@@ -227,8 +227,32 @@ namespace NMib
 				f_SetMantissaBits(1);
 			}
 		public:
-
-
+			
+			static DMibFloatInline TCFloat fs_LimitMin()
+			{
+				TCFloat Temp;
+				if (ESignBits)
+				{
+					Temp.f_SetMantissa((fg_Convert<CInteger>(1) << EMantissaBits) - fg_Convert<CInteger>(1));
+					Temp.f_SetSign(1);
+					Temp.f_SetExponent(fg_PowerOfTwoMinusOne<CInteger>(EExponentBits-1));
+				}
+				else
+				{
+					Temp = fs_0();
+				}
+				return Temp;
+			}
+			
+			static DMibFloatInline TCFloat fs_LimitMax()
+			{
+				TCFloat Temp;
+				Temp.f_SetMantissa((fg_Convert<CInteger>(1) << EMantissaBits) - fg_Convert<CInteger>(1));
+				Temp.f_SetSign(0);
+				Temp.f_SetExponent(fg_PowerOfTwoMinusOne<CInteger>(EExponentBits-1));
+				return Temp;
+			}
+			
 			static DMibFloatInline TCFloat fs_0()
 			{
 				TCFloat Temp;
@@ -1714,7 +1738,7 @@ namespace NMib
 					CInternalFloat ResultCalc = TCFloat::fs_1();
 					CInternalFloat Temp = *this;
 					CInternalFloat One = TCFloat::fs_1();
-					CInternalFloat Two = TCFloat::fs_2();
+					//CInternalFloat Two = TCFloat::fs_2();
 					CInternalFloat Temp2 = *this;
 
 					//y = (x-1) / (x + 1);
