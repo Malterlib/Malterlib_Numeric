@@ -34,12 +34,14 @@ namespace NMib
 #endif
 			enum
 			{
-				ELowerBits = sizeof(t_CLower)*8,
-				ELowerFirstBit = 0,
-				ELowerLastBit = ELowerBits - 1,
-				EUpperBits = sizeof(t_CUpper)*8,
-				EUpperFirstBit = ELowerBits,
-				EUpperLastBit = EUpperBits + ELowerBits - 1
+				ELowerBits = sizeof(t_CLower)*8
+				, ELowerFirstBit = 0
+				, ELowerLastBit = ELowerBits - 1
+				, EUpperBits = sizeof(t_CUpper)*8
+				, EUpperFirstBit = ELowerBits
+				, EUpperLastBit = EUpperBits + ELowerBits - 1
+				, EAllBits = ELowerBits + EUpperBits   
+				, EHalfBits = EAllBits / 2   
 			};
 			static_assert(EUpperBits >= ELowerBits, "If non symmetric sizes for constituent integers, the upper integer needs to be the larger one, otherwise sign extension wont work");
 		public:
@@ -102,9 +104,23 @@ namespace NMib
 				{
 					typedef TCInt<t_CUpper2, t_CLower2> CType;
 					CType Ret;
-					static const TCInt And1 = DMibBitRangeTyped(uaint(0), uaint(fg_Min((mint)ELowerBits - 1, sizeof(TCInt)*8 - 1)), TCInt);
-					Ret.m_Upper = t_CUpper2((((*this) >> uaint(fg_Min((mint)ELowerBits, sizeof(CType)*8) - 1)) >> uaint(1)));
-					Ret.m_Lower = t_CLower2(((*this) & And1));
+					static const TCInt And1 = DMibBitRangeTyped(uaint(0), uaint(CType::ELowerBits - 1), TCInt);
+					if (sizeof(t_CUpper2) > sizeof(TCInt))
+					{
+						typename TCChooseType<NTraits::TCIsSigned<t_CUpper>::mc_Value, typename NTraits::TCSigned<t_CUpper2>::CType, t_CUpper2>::CType  Temp{*this};
+						Temp >>= CType::ELowerBits - 1;
+						Temp >>= 1;
+						Ret.m_Upper = t_CUpper2(Temp);
+					}
+					else
+						Ret.m_Upper = t_CUpper2((((*this) >> uaint(CType::ELowerBits - 1) >> uaint(1))));
+					if (sizeof(t_CLower2) > sizeof(TCInt))
+					{
+						typename TCChooseType<NTraits::TCIsSigned<t_CUpper>::mc_Value, typename NTraits::TCSigned<t_CLower2>::CType, t_CLower2>::CType Temp{*this};
+						Ret.m_Lower = t_CLower2(Temp);
+					}
+					else
+						Ret.m_Lower = t_CLower2(((*this) & And1));
 					return Ret;
 				}
 			}
@@ -121,7 +137,8 @@ namespace NMib
 				else
 				{
 					t_CInt Ret;
-					Ret = t_CInt((m_Upper << (fg_Min((mint)NMath::TCInt<t_CUpper, t_CLower>::ELowerBits, sizeof(t_CInt)*8) - 1)) << 1);
+					using CLargestInt = typename NTraits::TCLargestType<t_CInt, t_CUpper>::CType; 
+					Ret = t_CInt((CLargestInt(m_Upper) << (fg_Min((mint)ELowerBits, sizeof(CLargestInt)*8) - 1)) << 1);
 					Ret = Ret | t_CInt(m_Lower);
 					return Ret;
 				}
@@ -174,6 +191,11 @@ namespace NMib
 			TCInt operator - () const
 			{
 				return fs_Zero() - (*this);
+			}
+
+			TCInt operator + () const
+			{
+				return *this;
 			}
 
 			TCInt operator ~ () const
@@ -409,8 +431,8 @@ namespace NMib
 				// Multiply Upper by lower and let it owerflow
 				Result += TCInt(Val0.m_Upper * Val1.m_Lower, mc_LowerZero);
 				Result += TCInt(Val1.m_Upper * Val0.m_Lower, mc_LowerZero);
-				// Can never contribute to number (always overflows)
-//				Result += TCInt(Val0.m_Upper * Val1.m_Upper, 0) << EUpperBits;
+				if (sizeof(t_CLower) < sizeof(t_CUpper))
+					Result += TCInt(Val0.m_Upper * Val1.m_Upper, 0) << ELowerBits;
 
 				if (NTraits::TCIsSigned<t_CUpper>::mc_Value && bSigned)
 					*this = -Result;
@@ -565,7 +587,11 @@ namespace NMib
 					if (aint(ELowerBits) >= Value)
 						m_Lower |= t_CLower(Upper0 << (aint(ELowerBits) - Value));
 					else
-						m_Lower |= t_CLower(Upper0 >> (Value - aint(ELowerBits)));
+					{
+						auto Bits = Value - aint(ELowerBits);
+						auto Test = (Upper0 >> (Bits - 1)) >> 1;
+						m_Lower |= t_CLower(Test);
+					}
 				}
 
 				return *this;

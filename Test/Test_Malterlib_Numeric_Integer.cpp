@@ -15,138 +15,107 @@ namespace
 		template <template <typename t_CFloat00> class t_CTestTemplate>
 		void f_TestAll()
 		{
-			typedef t_CTestTemplate<int8> CTest8;
-			typedef t_CTestTemplate<int16> CTest16;
-			typedef t_CTestTemplate<int32> CTest32;
-			typedef t_CTestTemplate<int64> CTest64;
-#if 0
-			typedef t_CTestTemplate<int80> CTest80;
-			typedef t_CTestTemplate<int128> CTest128;
-			typedef t_CTestTemplate<int160> CTest160;
-			typedef t_CTestTemplate<int256> CTest256;
-			typedef t_CTestTemplate<int512> CTest512;
-			typedef t_CTestTemplate<int1024> CTest1024;
-			typedef t_CTestTemplate<int2048> CTest2048;
-			typedef t_CTestTemplate<int4096> CTest4096;
-#endif
 			DMibTestCategory("int8")
 			{
-				CTest8()();
+				t_CTestTemplate<int8>()();
 			};
 			DMibTestCategory("int16")
 			{
-				CTest16()();
+				t_CTestTemplate<int16>()();
 			};
 			DMibTestCategory("int32")
 			{
-				CTest32()();
+				t_CTestTemplate<int32>()();
 			};
 			DMibTestCategory("int64")
 			{
-				CTest64()();
+				t_CTestTemplate<int64>()();
 			};
-
-#if 0
 			DMibTestCategory("int80")
 			{
-				CTest80()();
+				t_CTestTemplate<int80>()();
 			};
 			DMibTestCategory("int128")
 			{
-				CTest128()();
+				t_CTestTemplate<int128>()();
 			};
 			DMibTestCategory("int160")
 			{
-				CTest160()();
+				t_CTestTemplate<int160>()();
 			};
 			DMibTestCategory("int256")
 			{
-				CTest256()();
+				t_CTestTemplate<int256>()();
 			};
 			DMibTestCategory("int512")
 			{
-				CTest512()();
+				t_CTestTemplate<int512>()();
 			};
-#endif 
-/*			
-			These are too slow, will reenable when TCInt is rewritten
-			DMibTestSuite("int1024")
+			DMibTestCategory("int1024")
 			{
-				CTest1024()();
+				t_CTestTemplate<int1024>()();
 			};
-			DMibTestSuite("int2048")
-			{
-				CTest2048()();
-			};
-			DMibTestSuite("int4096")
-			{
-				CTest4096()();
-			};*/
-
-			typedef t_CTestTemplate<uint8> CTestU8;
-			typedef t_CTestTemplate<uint16> CTestU16;
-			typedef t_CTestTemplate<uint32> CTestU32;
-			typedef t_CTestTemplate<uint64> CTestU64;
 #if 0
-			typedef t_CTestTemplate<uint80> CTestU80;
-			typedef t_CTestTemplate<uint128> CTestU128;
-			typedef t_CTestTemplate<uint160> CTestU160;
-			typedef t_CTestTemplate<uint256> CTestU256;
-			typedef t_CTestTemplate<uint512> CTestU512;
-			typedef t_CTestTemplate<uint1024> CTestU1024;
-			typedef t_CTestTemplate<uint2048> CTestU2048;
-			typedef t_CTestTemplate<uint4096> CTestU4096;
+			DMibTestCategory("int2048")
+			{
+				t_CTestTemplate<int2048>()();
+			};
+			DMibTestCategory("int4096")
+			{
+				t_CTestTemplate<int4096>()();
+			};
 #endif
+
 			DMibTestCategory("uint8")
 			{
-				CTestU8()();
+				t_CTestTemplate<uint8>()();
 			};
 			DMibTestCategory("uint16")
 			{
-				CTestU16()();
+				t_CTestTemplate<uint16>()();
 			};
 			DMibTestCategory("uint32")
 			{
-				CTestU32()();
+				t_CTestTemplate<uint32>()();
 			};
 			DMibTestCategory("uint64")
 			{
-				CTestU64()();
+				t_CTestTemplate<uint64>()();
 			};
-/*			DMibTestCategory("uint80")
+			DMibTestCategory("uint80")
 			{
-				CTestU80()();
+				t_CTestTemplate<uint80>()();
 			};
 			DMibTestCategory("uint128")
 			{
-				CTestU128()();
+				t_CTestTemplate<uint128>()();
 			};
 			DMibTestCategory("uint160")
 			{
-				CTestU160()();
+				t_CTestTemplate<uint160>()();
 			};
 			DMibTestCategory("uint256")
 			{
-				CTestU256()();
+				t_CTestTemplate<uint256>()();
 			};
 			DMibTestCategory("uint512")
 			{
-				CTestU512()();
-			};*/
-/*			
-			These are too slow, will reenable when TCInt is rewritten
-			DMibTestSuite("uint1024")
-			{
-				CTestU1024()();
+				t_CTestTemplate<uint512>()();
 			};
-			DMibTestSuite("uint2048")
+			DMibTestCategory("uint1024")
 			{
-				CTestU2048()();
+				t_CTestTemplate<uint1024>()();
 			};
-			DMibTestSuite("uint4096")
+#if 0
+			DMibTestCategory("uint2048")
 			{
-				CTestU4096()();
-			};*/
+				t_CTestTemplate<uint2048>()();
+			};
+			DMibTestCategory("uint4096")
+			{
+				t_CTestTemplate<uint4096>()();
+			};
+#endif
 		}
 
 		template <typename t_CInt>
