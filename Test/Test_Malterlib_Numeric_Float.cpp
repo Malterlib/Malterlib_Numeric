@@ -1,7 +1,11 @@
 ﻿// Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
+#include <Mib/Numeric/CustomFloat>
+
 #if 1
+#include <cmath>
+#include <limits>
 
 #include "Test_Malterlib_Numeric_Float.h"
 using namespace NMib::NMath;
@@ -11,11 +15,75 @@ namespace
 	{
 	public:
 
+		template <template <typename t_CFloat00> class t_CTestTemplate>
+		static void fs_TestAll(bool _bSuite = true)
+		{
+			NMib::NTest::ETestCategoryFlag Flags = _bSuite ? NMib::NTest::ETestCategoryFlag_Tests : NMib::NTest::ETestCategoryFlag_None;
+			DMibTestCategoryFlags("fp8", Flags)
+			{
+				t_CTestTemplate<fp8>()();
+			};
+			DMibTestCategoryFlags("fp16", Flags)
+			{
+				t_CTestTemplate<fp16>()();
+			};
+			DMibTestCategoryFlags("fp32", Flags)
+			{
+				t_CTestTemplate<fp32>()();
+			};
+			DMibTestCategoryFlags("fp32Emu", Flags)
+			{
+				t_CTestTemplate<CIEEEFloat32Emu>()();
+			};
+			DMibTestCategoryFlags("fp64", Flags)
+			{
+				t_CTestTemplate<fp64>()();
+			};
+			DMibTestCategoryFlags("fp64Emu", Flags)
+			{
+				t_CTestTemplate<CIEEEFloat64Emu>()();
+			};
+			DMibTestCategoryFlags("fp80", Flags)
+			{
+				t_CTestTemplate<fp80>()();
+			};
+			DMibTestCategoryFlags("fp80Emu", Flags)
+			{
+				t_CTestTemplate<CIEEEFloat80Emu>()();
+			};
+			DMibTestCategoryFlags("fp128", Flags)
+			{
+				t_CTestTemplate<fp128>()();
+			};
+			DMibTestCategoryFlags("fp256", Flags)
+			{
+				t_CTestTemplate<fp256>()();
+			};
+			DMibTestCategoryFlags("fp512", Flags)
+			{
+				t_CTestTemplate<fp512>()();
+			};
+#ifndef DMibDebug
+			DMibTestCategoryFlags("fp1024", Flags)
+			{
+				t_CTestTemplate<fp1024>()();
+			};
+/*			DMibTestCategoryFlags("fp2048", Flags)
+			{
+				t_CTestTemplate<fp2048>()();
+			};*/
+/*			DMibTestCategoryFlags("fp4096", Flags)
+			{
+				t_CTestTemplate<fp4096>()();
+			};*/
+#endif
+		}
+		
 		template <typename t_CFloat>
 		class CConstants
 		{
 		public:
-			typedef typename NMib::NTraits::TCSmallestType<t_CFloat, double>::CType CSmallestType;
+			typedef typename NMib::NTraits::TCSmallestType<t_CFloat, fp64>::CType CSmallestType;
 			template <typename t_CFrom>
 			CSmallestType f_Cnv(const t_CFrom &_From)
 			{
@@ -23,112 +91,145 @@ namespace
 			}
 			void operator() ()
 			{
-				DMibTest(DMibExpr(f_Cnv(fg_F0<t_CFloat>())) == DMibExpr(f_Cnv(0.0)));
-				DMibTest(DMibExpr(f_Cnv(fg_F0_5<t_CFloat>())) == DMibExpr(f_Cnv(0.0)));
-				DMibTest(DMibExpr(f_Cnv(fg_F1<t_CFloat>())) == DMibExpr(f_Cnv(0.0)));
-				DMibTest(DMibExpr(f_Cnv(fg_F2<t_CFloat>())) == DMibExpr(f_Cnv(0.0)));
-				DMibTest(DMibExpr(f_Cnv(fg_FPi<t_CFloat>())) == DMibExpr(f_Cnv(0.0)));
-				DMibTest(DMibExpr(f_Cnv(fg_FSqrt2<t_CFloat>())) == DMibExpr(f_Cnv(0.0)));
+				DMibExpect(f_Cnv(fg_F0<t_CFloat>()), ==, f_Cnv(0.0));
+				DMibExpect(f_Cnv(fg_F0_5<t_CFloat>()), ==, f_Cnv(0.5));
+				DMibExpect(f_Cnv(fg_F1<t_CFloat>()), ==, f_Cnv(1.0));
+				DMibExpect(f_Cnv(fg_F2<t_CFloat>()), ==, f_Cnv(2.0));
+				DMibExpect(f_Cnv(fg_FPi<t_CFloat>()), ==, f_Cnv(3.1415926535897932384626433832795028841971693));
+				DMibExpect(f_Cnv(fg_FSqrt2<t_CFloat>()), ==, f_Cnv(1.4142135623730950488016887242096980785696718));
+				DMibExpect(f_Cnv(fg_FE<t_CFloat>()), ==, f_Cnv(2.7182818284590452353602874713526624977572470936999));
 				// Euler too slow currently
-				//DMibTest(DMibExpr(f_Cnv(fg_FE<t_CFloat>())) == DMibExpr(f_Cnv(0.0)));
-				//DMibTest(DMibExpr(f_Cnv(fg_FEuler<t_CFloat>())) == DMibExpr(f_Cnv(0.0)));
-				DMibTest(DMibExpr(f_Cnv(fg_FGoldenRatio<t_CFloat>())) == DMibExpr(f_Cnv(0.0)));
-				DMibTest(DMibExpr(f_Cnv(fg_FLog10_2<t_CFloat>())) == DMibExpr(f_Cnv(0.0)));
-				DMibTest(DMibExpr(f_Cnv(fg_FLog2_10<t_CFloat>())) == DMibExpr(f_Cnv(0.0)));
-				DMibTest(DMibExpr(f_Cnv(fg_FLog10_E<t_CFloat>())) == DMibExpr(f_Cnv(0.0)));
-				DMibTest(DMibExpr(f_Cnv(fg_FLogE_10<t_CFloat>())) == DMibExpr(f_Cnv(0.0)));
-				DMibTest(DMibExpr(f_Cnv(fg_FLog2_E<t_CFloat>())) == DMibExpr(f_Cnv(0.0)));
-				DMibTest(DMibExpr(f_Cnv(fg_FLogE_2<t_CFloat>())) == DMibExpr(f_Cnv(0.0)));
-				DMibTest(DMibExpr(f_Cnv(fg_FInf<t_CFloat>())) == DMibExpr(f_Cnv(0.0)));
-				DMibTest(DMibExpr(f_Cnv(fg_FNegInf<t_CFloat>())) == DMibExpr(f_Cnv(0.0)));
-				DMibTest(DMibExpr(f_Cnv(fg_FQNan<t_CFloat>())) == DMibExpr(f_Cnv(0.0)));
-				DMibTest(DMibExpr(f_Cnv(fg_FSNan<t_CFloat>())) == DMibExpr(f_Cnv(0.0)));
-				DMibTest(DMibExpr(f_Cnv(fg_FNegQNan<t_CFloat>())) == DMibExpr(f_Cnv(0.0)));
-				DMibTest(DMibExpr(f_Cnv(fg_FNegSNan<t_CFloat>())) == DMibExpr(f_Cnv(0.0)));
+				//DMibExpect(f_Cnv(fg_FEuler<t_CFloat>()), ==, DMibExpr(f_Cnv(0.57721566490153286060651209008240243104215933593992));
+				DMibExpect(f_Cnv(fg_FGoldenRatio<t_CFloat>()), ==, f_Cnv(1.61803398874989484820458683436563811772030));
+				DMibExpect(f_Cnv(fg_FLog10_2<t_CFloat>()), ==, f_Cnv(0.3010299956639811952137388947244930267681898814));
+				DMibExpect(f_Cnv(fg_FLog2_10<t_CFloat>()), ==, f_Cnv(3.3219280948873623478703194294893901758648313930));
+				DMibExpect(f_Cnv(fg_FLog10_E<t_CFloat>()), ==, f_Cnv(0.43429448190325182765112891891660508229439700580366));
+				DMibExpect(f_Cnv(fg_FLogE_10<t_CFloat>()), ==, f_Cnv(2.3025850929940456840179914546843642076011014886287));
+				DMibExpect(f_Cnv(fg_FLog2_E<t_CFloat>()), ==, f_Cnv(1.4426950408889634073599246810018921374266459541529));
+				DMibExpect(f_Cnv(fg_FLogE_2<t_CFloat>()), ==, f_Cnv(0.69314718055994530941723212145817656807550013436025));
+				DMibExpect(f_Cnv(fg_FInf<t_CFloat>()), ==, f_Cnv(fp64::fs_Inf()));
+				DMibExpect(f_Cnv(fg_FNegInf<t_CFloat>()), ==, f_Cnv(fp64::fs_NegInf()));
+				DMibExpect(f_Cnv(fg_FQNan<t_CFloat>()), !=, f_Cnv(fp64::fs_QNan()));
+				DMibExpect(f_Cnv(fg_FSNan<t_CFloat>()), !=, f_Cnv(fp64::fs_SNan()));
+				DMibExpect(f_Cnv(fg_FNegQNan<t_CFloat>()), !=, f_Cnv(fp64::fs_NegQNan()));
+				DMibExpect(f_Cnv(fg_FNegSNan<t_CFloat>()), !=, f_Cnv(fp64::fs_NegSNan()));
+			}
+		};
+		
+		template <typename t_CFloat>
+		class CInvalid
+		{
+		public:
+			void operator() ()
+			{
+				DMibTest(DMibExpr(t_CFloat::fs_LimitMax()) * DMibExpr(t_CFloat::fs_2()) == DMibExpr(t_CFloat::fs_Inf()))(ETestFlag_NoValues);
+				DMibTest(DMibExpr(t_CFloat::fs_LimitMin()) * DMibExpr(t_CFloat::fs_2()) == DMibExpr(t_CFloat::fs_NegInf()))(ETestFlag_NoValues);
 			}
 		};
 
-		template <template <typename t_CFloat00> class t_CTestTemplate>
-		void f_TestAll()
+		template <typename t_CFloatLeft>
+		class TCConversion
 		{
-			typedef t_CTestTemplate<fp8> CTest8;
-			typedef t_CTestTemplate<fp16> CTest16;
-			typedef t_CTestTemplate<fp32> CTest32;
-			typedef t_CTestTemplate<fp64> CTest64;
-			typedef t_CTestTemplate<fp80> CTest80;
-			typedef t_CTestTemplate<fp128> CTest128;
-			typedef t_CTestTemplate<fp256> CTest256;
-			typedef t_CTestTemplate<fp512> CTest512;
-#ifndef DDebug
-			typedef t_CTestTemplate<fp1024> CTest1024;
-			typedef t_CTestTemplate<fp2048> CTest2048;
-			typedef t_CTestTemplate<fp4096> CTest4096;
-#endif
-			DMibTestSuite("fp8")
+		public:
+			template <typename t_CFloatRight>
+			class CInner
 			{
-				CTest8()();
+			public:
+				void operator() ()
+				{
+#define DTestConversion(d_Name, d_Value, d_ExpectBiggerOperator, d_ExpectBigger, d_ExpectSmallerOperator, d_ExpectSmaller) \
+					{\
+						DMibTestPath("Construct");\
+						auto d_Name = d_Value;\
+						t_CFloatLeft Converted##d_Name{d_Name}; \
+						if (sizeof(t_CFloatLeft) >= sizeof(t_CFloatRight))\
+							DMibExpect(Converted##d_Name, d_ExpectBiggerOperator, d_Name);\
+						else\
+							DMibExpect(Converted##d_Name, d_ExpectSmallerOperator, d_ExpectSmaller);\
+					}\
+					{\
+						DMibTestPath("Assign");\
+						auto d_Name = d_Value;\
+						t_CFloatLeft Converted##d_Name;\
+						Converted##d_Name = d_Name;\
+						if (sizeof(t_CFloatLeft) >= sizeof(t_CFloatRight))\
+							DMibExpect(Converted##d_Name, d_ExpectBiggerOperator, d_Name);\
+						else\
+							DMibExpect(Converted##d_Name, d_ExpectSmallerOperator, d_ExpectSmaller);\
+					}
+					
+					DTestConversion(SmallestDenormal, t_CFloatRight::fs_SmallestDenormal(), ==, SmallestDenormal, ==, t_CFloatLeft::fs_0());
+					DTestConversion(NegSmallestDenormal, t_CFloatRight::fs_NegSmallestDenormal(), ==, NegSmallestDenormal, ==, -t_CFloatLeft::fs_0());
+					if (sizeof(t_CFloatLeft) != sizeof(t_CFloatRight) && t_CFloatLeft::EExponentBits == t_CFloatRight::EExponentBits)
+					{
+						DTestConversion(Smallest, t_CFloatRight::fs_Smallest(), ==, Smallest, ==, Smallest);
+						DTestConversion(NegSmallest, t_CFloatRight::fs_NegSmallest(), ==, NegSmallest, ==, NegSmallest);
+					}
+					else
+					{
+						DTestConversion(Smallest, t_CFloatRight::fs_Smallest(), ==, Smallest, ==, t_CFloatLeft::fs_0());
+						DTestConversion(NegSmallest, t_CFloatRight::fs_NegSmallest(), ==, NegSmallest, ==, -t_CFloatLeft::fs_0());
+					}
+					DTestConversion(LimitMin, t_CFloatRight::fs_LimitMin(), ==, LimitMin, ==, t_CFloatLeft::fs_NegInf());
+					DTestConversion(LimitMax, t_CFloatRight::fs_LimitMax(), ==, LimitMax, ==, t_CFloatLeft::fs_Inf());
+
+					DTestConversion(Float_0, t_CFloatRight::fs_0(), ==, Float_0, ==, t_CFloatLeft::fs_0());
+					DTestConversion(Float_0_5, t_CFloatRight::fs_0_5(), ==, Float_0_5, ==, t_CFloatLeft::fs_0_5());
+					DTestConversion(Float_1, t_CFloatRight::fs_1(), ==, Float_1, ==, t_CFloatLeft::fs_1());
+					DTestConversion(Float_2, t_CFloatRight::fs_2(), ==, Float_2, ==, t_CFloatLeft::fs_2());
+					DTestConversion(Float_E, t_CFloatRight::fs_E(), ==, Float_E, ==, t_CFloatLeft::fs_E());
+					DTestConversion(Float_Pi, t_CFloatRight::fs_Pi(), ==, Float_Pi, ==, t_CFloatLeft::fs_Pi());
+					DTestConversion(Float_Sqrt2, t_CFloatRight::fs_Sqrt2(), ==, Float_Sqrt2, ==, t_CFloatLeft::fs_Sqrt2());
+					//DTestConversion(Float_Euler, t_CFloatRight::fs_Euler(), ==, Float_Euler, ==, t_CFloatLeft::fs_Euler()); // Slow
+					DTestConversion(Float_GoldenRatio, t_CFloatRight::fs_GoldenRatio(), ==, Float_GoldenRatio, ==, t_CFloatLeft::fs_GoldenRatio());
+					DTestConversion(Float_Log10_2, t_CFloatRight::fs_Log10_2(), ==, Float_Log10_2, ==, t_CFloatLeft::fs_Log10_2());
+					DTestConversion(Float_Log2_10, t_CFloatRight::fs_Log2_10(), ==, Float_Log2_10, ==, t_CFloatLeft::fs_Log2_10());
+					DTestConversion(Float_Log10_E, t_CFloatRight::fs_Log10_E(), ==, Float_Log10_E, ==, t_CFloatLeft::fs_Log10_E());
+					DTestConversion(Float_LogE_10, t_CFloatRight::fs_LogE_10(), ==, Float_LogE_10, ==, t_CFloatLeft::fs_LogE_10());
+					DTestConversion(Float_Log2_E, t_CFloatRight::fs_Log2_E(), ==, Float_Log2_E, ==, t_CFloatLeft::fs_Log2_E());
+					DTestConversion(Float_LogE_2, t_CFloatRight::fs_LogE_2(), ==, Float_LogE_2, ==, t_CFloatLeft::fs_LogE_2());
+				}
 			};
-			DMibTestSuite("fp16")
+		};
+		
+		template <typename t_CFloat>
+		class CConversion
+		{
+		public:
+			typedef typename NMib::NTraits::TCSmallestType<t_CFloat, fp64>::CType CSmallestType;
+			template <typename t_CFrom>
+			CSmallestType f_Cnv(const t_CFrom &_From)
 			{
-				CTest16()();
-			};
-			DMibTestSuite("fp32")
+				return NMib::fg_Convert<CSmallestType>(_From);
+			}
+			void operator() ()
 			{
-				CTest32()();
-			};
-			DMibTestSuite("fp64")
-			{
-				CTest64()();
-			};
-			DMibTestSuite("fp80")
-			{
-				CTest80()();
-			};
-			DMibTestSuite("fp128")
-			{
-				CTest128()();
-			};
-			DMibTestSuite("fp256")
-			{
-				CTest256()();
-			};
-			DMibTestSuite("fp512")
-			{
-				CTest512()();
-			};
-#ifndef DDebug
-			DMibTestSuite("fp1024")
-			{
-				CTest1024()();
-			};
-			DMibTestSuite("fp2048")
-			{
-				CTest2048()();
-			};
-			DMibTestSuite("fp4096")
-			{
-				CTest4096()();
-			};
-#endif
-		}
+				fs_TestAll<TCConversion<t_CFloat>::template CInner>();
+			}
+		};
 
 		void f_DoTests()
 		{
-			CIEEEFloat32Emu Test0 = 0.0;
-			CIEEEFloat32Emu Test1 = 1.0;
-			CIEEEFloat32Emu Test2 = Test0 * Test1;
-			fp32 Test3 = Test2;
-
-			fp32 Test10 = 0.0;
-			fp32 Test11 = 1.0;
-			fp32 Test12 = Test10 * Test11;
-
-			DMibTestSuite("Constants")
+			fp16 Test = fp16::fs_0();
+			fp8 Test2 = Test;
+			
+			bool boo = Test == Test2;
+			(void)boo;
+			
+			DMibTestCategory("Invalid")
 			{
-//				this->f_TestAll<CConstants>();
+				fs_TestAll<CInvalid>();
+			};
+			
+			DMibTestCategory("Conversion")
+			{
+				fs_TestAll<CConversion>(false);
 			};
 
-
+			DMibTestCategory("Constants")
+			{
+				fs_TestAll<CConstants>();
+			};
 #if 0
 			{
 				ufp8 Temp = fp64(1.0);
