@@ -319,12 +319,12 @@ namespace NMib
 				return Ret;
 			}
 
-			bint operator && (const TCInt &_Value) const
+			bool operator && (const TCInt &_Value) const
 			{
 				return (m_Upper != mc_UpperZero || m_Lower != mc_LowerZero) && (_Value.m_Upper != mc_UpperZero || _Value.m_Lower != mc_LowerZero);
 			}
 
-			bint operator || (const TCInt &_Value) const
+			bool operator || (const TCInt &_Value) const
 			{
 				return (m_Upper != mc_UpperZero || m_Lower != mc_LowerZero) || (_Value.m_Upper != mc_UpperZero || _Value.m_Lower != mc_LowerZero);
 			}
@@ -392,7 +392,7 @@ namespace NMib
 
 			TCInt &operator *= (const TCInt &_Value)
 			{
-				bint bSigned = false;
+				bool bSigned = false;
 				TCInt Val0 = *this;
 				TCInt Val1 = _Value;
 				if (NTraits::TCIsSigned<t_CUpper>::mc_Value && Val0 < fs_Zero())
@@ -442,14 +442,14 @@ namespace NMib
 				return *this;
 			}
 
-			static bint fp_IsBitSet(uaint _Bit)
+			static bool fp_IsBitSet(uaint _Bit)
 			{
 				return false;
 			}
 
 			TCInt &operator /= (const TCInt &_Value)
 			{
-				bint bSigned = false;
+				bool bSigned = false;
 				TCInt Val0 = *this;
 				TCInt Val1 = _Value;
 				if (NTraits::TCIsSigned<t_CUpper>::mc_Value && Val0 < fs_Zero())
@@ -502,7 +502,7 @@ namespace NMib
             
 			TCInt &operator %= (const TCInt &_Value)
 			{
-				bint bSigned = false;
+				bool bSigned = false;
 				TCInt Val0 = *this;
 				TCInt Val1 = _Value;
 				if (NTraits::TCIsSigned<t_CUpper>::mc_Value && Val0 < fs_Zero())
@@ -649,12 +649,12 @@ namespace NMib
 			||______________________________________________________________________________________________||
 			\************************************************************************************************/
 
-			bint operator == (const TCInt &_Value) const
+			bool operator == (const TCInt &_Value) const
 			{
 				return m_Lower == _Value.m_Lower && m_Upper == _Value.m_Upper;
 			}
 
-			bint operator < (const TCInt &_Value) const
+			bool operator < (const TCInt &_Value) const
 			{
 				return m_Upper < _Value.m_Upper || (m_Upper == _Value.m_Upper && m_Lower < _Value.m_Lower);
 			}
@@ -846,13 +846,20 @@ typedef NMib::NMath::TCInt<int128, uint32> int160;
 typedef NMib::NMath::TCInt<uint128, uint32> uint160;
 #endif
 
-
 #ifndef DMibPCanDo_int256
 typedef NMib::NMath::TCInt<int128, uint128> int256;
 #endif
 
 #ifndef DMibPCanDo_uint256
 typedef NMib::NMath::TCInt<uint128, uint128> uint256;
+#endif
+
+#ifndef DMibPCanDo_int320
+typedef NMib::NMath::TCInt<int256, uint64> int320;
+#endif
+
+#ifndef DMibPCanDo_uint320
+typedef NMib::NMath::TCInt<uint256, uint64> uint320;
 #endif
 
 #ifndef DMibPCanDo_int512
@@ -915,6 +922,9 @@ namespace NMib
 #if !(defined(DMibPCanDo_uint80) && defined(DMibPCanDo_uint160))
 	DMibTraitsImplementSizePair(uint80, uint160);
 #endif
+#if !(defined(DMibPCanDo_uint160) && defined(DMibPCanDo_uint320))
+	DMibTraitsImplementSizePair(uint160, uint320);
+#endif
 #if !(defined(DMibPCanDo_uint128) && defined(DMibPCanDo_uint256))
 	DMibTraitsImplementSizePair(uint128, uint256);
 #endif
@@ -950,6 +960,9 @@ namespace NMib
 #endif
 #if !(defined(DMibPCanDo_int128) && defined(DMibPCanDo_int256))
 	DMibTraitsImplementSizePair(int128, int256);
+#endif
+#if !(defined(DMibPCanDo_int160) && defined(DMibPCanDo_int320))
+	DMibTraitsImplementSizePair(int160, int320);
 #endif
 #if !(defined(DMibPCanDo_int256) && defined(DMibPCanDo_int512))
 	DMibTraitsImplementSizePair(int256, int512);
@@ -990,6 +1003,9 @@ namespace NMib
 #endif
 #if !defined(DMibPCanDo_int256)
 	DMibTraitsImplementIntegerFromSize(int256);
+#endif
+#if !defined(DMibPCanDo_int320)
+	DMibTraitsImplementIntegerFromSize(int320);
 #endif
 #if !defined(DMibPCanDo_int512)
 	DMibTraitsImplementIntegerFromSize(int512);

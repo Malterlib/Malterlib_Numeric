@@ -1,4 +1,5 @@
-﻿// Copyright © 2015 Hansoft AB 
+﻿
+// Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #pragma once
@@ -500,13 +501,20 @@ namespace NMib
 	DMibMathFloatConvertInt(CIEEEFloat64, uint160);
 #endif
 
-
 #ifdef DMibPCanDo_int256
 	DMibMathFloatConvertInt(CIEEEFloat64, int256);
 #endif
 
 #ifdef DMibPCanDo_uint256
 	DMibMathFloatConvertInt(CIEEEFloat64, uint256);
+#endif
+
+#ifdef DMibPCanDo_int320
+	DMibMathFloatConvertInt(CIEEEFloat64, int320);
+#endif
+
+#ifdef DMibPCanDo_uint320
+	DMibMathFloatConvertInt(CIEEEFloat64, uint320);
 #endif
 
 #ifdef DMibPCanDo_int512

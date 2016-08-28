@@ -14,43 +14,43 @@ namespace NMib
 		{
 			pfp32 fg_Sin(pfp32 _Val)
 			{
-				return sin(_Val);
+				return sinf(_Val);
 			}
 			pfp32 fg_Cos(pfp32 _Val)
 			{
-				return cos(_Val);
+				return cosf(_Val);
 			}
 			pfp32 fg_Tan(pfp32 _Val)
 			{
-				return tan(_Val);
+				return tanf(_Val);
 			}
 			pfp32 fg_SinH(pfp32 _Val)
 			{
-				return sinh(_Val);
+				return sinhf(_Val);
 			}
 			pfp32 fg_CosH(pfp32 _Val)
 			{
-				return cosh(_Val);
+				return coshf(_Val);
 			}
 			pfp32 fg_TanH(pfp32 _Val)
 			{
-				return tanh(_Val);
+				return tanhf(_Val);
 			}
 			pfp32 fg_ArcSin(pfp32 _Val)
 			{
-				return asin(_Val);
+				return asinf(_Val);
 			}
 			pfp32 fg_ArcCos(pfp32 _Val)
 			{
-				return acos(_Val);
+				return acosf(_Val);
 			}
 			pfp32 fg_ArcTan(pfp32 _Val)
 			{
-				return atan(_Val);
+				return atanf(_Val);
 			}
 			pfp32 fg_ArcTan(pfp32 _Val, pfp32 _Source)
 			{
-				return atan2(_Val, _Source);
+				return atan2f(_Val, _Source);
 			}
 
 			/************************************************************************************************\
@@ -62,70 +62,66 @@ namespace NMib
 
 			pfp32 fg_ExpN(pfp32 _Val)
 			{
-				return exp(_Val);
+				return expf(_Val);
 			}
 			pfp32 fg_LogN(pfp32 _Val)
 			{
-				return log(_Val);
+				return logf(_Val);
 			}
 			pfp32 fg_Exp10(pfp32 _Val)
 			{
 				// e^(log(10) * x)
-				pfp64 log_10 = 2.3025850929940456840179914546844;
-				return exp(log_10 * pfp64(_Val));
+				return powf(10.0f, _Val);
 			}
 			pfp32 fg_Log10(pfp32 _Val)
 			{
-				return log10(_Val);
+				return log10f(_Val);
 			}
 			pfp32 fg_Exp2(pfp32 _Val)
 			{
 				// e^(log(2) * x)
-				pfp64 log_2 = 0.69314718055994530941723212145818;
-				return exp(log_2 * pfp64(_Val));
+				return exp2f(_Val);
 			}
 			pfp32 fg_Log2(pfp32 _Val)
 			{
 				// log(x) / log(2)
 				// log(x) * log2(e)
-				pfp64 log2_e = 1.4426950408889634073599246810019;
-				return log(pfp64(_Val)) * log2_e;
+				return log2f(_Val);
 			}
 			pfp32 fg_Exp(pfp32 _Val, pfp32 _Base)
 			{
 				// e^(log(_Base) * x)
-				pfp32 log_Base = log(_Base);
-				return exp(log_Base * _Val);
+				return powf(_Base, _Val);
 			}
 			pfp32 fg_Log(pfp32 _Val, pfp32 _Base)
 			{
 				// log(x) / log(_Base)
-				pfp32 log_Base = log((_Base));
-				return log(_Val) / log_Base;
+				pfp32 log_Base = logf(_Base);
+				return logf(_Val) / log_Base;
 			}
 			pfp32 fg_Sqrt(pfp32 _Val)
 			{
-				return sqrt(_Val);
+				return sqrtf(_Val);
 			}
 			pfp32 fg_Pow(pfp32 _Val, pfp32 _Power)
 			{
-				return pow(_Val, _Power);
+				return powf(_Val, _Power);
 			}
 			pfp32 fg_Floor(pfp32 _Val)
 			{
-				return floor(_Val);
+				return floorf(_Val);
 			}
 			pfp32 fg_Ceil(pfp32 _Val)
 			{
-				return ceil(_Val);
+				return ceilf(_Val);
 			}
 			pfp32 fg_Abs(pfp32 _Val)
 			{
-				return fabs(_Val);
+				return fabsf(_Val);
 			}
 			pfp32 fg_Mod(pfp32 _Val, pfp32 _Modulu)
 			{
-				return fmod(_Val, _Modulu);
+				return fmodf(_Val, _Modulu);
 			}
 		}
 	}

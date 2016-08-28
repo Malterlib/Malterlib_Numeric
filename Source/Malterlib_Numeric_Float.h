@@ -31,7 +31,7 @@ namespace NMib
 		template <typename t_CFloat>
 		class TCFloatConstants;
 
-		template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat = CNoImplicit, bint t_bDummyOptimize = true, typename t_CIntegerStorage = typename NTraits::TCIntFromSizeLarger<(t_SignBits + t_ExponentBits + t_MantissaBits + 7)/8>::CType>
+		template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat = CNoImplicit, bool t_bDummyOptimize = true, typename t_CIntegerStorage = typename NTraits::TCIntFromSizeLarger<(t_SignBits + t_ExponentBits + t_MantissaBits + 7)/8>::CType>
 		class TCFloat
 		{
 			template <typename t_CFloat>
@@ -115,6 +115,7 @@ namespace NMib
 			static DMibFloatInline TCFloat fs_NegSmallest();
 			static DMibFloatInline TCFloat fs_LimitMin();
 			static DMibFloatInline TCFloat fs_LimitMax();
+			static DMibFloatInline TCFloat fs_Epsilon();
 			static DMibFloatInline TCFloat fs_0();
 			static DMibFloatInline TCFloat fs_0_5();
 			static DMibFloatInline TCFloat fs_1();
@@ -144,13 +145,13 @@ namespace NMib
 			DMibFloatInlineS void f_SetSign(const CInteger &_Value);
 			DMibFloatInlineS void f_SetExponent(const CInteger &_Value);
 			DMibFloatInlineS void f_SetMantissa(const CInteger &_Value);
-			void f_SetAllRound(const CInteger &_Sign, const CInteger &_Exponent, const CDoubleInteger &_Mantissa, aint _AtleastExtraBits);
-			DMibFloatInlineS bint f_IsNaN() const;
-			DMibFloatInlineS bint f_IsQNaN() const;
-			DMibFloatInlineS bint f_IsSNaN() const;
-			DMibFloatInlineS bint f_IsInfinity() const;
-			DMibFloatInlineS bint f_IsInvalid() const;
-			DMibFloatInlineS bint f_IsDenormalized() const;
+			void f_SetAllRound(const CInteger &_Sign, const CInteger &_Exponent, const CDoubleUnsignedInteger &_Mantissa, aint _AtleastExtraBits);
+			DMibFloatInlineS bool f_IsNan() const;
+			DMibFloatInlineS bool f_IsQNan() const;
+			DMibFloatInlineS bool f_IsSNan() const;
+			DMibFloatInlineS bool f_IsInfinity() const;
+			DMibFloatInlineS bool f_IsInvalid() const;
+			DMibFloatInlineS bool f_IsDenormalized() const;
 			static DMibFloatInline TCFloat fs_Inf();
 			static DMibFloatInline TCFloat fs_NegInf();
 			static DMibFloatInline TCFloat fs_QNan();
@@ -164,13 +165,13 @@ namespace NMib
 			// Do nothing in default constructor
 			DMibFloatInlineS TCFloat();
 
-			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bint t_bDummyOptimize2, typename t_CIntegerStorage2>
+			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bool t_bDummyOptimize2, typename t_CIntegerStorage2>
 			DMibFloatInlineS void f_AssignRoundUp(const TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> &_SetValue);
-			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bint t_bDummyOptimize2, typename t_CIntegerStorage2>
+			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bool t_bDummyOptimize2, typename t_CIntegerStorage2>
 			DMibFloatInlineS void f_Assign(const TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> &_SetValue);
-			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bint t_bDummyOptimize2, typename t_CIntegerStorage2>
+			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bool t_bDummyOptimize2, typename t_CIntegerStorage2>
 			DMibFloatInlineS TCFloat & operator = (const TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> &_SetValue);
-			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bint t_bDummyOptimize2, typename t_CIntegerStorage2>
+			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bool t_bDummyOptimize2, typename t_CIntegerStorage2>
 			DMibFloatInlineS TCFloat(const TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> &_SetValue);
 			DMibFloatInlineS CInteger f_ToInt() const;
 			DMibFloatInlineS CUnsignedInteger f_ToUnsignedInt() const;
@@ -207,19 +208,19 @@ namespace NMib
 			\************************************************************************************************/
 
 			TCFloat operator + (const TCFloat &_Value) const;
-			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bint t_bDummyOptimize2, typename t_CIntegerStorage2>
+			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bool t_bDummyOptimize2, typename t_CIntegerStorage2>
 			typename NTraits::TCLargestType<TCFloat, NMib::NMath::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2>>::CType operator + (NMib::NMath::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_Value) const;
 
 			TCFloat operator - (const TCFloat &_Value) const;
-			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bint t_bDummyOptimize2, typename t_CIntegerStorage2>
+			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bool t_bDummyOptimize2, typename t_CIntegerStorage2>
 			typename NTraits::TCLargestType<TCFloat, NMib::NMath::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2>>::CType operator - (NMib::NMath::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_Value) const;
 
 			TCFloat operator * (const TCFloat &_Value) const;
-			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bint t_bDummyOptimize2, typename t_CIntegerStorage2>
+			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bool t_bDummyOptimize2, typename t_CIntegerStorage2>
 			typename NTraits::TCLargestType<TCFloat, NMib::NMath::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2>>::CType operator * (NMib::NMath::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_Value) const;
 
 			TCFloat operator / (const TCFloat &_Value) const;
-			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bint t_bDummyOptimize2, typename t_CIntegerStorage2>
+			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bool t_bDummyOptimize2, typename t_CIntegerStorage2>
 			typename NTraits::TCLargestType<TCFloat, NMib::NMath::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2>>::CType operator / (NMib::NMath::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_Value) const;
 			
 			TCFloat operator - () const;
@@ -232,15 +233,25 @@ namespace NMib
 				typedef CDoubleUnsignedInteger CMantissa;
 				typedef CDoubleInteger CSignedMantissa;
 				typedef CDoubleInteger CExponent;
+
+				typedef typename NTraits::TCLargerType<CMantissa>::CType CRawQuadMantissa;
+
+				typedef typename NTraits::TCUnsigned<CRawQuadMantissa>::CType CQuadMantissa;
+				typedef typename NTraits::TCSigned<CRawQuadMantissa>::CType CSignedQuadMantissa;
+				
 				CMantissa m_Mantissa;
 				CExponent m_Exponent;
 				CInteger m_Sign;
+				mint m_MantissaBits = 0;
 
 				CInternalFloat();
 
 				enum
 				{
-					EInternalMantissaBits = sizeof(CMantissa)*4 - 1,
+					EInternalMaxMantissaBits = sizeof(CMantissa)*8 - 3,
+					EInternalHalfMantissaBits = EInternalMaxMantissaBits / 2,
+					EInternalMaxQuadMantissaBits = sizeof(CQuadMantissa)*8 - 2,
+					EInternalHalfQuadMantissaBits = EInternalMaxQuadMantissaBits / 2,
 					EInternalExponentBits = sizeof(CExponent)*8 - 2
 				};
 
@@ -258,22 +269,25 @@ namespace NMib
 				
 				CInternalFloat(const TCFloat &_Source);
 				CInternalFloat &operator = (const TCFloat &_Source);
-				bint f_AlmostEqual(const CInternalFloat &_Value, int _nBits);
-				void f_SetAllRound(const CInteger &_Sign, const CExponent &_Exponent, const CMantissa &_Mantissa, aint _AtleastExtraBits);
-				void Mul(const CInternalFloat &_Value);
-				void Div(const CInternalFloat &_Value);
-				void Add(const CInternalFloat &_Value);
-				void Sub(const CInternalFloat &_Value);
-				void ATan();
-				void Remainder();
+				CMantissa f_GetSharedMantissa(CInternalFloat const &_Other, CMantissa &o_OtherMantissa, mint &o_nMantissaBits);
+				bool f_AlmostEqual(const CInternalFloat &_Value, int _nBits);
+				void f_SetAllRound(const CInteger &_Sign, const CExponent &_Exponent, const CMantissa &_Mantissa, aint _nMantissaBits);
+				void f_Mul(const CInternalFloat &_Value);
+				void f_Div(const CInternalFloat &_Value);
+				void f_Add(const CInternalFloat &_Value);
+				void f_Sub(const CInternalFloat &_Value);
+				void f_ATan();
+				void f_Remainder();
 				
-				CSignedMantissa f_ToInt();
+				CSignedMantissa f_ToInt(bool &o_bOverflow);
 				void f_FromInt(const CSignedMantissa &_Int);
 				static CInternalFloat fs_FromInt(const CSignedMantissa &_Other);
 				void f_ExpN();
 				void f_Exp10();
-				TCFloat GetFloat();
-				void LogNFull();
+				TCFloat f_GetFloat();
+				template <typename tf_CFloat>
+				tf_CFloat f_GetFloat();
+				void f_LogNFull();
 				void f_LogN();
 				void f_Log10();
 				void f_Log2();
@@ -319,7 +333,7 @@ namespace NMib
 			TCFloat f_ArcCos() const;
 			TCFloat f_ArcTan() const;
 			TCFloat f_ArcTan(const TCFloat &_Source) const;
-			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bint t_bDummyOptimize2, typename t_CIntegerStorage2>
+			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bool t_bDummyOptimize2, typename t_CIntegerStorage2>
 			typename NTraits::TCLargestType<TCFloat, NMib::NMath::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2>>::CType f_ArcTan(NMib::NMath::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_Source) const;
 
 			/************************************************************************************************\
@@ -335,10 +349,10 @@ namespace NMib
 			TCFloat f_Exp2() const;
 			TCFloat f_Log2() const;
 			TCFloat f_Exp(const TCFloat & _Base) const;
-			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bint t_bDummyOptimize2, typename t_CIntegerStorage2>
+			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bool t_bDummyOptimize2, typename t_CIntegerStorage2>
 			typename NTraits::TCLargestType<TCFloat, NMib::NMath::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2>>::CType f_Exp(NMib::NMath::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_Base) const;
 			TCFloat f_Log(const TCFloat & _Base) const;
-			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bint t_bDummyOptimize2, typename t_CIntegerStorage2>
+			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bool t_bDummyOptimize2, typename t_CIntegerStorage2>
 			typename NTraits::TCLargestType<TCFloat, NMib::NMath::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2>>::CType f_Log(NMib::NMath::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_Base) const;
 
 			/************************************************************************************************\
@@ -350,7 +364,7 @@ namespace NMib
 			TCFloat f_Sqrt() const;
 			TCFloat f_Sqr() const;
 			TCFloat f_Pow(const TCFloat &_Power) const;
-			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bint t_bDummyOptimize2, typename t_CIntegerStorage2>
+			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bool t_bDummyOptimize2, typename t_CIntegerStorage2>
 			typename NTraits::TCLargestType<TCFloat, NMib::NMath::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2>>::CType f_Pow(NMib::NMath::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_Power) const;
 
 			/************************************************************************************************\
@@ -364,24 +378,34 @@ namespace NMib
 			TCFloat f_Ceil() const; 
 			TCFloat f_Abs() const;
 			TCFloat f_Mod(const TCFloat &_Modulu) const;
-			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bint t_bDummyOptimize2, typename t_CIntegerStorage2>
+			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bool t_bDummyOptimize2, typename t_CIntegerStorage2>
 			typename NTraits::TCLargestType<TCFloat, NMib::NMath::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2>>::CType f_Mod(NMib::NMath::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_Modulu) const;
+			
+			
+			/************************************************************************************************\
+			||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
+			|| Integer functions
+			||______________________________________________________________________________________________||
+			\************************************************************************************************/
+
+			bool f_AlmostEqual(TCFloat const &_Other, mint _nMantissaBits = 1) const;
+			
 			bool operator == (const TCFloat &_Value) const;
 			bool operator < (const TCFloat &_Value) const;
-			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bint t_bDummyOptimize2, typename t_CIntegerStorage2>
+			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bool t_bDummyOptimize2, typename t_CIntegerStorage2>
 			bool operator < (TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_Right);
-			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bint t_bDummyOptimize2, typename t_CIntegerStorage2>
+			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bool t_bDummyOptimize2, typename t_CIntegerStorage2>
 			bool operator == (NMib::NMath::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_Right);
 			explicit operator bool() const;
 		};
 
-		template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bint t_bDummyOptimize, typename t_CIntegerStorage>
+		template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 		bool operator < (NMib::NMath::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> const &_Left, typename NMib::NMath::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::CImplicitFloat const &_Right);
-		template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bint t_bDummyOptimize, typename t_CIntegerStorage>
+		template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 		bool operator < (typename NMib::NMath::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::CImplicitFloat const &_Left, NMib::NMath::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> const &_Right);
-		template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bint t_bDummyOptimize, typename t_CIntegerStorage>
+		template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 		bool operator == (NMib::NMath::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> const &_Left, typename NMib::NMath::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::CImplicitFloat const &_Right);
-		template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bint t_bDummyOptimize, typename t_CIntegerStorage>
+		template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 		bool operator == (typename NMib::NMath::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::CImplicitFloat const &_Left, NMib::NMath::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> const &_Right);
 	}
 
@@ -389,7 +413,7 @@ namespace NMib
 	{
 		namespace NImplementation
 		{
-			template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bint t_bDummyOptimize, typename t_CIntegerStorage>
+			template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 			class TCIsSigned<NMib::NMath::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> >
 			{
 			public:
@@ -399,7 +423,7 @@ namespace NMib
 				};
 			};
 
-			template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bint t_bDummyOptimize, typename t_CIntegerStorage>
+			template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 			class TCIsFloat<NMib::NMath::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> >
 			{
 			public:
@@ -411,7 +435,7 @@ namespace NMib
 		}
 	}
 
-	template <typename t_CType0, aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bint t_bDummyOptimize, typename t_CIntegerStorage>
+	template <typename t_CType0, aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 	class TCConvert< t_CType0, NMib::NMath::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>, NTraits::TCCompileTimeConstant<int, (NTraits::TCIsFloat<t_CType0>::mc_Value)>>
 	{
 	public:
@@ -425,7 +449,7 @@ namespace NMib
 		}
 	};
 
-	template <typename t_CType0, aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bint t_bDummyOptimize, typename t_CIntegerStorage>
+	template <typename t_CType0, aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 	class TCConvert< t_CType0, NMib::NMath::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>, NTraits::TCCompileTimeConstant<int, (!NTraits::TCIsFloat<t_CType0>::mc_Value)>>
 	{
 	public:
@@ -438,7 +462,7 @@ namespace NMib
 
 	};
 
-	template <typename t_CType0, aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bint t_bDummyOptimize, typename t_CIntegerStorage>
+	template <typename t_CType0, aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 	class TCConvert< NMib::NMath::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>, t_CType0>
 	{
 	public:
@@ -457,7 +481,7 @@ namespace NMib
 		}
 	};
 
-	template <typename t_CUpper, typename t_CLower, aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bint t_bDummyOptimize, typename t_CIntegerStorage>
+	template <typename t_CUpper, typename t_CLower, aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 	class TCConvert< NMib::NMath::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>, NMath::TCInt<t_CUpper, t_CLower> >
 	{
 	public:

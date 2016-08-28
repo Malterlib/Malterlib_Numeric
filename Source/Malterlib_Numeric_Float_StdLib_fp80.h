@@ -340,14 +340,14 @@ namespace NMib
 		template <> inline_small CIEEEFloat80::CInteger CIEEEFloat80::f_ToInt() const
 		{
 			pfp80 ToLoad = f_Get();
-			return int64(ToLoad);
+			return int128(ToLoad);
 		}
 
 		template <> inline_small CIEEEFloat80::CUnsignedInteger CIEEEFloat80::f_ToUnsignedInt() const
 		{
 			pfp80 ToLoad = f_Get();
 			
-			return uint64(ToLoad);
+			return uint128(ToLoad);
 		}
 
 
@@ -501,7 +501,6 @@ namespace NMib
 	DMibMathFloatConvertInt(CIEEEFloat80, uint160);
 #endif
 
-
 #ifdef DMibPCanDo_int256
 	DMibMathFloatConvertInt(CIEEEFloat80, int256);
 #endif
@@ -510,6 +509,14 @@ namespace NMib
 	DMibMathFloatConvertInt(CIEEEFloat80, uint256);
 #endif
 
+#ifdef DMibPCanDo_int320
+	DMibMathFloatConvertInt(CIEEEFloat80, int320);
+#endif
+
+#ifdef DMibPCanDo_uint320
+	DMibMathFloatConvertInt(CIEEEFloat80, uint320);
+#endif
+	
 #ifdef DMibPCanDo_int512
 	DMibMathFloatConvertInt(CIEEEFloat80, int512);
 #endif

@@ -47,6 +47,10 @@ namespace
 			{
 				t_CTestTemplate<int256>()();
 			};
+			DMibTestCategory("int320")
+			{
+				t_CTestTemplate<int320>()();
+			};
 			DMibTestCategory("int512")
 			{
 				t_CTestTemplate<int512>()();

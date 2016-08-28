@@ -67,11 +67,6 @@ namespace NMib::NSys::NMath
 	pfp64 fg_Exp10(pfp64 _Val)
 	{
 		// e^(log(10) * x)
-		/*
-		// Gives bad accurency
-		pfp64 log_10 = 2.3025850929940456840179914546844;
-		return exp(log_10 * _Val);
-		*/
 		return pow(10.0, _Val);
 	}
 	pfp64 fg_Log10(pfp64 _Val)
@@ -81,30 +76,23 @@ namespace NMib::NSys::NMath
 	pfp64 fg_Exp2(pfp64 _Val)
 	{
 		// e^(log(2) * x)
-		/*
-		// Gives bad accurency
-		pfp64 log_2 = 0.69314718055994530941723212145818;
-		return exp(log_2 * _Val);
-		*/
-		return pow(2.0, _Val);
+		return exp2(_Val);
 	}
 	pfp64 fg_Log2(pfp64 _Val)
 	{
 		// log(x) / log(2)
 		// log(x) * log2(e)
-		pfp64 log2_e = 1.4426950408889634073599246810019;
-		return log(_Val) * log2_e;
+		return log2(_Val);
 	}
 	pfp64 fg_Exp(pfp64 _Val, pfp64 _Base)
 	{
 		// e^(log(_Base) * x)
-		pfp64 log_Base = log(_Base);
-		return exp(log_Base * _Val);
+		return pow(_Base, _Val);
 	}
 	pfp64 fg_Log(pfp64 _Val, pfp64 _Base)
 	{
 		// log(x) / log(_Base)
-		pfp64 log_Base = log((_Base));
+		pfp64 log_Base = log(_Base);
 		return log(_Val) / log_Base;
 	}
 	pfp64 fg_Sqrt(pfp64 _Val)

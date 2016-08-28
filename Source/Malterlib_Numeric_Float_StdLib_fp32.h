@@ -510,13 +510,20 @@ namespace NMib
 	DMibMathFloatConvertInt(CIEEEFloat32, uint160);
 #endif
 
-
 #ifdef DMibPCanDo_int256
 	DMibMathFloatConvertInt(CIEEEFloat32, int256);
 #endif
 
 #ifdef DMibPCanDo_uint256
 	DMibMathFloatConvertInt(CIEEEFloat32, uint256);
+#endif
+
+#ifdef DMibPCanDo_int320
+	DMibMathFloatConvertInt(CIEEEFloat32, int320);
+#endif
+
+#ifdef DMibPCanDo_uint320
+	DMibMathFloatConvertInt(CIEEEFloat32, uint320);
 #endif
 
 #ifdef DMibPCanDo_int512
