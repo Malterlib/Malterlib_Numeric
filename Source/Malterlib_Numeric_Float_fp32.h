@@ -1,25 +1,43 @@
 ﻿// Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
+#pragma once
+
 #include <Mib/Core/Core>
 
 #include "Malterlib_Numeric_Float.h"
+#include "Malterlib_Numeric_Float_fp16.h"
+
+#ifdef DMibPCanDo_fp32
+typedef NMib::NMath::TCFloat<1, 8, 23, pfp32> CIEEEFloat32;
+typedef NMib::NMath::TCFloat<1, 8, 23, pfp32, 0> CIEEEFloat32Emu;
+#else
+typedef NMib::NMath::TCFloat<1, 8, 23> CIEEEFloat32;
+typedef NMib::NMath::TCFloat<1, 8, 23, NMib::NMath::CNoImplicit, 0> CIEEEFloat32Emu;
+#endif
+typedef NMib::NMath::TCFloat<0, 8, 24> ufp32;
+typedef CIEEEFloat32 fp32;
+typedef NMib::TCAutoClear<fp32> zfp32;
+typedef NMib::TCAutoClear<ufp32> zufp32;
 
 #if defined(DMibPFloat_StdLib) && defined(DMibPCanDo_fp32)
 #	include "Malterlib_Numeric_Float_StdLib_fp32.h"
 #endif
 
-namespace NMib
+namespace NMib::NTraits
 {
-	namespace NMath
-	{
-		#ifdef DMibPCanDo_fp32
-			extern template class TCFloat<1, 8, 23, pfp32>;
-			extern template class TCFloat<1, 8, 23, pfp32, 0>;
-		#else
-			extern template class TCFloat<1, 8, 23>;
-			extern template class TCFloat<1, 8, 23, CNoImplicit, 0>;
-		#endif
-		extern template class TCFloat<0, 8, 24>;
-	}
+	DMibTraitsImplementFloatFromSize(fp32);
+	DMibTraitsImplementSizePair(fp16, fp32);
+}
+
+namespace NMib::NMath
+{
+	#ifdef DMibPCanDo_fp32
+		extern template class TCFloat<1, 8, 23, pfp32>;
+		extern template class TCFloat<1, 8, 23, pfp32, 0>;
+	#else
+		extern template class TCFloat<1, 8, 23>;
+		extern template class TCFloat<1, 8, 23, CNoImplicit, 0>;
+	#endif
+	extern template class TCFloat<0, 8, 24>;
 }

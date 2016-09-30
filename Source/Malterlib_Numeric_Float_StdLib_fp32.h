@@ -121,53 +121,6 @@ namespace NMib
             f_Get() = 0.69314718055994530941723212145818f;
 		}
 
-#ifdef DMibPCanDo_fp64
-		template < > 
-		template < > 
-		inline_always void CIEEEFloat32 ::f_Assign(const CIEEEFloat64 &_SetValue)
-		{
-            f_Get() = _SetValue.f_Get();
-		}
-
-		template < > 
-		template < > 
-		inline_always bool CIEEEFloat32 :: operator < (const CIEEEFloat64 &_SetValue)
-		{
-            return f_Get() < _SetValue.f_Get();
-		}
-
-		template < > 
-		template < > 
-		inline_always bool CIEEEFloat32 :: operator == (const CIEEEFloat64 &_SetValue)
-		{
-            return f_Get() == _SetValue.f_Get();
-		}
-#endif
-
-#ifdef DMibPCanDo_fp80
-		template < > 
-		template < > 
-		inline_always void CIEEEFloat32 ::f_Assign(const CIEEEFloat80 &_SetValue)
-		{
-            f_Get() = _SetValue.f_Get();
-		}
-
-		template < > 
-		template < > 
-		inline_always bool CIEEEFloat32 :: operator < (const CIEEEFloat80 &_SetValue)
-		{
-            return f_Get() < _SetValue.f_Get();
-		}
-
-		template < > 
-		template < > 
-		inline_always bool CIEEEFloat32 :: operator == (const CIEEEFloat80 &_SetValue)
-		{
-            return f_Get() == _SetValue.f_Get();
-		}
-#endif
-
-
         /************************************************************************************************\
 		||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
 		|| Return by value operators
@@ -402,14 +355,6 @@ namespace NMib
 		}\
 	};
 
-#ifdef DMibPCanDo_fp80
-	DMibDirectConvert(pfp32, CIEEEFloat80);
-#endif
-	
-#ifdef DMibPCanDo_fp64
-	DMibDirectConvert(pfp32, CIEEEFloat64);
-#endif
-
 	DMibDirectConvert(pfp32, CIEEEFloat32);
 	
 #undef DMibDirectConvert
@@ -424,14 +369,6 @@ namespace NMib
 			return _From.f_Get();\
 		}\
 	};
-
-#ifdef DMibPCanDo_fp80
-	DMibMathFloatConvertNative(CIEEEFloat80, pfp32);
-#endif
-
-#ifdef DMibPCanDo_fp64
-	DMibMathFloatConvertNative(CIEEEFloat64, pfp32);
-#endif
 
 	DMibMathFloatConvertNative(CIEEEFloat32, pfp32);
 	

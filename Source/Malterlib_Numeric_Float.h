@@ -1,5 +1,6 @@
 ﻿// Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
+
 #pragma once
 
 #include <Mib/Core/Core>
@@ -494,108 +495,7 @@ namespace NMib
 
 }
 
-
-#ifdef DMibPCanDo_fp8
-typedef NMib::NMath::TCFloat<1, 3, 4, pfp8> CIEEEFloat8;
-typedef NMib::NMath::TCFloat<1, 2, 5, pfp8, 0> CIEEEFloat8Emu;
-#else
-typedef NMib::NMath::TCFloat<1, 3, 4> CIEEEFloat8;
-typedef NMib::NMath::TCFloat<1, 2, 5, NMib::NMath::CNoImplicit, 0> CIEEEFloat8Emu;
-#endif
-typedef NMib::NMath::TCFloat<0, 3, 5> ufp8;
-typedef CIEEEFloat8 fp8;
-typedef NMib::TCAutoClear<fp8> zfp8;
-typedef NMib::TCAutoClear<ufp8> zufp8;
-
-#ifdef DMibPCanDo_fp16
-typedef NMib::NMath::TCFloat<1, 5, 10, pfp16> CIEEEFloat16;
-typedef NMib::NMath::TCFloat<1, 4, 11, pfp16, 0> CIEEEFloat16Emu;
-#else
-typedef NMib::NMath::TCFloat<1, 5, 10> CIEEEFloat16;
-typedef NMib::NMath::TCFloat<1, 4, 11, NMib::NMath::CNoImplicit, 0> CIEEEFloat16Emu;
-#endif
-typedef NMib::NMath::TCFloat<0, 5, 11> ufp16;
-typedef CIEEEFloat16 fp16;
-typedef NMib::TCAutoClear<fp16> zfp16;
-typedef NMib::TCAutoClear<ufp16> zufp16;
-
-#ifdef DMibPCanDo_fp32
-typedef NMib::NMath::TCFloat<1, 8, 23, pfp32> CIEEEFloat32;
-typedef NMib::NMath::TCFloat<1, 8, 23, pfp32, 0> CIEEEFloat32Emu;
-#else
-typedef NMib::NMath::TCFloat<1, 8, 23> CIEEEFloat32;
-typedef NMib::NMath::TCFloat<1, 8, 23, NMib::NMath::CNoImplicit, 0> CIEEEFloat32Emu;
-#endif
-typedef NMib::NMath::TCFloat<0, 8, 24> ufp32;
-typedef CIEEEFloat32 fp32;
-typedef NMib::TCAutoClear<fp32> zfp32;
-typedef NMib::TCAutoClear<ufp32> zufp32;
-
-#ifdef DMibPCanDo_fp64
-typedef NMib::NMath::TCFloat<1, 11, 52, pfp64, 0> CIEEEFloat64Emu;
-typedef NMib::NMath::TCFloat<1, 11, 52, pfp64> CIEEEFloat64;
-#else
-typedef NMib::NMath::TCFloat<1, 11, 52> CIEEEFloat64;
-typedef NMib::NMath::TCFloat<1, 11, 52, NMib::NMath::CNoImplicit, 0> CIEEEFloat64Emu;
-#endif
-typedef CIEEEFloat64 fp64;
-typedef NMib::TCAutoClear<fp64> zfp64;
-//typedef NMib::TCAutoClear<ufp64> zufp64;
-
-#ifdef DMibPCanDo_fp80
-typedef NMib::NMath::TCFloat<1, 15, 63, pfp80> CIEEEFloat80;
-typedef NMib::NMath::TCFloat<1, 15, 63, pfp80, 0> CIEEEFloat80Emu;
-#else
-typedef NMib::NMath::TCFloat<1, 15, 63> CIEEEFloat80;
-typedef NMib::NMath::TCFloat<1, 15, 63, NMib::NMath::CNoImplicit, 0> CIEEEFloat80Emu;
-#endif
-typedef CIEEEFloat80 fp80;
-typedef NMib::TCAutoClear<fp80> zfp80;
-//typedef NMib::TCAutoClear<ufp80> zufp80;
-
-#ifdef DMibPCanDo_fp128
-typedef NMib::NMath::TCFloat<1, 15, 112, pfp128> CIEEEFloat128;
-typedef NMib::NMath::TCFloat<1, 15, 112, pfp128, 0> CIEEEFloat128Emu;
-#else
-typedef NMib::NMath::TCFloat<1, 15, 112> CIEEEFloat128;
-typedef NMib::NMath::TCFloat<1, 15, 112, NMib::NMath::CNoImplicit, 0> CIEEEFloat128Emu;
-#endif
-typedef CIEEEFloat128 fp128;
-typedef NMib::TCAutoClear<fp128> zfp128;
-//typedef NMib::TCAutoClear<ufp128> zufp128;
-
-typedef NMib::NMath::TCFloat<1, 19, 236> CIEEEFloat256;
-typedef NMib::NMath::TCFloat<1, 19, 236, NMib::NMath::CNoImplicit, 0> CIEEEFloat256Emu;
-typedef CIEEEFloat256 fp256;
-typedef NMib::TCAutoClear<fp256> zfp256;
-//typedef NMib::TCAutoClear<ufp256> zufp256;
-
-typedef NMib::NMath::TCFloat<1, 63, 512-64> CIEEEFloat512;
-typedef NMib::NMath::TCFloat<1, 63, 512-64, NMib::NMath::CNoImplicit, 0> CIEEEFloat512Emu;
-typedef CIEEEFloat512 fp512;
-typedef NMib::TCAutoClear<fp512> zfp512;
-//typedef NMib::TCAutoClear<ufp512> zufp512;
-
-typedef NMib::NMath::TCFloat<1, 63, 1024-64> CIEEEFloat1024;
-typedef NMib::NMath::TCFloat<1, 63, 1024-64, NMib::NMath::CNoImplicit, 0> CIEEEFloat1024Emu;
-typedef CIEEEFloat1024 fp1024;
-typedef NMib::TCAutoClear<fp1024> zfp1024;
-//typedef NMib::TCAutoClear<ufp1024> zufp1024;
-
-typedef NMib::NMath::TCFloat<1, 63, 2048-64> CIEEEFloat2048;
-typedef NMib::NMath::TCFloat<1, 63, 2048-64, NMib::NMath::CNoImplicit, 0> CIEEEFloat2048Emu;
-typedef CIEEEFloat2048 fp2048;
-typedef NMib::TCAutoClear<fp2048> zfp2048;
-//typedef NMib::TCAutoClear<ufp2048> zufp2048;
-
-typedef NMib::NMath::TCFloat<1, 63, 4096-64> CIEEEFloat4096;
-typedef NMib::NMath::TCFloat<1, 63, 4096-64, NMib::NMath::CNoImplicit, 0> CIEEEFloat4096Emu;
-typedef CIEEEFloat4096 fp4096;
-typedef NMib::TCAutoClear<fp4096> zfp4096;
-//typedef NMib::TCAutoClear<ufp4096> zufp4096;
-
-
-// Default supprot
+// Default support
 #if defined(DMibPCanDo_fp32)
 #	include "Malterlib_Numeric_Float_fp32.h"
 #endif
@@ -605,31 +505,3 @@ typedef NMib::TCAutoClear<fp4096> zfp4096;
 #if defined(DMibPCanDo_fp80)
 #	include "Malterlib_Numeric_Float_fp80.h"
 #endif
-
-namespace NMib
-{
-	namespace NTraits
-	{
-		DMibTraitsImplementFloatFromSize(fp8);
-		DMibTraitsImplementFloatFromSize(fp16);
-		DMibTraitsImplementFloatFromSize(fp32);
-		DMibTraitsImplementFloatFromSize(fp64);
-		DMibTraitsImplementFloatFromSize(fp80);
-		DMibTraitsImplementFloatFromSize(fp128);
-		DMibTraitsImplementFloatFromSize(fp256);
-		DMibTraitsImplementFloatFromSize(fp512);
-		DMibTraitsImplementFloatFromSize(fp1024);
-		DMibTraitsImplementFloatFromSize(fp2048);
-		DMibTraitsImplementFloatFromSize(fp4096);
-
-		DMibTraitsImplementSizePair(fp8, fp16);
-		DMibTraitsImplementSizePair(fp16, fp32);
-		DMibTraitsImplementSizePair(fp32, fp64);
-		DMibTraitsImplementSizePair(fp64, fp128);
-		DMibTraitsImplementSizePair(fp128, fp256);
-		DMibTraitsImplementSizePair(fp256, fp512);
-		DMibTraitsImplementSizePair(fp512, fp1024);
-		DMibTraitsImplementSizePair(fp1024, fp2048);
-		DMibTraitsImplementSizePair(fp2048, fp4096);
-	}
-}

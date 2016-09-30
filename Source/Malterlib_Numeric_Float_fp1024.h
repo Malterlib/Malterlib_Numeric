@@ -1,19 +1,31 @@
 ﻿// Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
+#pragma once
+
 #include <Mib/Core/Core>
 
 #include "Malterlib_Numeric_Float.h"
+#include "Malterlib_Numeric_Float_fp512.h"
+
+typedef NMib::NMath::TCFloat<1, 63, 1024-64> CIEEEFloat1024;
+typedef NMib::NMath::TCFloat<1, 63, 1024-64, NMib::NMath::CNoImplicit, 0> CIEEEFloat1024Emu;
+typedef CIEEEFloat1024 fp1024;
+typedef NMib::TCAutoClear<fp1024> zfp1024;
+//typedef NMib::TCAutoClear<ufp1024> zufp1024;
 
 #if defined(DMibPFloat_StdLib) && defined(DMibPCanDo_fp1024)
 #	include "Malterlib_Numeric_Float_StdLib_fp1024.h"
 #endif
 
-namespace NMib
+namespace NMib::NTraits
 {
-	namespace NMath
-	{
-		extern template class TCFloat<1, 63, 1024-64>;
-		extern template class TCFloat<1, 63, 1024-64, CNoImplicit, 0>;
-	}
+	DMibTraitsImplementFloatFromSize(fp1024);
+	DMibTraitsImplementSizePair(fp512, fp1024);
+}
+
+namespace NMib::NMath
+{
+	extern template class TCFloat<1, 63, 1024-64>;
+	extern template class TCFloat<1, 63, 1024-64, CNoImplicit, 0>;
 }
