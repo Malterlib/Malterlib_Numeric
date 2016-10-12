@@ -7,8 +7,13 @@
 
 #include "../../Core/Source/Malterlib_Core_General.h"
 
-#define DMibFloatInline 
+#ifndef DMibDebug
+#define DMibFloatInline inline 
+#define DMibFloatInlineS inline_small
+#else
+#define DMibFloatInline
 #define DMibFloatInlineS
+#endif
 
 namespace NMib
 {
@@ -394,9 +399,9 @@ namespace NMib
 			bool operator == (const TCFloat &_Value) const;
 			bool operator < (const TCFloat &_Value) const;
 			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bool t_bDummyOptimize2, typename t_CIntegerStorage2>
-			bool operator < (TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_Right);
+			bool operator < (TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_Right) const;
 			template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bool t_bDummyOptimize2, typename t_CIntegerStorage2>
-			bool operator == (NMib::NMath::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_Right);
+			bool operator == (NMib::NMath::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_Right) const;
 			explicit operator bool() const;
 		};
 
@@ -504,4 +509,8 @@ namespace NMib
 #endif
 #if defined(DMibPCanDo_fp80)
 #	include "Malterlib_Numeric_Float_fp80.h"
+#endif
+
+#ifndef DMibDebug
+#	include "Malterlib_Numeric_Float.hpp"
 #endif

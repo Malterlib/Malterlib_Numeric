@@ -121,14 +121,14 @@ namespace NMib::NMath
 
 	template < > 
 	template < > 
-	inline_always bool CIEEEFloat64 :: operator < (const CIEEEFloat32 &_SetValue)
+	inline_always bool CIEEEFloat64 :: operator < (const CIEEEFloat32 &_SetValue) const
 	{
 		return f_Get() < _SetValue.f_Get();
 	}
 
 	template < > 
 	template < > 
-	inline_always bool CIEEEFloat64 :: operator == (const CIEEEFloat32 &_SetValue)
+	inline_always bool CIEEEFloat64 :: operator == (const CIEEEFloat32 &_SetValue) const
 	{
 		return f_Get() == _SetValue.f_Get();
 	}
@@ -141,14 +141,14 @@ namespace NMib::NMath
 
 	template < > 
 	template < > 
-	inline_always bool CIEEEFloat32 :: operator < (const CIEEEFloat64 &_SetValue)
+	inline_always bool CIEEEFloat32 :: operator < (const CIEEEFloat64 &_SetValue) const
 	{
 		return f_Get() < _SetValue.f_Get();
 	}
 
 	template < > 
 	template < > 
-	inline_always bool CIEEEFloat32 :: operator == (const CIEEEFloat64 &_SetValue)
+	inline_always bool CIEEEFloat32 :: operator == (const CIEEEFloat64 &_SetValue) const
 	{
 		return f_Get() == _SetValue.f_Get();
 	}
