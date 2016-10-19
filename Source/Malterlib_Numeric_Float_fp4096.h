@@ -26,8 +26,12 @@ namespace NMib::NTraits
 
 namespace NMib::NMath
 {
-#ifndef DMibFloattDoInline_NoExternTemplate
+#if !defined(DMibFloattDoInline_NoExternTemplate) && defined(DMibDebug)
 	extern template class TCFloat<1, 63, 4096-64>;
 	extern template class TCFloat<1, 63, 4096-64, CNoImplicit, 0>;
 #endif
 }
+
+#if !defined(DMibDebug)
+#include "Malterlib_Numeric_Float.hpp"
+#endif

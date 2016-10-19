@@ -8,7 +8,7 @@ namespace NMib
 {
 	namespace NMath
 	{
-#ifndef DMibFloattDoInline_NoExternTemplate
+#if !defined(DMibFloattDoInline_NoExternTemplate) && defined(DMibDebug)
 		template class TCFloat<1, 63, 1024-64>;
 		template class TCFloat<1, 63, 1024-64, CNoImplicit, 0>;
 #endif
