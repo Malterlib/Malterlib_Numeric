@@ -381,16 +381,22 @@ namespace NMib
 		template <> inline_small CIEEEFloat80::CInteger CIEEEFloat80::f_ToInt() const
 		{
 			pfp80 ToLoad = f_Get();
+#ifdef DMibPCanDo_int128
 			return int128(ToLoad);
+#else
+			return int64(ToLoad);
+#endif
 		}
 
 		template <> inline_small CIEEEFloat80::CUnsignedInteger CIEEEFloat80::f_ToUnsignedInt() const
 		{
 			pfp80 ToLoad = f_Get();
-			
+#ifdef DMibPCanDo_int128
 			return uint128(ToLoad);
+#else
+			return uint64(ToLoad);
+#endif
 		}
-
 
 		template <> inline_small CIEEEFloat80 CIEEEFloat80::f_Floor() const
 		{
