@@ -8,11 +8,15 @@
 #include "../../Core/Source/Malterlib_Core_General.h"
 
 #ifndef DMibDebug
-#define DMibFloatInline inline 
-#define DMibFloatInlineS inline_small
+#	define DMibFloattDoInline
+#	ifdef DCompiler_MSVC
+#		define DMibFloattDoInline_NoExternTemplate
+#	endif
+#	define DMibFloatInline inline 
+#	define DMibFloatInlineS inline_small
 #else
-#define DMibFloatInline
-#define DMibFloatInlineS
+#	define DMibFloatInline
+#	define DMibFloatInlineS
 #endif
 
 namespace NMib
@@ -511,6 +515,6 @@ namespace NMib
 #	include "Malterlib_Numeric_Float_fp80.h"
 #endif
 
-#ifndef DMibDebug
+#ifdef DMibFloattDoInline
 #	include "Malterlib_Numeric_Float.hpp"
 #endif

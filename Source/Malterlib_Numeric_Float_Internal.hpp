@@ -573,12 +573,12 @@ namespace NMib
 			mint nMantissaBits;
 			CMantissa MantissaGet1;
 			CMantissa MantissaGet0 = f_GetSharedMantissa(_Value, MantissaGet1, nMantissaBits);
-			if (nMantissaBits < (EInternalMaxMantissaBits - 1))
+			if (nMantissaBits < mint(EInternalMaxMantissaBits - 1))
 			{
 				mint Diff = (EInternalMaxMantissaBits - 1) - nMantissaBits; 
 				MantissaGet0 <<= Diff;
 				MantissaGet1 <<= Diff;
-				nMantissaBits = (EInternalMaxMantissaBits - 1);
+				nMantissaBits = mint(EInternalMaxMantissaBits - 1);
 			}
 			
 			CSignedMantissa Mantissa0 = MantissaGet0;
@@ -586,7 +586,7 @@ namespace NMib
 			
 			if (Exponent0 > Exponent1)
 			{
-				aint Diff = fg_Convert<aint>(Exponent0 - Exponent1);
+				mint Diff = fg_Convert<aint>(Exponent0 - Exponent1);
 				CSignedMantissa NewMantissa;
 				if (Diff > nMantissaBits)
 				{
@@ -623,7 +623,7 @@ namespace NMib
 			}
 			else 
 			{
-				aint Diff = fg_Convert<aint>(Exponent1 - Exponent0);
+				mint Diff = fg_Convert<aint>(Exponent1 - Exponent0);
 				CSignedMantissa NewMantissa;
 				if (Diff > nMantissaBits)
 				{
@@ -747,7 +747,7 @@ namespace NMib
 			
 			if (Exp >= 0)
 			{
-				if (Exp >= (sizeof(CMantissa)*8 - (m_MantissaBits + 1)))
+				if (Exp >= aint(sizeof(CMantissa)*8 - (m_MantissaBits + 1)))
 				{
 					o_bOverflow = true;
 					return TCLimitsInt<CSignedMantissa>::mc_Max;
@@ -762,7 +762,7 @@ namespace NMib
 			}
 			else
 			{
-				if (-Exp > (m_MantissaBits + 1))
+				if (-Exp > aint(m_MantissaBits + 1))
 					return 0;
 				return (m_Mantissa >> (-Exp) ) * Sign;
 			}

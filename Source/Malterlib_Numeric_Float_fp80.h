@@ -29,6 +29,7 @@ namespace NMib::NTraits
 
 namespace NMib::NMath
 {
+#ifndef DMibFloattDoInline_NoExternTemplate
 	#ifdef DMibPCanDo_fp80
 		extern template class TCFloat<1, 15, 63, pfp80>;
 		extern template class TCFloat<1, 15, 63, pfp80, 0>;
@@ -36,4 +37,5 @@ namespace NMib::NMath
 		extern template class TCFloat<1, 15, 63>;
 		extern template class TCFloat<1, 15, 63, CNoImplicit, 0>;
 	#endif
+#endif
 }
