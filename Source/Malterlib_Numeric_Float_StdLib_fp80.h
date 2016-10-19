@@ -48,22 +48,22 @@ namespace NMib
 {
 	namespace NMath
 	{
-		inline_small CIEEEFloat80 CIEEEFloat80::fs_0()
+		template <> inline_small CIEEEFloat80 CIEEEFloat80::fs_0()
 		{
 			return 0.0l;
 		}
 
-		inline_small CIEEEFloat80 CIEEEFloat80::fs_0_5()
+		template <> inline_small CIEEEFloat80 CIEEEFloat80::fs_0_5()
 		{
 			return 0.5l;
 		}
 	
-		inline_small CIEEEFloat80 CIEEEFloat80::fs_1()
+		template <> inline_small CIEEEFloat80 CIEEEFloat80::fs_1()
 		{
 			return 1.0l;
 		}
 
-		inline_small CIEEEFloat80 CIEEEFloat80::fs_2()
+		template <> inline_small CIEEEFloat80 CIEEEFloat80::fs_2()
 		{
 			return 2.0l;
 		}
