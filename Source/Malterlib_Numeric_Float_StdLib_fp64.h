@@ -46,6 +46,26 @@ namespace NMib::NMath
 	#pragma warning(disable : 4725) // Disable warning about erronous pentiums
 #endif
 
+	inline_small CIEEEFloat64 CIEEEFloat64::fs_0()
+	{
+		return 0.0;
+	}
+
+	inline_small CIEEEFloat64 CIEEEFloat64::fs_0_5()
+	{
+		return 0.5;
+	}
+	
+	inline_small CIEEEFloat64 CIEEEFloat64::fs_1()
+	{
+		return 1.0;
+	}
+
+	inline_small CIEEEFloat64 CIEEEFloat64::fs_2()
+	{
+		return 2.0;
+	}
+
 	template <> inline_small void CIEEEFloat64::fp_Set_0()
 	{
 		f_Get() = 0.0;
