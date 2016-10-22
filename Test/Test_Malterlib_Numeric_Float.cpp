@@ -71,24 +71,22 @@ namespace
 			{
 				t_CTestTemplate<fp256>()();
 			};
-			DMibTestCategoryFlags("fp512", Flags)
+/*			DMibTestCategoryFlags("fp512", Flags)
 			{
 				t_CTestTemplate<fp512>()();
 			};
-#ifndef DMibDebug
 			DMibTestCategoryFlags("fp1024", Flags)
 			{
 				t_CTestTemplate<fp1024>()();
 			};
-/*			DMibTestCategoryFlags("fp2048", Flags)
+			DMibTestCategoryFlags("fp2048", Flags)
 			{
 				t_CTestTemplate<fp2048>()();
-			};*/
-/*			DMibTestCategoryFlags("fp4096", Flags)
+			};
+			DMibTestCategoryFlags("fp4096", Flags)
 			{
 				t_CTestTemplate<fp4096>()();
 			};*/
-#endif
 		}
 		
 		template <typename t_CFloat>
@@ -536,10 +534,12 @@ namespace
 			{
 				fs_TestAll<CInvalid>();
 			};
+#ifdef DMibDebug
 			DMibTestCategory("Conversion")
 			{
 				fs_TestAll<CConversion>(false);
 			};
+#endif
 			DMibTestCategory("Constants")
 			{
 				fs_TestAll<CConstants>();
