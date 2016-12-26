@@ -135,7 +135,7 @@ namespace
 				DMibExpect(t_CFloat::fs_2() * t_CFloat::fs_2(), ==, t_CFloat(fp64(4.0)));
 				
 				mint ExpectedBits = 1;
-				if (t_CFloat::EMantissaBits > fp64::EMantissaBits)
+				if (mint(t_CFloat::EMantissaBits) > mint(fp64::EMantissaBits))
 					ExpectedBits = (t_CFloat::EMantissaBits - fp64::EMantissaBits) - 1;
 				
 				auto fCheckValue = [&](NMib::NStr::CStr const &_Desc, double _Left, double _Right)
@@ -163,7 +163,7 @@ namespace
 				DMibExpect(t_CFloat::fs_2() / t_CFloat::fs_2(), ==, t_CFloat(fp64(1.0)));
 				
 				mint ExpectedBits = 1;
-				if (t_CFloat::EMantissaBits > fp64::EMantissaBits)
+				if (mint(t_CFloat::EMantissaBits) > mint(fp64::EMantissaBits))
 					ExpectedBits = (t_CFloat::EMantissaBits - fp64::EMantissaBits) - 1;
 				
 				auto fCheckValue = [&](NMib::NStr::CStr const &_Desc, double _Left, double _Right)
@@ -231,7 +231,7 @@ namespace
 					
 					DTestConversion(SmallestDenormal, t_CFloatRight::fs_SmallestDenormal(), ==, SmallestDenormal, ==, t_CFloatLeft::fs_0());
 					DTestConversion(NegSmallestDenormal, t_CFloatRight::fs_NegSmallestDenormal(), ==, NegSmallestDenormal, ==, -t_CFloatLeft::fs_0());
-					if (sizeof(t_CFloatLeft) != sizeof(t_CFloatRight) && t_CFloatLeft::EExponentBits == t_CFloatRight::EExponentBits)
+					if (sizeof(t_CFloatLeft) != sizeof(t_CFloatRight) && mint(t_CFloatLeft::EExponentBits) == mint(t_CFloatRight::EExponentBits))
 					{
 						DTestConversion(Smallest, t_CFloatRight::fs_Smallest(), ==, Smallest, ==, Smallest);
 						DTestConversion(NegSmallest, t_CFloatRight::fs_NegSmallest(), ==, NegSmallest, ==, NegSmallest);
@@ -554,18 +554,26 @@ namespace
 			};
 			DMibTestCategory("Compare Emulate")
 			{
+#if defined(DMibPCanDo_fp80)
 				DMibTestSuite("fp32")
 				{
 					f_CompareEmulate<fp32, CIEEEFloat32Emu>();
 				};
+#endif
+#ifndef DCompiler_MSVC
+#if defined(DMibPCanDo_fp64)
 				DMibTestSuite("fp64")
 				{
 					f_CompareEmulate<fp64, CIEEEFloat64Emu>();
 				};
+#endif
+#if defined(DMibPCanDo_fp80)
 				DMibTestSuite("fp80")
 				{
 					f_CompareEmulate<fp80, CIEEEFloat80Emu>();
 				};
+#endif
+#endif
 			};
 		}
 	};

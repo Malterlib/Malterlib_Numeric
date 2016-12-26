@@ -89,7 +89,7 @@ namespace NMib
 			using CLargestInteger = typename NTraits::TCLargestType<CInteger, typename COtherFloat::CInteger>::CType;
 
 			static const CLargestInteger ExponentMax = fg_PowerOfTwoMinusOne<CLargestInteger>(EExponentBits);
-			static const CLargestInteger ExponentMaxNeg = -((CLargestInteger(1) << (uaint(sizeof(CInteger)*8 - 1))) - CLargestInteger(1));
+			static const CLargestInteger ExponentMaxNeg = -((CLargestInteger(1) << (uaint(sizeof(CInteger)*8 - 2))) - CLargestInteger(1));
 
 			typename COtherFloat::CInteger OtherExponent;
 			typename COtherFloat::CInteger OtherMantissa;
