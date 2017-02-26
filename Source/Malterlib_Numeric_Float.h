@@ -72,7 +72,7 @@ namespace NMib
 #endif
 			};
 
-			static_assert(constenum(EUnusedBits) >= 0, "");
+			static_assert(mint(EUnusedBits) >= 0, "");
 			static_assert(sizeof(CDoubleInteger) > sizeof(CInteger), "");
 
 		protected:
