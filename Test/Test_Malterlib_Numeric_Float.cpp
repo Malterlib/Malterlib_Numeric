@@ -554,7 +554,7 @@ namespace
 			};
 			DMibTestCategory("Compare Emulate")
 			{
-#if defined(DMibPCanDo_fp80)
+#if defined(DMibPCanDo_fp32)
 				DMibTestSuite("fp32")
 				{
 					f_CompareEmulate<fp32, CIEEEFloat32Emu>();
