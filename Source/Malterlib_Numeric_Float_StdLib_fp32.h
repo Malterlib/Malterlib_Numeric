@@ -52,6 +52,8 @@ namespace NMib::NSys::NMath
 		|_________________________________________________________________________________________________|
 		\************************************************************************************************/
 
+#ifndef DDocumentation_Doxygen
+
 namespace NMib
 {
 	namespace NMath
@@ -360,6 +362,8 @@ namespace NMib
 		}
 	}
 }
+
+#endif
 
 namespace NMib
 {

@@ -40,12 +40,14 @@ namespace NMib::NSys::NMath
 	pfp64 fg_Mod(pfp64 _Val, pfp64 _Modulu);
 }
 
+#ifndef DDocumentation_Doxygen
+
 namespace NMib::NMath
 {
 #ifdef DCompiler_MSVC
 	#pragma warning(disable : 4725) // Disable warning about erronous pentiums
 #endif
-
+	
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::fs_0()
 	{
 		return 0.0;
@@ -395,6 +397,8 @@ namespace NMib::NMath
 		return f_Get() < ((pfp64 &)_Value.m_Data);
 	}
 }
+
+#endif
 
 namespace NMib
 {

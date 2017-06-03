@@ -44,6 +44,8 @@ namespace NMib::NSys::NMath
 	#pragma warning(disable : 4725) // Disable warning about erronous pentiums
 #endif
 
+#ifndef DDocumentation_Doxygen
+
 namespace NMib
 {
 	namespace NMath
@@ -447,6 +449,8 @@ namespace NMib
 		}
 	}
 }
+
+#endif
 
 namespace NMib
 {
