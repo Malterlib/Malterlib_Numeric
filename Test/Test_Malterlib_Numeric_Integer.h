@@ -71,9 +71,9 @@ namespace NMib
 		template <int t_nBytes, int t_VariableNumber>
 		void fg_DoAddition(TCCombineInt<t_nBytes, t_VariableNumber> &_Left, const TCCombineInt<t_nBytes, t_VariableNumber> &_Right)
 		{
-			const static int Vars = TCCombineInt<t_nBytes, t_VariableNumber>::ENumVars;
+			/*const static int Vars = TCCombineInt<t_nBytes, t_VariableNumber>::ENumVars;
 
-/*				t_CLower Lower0 = m_Lower;
+				t_CLower Lower0 = m_Lower;
 			t_CLower Lower1 = _Value.m_Lower;
 			m_Lower = Lower0 + Lower1;
 
