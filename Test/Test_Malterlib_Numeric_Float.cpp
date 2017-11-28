@@ -472,7 +472,9 @@ namespace
 					DMibTestPath(_Desc);
 					auto Result = _fFunctor(tf_CFloat(_Value0));
 					auto ResultEmu = _fFunctor(tf_CEmulateFloat(_Value0));
-					if (fs_IsNan(Result) || !NMib::NTraits::TCIsSame<tf_CFloat, fp80>::mc_Value)
+					if (fs_IsNan(Result))
+						DMibExpect(fs_IsNan(ResultEmu), ==, fs_IsNan(Result));
+					else if (!NMib::NTraits::TCIsSame<tf_CFloat, fp80>::mc_Value)
 						DMibExpect(fs_GetName(ResultEmu), ==, fs_GetName(Result));
 					if (!fs_IsNan(Result))
 					{
