@@ -1,4 +1,4 @@
-﻿// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #pragma once
@@ -72,8 +72,8 @@ namespace NMib
 #endif
 			};
 
-			static_assert(mint(EUnusedBits) >= 0, "");
-			static_assert(sizeof(CDoubleInteger) > sizeof(CInteger), "");
+			static_assert(mint(EUnusedBits) >= 0);
+			static_assert(sizeof(CDoubleInteger) > sizeof(CInteger));
 
 		protected:
 			// Data stored in granularity of t_CStorageClass

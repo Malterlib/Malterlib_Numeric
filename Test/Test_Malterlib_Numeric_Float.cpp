@@ -561,7 +561,7 @@ namespace
 			{
 				fs_TestAll<CDivide>();
 			};
-#ifndef DCompiler_MSVC
+#ifndef DCompiler_MSVC_Workaround
 			DMibTestCategory("Compare Emulate")
 			{
 #if defined(DMibPCanDo_fp32)
