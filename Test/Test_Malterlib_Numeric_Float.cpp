@@ -20,6 +20,13 @@
 #include <float.h>
 
 #include "Test_Malterlib_Numeric_Float.h"
+
+#ifdef DCompiler_MSVC
+#pragma float_control(precise, on)
+#pragma fp_contract(off)
+#pragma fenv_access(on)
+#endif
+
 using namespace NMib::NMath;
 namespace
 {
@@ -554,6 +561,7 @@ namespace
 			{
 				fs_TestAll<CDivide>();
 			};
+#ifndef DCompiler_MSVC
 			DMibTestCategory("Compare Emulate")
 			{
 #if defined(DMibPCanDo_fp32)
@@ -562,7 +570,6 @@ namespace
 					f_CompareEmulate<fp32, CIEEEFloat32Emu>();
 				};
 #endif
-#ifndef DCompiler_MSVC
 #if defined(DMibPCanDo_fp64)
 				DMibTestSuite("fp64")
 				{
@@ -575,8 +582,8 @@ namespace
 					f_CompareEmulate<fp80, CIEEEFloat80Emu>();
 				};
 #endif
-#endif
 			};
+#endif
 		}
 	};
 
@@ -1223,5 +1230,6 @@ public:
 };
 
 DMibRuntimeClass(CMalterlibTest, CTestFloat);
+
 #endif
 
