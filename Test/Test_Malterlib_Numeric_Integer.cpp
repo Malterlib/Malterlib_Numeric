@@ -1,11 +1,11 @@
-﻿// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #if 1
 
 #include "Test_Malterlib_Numeric_Integer.h"
 
-using namespace NMib::NMath;
+using namespace NMib::NNumeric;
 namespace
 {
 	class CInt_Tests : public NMib::NTest::CTest
@@ -428,7 +428,7 @@ namespace
 #define NumIter 65536
 
 
-using namespace NMib::NMath;
+using namespace NMib::NNumeric;
 
 typedef TCInt<int8, uint8> Simulate_int16;
 

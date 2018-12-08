@@ -1,11 +1,11 @@
-﻿// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #pragma once
 
 #include <Mib/Core/Core>
 
-namespace NMib::NSys::NMath
+namespace NMib::NSys::NNumeric
 {
 	pfp64 fg_Sin(pfp64 _Val);
 	pfp64 fg_Cos(pfp64 _Val);
@@ -42,7 +42,7 @@ namespace NMib::NSys::NMath
 
 #ifndef DDocumentation_Doxygen
 
-namespace NMib::NMath
+namespace NMib::NNumeric
 {
 #ifdef DCompiler_MSVC
 	#pragma warning(disable : 4725) // Disable warning about erronous pentiums
@@ -248,44 +248,44 @@ namespace NMib::NMath
 
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_Sin() const
 	{
-		return NSys::NMath::fg_Sin(f_Get());
+		return NSys::NNumeric::fg_Sin(f_Get());
 	}
 
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_Cos() const
 	{
-		return NSys::NMath::fg_Cos(f_Get());
+		return NSys::NNumeric::fg_Cos(f_Get());
 	}
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_Tan() const
 	{
-		return NSys::NMath::fg_Tan(f_Get());
+		return NSys::NNumeric::fg_Tan(f_Get());
 	}
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_SinH() const
 	{
-		return NSys::NMath::fg_SinH(f_Get());
+		return NSys::NNumeric::fg_SinH(f_Get());
 	}
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_CosH() const
 	{
-		return NSys::NMath::fg_CosH(f_Get());
+		return NSys::NNumeric::fg_CosH(f_Get());
 	}
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_TanH() const
 	{
-		return NSys::NMath::fg_TanH(f_Get());
+		return NSys::NNumeric::fg_TanH(f_Get());
 	}
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_ArcSin() const
 	{
-		return NSys::NMath::fg_ArcSin(f_Get());
+		return NSys::NNumeric::fg_ArcSin(f_Get());
 	}
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_ArcCos() const
 	{
-		return NSys::NMath::fg_ArcCos(f_Get());
+		return NSys::NNumeric::fg_ArcCos(f_Get());
 	}
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_ArcTan() const
 	{
-		return NSys::NMath::fg_ArcTan(f_Get());
+		return NSys::NNumeric::fg_ArcTan(f_Get());
 	}
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_ArcTan(const CIEEEFloat64 &_Source) const
 	{
-		return NSys::NMath::fg_ArcTan(f_Get(), ((pfp64 &)_Source.m_Data));
+		return NSys::NNumeric::fg_ArcTan(f_Get(), ((pfp64 &)_Source.m_Data));
 	}
 
 	/************************************************************************************************\
@@ -297,35 +297,35 @@ namespace NMib::NMath
 
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_ExpN() const
 	{
-		return NSys::NMath::fg_ExpN(f_Get());
+		return NSys::NNumeric::fg_ExpN(f_Get());
 	}
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_LogN() const
 	{
-		return NSys::NMath::fg_LogN(f_Get());
+		return NSys::NNumeric::fg_LogN(f_Get());
 	}
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_Exp10() const
 	{
-		return NSys::NMath::fg_Exp10(f_Get());
+		return NSys::NNumeric::fg_Exp10(f_Get());
 	}
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_Log10() const
 	{
-		return NSys::NMath::fg_Log10(f_Get());
+		return NSys::NNumeric::fg_Log10(f_Get());
 	}
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_Exp2() const
 	{
-		return NSys::NMath::fg_Exp2(f_Get());
+		return NSys::NNumeric::fg_Exp2(f_Get());
 	}
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_Log2() const
 	{
-		return NSys::NMath::fg_Log2(f_Get());
+		return NSys::NNumeric::fg_Log2(f_Get());
 	}
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_Exp(const CIEEEFloat64 & _Base) const
 	{
-		return NSys::NMath::fg_Exp(f_Get(), ((pfp64 &)_Base.m_Data));
+		return NSys::NNumeric::fg_Exp(f_Get(), ((pfp64 &)_Base.m_Data));
 	}
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_Log(const CIEEEFloat64 & _Base) const
 	{
-		return NSys::NMath::fg_Log(f_Get(), ((pfp64 &)_Base.m_Data));
+		return NSys::NNumeric::fg_Log(f_Get(), ((pfp64 &)_Base.m_Data));
 	}
 
 	/************************************************************************************************\
@@ -336,7 +336,7 @@ namespace NMib::NMath
 
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_Sqrt() const
 	{
-		return NSys::NMath::fg_Sqrt(f_Get());
+		return NSys::NNumeric::fg_Sqrt(f_Get());
 	}
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_Sqr() const
 	{
@@ -345,7 +345,7 @@ namespace NMib::NMath
 
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_Pow(const CIEEEFloat64 &_Power) const
 	{
-		return NSys::NMath::fg_Pow(f_Get(), ((pfp64 &)_Power.m_Data));
+		return NSys::NNumeric::fg_Pow(f_Get(), ((pfp64 &)_Power.m_Data));
 	}
 
 
@@ -371,19 +371,19 @@ namespace NMib::NMath
 
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_Floor() const
 	{
-		return NSys::NMath::fg_Floor(f_Get());
+		return NSys::NNumeric::fg_Floor(f_Get());
 	}
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_Ceil() const
 	{
-		return NSys::NMath::fg_Ceil(f_Get());
+		return NSys::NNumeric::fg_Ceil(f_Get());
 	}
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_Abs() const
 	{
-		return NSys::NMath::fg_Abs(f_Get());
+		return NSys::NNumeric::fg_Abs(f_Get());
 	}
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::f_Mod(const TCFloat &_Modulu) const
 	{
-		return NSys::NMath::fg_Mod(f_Get(), ((pfp64 &)_Modulu.m_Data));
+		return NSys::NNumeric::fg_Mod(f_Get(), ((pfp64 &)_Modulu.m_Data));
 	}
 
 

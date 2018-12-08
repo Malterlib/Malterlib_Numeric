@@ -1,11 +1,11 @@
-﻿// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #pragma once
 
 #include <Mib/Core/Core>
 
-namespace NMib::NSys::NMath
+namespace NMib::NSys::NNumeric
 {
 	pfp32 fg_Sin(pfp32 _Val);
 	pfp32 fg_Cos(pfp32 _Val);
@@ -54,312 +54,309 @@ namespace NMib::NSys::NMath
 
 #ifndef DDocumentation_Doxygen
 
-namespace NMib
+namespace NMib::NNumeric
 {
-	namespace NMath
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::fs_0()
 	{
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::fs_0()
-		{
-			return 0.0f;
-		}
+		return 0.0f;
+	}
 
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::fs_0_5()
-		{
-			return 0.5f;
-		}
-	
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::fs_1()
-		{
-			return 1.0f;
-		}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::fs_0_5()
+	{
+		return 0.5f;
+	}
 
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::fs_2()
-		{
-			return 2.0f;
-		}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::fs_1()
+	{
+		return 1.0f;
+	}
 
-		template <> inline_small void CIEEEFloat32::fp_Set_0()
-		{
-            f_Get() = 0.0f;
-		}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::fs_2()
+	{
+		return 2.0f;
+	}
 
-		template <> inline_small void CIEEEFloat32::fp_Set_0_5()
-		{
-            f_Get() = 0.5f;
-		}
+	template <> inline_small void CIEEEFloat32::fp_Set_0()
+	{
+		f_Get() = 0.0f;
+	}
 
-		template <> inline_small void CIEEEFloat32::fp_Set_1()
-		{
-            f_Get() = 1.0f;
-		}
+	template <> inline_small void CIEEEFloat32::fp_Set_0_5()
+	{
+		f_Get() = 0.5f;
+	}
 
-		template <> inline_small void CIEEEFloat32::fp_Set_2()
-		{
-            f_Get() = 2.0f;
-		}
+	template <> inline_small void CIEEEFloat32::fp_Set_1()
+	{
+		f_Get() = 1.0f;
+	}
 
-		template <> inline_small void CIEEEFloat32::fp_Set_E()
-		{
-            f_Get() = 2.71828182845904523536028747135266249775724709369995f;			
-		}
+	template <> inline_small void CIEEEFloat32::fp_Set_2()
+	{
+		f_Get() = 2.0f;
+	}
 
-		template <> inline_small void CIEEEFloat32::fp_Set_Pi()
-		{
-            f_Get() = 3.14159265358979323846264338327950288419716939937510f;
-		}
+	template <> inline_small void CIEEEFloat32::fp_Set_E()
+	{
+		f_Get() = 2.71828182845904523536028747135266249775724709369995f;
+	}
 
-		template <> inline_small void CIEEEFloat32::fp_Set_Euler()
-		{
-            f_Get() = 0.57721566490153286060651209008240243104215933593992f;
-		}
+	template <> inline_small void CIEEEFloat32::fp_Set_Pi()
+	{
+		f_Get() = 3.14159265358979323846264338327950288419716939937510f;
+	}
 
-		template <> inline_small void CIEEEFloat32::fp_Set_GoldenRatio()
-		{
-            f_Get() = 1.61803398874989484820458683436563811772030917980576f;
-		}
+	template <> inline_small void CIEEEFloat32::fp_Set_Euler()
+	{
+		f_Get() = 0.57721566490153286060651209008240243104215933593992f;
+	}
 
-		template <> inline_small void CIEEEFloat32::fp_Set_Sqrt2()
-		{
-            f_Get() = 1.4142135623730950488016887242097f;
-		}
+	template <> inline_small void CIEEEFloat32::fp_Set_GoldenRatio()
+	{
+		f_Get() = 1.61803398874989484820458683436563811772030917980576f;
+	}
 
-		template <> inline_small void CIEEEFloat32::fp_Set_Log2_10()
-		{
-            f_Get() = 3.3219280948873623478703194294894f;
-		}
+	template <> inline_small void CIEEEFloat32::fp_Set_Sqrt2()
+	{
+		f_Get() = 1.4142135623730950488016887242097f;
+	}
 
-		template <> inline_small void CIEEEFloat32::fp_Set_Log10_2()
-		{
-            f_Get() = 0.30102999566398119521373889472449f;
-		}
+	template <> inline_small void CIEEEFloat32::fp_Set_Log2_10()
+	{
+		f_Get() = 3.3219280948873623478703194294894f;
+	}
 
-		template <> inline_small void CIEEEFloat32::fp_Set_Log2_E()
-		{
-            f_Get() = 1.4426950408889634073599246810019f;
-		}
+	template <> inline_small void CIEEEFloat32::fp_Set_Log10_2()
+	{
+		f_Get() = 0.30102999566398119521373889472449f;
+	}
 
-		template <> inline_small void CIEEEFloat32::fp_Set_LogE_2()
-		{
-            f_Get() = 0.69314718055994530941723212145818f;
-		}
+	template <> inline_small void CIEEEFloat32::fp_Set_Log2_E()
+	{
+		f_Get() = 1.4426950408889634073599246810019f;
+	}
 
-        /************************************************************************************************\
-		||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
-		|| Return by value operators
-		||______________________________________________________________________________________________||
-		\************************************************************************************************/
+	template <> inline_small void CIEEEFloat32::fp_Set_LogE_2()
+	{
+		f_Get() = 0.69314718055994530941723212145818f;
+	}
 
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::operator + (const CIEEEFloat32 &_Value) const
-		{
-			return f_Get() + ((pfp32 &)_Value.m_Data);
-		}
+	/************************************************************************************************\
+	||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
+	|| Return by value operators
+	||______________________________________________________________________________________________||
+	\************************************************************************************************/
 
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::operator - (const CIEEEFloat32 &_Value) const
-		{
-			return f_Get() - ((pfp32 &)_Value.m_Data);
-		}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::operator + (const CIEEEFloat32 &_Value) const
+	{
+		return f_Get() + ((pfp32 &)_Value.m_Data);
+	}
 
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::operator * (const CIEEEFloat32 &_Value) const
-		{
-			return f_Get() * ((pfp32 &)_Value.m_Data);
-		}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::operator - (const CIEEEFloat32 &_Value) const
+	{
+		return f_Get() - ((pfp32 &)_Value.m_Data);
+	}
 
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::operator / (const CIEEEFloat32 &_Value) const
-		{
-			return f_Get() / ((pfp32 &)_Value.m_Data);
-		}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::operator * (const CIEEEFloat32 &_Value) const
+	{
+		return f_Get() * ((pfp32 &)_Value.m_Data);
+	}
 
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::operator - () const
-		{
-			return -f_Get();
-		}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::operator / (const CIEEEFloat32 &_Value) const
+	{
+		return f_Get() / ((pfp32 &)_Value.m_Data);
+	}
+
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::operator - () const
+	{
+		return -f_Get();
+	}
 
 
-		/************************************************************************************************\
-		||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
-		|| Return by reference operators
-		||______________________________________________________________________________________________||
-		\************************************************************************************************/
+	/************************************************************************************************\
+	||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
+	|| Return by reference operators
+	||______________________________________________________________________________________________||
+	\************************************************************************************************/
 
-		template <> inline_small CIEEEFloat32 &CIEEEFloat32::operator += (const CIEEEFloat32 &_Value)
-		{
-			f_Get() += ((pfp32 &)_Value.m_Data);
-			return *this;
-		}
+	template <> inline_small CIEEEFloat32 &CIEEEFloat32::operator += (const CIEEEFloat32 &_Value)
+	{
+		f_Get() += ((pfp32 &)_Value.m_Data);
+		return *this;
+	}
 
-		template <> inline_small CIEEEFloat32 &CIEEEFloat32::operator -= (const CIEEEFloat32 &_Value)
-		{
-			f_Get() -= ((pfp32 &)_Value.m_Data);
-			return *this;
-		}
+	template <> inline_small CIEEEFloat32 &CIEEEFloat32::operator -= (const CIEEEFloat32 &_Value)
+	{
+		f_Get() -= ((pfp32 &)_Value.m_Data);
+		return *this;
+	}
 
-		template <> inline_small CIEEEFloat32 &CIEEEFloat32::operator /= (const CIEEEFloat32 &_Value)
-		{
-			f_Get() /= ((pfp32 &)_Value.m_Data);
-			return *this;
-		}
+	template <> inline_small CIEEEFloat32 &CIEEEFloat32::operator /= (const CIEEEFloat32 &_Value)
+	{
+		f_Get() /= ((pfp32 &)_Value.m_Data);
+		return *this;
+	}
 
-		template <> inline_small CIEEEFloat32 &CIEEEFloat32::operator *= (const CIEEEFloat32 &_Value)
-		{
-			f_Get() *= ((pfp32 &)_Value.m_Data);
-			return *this;
-		}
+	template <> inline_small CIEEEFloat32 &CIEEEFloat32::operator *= (const CIEEEFloat32 &_Value)
+	{
+		f_Get() *= ((pfp32 &)_Value.m_Data);
+		return *this;
+	}
 
-		/************************************************************************************************\
-		||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
-		|| Trigomethric
-		||______________________________________________________________________________________________||
-		\************************************************************************************************/
+	/************************************************************************************************\
+	||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
+	|| Trigomethric
+	||______________________________________________________________________________________________||
+	\************************************************************************************************/
 
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Sin() const
-		{
-			return NSys::NMath::fg_Sin(f_Get());
-		}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Sin() const
+	{
+		return NSys::NNumeric::fg_Sin(f_Get());
+	}
 
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Cos() const
-		{
-			return NSys::NMath::fg_Cos(f_Get());
-		}
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Tan() const
-		{
-			return NSys::NMath::fg_Tan(f_Get());
-		}
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_SinH() const
-		{
-			return NSys::NMath::fg_SinH(f_Get());
-		}
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_CosH() const
-		{
-			return NSys::NMath::fg_CosH(f_Get());
-		}
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_TanH() const
-		{
-			return NSys::NMath::fg_TanH(f_Get());
-		}
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_ArcSin() const
-		{
-			return NSys::NMath::fg_ArcSin(f_Get());
-		}
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_ArcCos() const
-		{
-			return NSys::NMath::fg_ArcCos(f_Get());
-		}
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_ArcTan() const
-		{
-			return NSys::NMath::fg_ArcTan(f_Get());
-		}
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_ArcTan(const CIEEEFloat32 &_Source) const
-		{
-			return NSys::NMath::fg_ArcTan(f_Get(), ((pfp32 &)_Source.m_Data));
-		}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Cos() const
+	{
+		return NSys::NNumeric::fg_Cos(f_Get());
+	}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Tan() const
+	{
+		return NSys::NNumeric::fg_Tan(f_Get());
+	}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_SinH() const
+	{
+		return NSys::NNumeric::fg_SinH(f_Get());
+	}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_CosH() const
+	{
+		return NSys::NNumeric::fg_CosH(f_Get());
+	}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_TanH() const
+	{
+		return NSys::NNumeric::fg_TanH(f_Get());
+	}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_ArcSin() const
+	{
+		return NSys::NNumeric::fg_ArcSin(f_Get());
+	}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_ArcCos() const
+	{
+		return NSys::NNumeric::fg_ArcCos(f_Get());
+	}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_ArcTan() const
+	{
+		return NSys::NNumeric::fg_ArcTan(f_Get());
+	}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_ArcTan(const CIEEEFloat32 &_Source) const
+	{
+		return NSys::NNumeric::fg_ArcTan(f_Get(), ((pfp32 &)_Source.m_Data));
+	}
 
-		/************************************************************************************************\
-		||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
-		|| Logarithm and exponent
-		||______________________________________________________________________________________________||
-		\************************************************************************************************/
-
-
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_ExpN() const
-		{
-			return NSys::NMath::fg_ExpN(f_Get());
-		}
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_LogN() const
-		{
-			return NSys::NMath::fg_LogN(f_Get());
-		}
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Exp10() const
-		{
-			return NSys::NMath::fg_Exp10(f_Get());
-		}
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Log10() const
-		{
-			return NSys::NMath::fg_Log10(f_Get());
-		}
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Exp2() const
-		{
-			return NSys::NMath::fg_Exp2(f_Get());
-		}
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Log2() const
-		{
-			return NSys::NMath::fg_Log2(f_Get());
-		}
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Exp(const CIEEEFloat32 & _Base) const
-		{
-			return NSys::NMath::fg_Exp(f_Get(), ((pfp32 &)_Base.m_Data));
-		}
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Log(const CIEEEFloat32 & _Base) const
-		{
-			return NSys::NMath::fg_Log(f_Get(), ((pfp32 &)_Base.m_Data));
-		}
-
-		/************************************************************************************************\
-		||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
-		|| Power
-		||______________________________________________________________________________________________||
-		\************************************************************************************************/
-
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Sqrt() const
-		{
-			return NSys::NMath::fg_Sqrt(f_Get());
-		}
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Sqr() const
-		{
-			return (f_Get()) * (f_Get());
-		}
-
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Pow(const CIEEEFloat32 &_Power) const
-		{
-			return NSys::NMath::fg_Pow(f_Get(), ((pfp32 &)_Power.m_Data));
-		}
+	/************************************************************************************************\
+	||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
+	|| Logarithm and exponent
+	||______________________________________________________________________________________________||
+	\************************************************************************************************/
 
 
-		/************************************************************************************************\
-		||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
-		|| Integer functions
-		||______________________________________________________________________________________________||
-		\************************************************************************************************/
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_ExpN() const
+	{
+		return NSys::NNumeric::fg_ExpN(f_Get());
+	}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_LogN() const
+	{
+		return NSys::NNumeric::fg_LogN(f_Get());
+	}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Exp10() const
+	{
+		return NSys::NNumeric::fg_Exp10(f_Get());
+	}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Log10() const
+	{
+		return NSys::NNumeric::fg_Log10(f_Get());
+	}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Exp2() const
+	{
+		return NSys::NNumeric::fg_Exp2(f_Get());
+	}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Log2() const
+	{
+		return NSys::NNumeric::fg_Log2(f_Get());
+	}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Exp(const CIEEEFloat32 & _Base) const
+	{
+		return NSys::NNumeric::fg_Exp(f_Get(), ((pfp32 &)_Base.m_Data));
+	}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Log(const CIEEEFloat32 & _Base) const
+	{
+		return NSys::NNumeric::fg_Log(f_Get(), ((pfp32 &)_Base.m_Data));
+	}
 
-		template <> inline_small CIEEEFloat32::CInteger CIEEEFloat32::f_ToInt() const
-		{
-			pfp32 ToLoad = f_Get();
-			return (CIEEEFloat32::CInteger)ToLoad;
-		}
+	/************************************************************************************************\
+	||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
+	|| Power
+	||______________________________________________________________________________________________||
+	\************************************************************************************************/
 
-		template <> inline_small CIEEEFloat32::CUnsignedInteger CIEEEFloat32::f_ToUnsignedInt() const
-		{
-			pfp32 ToLoad = f_Get();
-			return (CIEEEFloat32::CUnsignedInteger)ToLoad;
-		}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Sqrt() const
+	{
+		return NSys::NNumeric::fg_Sqrt(f_Get());
+	}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Sqr() const
+	{
+		return (f_Get()) * (f_Get());
+	}
 
-
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Floor() const
-		{
-			return NSys::NMath::fg_Floor(f_Get());
-		}
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Ceil() const
-		{
-			return NSys::NMath::fg_Ceil(f_Get());
-		}
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Abs() const
-		{
-			return NSys::NMath::fg_Abs(f_Get());
-		}
-		template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Mod(const TCFloat &_Modulu) const
-		{
-			return NSys::NMath::fg_Mod(f_Get(), ((pfp32 &)_Modulu.m_Data));
-		}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Pow(const CIEEEFloat32 &_Power) const
+	{
+		return NSys::NNumeric::fg_Pow(f_Get(), ((pfp32 &)_Power.m_Data));
+	}
 
 
-		template <> inline_small bool CIEEEFloat32::operator == (const CIEEEFloat32 &_Value) const
-		{
-			return f_Get() == ((pfp32 &)_Value.m_Data);
-		}
+	/************************************************************************************************\
+	||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
+	|| Integer functions
+	||______________________________________________________________________________________________||
+	\************************************************************************************************/
 
-		template <> inline_small bool CIEEEFloat32::operator < (const CIEEEFloat32 &_Value) const
-		{
-			return f_Get() < ((pfp32 &)_Value.m_Data);
-		}
+	template <> inline_small CIEEEFloat32::CInteger CIEEEFloat32::f_ToInt() const
+	{
+		pfp32 ToLoad = f_Get();
+		return (CIEEEFloat32::CInteger)ToLoad;
+	}
+
+	template <> inline_small CIEEEFloat32::CUnsignedInteger CIEEEFloat32::f_ToUnsignedInt() const
+	{
+		pfp32 ToLoad = f_Get();
+		return (CIEEEFloat32::CUnsignedInteger)ToLoad;
+	}
+
+
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Floor() const
+	{
+		return NSys::NNumeric::fg_Floor(f_Get());
+	}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Ceil() const
+	{
+		return NSys::NNumeric::fg_Ceil(f_Get());
+	}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Abs() const
+	{
+		return NSys::NNumeric::fg_Abs(f_Get());
+	}
+	template <> inline_small CIEEEFloat32 CIEEEFloat32::f_Mod(const TCFloat &_Modulu) const
+	{
+		return NSys::NNumeric::fg_Mod(f_Get(), ((pfp32 &)_Modulu.m_Data));
+	}
+
+
+	template <> inline_small bool CIEEEFloat32::operator == (const CIEEEFloat32 &_Value) const
+	{
+		return f_Get() == ((pfp32 &)_Value.m_Data);
+	}
+
+	template <> inline_small bool CIEEEFloat32::operator < (const CIEEEFloat32 &_Value) const
+	{
+		return f_Get() < ((pfp32 &)_Value.m_Data);
 	}
 }
 
@@ -367,7 +364,6 @@ namespace NMib
 
 namespace NMib
 {
-
 #define DMibDirectConvert(_FromType, _ToType) \
 	template <>\
 	class TCConvert< _ToType, _FromType>\

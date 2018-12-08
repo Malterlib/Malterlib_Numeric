@@ -1,4 +1,4 @@
-﻿// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #pragma once
@@ -9,11 +9,11 @@
 #include "Malterlib_Numeric_Float_fp64.h"
 
 #ifdef DMibPCanDo_fp128
-typedef NMib::NMath::TCFloat<1, 15, 112, pfp128> CIEEEFloat128;
-typedef NMib::NMath::TCFloat<1, 15, 112, pfp128, 0> CIEEEFloat128Emu;
+typedef NMib::NNumeric::TCFloat<1, 15, 112, pfp128> CIEEEFloat128;
+typedef NMib::NNumeric::TCFloat<1, 15, 112, pfp128, 0> CIEEEFloat128Emu;
 #else
-typedef NMib::NMath::TCFloat<1, 15, 112> CIEEEFloat128;
-typedef NMib::NMath::TCFloat<1, 15, 112, NMib::NMath::CNoImplicit, 0> CIEEEFloat128Emu;
+typedef NMib::NNumeric::TCFloat<1, 15, 112> CIEEEFloat128;
+typedef NMib::NNumeric::TCFloat<1, 15, 112, NMib::NNumeric::CNoImplicit, 0> CIEEEFloat128Emu;
 #endif
 typedef CIEEEFloat128 fp128;
 typedef NMib::TCAutoClear<fp128> zfp128;
@@ -29,7 +29,7 @@ namespace NMib::NTraits
 	DMibTraitsImplementSizePair(fp64, fp128);
 }
 
-namespace NMib::NMath
+namespace NMib::NNumeric
 {
 #ifndef DMibFloattDoInline_NoExternTemplate
 	#ifdef DMibPCanDo_fp128

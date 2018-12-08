@@ -1,4 +1,4 @@
-﻿// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #include <Mib/Core/Core>
@@ -6,7 +6,7 @@
 #if defined(DMibPFloat_StdLib) && defined(DMibPCanDo_fp64)
 #include "math.h"
 
-namespace NMib::NSys::NMath
+namespace NMib::NSys::NNumeric
 {
 	pfp64 fg_Sin(pfp64 _Val)
 	{

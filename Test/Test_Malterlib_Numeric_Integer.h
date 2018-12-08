@@ -7,7 +7,7 @@
 
 namespace NMib
 {
-	namespace NMath
+	namespace NNumeric
 	{
 		template <int t_nBytes, int t_VariableNumber = 0>
 		class TCCombineInt : public TCCombineInt<t_nBytes - sizeof(typename NTraits::TCIntFromSizeSmaller<t_nBytes, true>::CType), t_VariableNumber + 1>
@@ -160,7 +160,7 @@ namespace NMib
 				else
 				{
 					t_CInt Ret;
-					Ret = (m_Upper << (fg_Min((mint)NMath::TCInt2<t_CUpper, t_CLower>::ELowerBits, sizeof(t_CInt)*8) - 1)) << 1;
+					Ret = (m_Upper << (fg_Min((mint)NNumeric::TCInt2<t_CUpper, t_CLower>::ELowerBits, sizeof(t_CInt)*8) - 1)) << 1;
 					Ret = Ret | t_CInt(m_Lower);
 					return Ret;
 				}
@@ -681,7 +681,7 @@ namespace NMib
 
 
 		template <typename t_CUpper, typename t_CLower>
-		class NMib::NTraits::NImplementation::TCIsSigned<NMib::NMath::TCInt2<t_CUpper, t_CLower> >
+		class NMib::NTraits::NImplementation::TCIsSigned<NMib::NNumeric::TCInt2<t_CUpper, t_CLower> >
 		{
 		public:
 			enum
@@ -691,21 +691,21 @@ namespace NMib
 		};
 
 		template <typename t_CUpper, typename t_CLower>
-		class NMib::NTraits::NImplementation::TCUnsigned<NMib::NMath::TCInt2<t_CUpper, t_CLower> >
+		class NMib::NTraits::NImplementation::TCUnsigned<NMib::NNumeric::TCInt2<t_CUpper, t_CLower> >
 		{
 		public:
-			typedef NMib::NMath::TCInt2<typename NMib::NTraits::TCUnsigned<t_CUpper>::CType, t_CLower> CType;
+			typedef NMib::NNumeric::TCInt2<typename NMib::NTraits::TCUnsigned<t_CUpper>::CType, t_CLower> CType;
 		};
 
 		template <typename t_CUpper, typename t_CLower>
-		class NMib::NTraits::NImplementation::TCSigned<NMib::NMath::TCInt2<t_CUpper, t_CLower> >
+		class NMib::NTraits::NImplementation::TCSigned<NMib::NNumeric::TCInt2<t_CUpper, t_CLower> >
 		{
 		public:
-			typedef NMib::NMath::TCInt2<typename NMib::NTraits::TCSigned<t_CUpper>::CType, t_CLower> CType;
+			typedef NMib::NNumeric::TCInt2<typename NMib::NTraits::TCSigned<t_CUpper>::CType, t_CLower> CType;
 		};
 
 		template <typename t_CUpper, typename t_CLower>
-		class NMib::NTraits::NImplementation::TCIsInteger<NMib::NMath::TCInt2<t_CUpper, t_CLower>>
+		class NMib::NTraits::NImplementation::TCIsInteger<NMib::NNumeric::TCInt2<t_CUpper, t_CLower>>
 		{
 		public:
 			enum
@@ -718,13 +718,13 @@ namespace NMib
 	}
 	/*
 	template <typename t_CType0, typename t_CUpper, typename t_CLower>
-	class TCConvert<t_CType0, NMath::TCInt2<t_CUpper, t_CLower> >
+	class TCConvert<t_CType0, NNumeric::TCInt2<t_CUpper, t_CLower> >
 	{
 	public:
-		static inline_small t_CType0 fs_Convert(NMath::TCInt2<t_CUpper, t_CLower> const &_From)
+		static inline_small t_CType0 fs_Convert(NNumeric::TCInt2<t_CUpper, t_CLower> const &_From)
 		{
 			t_CType0 Ret;
-			Ret = (NMib::fg_Convert<t_CType0>(_From.m_Upper) << (fg_Min((mint)NMath::TCInt2<t_CUpper, t_CLower>::ELowerBits, sizeof(t_CType0)*8) - 1)) << 1;
+			Ret = (NMib::fg_Convert<t_CType0>(_From.m_Upper) << (fg_Min((mint)NNumeric::TCInt2<t_CUpper, t_CLower>::ELowerBits, sizeof(t_CType0)*8) - 1)) << 1;
 			Ret = Ret | NMib::fg_Convert<t_CType0>(_From.m_Lower);
 			return Ret;
 		}

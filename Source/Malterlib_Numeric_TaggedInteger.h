@@ -51,5 +51,5 @@ namespace NMib::NNumeric
 #include "Malterlib_Numeric_TaggedInteger.hpp"
 
 #ifndef DMibPNoShortCuts
-using namespace NMib::NNumeric;
+	using namespace NMib::NNumeric;
 #endif

@@ -27,7 +27,7 @@
 #pragma fenv_access(on)
 #endif
 
-using namespace NMib::NMath;
+using namespace NMib::NNumeric;
 namespace
 {
 	class CFloat_Tests : public NMib::NTest::CTest
@@ -596,7 +596,7 @@ namespace
 #define NumIter 65536
 
 
-using namespace NMib::NMath;
+using namespace NMib::NNumeric;
 
 template <typename t_CTo, typename t_CFrom>
 t_CTo ConvertType (const t_CFrom &_Input)
@@ -1010,8 +1010,8 @@ public:
 
 		DMibTrace("{fe100}\n", fp32(2000000000.0f));
 
-		typedef NMib::NMath::TCFloat <1, 8, 23, pfp32, 0> CIEEEFloat32Emulate;
-		typedef NMib::NMath::TCFloat <1, 11, 52, pfp64, 0> CIEEEFloat64Emulate;
+		typedef NMib::NNumeric::TCFloat <1, 8, 23, pfp32, 0> CIEEEFloat32Emulate;
+		typedef NMib::NNumeric::TCFloat <1, 11, 52, pfp64, 0> CIEEEFloat64Emulate;
 
 		fp128 Temp1 = fp64(11.0);
 

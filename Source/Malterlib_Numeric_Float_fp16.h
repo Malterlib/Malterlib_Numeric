@@ -1,4 +1,4 @@
-﻿// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #pragma once
@@ -9,13 +9,13 @@
 #include "Malterlib_Numeric_Float_fp8.h"
 
 #ifdef DMibPCanDo_fp16
-typedef NMib::NMath::TCFloat<1, 5, 10, pfp16> CIEEEFloat16;
-typedef NMib::NMath::TCFloat<1, 4, 11, pfp16, 0> CIEEEFloat16Emu;
+typedef NMib::NNumeric::TCFloat<1, 5, 10, pfp16> CIEEEFloat16;
+typedef NMib::NNumeric::TCFloat<1, 4, 11, pfp16, 0> CIEEEFloat16Emu;
 #else
-typedef NMib::NMath::TCFloat<1, 5, 10> CIEEEFloat16;
-typedef NMib::NMath::TCFloat<1, 4, 11, NMib::NMath::CNoImplicit, 0> CIEEEFloat16Emu;
+typedef NMib::NNumeric::TCFloat<1, 5, 10> CIEEEFloat16;
+typedef NMib::NNumeric::TCFloat<1, 4, 11, NMib::NNumeric::CNoImplicit, 0> CIEEEFloat16Emu;
 #endif
-typedef NMib::NMath::TCFloat<0, 5, 11> ufp16;
+typedef NMib::NNumeric::TCFloat<0, 5, 11> ufp16;
 typedef CIEEEFloat16 fp16;
 typedef NMib::TCAutoClear<fp16> zfp16;
 typedef NMib::TCAutoClear<ufp16> zufp16;
@@ -30,7 +30,7 @@ namespace NMib::NTraits
 	DMibTraitsImplementSizePair(fp8, fp16);
 }
 
-namespace NMib::NMath
+namespace NMib::NNumeric
 {
 #ifndef DMibFloattDoInline_NoExternTemplate
 	#ifdef DMibPCanDo_fp16

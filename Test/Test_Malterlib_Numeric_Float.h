@@ -1,9 +1,9 @@
-﻿// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 namespace NMib
 {
-	namespace NMath
+	namespace NNumeric
 	{
 
 
@@ -19,10 +19,10 @@ namespace NMib
 		DMibMathImplementNativeFloat(pfp64, CIEEEFloat64);
 
 		template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bint t_bDummyOptimize, typename t_CIntegerStorage>
-		class TCFloatFromNative<NMib::NMath::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>>
+		class TCFloatFromNative<NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>>
 		{
 		public:
-			typedef NMib::NMath::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> CType;
+			typedef NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> CType;
 		};
 
 		template <typename t_CFloat>
@@ -32,9 +32,9 @@ namespace NMib
 		};
 
 		template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bint t_bDummyOptimize, typename t_CIntegerStorage>
-		class TCFloatTraits<NMib::NMath::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>>
+		class TCFloatTraits<NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>>
 		{
-			typedef NMib::NMath::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> CFloat;
+			typedef NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> CFloat;
 		public:
 			typedef typename CFloat::CInteger CStorageInteger;
 			typedef typename CFloat::CDoubleInteger CStorageInteger_x2;
@@ -44,7 +44,7 @@ namespace NMib
 
 			typedef typename CFloat::CImplicitFloat CFundamentalFloat;
 
-			bint const static ms_bHasFundamentalFloat = !NTraits::TCIsSame<CFundamentalFloat, NMib::NMath::CNoImplicit>::mc_Value;
+			bint const static ms_bHasFundamentalFloat = !NTraits::TCIsSame<CFundamentalFloat, NMib::NNumeric::CNoImplicit>::mc_Value;
 		};
 
 		template <typename t_CFloat>
@@ -76,7 +76,7 @@ namespace NMib
 			}
 #endif
 			bint mp_bInit;
-			NAggregate::TCAggregateSimple<t_CFloat> mp_Float;
+			NStorage::TCAggregateSimple<t_CFloat> mp_Float;
 			operator const t_CFloat & ()
 			{
 				if (!mp_bInit)

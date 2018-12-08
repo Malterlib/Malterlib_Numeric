@@ -1,21 +1,18 @@
-﻿// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #include "Malterlib_Numeric_Float_fp128.h"
 #include "Malterlib_Numeric_Float.hpp"
 
-namespace NMib
+namespace NMib::NNumeric
 {
-	namespace NMath
-	{
 #ifndef DMibFloattDoInline_NoExternTemplate
-		#ifdef DMibPCanDo_fp128
-			template class TCFloat<1, 15, 112, pfp128>;
-			template class TCFloat<1, 15, 112, pfp128, 0>;
-		#else
-			template class TCFloat<1, 15, 112>;
-			template class TCFloat<1, 15, 112, CNoImplicit, 0>;
-		#endif
+	#ifdef DMibPCanDo_fp128
+		template class TCFloat<1, 15, 112, pfp128>;
+		template class TCFloat<1, 15, 112, pfp128, 0>;
+	#else
+		template class TCFloat<1, 15, 112>;
+		template class TCFloat<1, 15, 112, CNoImplicit, 0>;
+	#endif
 #endif
-	}
 }
