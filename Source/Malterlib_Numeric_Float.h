@@ -87,16 +87,10 @@ namespace NMib::NNumeric
 		\************************************************************************************************/
 
 #ifdef DMibDebuggerHelpers
-		struct CHelper
+		assure_used pfp64 f_Debug_GetAsDouble()
 		{
-			assure_used static pfp64 fs_GetAsDouble(void *_pData)
-			{
-				TCFloat *pThis = (TCFloat *)_pData;
-
-				return NMib::NNumeric::TCFloat<1, 11, 52, pfp64>(*pThis).f_Get();
-			}
-		};
-		static CHelper *ms_pHelper;
+			return NMib::NNumeric::TCFloat<1, 11, 52, pfp64>(*this).f_Get();
+		}
 #endif
 		void fp_Set_0();
 		void fp_Set_0_5();

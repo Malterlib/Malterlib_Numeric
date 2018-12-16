@@ -830,8 +830,7 @@ namespace NMib::NNumeric
 	DMibFloatInlineS TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::TCFloat()
 	{
 #ifdef DMibDebuggerHelpers
-		(void)&CHelper::fs_GetAsDouble;
-		(void)&ms_pHelper;
+		static_assert(TCInstantiateValue<&TCFloat::f_Debug_GetAsDouble>::mc_Value);
 #endif
 	}
 
@@ -916,8 +915,7 @@ namespace NMib::NNumeric
 	{
 		((t_CImplicitFloat &)m_Data) = _Value;
 #ifdef DMibDebuggerHelpers
-		(void)&CHelper::fs_GetAsDouble;
-		(void)&ms_pHelper;
+		static_assert(TCInstantiateValue<&TCFloat::f_Debug_GetAsDouble>::mc_Value);
 #endif
 	}
 

@@ -191,8 +191,7 @@ namespace NMib::NNumeric
 	{
 		f_Assign(_SetValue);
 #ifdef DMibDebuggerHelpers
-		(void)&CHelper::fs_GetAsDouble;
-		(void)&ms_pHelper;
+		static_assert(TCInstantiateValue<&TCFloat::f_Debug_GetAsDouble>::mc_Value);
 #endif
 	}
 
@@ -257,8 +256,7 @@ namespace NMib::NNumeric
 	{
 		*this = _Value ? fs_1() : fs_0();
 #ifdef DMibDebuggerHelpers
-		(void)&CHelper::fs_GetAsDouble;
-		(void)&ms_pHelper;
+		static_assert(TCInstantiateValue<&TCFloat::f_Debug_GetAsDouble>::mc_Value);
 #endif
 	}
 
@@ -482,11 +480,6 @@ namespace NMib::NNumeric
 		return true;
 	}
 
-#ifdef DMibDebuggerHelpers
-	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	assure_used typename TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::CHelper *
-	TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::ms_pHelper = nullptr;
-#endif
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 	bool operator < (NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> const &_Left, typename NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::CImplicitFloat const &_Right)
 	{
