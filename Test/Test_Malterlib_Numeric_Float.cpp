@@ -220,7 +220,7 @@ namespace
 						DMibTestPath("Construct");\
 						auto d_Name = d_Value;\
 						t_CFloatLeft Converted##d_Name{d_Name}; \
-						if (sizeof(t_CFloatLeft) >= sizeof(t_CFloatRight))\
+						if (sizeof(typename t_CFloatLeft::CUnsignedInteger) >= sizeof(typename t_CFloatRight::CUnsignedInteger))\
 							DMibExpect(Converted##d_Name, d_ExpectBiggerOperator, d_Name);\
 						else\
 							DMibExpect(Converted##d_Name, d_ExpectSmallerOperator, d_ExpectSmaller);\
@@ -230,7 +230,7 @@ namespace
 						auto d_Name = d_Value;\
 						t_CFloatLeft Converted##d_Name;\
 						Converted##d_Name = d_Name;\
-						if (sizeof(t_CFloatLeft) >= sizeof(t_CFloatRight))\
+						if (sizeof(typename t_CFloatLeft::CUnsignedInteger) >= sizeof(typename t_CFloatRight::CUnsignedInteger))\
 							DMibExpect(Converted##d_Name, d_ExpectBiggerOperator, d_Name);\
 						else\
 							DMibExpect(Converted##d_Name, d_ExpectSmallerOperator, d_ExpectSmaller);\
@@ -238,7 +238,7 @@ namespace
 					
 					DTestConversion(SmallestDenormal, t_CFloatRight::fs_SmallestDenormal(), ==, SmallestDenormal, ==, t_CFloatLeft::fs_0());
 					DTestConversion(NegSmallestDenormal, t_CFloatRight::fs_NegSmallestDenormal(), ==, NegSmallestDenormal, ==, -t_CFloatLeft::fs_0());
-					if (sizeof(t_CFloatLeft) != sizeof(t_CFloatRight) && mint(t_CFloatLeft::EExponentBits) == mint(t_CFloatRight::EExponentBits))
+					if (sizeof(typename t_CFloatLeft::CUnsignedInteger) != sizeof(typename t_CFloatRight::CUnsignedInteger) && mint(t_CFloatLeft::EExponentBits) == mint(t_CFloatRight::EExponentBits))
 					{
 						DTestConversion(Smallest, t_CFloatRight::fs_Smallest(), ==, Smallest, ==, Smallest);
 						DTestConversion(NegSmallest, t_CFloatRight::fs_NegSmallest(), ==, NegSmallest, ==, NegSmallest);
