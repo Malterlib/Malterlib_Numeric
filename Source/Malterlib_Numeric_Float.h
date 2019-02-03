@@ -87,7 +87,7 @@ namespace NMib::NNumeric
 		\************************************************************************************************/
 
 #ifdef DMibDebuggerHelpers
-		assure_used pfp64 f_Debug_GetAsDouble()
+		pfp64 f_Debug_GetAsDouble()
 		{
 			return NMib::NNumeric::TCFloat<1, 11, 52, pfp64>(*this).f_Get();
 		}
