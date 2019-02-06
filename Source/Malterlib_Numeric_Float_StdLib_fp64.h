@@ -48,6 +48,11 @@ namespace NMib::NNumeric
 	#pragma warning(disable : 4725) // Disable warning about erronous pentiums
 #endif
 	
+	template <> inline_small CIEEEFloat64::TCFloat(TCFloat const &_Other)
+		: m_DataImplicit(_Other.m_DataImplicit)
+	{
+	}
+
 	template <> inline_small CIEEEFloat64 CIEEEFloat64::fs_0()
 	{
 		return 0.0;

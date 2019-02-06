@@ -44,7 +44,7 @@ namespace NMib::NNumeric
 	class TCFloatConstants;
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat = CNoImplicit, bool t_bDummyOptimize = true, typename t_CIntegerStorage = typename NTraits::TCIntFromSizeLarger<(t_SignBits + t_ExponentBits + t_MantissaBits + 7)/8>::CType>
-	class alignas(fg_MaxConstexpr(NTraits::TCAlignmentOf<t_CImplicitFloat>::mc_Value, NTraits::TCAlignmentOf<t_CIntegerStorage>::mc_Value)) TCFloat
+	class TCFloat
 	{
 		template <typename t_CFloat>
 		friend class TCFloatConstants;
@@ -79,7 +79,11 @@ namespace NMib::NNumeric
 
 	protected:
 		// Data stored in granularity of t_CStorageClass
-		CUnsignedInteger m_Data;
+		union
+		{
+			CUnsignedInteger m_Data;
+			CImplicitFloat m_DataImplicit;
+		};
 		/************************************************************************************************\
 		||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
 		|| Constants
@@ -170,6 +174,7 @@ namespace NMib::NNumeric
 		CUnsignedInteger const &f_GetStorage() const;
 		// Do nothing in default constructor
 		DMibFloatInlineS TCFloat();
+		DMibFloatInlineS ~TCFloat();
 
 		template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bool t_bDummyOptimize2, typename t_CIntegerStorage2>
 		DMibFloatInlineS void f_AssignRoundUp(const TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> &_SetValue);
@@ -206,6 +211,9 @@ namespace NMib::NNumeric
 		DMibFloatInlineS TCFloat(tf_CType _Value, typename TCEnableIf<NTraits::TCIsSame<tf_CType, bool>::mc_Value>::CType *_pDummy = nullptr);
 		template <typename tf_CType>
 		DMibFloatInlineS typename TCEnableIf<NTraits::TCIsSame<tf_CType, bool>::mc_Value, TCFloat &>::CType operator = (tf_CType _Value);
+
+		DMibFloatInlineS TCFloat(TCFloat const &_Value);
+		DMibFloatInlineS TCFloat &operator = (TCFloat const &_Value);
 
 		/************************************************************************************************\
 		||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
