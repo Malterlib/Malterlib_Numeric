@@ -44,7 +44,11 @@ namespace NMib::NNumeric
 	class TCFloatConstants;
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat = CNoImplicit, bool t_bDummyOptimize = true, typename t_CIntegerStorage = typename NTraits::TCIntFromSizeLarger<(t_SignBits + t_ExponentBits + t_MantissaBits + 7)/8>::CType>
-	class TCFloat
+	class
+#ifdef DCompiler_clang
+	alignas(fg_MaxConstexpr(NTraits::TCAlignmentOf<t_CImplicitFloat>::mc_Value, NTraits::TCAlignmentOf<t_CIntegerStorage>::mc_Value))
+#endif
+	TCFloat
 	{
 		template <typename t_CFloat>
 		friend class TCFloatConstants;
