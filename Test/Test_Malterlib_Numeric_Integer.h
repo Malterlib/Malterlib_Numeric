@@ -1,4 +1,4 @@
-// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #pragma once
@@ -22,7 +22,7 @@ namespace NMib
 			{
 				typedef typename CSuper::template CCalculateType<t_Var>::CCombine CNextCombine;
 			public:
-				
+
 				typedef typename TCChooseType<t_Var == t_VariableNumber, TCCombineInt, CNextCombine>::CType CCombine;
 			};
 
@@ -130,7 +130,7 @@ namespace NMib
 			}
 
 			template <typename t_CUpper2, typename t_CLower2>
-			operator TCInt2<t_CUpper2, t_CLower2> () const 
+			operator TCInt2<t_CUpper2, t_CLower2> () const
 			{
 				if (sizeof(t_CUpper2) + sizeof(t_CLower2) <= sizeof(t_CLower))
 				{
@@ -167,7 +167,7 @@ namespace NMib
 			}
 
 			template <typename t_CType>
-			TCInt2(t_CType const &_Convert, 
+			TCInt2(t_CType const &_Convert,
 				typename TCDisableIf<!NTraits::TCIsFundamental<t_CType>::mc_Value, t_CType>::CType *_pDummy = nullptr
 				)
 			{
@@ -280,7 +280,7 @@ namespace NMib
 				Ret *= _Value;
 				return Ret;
 			}
-													
+
 			TCInt2 operator / (const TCInt2 &_Value) const
 			{
 				TCInt2 Ret = *this;
@@ -345,12 +345,12 @@ namespace NMib
 				return Ret;
 			}
 
-			bint operator && (const TCInt2 &_Value) const
+			bool operator && (const TCInt2 &_Value) const
 			{
 				return (m_Upper != mc_UpperZero || m_Lower != mc_LowerZero) && (_Value.m_Upper != mc_UpperZero || _Value.m_Lower != mc_LowerZero);
 			}
 
-			bint operator || (const TCInt2 &_Value) const
+			bool operator || (const TCInt2 &_Value) const
 			{
 				return (m_Upper != mc_UpperZero || m_Lower != mc_LowerZero) || (_Value.m_Upper != mc_UpperZero || _Value.m_Lower != mc_LowerZero);
 			}
@@ -386,7 +386,7 @@ namespace NMib
 
 	/*			static const t_CLower And0 = (t_CLower(1) << ELowerLastBit);
 				static const t_CLower And1 = ((t_CLower(1) << ELowerLastBit) - t_CLower(1));
-				
+
 				if ((((((Lower0 ^ Lower1) & ((Lower0 & And1) + (Lower1 & And1))) | (Lower0 & Lower1)) & And0)) != 0)
 				{
 					m_Upper += _Value.m_Upper;
@@ -394,7 +394,7 @@ namespace NMib
 				}
 				else
 					m_Upper += _Value.m_Upper;*/
-					
+
 
 
 //				m_Upper += _Value.m_Upper + ((((((Lower0 ^ Lower1) & ((Lower0 & And1) + (Lower1 & And1))) | (Lower0 & Lower1)) & And0)) >> ELowerLastBit);
@@ -418,7 +418,7 @@ namespace NMib
 
 			TCInt2 &operator *= (const TCInt2 &_Value)
 			{
-				bint bSigned = false;
+				bool bSigned = false;
 				TCInt2 Val0 = *this;
 				TCInt2 Val1 = _Value;
 				if (NTraits::TCIsSigned<t_CUpper>::mc_Value && Val0 < fs_Zero())
@@ -468,13 +468,13 @@ namespace NMib
 				return *this;
 			}
 
-			static bint fp_IsBitSet(uaint _Bit)
+			static bool fp_IsBitSet(uaint _Bit)
 			{
 			}
 
 			TCInt2 &operator /= (const TCInt2 &_Value)
 			{
-				bint bSigned = false;
+				bool bSigned = false;
 				TCInt2 Val0 = *this;
 				TCInt2 Val1 = _Value;
 				if (NTraits::TCIsSigned<t_CUpper>::mc_Value && Val0 < fs_Zero())
@@ -524,10 +524,10 @@ namespace NMib
 
 				return *this;
 			}
-            
+
 			TCInt2 &operator %= (const TCInt2 &_Value)
 			{
-				bint bSigned = false;
+				bool bSigned = false;
 				TCInt2 Val0 = *this;
 				TCInt2 Val1 = _Value;
 				if (NTraits::TCIsSigned<t_CUpper>::mc_Value && Val0 < fs_Zero())
@@ -535,7 +535,7 @@ namespace NMib
 					Val0 = -Val0;
 					bSigned = true;
 				}
-				
+
 				if (NTraits::TCIsSigned<t_CUpper>::mc_Value && Val1 < fs_Zero())
 				{
 					Val1 = -Val1;
@@ -616,7 +616,7 @@ namespace NMib
 					else
 						m_Upper |= t_CUpper(Lower0) << (Value - aint(ELowerBits));
 				}
-				
+
 				return *this;
 			}
 
@@ -648,12 +648,12 @@ namespace NMib
 			||______________________________________________________________________________________________||
 			\************************************************************************************************/
 #if 0
-			bint operator == (const TCInt2 &_Value) const
+			bool operator == (const TCInt2 &_Value) const
 			{
 				return m_Lower == _Value.m_Lower && m_Upper == _Value.m_Upper;
 			}
 
-			bint operator < (const TCInt2 &_Value) const
+			bool operator < (const TCInt2 &_Value) const
 			{
 				return m_Upper < _Value.m_Upper || (m_Upper == _Value.m_Upper && m_Lower < _Value.m_Lower);
 			}

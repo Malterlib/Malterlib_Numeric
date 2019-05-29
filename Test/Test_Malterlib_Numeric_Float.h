@@ -1,4 +1,4 @@
-// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 namespace NMib
@@ -18,7 +18,7 @@ namespace NMib
 		DMibMathImplementNativeFloat(pfp32, CIEEEFloat32);
 		DMibMathImplementNativeFloat(pfp64, CIEEEFloat64);
 
-		template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bint t_bDummyOptimize, typename t_CIntegerStorage>
+		template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 		class TCFloatFromNative<NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>>
 		{
 		public:
@@ -31,7 +31,7 @@ namespace NMib
 		public:
 		};
 
-		template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bint t_bDummyOptimize, typename t_CIntegerStorage>
+		template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 		class TCFloatTraits<NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>>
 		{
 			typedef NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> CFloat;
@@ -44,7 +44,7 @@ namespace NMib
 
 			typedef typename CFloat::CImplicitFloat CFundamentalFloat;
 
-			bint const static ms_bHasFundamentalFloat = !NTraits::TCIsSame<CFundamentalFloat, NMib::NNumeric::CNoImplicit>::mc_Value;
+			bool const static ms_bHasFundamentalFloat = !NTraits::TCIsSame<CFundamentalFloat, NMib::NNumeric::CNoImplicit>::mc_Value;
 		};
 
 		template <typename t_CFloat>
@@ -53,7 +53,7 @@ namespace NMib
 		public:
 
 			typename TCChooseType<TCFloatTraits<t_CFloat>::ms_bHasFundamentalFloat, typename TCFloatTraits<t_CFloat>::CFundamentalFloat, t_CFloat>::CFloat CType;
-			
+
 		};
 
 
@@ -75,7 +75,7 @@ namespace NMib
 			{
 			}
 #endif
-			bint mp_bInit;
+			bool mp_bInit;
 			NStorage::TCAggregateSimple<t_CFloat> mp_Float;
 			operator const t_CFloat & ()
 			{
@@ -264,7 +264,7 @@ namespace NMib
 		TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_NegQNan> TCFloatConstants<t_CFloat>::ms_NegQNan = {DAggregateInit};
 		template <typename t_CFloat>
 		TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_NegSNan> TCFloatConstants<t_CFloat>::ms_NegSNan = {DAggregateInit};
-		
+
 		template <typename t_CFloat>
 		static t_CFloat &fg_FInPlace0(t_CFloat &_Float)
 		{
@@ -420,8 +420,8 @@ namespace NMib
 		{
 			return TCFloatConstants<t_CFloat>::ms_NegSNan;
 		}
-		
-		
+
+
 		template <typename t_CFloat, typename t_CInteger>
 		static t_CFloat fg_FFromInt(const t_CInteger &_Int);
 		template <typename t_CFloat, typename t_CIntegerSign, typename t_CIntegerExponent, typename t_CMantissoExponent>
@@ -443,17 +443,17 @@ namespace NMib
 		typename TCFloatTraits<t_CFloat>::CStorageInteger fg_FDenormalizedMantissa(t_CFloat const &_Float);
 
 		template <typename t_CFloat>
-		bint fg_FIsNaN(t_CFloat const &_Float);
+		bool fg_FIsNaN(t_CFloat const &_Float);
 		template <typename t_CFloat>
-		bint fg_FIsQNaN(t_CFloat const &_Float);
+		bool fg_FIsQNaN(t_CFloat const &_Float);
 		template <typename t_CFloat>
-		bint fg_FIsSNaN(t_CFloat const &_Float);
+		bool fg_FIsSNaN(t_CFloat const &_Float);
 		template <typename t_CFloat>
-		bint fg_FIsInfinity(t_CFloat const &_Float);
+		bool fg_FIsInfinity(t_CFloat const &_Float);
 		template <typename t_CFloat>
-		bint fg_FIsInvalid(t_CFloat const &_Float);
+		bool fg_FIsInvalid(t_CFloat const &_Float);
 		template <typename t_CFloat>
-		bint fg_FIsDenormalized(t_CFloat const &_Float);
+		bool fg_FIsDenormalized(t_CFloat const &_Float);
 
 		template <typename t_CInteger, typename t_CFloat>
 		t_CInteger fg_FToInt(t_CFloat const &_Float);
