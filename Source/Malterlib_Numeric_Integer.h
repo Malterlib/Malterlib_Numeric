@@ -93,7 +93,7 @@ namespace NMib::NNumeric
 		template <typename t_CUpper2, typename t_CLower2>
 		TCInt<t_CUpper2, t_CLower2> f_GetAsTCInt() const
 		{
-			if (sizeof(t_CUpper2) + sizeof(t_CLower2) <= sizeof(t_CLower))
+			if constexpr (sizeof(t_CUpper2) + sizeof(t_CLower2) <= sizeof(t_CLower))
 			{
 				// Less than lower
 				return m_Lower;
@@ -103,7 +103,7 @@ namespace NMib::NNumeric
 				typedef TCInt<t_CUpper2, t_CLower2> CType;
 				CType Ret;
 				static const TCInt And1 = DMibBitRangeTyped(uaint(0), uaint(CType::ELowerBits - 1), TCInt);
-				if (sizeof(t_CUpper2) > sizeof(TCInt))
+				if constexpr (sizeof(t_CUpper2) > sizeof(TCInt))
 				{
 					typename TCChooseType<NTraits::TCIsSigned<t_CUpper>::mc_Value, typename NTraits::TCSigned<t_CUpper2>::CType, t_CUpper2>::CType  Temp{*this};
 					Temp >>= CType::ELowerBits - 1;
@@ -112,7 +112,7 @@ namespace NMib::NNumeric
 				}
 				else
 					Ret.m_Upper = t_CUpper2((((*this) >> uaint(CType::ELowerBits - 1) >> uaint(1))));
-				if (sizeof(t_CLower2) > sizeof(TCInt))
+				if constexpr (sizeof(t_CLower2) > sizeof(TCInt))
 				{
 					typename TCChooseType<NTraits::TCIsSigned<t_CUpper>::mc_Value, typename NTraits::TCSigned<t_CLower2>::CType, t_CLower2>::CType Temp{*this};
 					Ret.m_Lower = t_CLower2(Temp);
@@ -127,7 +127,7 @@ namespace NMib::NNumeric
 		explicit operator t_CInt () const
 		{
 			static_assert(NTraits::TCIsInteger<t_CInt>::mc_Value, "Must be an integer type");
-			if (sizeof(t_CInt) <= sizeof(t_CLower))
+			if constexpr (sizeof(t_CInt) <= sizeof(t_CLower))
 			{
 				// Less than lower
 				return t_CInt(m_Lower);
@@ -429,7 +429,7 @@ namespace NMib::NNumeric
 			// Multiply Upper by lower and let it owerflow
 			Result += TCInt(Val0.m_Upper * Val1.m_Lower, mc_LowerZero);
 			Result += TCInt(Val1.m_Upper * Val0.m_Lower, mc_LowerZero);
-			if (sizeof(t_CLower) < sizeof(t_CUpper))
+			if constexpr (sizeof(t_CLower) < sizeof(t_CUpper))
 				Result += TCInt(Val0.m_Upper * Val1.m_Upper, 0) << ELowerBits;
 
 			if (NTraits::TCIsSigned<t_CUpper>::mc_Value && bSigned)

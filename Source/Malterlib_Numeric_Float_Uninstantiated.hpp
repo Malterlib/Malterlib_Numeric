@@ -164,7 +164,7 @@ namespace NMib::NNumeric
 		{
 			uaint nBits = (uaint(COtherFloat::EMantissaBits) - uaint(EMantissaBits));
 			uaint nBitsLost = 0;
-			if (uaint(COtherFloat::EMantissaBits) > uaint(sizeof(CDoubleInteger)*8-1))
+			if constexpr (uaint(COtherFloat::EMantissaBits) > uaint(sizeof(CDoubleInteger)*8-1))
 				nBitsLost = uaint(COtherFloat::EMantissaBits) - uaint(sizeof(CDoubleInteger)*8-1);
 			f_SetAllRound(fg_Convert<CInteger>(Other.f_GetSignBits()), fg_Convert<CInteger>(OtherExponent), fg_Convert<CDoubleUnsignedInteger>((OtherMantissa >> nBitsLost)), nBits - nBitsLost);
 		}
