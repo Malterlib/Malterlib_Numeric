@@ -223,47 +223,47 @@ namespace NMib
 		};
 
 		template <typename t_CFloat>
-		TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_0> TCFloatConstants<t_CFloat>::ms_0 = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_0> TCFloatConstants<t_CFloat>::ms_0 = {DAggregateInit};
 		template <typename t_CFloat>
-		TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_0_5> TCFloatConstants<t_CFloat>::ms_0_5 = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_0_5> TCFloatConstants<t_CFloat>::ms_0_5 = {DAggregateInit};
 		template <typename t_CFloat>
-		TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_1> TCFloatConstants<t_CFloat>::ms_1 = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_1> TCFloatConstants<t_CFloat>::ms_1 = {DAggregateInit};
 		template <typename t_CFloat>
-		TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_2> TCFloatConstants<t_CFloat>::ms_2 = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_2> TCFloatConstants<t_CFloat>::ms_2 = {DAggregateInit};
 		template <typename t_CFloat>
-		TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_E> TCFloatConstants<t_CFloat>::ms_E = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_E> TCFloatConstants<t_CFloat>::ms_E = {DAggregateInit};
 		template <typename t_CFloat>
-		TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_Pi> TCFloatConstants<t_CFloat>::ms_Pi = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_Pi> TCFloatConstants<t_CFloat>::ms_Pi = {DAggregateInit};
 		template <typename t_CFloat>
-		TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_Sqrt2> TCFloatConstants<t_CFloat>::ms_Sqrt2 = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_Sqrt2> TCFloatConstants<t_CFloat>::ms_Sqrt2 = {DAggregateInit};
 		template <typename t_CFloat>
-		TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_Euler> TCFloatConstants<t_CFloat>::ms_Euler = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_Euler> TCFloatConstants<t_CFloat>::ms_Euler = {DAggregateInit};
 		template <typename t_CFloat>
-		TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_GoldenRatio> TCFloatConstants<t_CFloat>::ms_GoldenRatio = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_GoldenRatio> TCFloatConstants<t_CFloat>::ms_GoldenRatio = {DAggregateInit};
 		template <typename t_CFloat>
-		TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_Log10_2> TCFloatConstants<t_CFloat>::ms_Log10_2 = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_Log10_2> TCFloatConstants<t_CFloat>::ms_Log10_2 = {DAggregateInit};
 		template <typename t_CFloat>
-		TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_Log2_10> TCFloatConstants<t_CFloat>::ms_Log2_10 = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_Log2_10> TCFloatConstants<t_CFloat>::ms_Log2_10 = {DAggregateInit};
 		template <typename t_CFloat>
-		TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_Log10_E> TCFloatConstants<t_CFloat>::ms_Log10_E = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_Log10_E> TCFloatConstants<t_CFloat>::ms_Log10_E = {DAggregateInit};
 		template <typename t_CFloat>
-		TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_LogE_10> TCFloatConstants<t_CFloat>::ms_LogE_10 = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_LogE_10> TCFloatConstants<t_CFloat>::ms_LogE_10 = {DAggregateInit};
 		template <typename t_CFloat>
-		TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_Log2_E> TCFloatConstants<t_CFloat>::ms_Log2_E = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_Log2_E> TCFloatConstants<t_CFloat>::ms_Log2_E = {DAggregateInit};
 		template <typename t_CFloat>
-		TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_LogE_2> TCFloatConstants<t_CFloat>::ms_LogE_2 = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_LogE_2> TCFloatConstants<t_CFloat>::ms_LogE_2 = {DAggregateInit};
 		template <typename t_CFloat>
-		TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_Inf> TCFloatConstants<t_CFloat>::ms_Inf = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_Inf> TCFloatConstants<t_CFloat>::ms_Inf = {DAggregateInit};
 		template <typename t_CFloat>
-		TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_NegInf> TCFloatConstants<t_CFloat>::ms_NegInf = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_NegInf> TCFloatConstants<t_CFloat>::ms_NegInf = {DAggregateInit};
 		template <typename t_CFloat>
-		TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_QNan> TCFloatConstants<t_CFloat>::ms_QNan = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_QNan> TCFloatConstants<t_CFloat>::ms_QNan = {DAggregateInit};
 		template <typename t_CFloat>
-		TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_SNan> TCFloatConstants<t_CFloat>::ms_SNan = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_SNan> TCFloatConstants<t_CFloat>::ms_SNan = {DAggregateInit};
 		template <typename t_CFloat>
-		TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_NegQNan> TCFloatConstants<t_CFloat>::ms_NegQNan = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_NegQNan> TCFloatConstants<t_CFloat>::ms_NegQNan = {DAggregateInit};
 		template <typename t_CFloat>
-		TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_NegSNan> TCFloatConstants<t_CFloat>::ms_NegSNan = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_NegSNan> TCFloatConstants<t_CFloat>::ms_NegSNan = {DAggregateInit};
 
 		template <typename t_CFloat>
 		static t_CFloat &fg_FInPlace0(t_CFloat &_Float)
