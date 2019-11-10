@@ -35,65 +35,64 @@ namespace
 	public:
 
 		template <template <typename t_CFloat00> class t_CTestTemplate>
-		static void fs_TestAll(bool _bSuite = true)
+		static void fs_TestAll()
 		{
-			NMib::NTest::ETestCategoryFlag Flags = _bSuite ? NMib::NTest::ETestCategoryFlag_Tests : NMib::NTest::ETestCategoryFlag_None;
-			DMibTestCategoryFlags("fp8", Flags)
 			{
+				DMibTestPath("fp8");
 				t_CTestTemplate<fp8>()();
-			};
-			DMibTestCategoryFlags("fp16", Flags)
+			}
 			{
+				DMibTestPath("fp16");
 				t_CTestTemplate<fp16>()();
-			};
-			DMibTestCategoryFlags("fp32", Flags)
+			}
 			{
+				DMibTestPath("fp32");
 				t_CTestTemplate<fp32>()();
-			};
-			DMibTestCategoryFlags("fp32Emu", Flags)
+			}
 			{
+				DMibTestPath("fp32Emu");
 				t_CTestTemplate<CIEEEFloat32Emu>()();
-			};
-			DMibTestCategoryFlags("fp64", Flags)
+			}
 			{
+				DMibTestPath("fp64");
 				t_CTestTemplate<fp64>()();
-			};
-			DMibTestCategoryFlags("fp64Emu", Flags)
+			}
 			{
+				DMibTestPath("fp64Emu");
 				t_CTestTemplate<CIEEEFloat64Emu>()();
-			};
-			DMibTestCategoryFlags("fp80", Flags)
+			}
 			{
+				DMibTestPath("fp80");
 				t_CTestTemplate<fp80>()();
-			};
-			DMibTestCategoryFlags("fp80Emu", Flags)
+			}
 			{
+				DMibTestPath("fp80Emu");
 				t_CTestTemplate<CIEEEFloat80Emu>()();
-			};
-			DMibTestCategoryFlags("fp128", Flags)
+			}
 			{
+				DMibTestPath("fp128");
 				t_CTestTemplate<fp128>()();
-			};
-			DMibTestCategoryFlags("fp256", Flags)
+			}
 			{
+				DMibTestPath("fp256");
 				t_CTestTemplate<fp256>()();
-			};
-/*			DMibTestCategoryFlags("fp512", Flags)
-			{
+			}
+/*			{
+				DMibTestPath("fp512");
 				t_CTestTemplate<fp512>()();
-			};
-			DMibTestCategoryFlags("fp1024", Flags)
+			}
 			{
+				DMibTestPath("fp1024");
 				t_CTestTemplate<fp1024>()();
-			};
-			DMibTestCategoryFlags("fp2048", Flags)
+			}
 			{
+				DMibTestPath("fp2048");
 				t_CTestTemplate<fp2048>()();
-			};
-			DMibTestCategoryFlags("fp4096", Flags)
+			}
 			{
+				DMibTestPath("fp4096");
 				t_CTestTemplate<fp4096>()();
-			};*/
+			}*/
 		}
 		
 		template <typename t_CFloat>
@@ -539,25 +538,25 @@ namespace
 
 		void f_DoTests()
 		{
-			DMibTestCategory("Invalid")
+			DMibTestSuite("Invalid")
 			{
 				fs_TestAll<CInvalid>();
 			};
 #ifdef DMibDebug
-			DMibTestCategory("Conversion")
+			DMibTestSuite("Conversion")
 			{
-				fs_TestAll<CConversion>(false);
+				fs_TestAll<CConversion>();
 			};
 #endif
-			DMibTestCategory("Constants")
+			DMibTestSuite("Constants")
 			{
 				fs_TestAll<CConstants>();
 			};
-			DMibTestCategory("Multiply")
+			DMibTestSuite("Multiply")
 			{
 				fs_TestAll<CMultiply>();
 			};
-			DMibTestCategory("Divide")
+			DMibTestSuite("Divide")
 			{
 				fs_TestAll<CDivide>();
 			};

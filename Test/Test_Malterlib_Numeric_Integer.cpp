@@ -15,110 +15,109 @@ namespace
 		template <template <typename t_CFloat00> class t_CTestTemplate>
 		void f_TestAll()
 		{
-			DMibTestCategory("int8")
 			{
+				DMibTestPath("int8");
 				t_CTestTemplate<int8>()();
-			};
-			DMibTestCategory("int16")
+			}
 			{
+				DMibTestPath("int16");
 				t_CTestTemplate<int16>()();
-			};
-			DMibTestCategory("int32")
+			}
 			{
+				DMibTestPath("int32");
 				t_CTestTemplate<int32>()();
-			};
-			DMibTestCategory("int64")
+			}
 			{
+				DMibTestPath("int64");
 				t_CTestTemplate<int64>()();
-			};
-			DMibTestCategory("int80")
+			}
 			{
+				DMibTestPath("int80");
 				t_CTestTemplate<int80>()();
-			};
-			DMibTestCategory("int128")
+			}
 			{
+				DMibTestPath("int128");
 				t_CTestTemplate<int128>()();
-			};
-			DMibTestCategory("int160")
+			}
 			{
+				DMibTestPath("int160");
 				t_CTestTemplate<int160>()();
-			};
-			DMibTestCategory("int256")
+			}
 			{
+				DMibTestPath("int256");
 				t_CTestTemplate<int256>()();
-			};
-			DMibTestCategory("int320")
+			}
 			{
+				DMibTestPath("int320");
 				t_CTestTemplate<int320>()();
-			};
-			DMibTestCategory("int512")
+			}
 			{
+				DMibTestPath("int512");
 				t_CTestTemplate<int512>()();
-			};
-			DMibTestCategory("int1024")
+			}
 			{
+				DMibTestPath("int1024");
 				t_CTestTemplate<int1024>()();
-			};
+			}
 #if 0
-			DMibTestCategory("int2048")
 			{
+				DMibTestPath("int2048");
 				t_CTestTemplate<int2048>()();
-			};
-			DMibTestCategory("int4096")
+			}
 			{
+				DMibTestPath("int4096");
 				t_CTestTemplate<int4096>()();
-			};
+			}
 #endif
-
-			DMibTestCategory("uint8")
 			{
+				DMibTestPath("uint8");
 				t_CTestTemplate<uint8>()();
-			};
-			DMibTestCategory("uint16")
+			}
 			{
+				DMibTestPath("uint16");
 				t_CTestTemplate<uint16>()();
-			};
-			DMibTestCategory("uint32")
+			}
 			{
+				DMibTestPath("uint32");
 				t_CTestTemplate<uint32>()();
-			};
-			DMibTestCategory("uint64")
+			}
 			{
+				DMibTestPath("uint64");
 				t_CTestTemplate<uint64>()();
-			};
-			DMibTestCategory("uint80")
+			}
 			{
+				DMibTestPath("uint80");
 				t_CTestTemplate<uint80>()();
-			};
-			DMibTestCategory("uint128")
+			}
 			{
+				DMibTestPath("uint128");
 				t_CTestTemplate<uint128>()();
-			};
-			DMibTestCategory("uint160")
+			}
 			{
+				DMibTestPath("uint160");
 				t_CTestTemplate<uint160>()();
-			};
-			DMibTestCategory("uint256")
+			}
 			{
+				DMibTestPath("uint256");
 				t_CTestTemplate<uint256>()();
-			};
-			DMibTestCategory("uint512")
+			}
 			{
+				DMibTestPath("uint512");
 				t_CTestTemplate<uint512>()();
-			};
-			DMibTestCategory("uint1024")
+			}
 			{
+				DMibTestPath("uint1024");
 				t_CTestTemplate<uint1024>()();
-			};
+			}
 #if 0
-			DMibTestCategory("uint2048")
 			{
+				DMibTestPath("uint2048");
 				t_CTestTemplate<uint2048>()();
-			};
-			DMibTestCategory("uint4096")
+			}
 			{
+				DMibTestPath("uint4096");
 				t_CTestTemplate<uint4096>()();
-			};
+			}
 #endif
 		}
 
@@ -132,10 +131,8 @@ namespace
 		public:
 			void operator() ()
 			{
-				DMibTestSuite("Addition")
-				{
-					this->f_Test();
-				};
+				DMibTestPath("Addition");
+				this->f_Test();
 			}
 		};
 
@@ -149,10 +146,8 @@ namespace
 		public:
 			void operator() ()
 			{
-				DMibTestSuite("Subtraction")
-				{
-					this->f_Test();
-				};
+				DMibTestPath("Subtraction");
+				this->f_Test();
 			}
 		};
 
@@ -181,7 +176,7 @@ namespace
 				;
 				for (mint i = 0; i < nBits; i += 4)
 				{
-					DMibTestCategoryFlags(NMib::NStr::CStr::CFormat("{}") << i, ETestCategoryFlag_DisableValues | ETestCategoryFlag_Tests)
+					DMibTestPath(NMib::NStr::CStr::CFormat("{}") << i);
 					{
 						if (!TestNumberBase)
 							TestNumberBase = fl_TestNumberBase();
@@ -238,7 +233,7 @@ namespace
 				;
 				for (mint i = 0; i < nBits; i += 4)
 				{
-					DMibTestCategoryFlags(NMib::NStr::CStr::CFormat("{}") << i, ETestCategoryFlag_DisableValues | ETestCategoryFlag_Tests)
+					DMibTestPath(NMib::NStr::CStr::CFormat("{}") << i);
 					{
 						if (!TestNumberBase)
 							TestNumberBase = fl_TestNumberBase();
@@ -306,11 +301,11 @@ namespace
 //			Test6 = 6;
 #endif
 
-			DMibTestCategory("Shift Left")
+			DMibTestCategoryFlags("Shift Left", ETestCategoryFlag_DisableValues | ETestCategoryFlag_Tests)
 			{
 				this->f_TestAll<CShiftLeft>();
 			};
-			DMibTestCategory("Shift Right")
+			DMibTestCategoryFlags("Shift Right", ETestCategoryFlag_DisableValues | ETestCategoryFlag_Tests)
 			{
 				this->f_TestAll<CShiftRight>();
 			};
@@ -391,12 +386,12 @@ namespace
 				Testu2 += 0;
 			}
 
-			DMibTestCategory("Addition")
+			DMibTestSuite("Addition")
 			{
 				this->f_TestAll<CAddition>();
 			};
 
-			DMibTestCategory("Subtration")
+			DMibTestSuite("Subtration")
 			{
 				this->f_TestAll<CSubtration>();
 			};
