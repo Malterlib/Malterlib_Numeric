@@ -698,7 +698,7 @@ namespace NMib::NNumeric
 		}
 
 		f_SetSignBits(_Sign);
-		if (Exponent == 0 && Mantissa == CInteger(0))
+		if (Exponent == 0 && Mantissa == CDoubleUnsignedInteger(0))
 			f_SetExponentBits(0); // Set to 0.0
 		else
 			f_SetExponent(Exponent);
