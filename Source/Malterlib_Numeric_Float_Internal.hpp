@@ -376,7 +376,7 @@ namespace NMib::NNumeric
 	{
 		CExponent Exponent = _Source.f_GetExponent();
 		CSignedMantissa Mantissa = _Source.f_GetMantissa();
-		f_SetAllRound(_Source.f_GetSignBits(), Exponent, Mantissa, EMantissaBits);
+		f_SetAllRound(_Source.f_GetSignBits(), Exponent, Mantissa, mc_MantissaBits);
 		return *this;
 	}
 
@@ -838,13 +838,13 @@ namespace NMib::NNumeric
 		tf_CFloat Temp;
 		typename tf_CFloat::CDoubleUnsignedInteger Mantissa = m_Mantissa;
 		mint MantissaBits = m_MantissaBits;
-		if (MantissaBits < tf_CFloat::EMantissaBits)
+		if (MantissaBits < tf_CFloat::mc_MantissaBits)
 		{
-			Mantissa <<= tf_CFloat::EMantissaBits - MantissaBits;
-			MantissaBits = tf_CFloat::EMantissaBits;
+			Mantissa <<= tf_CFloat::mc_MantissaBits - MantissaBits;
+			MantissaBits = tf_CFloat::mc_MantissaBits;
 		}
 
-		Temp.f_SetAllRound(m_Sign, typename tf_CFloat::CInteger(m_Exponent), Mantissa, MantissaBits - tf_CFloat::EMantissaBits);
+		Temp.f_SetAllRound(m_Sign, typename tf_CFloat::CInteger(m_Exponent), Mantissa, MantissaBits - tf_CFloat::mc_MantissaBits);
 		return Temp;
 	}
 
@@ -854,10 +854,10 @@ namespace NMib::NNumeric
 		TCFloat Temp;
 		CDoubleUnsignedInteger Mantissa = m_Mantissa;
 		mint MantissaBits = m_MantissaBits;
-		if (MantissaBits < EMantissaBits)
+		if (MantissaBits < mc_MantissaBits)
 		{
-			Mantissa <<= EMantissaBits - MantissaBits;
-			MantissaBits = EMantissaBits;
+			Mantissa <<= mc_MantissaBits - MantissaBits;
+			MantissaBits = mc_MantissaBits;
 		}
 		CInteger Exponent;
 		if (m_Exponent > CExponent(TCLimitsInt<CInteger>::mc_Max))
@@ -866,7 +866,7 @@ namespace NMib::NNumeric
 			Exponent = CInteger(m_Exponent);
 		if (Mantissa == 0)
 			Exponent = 0;
-		Temp.f_SetAllRound(m_Sign, Exponent, Mantissa, MantissaBits - EMantissaBits);
+		Temp.f_SetAllRound(m_Sign, Exponent, Mantissa, MantissaBits - mc_MantissaBits);
 		return Temp;
 	}
 

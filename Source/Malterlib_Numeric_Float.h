@@ -60,25 +60,23 @@ namespace NMib::NNumeric
 		typedef typename NTraits::TCUnsigned<CDoubleInteger>::CType CDoubleUnsignedInteger;
 		typedef t_CImplicitFloat CImplicitFloat;
 
-		enum
-		{
-			EStorageBits = sizeof(CInteger) * 8
-			, ESignBits = t_SignBits
-			, EExponentBits = t_ExponentBits
-			, EMantissaBits = t_MantissaBits
-			, EUnusedBits = EStorageBits - (ESignBits + EExponentBits + EMantissaBits)
-			, ESignBitPos = EStorageBits - (ESignBits)
-			, EExponentBitPos = EStorageBits - (ESignBits + EExponentBits)
-			, EUnusedBitPos = EStorageBits - (ESignBits + EExponentBits + EUnusedBits)
-			, EMantissaBitPos = 0
-#ifdef DMibPFloat_StdLib
-			, mc_bIsBuiltIn = !NTraits::TCIsSame<t_CImplicitFloat, CNoImplicit>::mc_Value
-#else
-			, mc_bIsBuiltIn = false
-#endif
-		};
+		static constexpr aint mc_MantissaBits = t_MantissaBits;
+		static constexpr aint mc_ExponentBits = t_ExponentBits;
+		static constexpr aint mc_SignBits = t_SignBits;
+		static constexpr mint mc_StorageBits = sizeof(CInteger) * 8;
+		static constexpr aint mc_UnusedBits = mc_StorageBits - (mc_SignBits + mc_ExponentBits + mc_MantissaBits);
+		static constexpr aint mc_SignBitPos = mc_StorageBits - (mc_SignBits);
+		static constexpr aint mc_ExponentBitPos = mc_StorageBits - (mc_SignBits + mc_ExponentBits);
+		static constexpr aint mc_UnusedBitPos = mc_StorageBits - (mc_SignBits + mc_ExponentBits + mc_UnusedBits);
+		static constexpr aint mc_MantissaBitPos = 0;
 
-		static_assert(mint(EUnusedBits) >= 0);
+#ifdef DMibPFloat_StdLib
+		static constexpr bool mc_bIsBuiltIn = !NTraits::TCIsSame<t_CImplicitFloat, CNoImplicit>::mc_Value;
+#else
+		static constexpr bool mc_bIsBuiltIn = false;s
+#endif
+
+		static_assert(mint(mc_UnusedBits) >= 0);
 		static_assert(sizeof(CDoubleInteger) > sizeof(CInteger));
 
 	protected:

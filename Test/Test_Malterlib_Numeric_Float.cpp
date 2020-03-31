@@ -141,8 +141,8 @@ namespace
 				DMibExpect(t_CFloat::fs_2() * t_CFloat::fs_2(), ==, t_CFloat(fp64(4.0)));
 				
 				mint ExpectedBits = 1;
-				if (mint(t_CFloat::EMantissaBits) > mint(fp64::EMantissaBits))
-					ExpectedBits = (t_CFloat::EMantissaBits - fp64::EMantissaBits) - 1;
+				if (mint(t_CFloat::mc_MantissaBits) > mint(fp64::mc_MantissaBits))
+					ExpectedBits = (t_CFloat::mc_MantissaBits - fp64::mc_MantissaBits) - 1;
 				
 				auto fCheckValue = [&](NMib::NStr::CStr const &_Desc, double _Left, double _Right)
 					{
@@ -169,8 +169,8 @@ namespace
 				DMibExpect(t_CFloat::fs_2() / t_CFloat::fs_2(), ==, t_CFloat(fp64(1.0)));
 				
 				mint ExpectedBits = 1;
-				if (mint(t_CFloat::EMantissaBits) > mint(fp64::EMantissaBits))
-					ExpectedBits = (t_CFloat::EMantissaBits - fp64::EMantissaBits) - 1;
+				if (mint(t_CFloat::mc_MantissaBits) > mint(fp64::mc_MantissaBits))
+					ExpectedBits = (t_CFloat::mc_MantissaBits - fp64::mc_MantissaBits) - 1;
 				
 				auto fCheckValue = [&](NMib::NStr::CStr const &_Desc, double _Left, double _Right)
 					{
@@ -237,7 +237,7 @@ namespace
 					
 					DTestConversion(SmallestDenormal, t_CFloatRight::fs_SmallestDenormal(), ==, SmallestDenormal, ==, t_CFloatLeft::fs_0());
 					DTestConversion(NegSmallestDenormal, t_CFloatRight::fs_NegSmallestDenormal(), ==, NegSmallestDenormal, ==, -t_CFloatLeft::fs_0());
-					if (sizeof(typename t_CFloatLeft::CUnsignedInteger) != sizeof(typename t_CFloatRight::CUnsignedInteger) && mint(t_CFloatLeft::EExponentBits) == mint(t_CFloatRight::EExponentBits))
+					if (sizeof(typename t_CFloatLeft::CUnsignedInteger) != sizeof(typename t_CFloatRight::CUnsignedInteger) && mint(t_CFloatLeft::mc_ExponentBits) == mint(t_CFloatRight::mc_ExponentBits))
 					{
 						DTestConversion(Smallest, t_CFloatRight::fs_Smallest(), ==, Smallest, ==, Smallest);
 						DTestConversion(NegSmallest, t_CFloatRight::fs_NegSmallest(), ==, NegSmallest, ==, NegSmallest);
@@ -896,7 +896,7 @@ public:
 		{
 			fp64 Test = NMib::NStr::fg_StrToFloat("4.0", fp64::fs_0());
 			Test.f_SetMantissaBits(0xffffffffffffffffi64);
-			Test.f_SetExponent(NMib::fg_PowerOfTwoMinusOne<fp32::CInteger>(fp32::EExponentBits) - 1);
+			Test.f_SetExponent(NMib::fg_PowerOfTwoMinusOne<fp32::CInteger>(fp32::mc_ExponentBits) - 1);
 			fp32 Test2 = Test;
 			fp32 Test3 = Test2;
 			Test3.f_SetMantissa(Test3.f_GetMantissa() + 1);

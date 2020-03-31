@@ -14,8 +14,8 @@ namespace NMib::NNumeric
 
 		f_SetSignBits(fg_Convert<CInteger>(Other.f_GetSignBits()));
 
-		static const CInteger ExponentMaxNeg = -((CInteger(1) << (aint)(EExponentBits - 1)) - CInteger(1));
-		static const CInteger ExponentMax = fg_PowerOfTwoMinusOne<CInteger>(EExponentBits);
+		static const CInteger ExponentMaxNeg = -((CInteger(1) << (aint)(mc_ExponentBits - 1)) - CInteger(1));
+		static const CInteger ExponentMax = fg_PowerOfTwoMinusOne<CInteger>(mc_ExponentBits);
 
 		TCFloat EndMul = fs_1();
 		if (Other.f_GetExponentBits() == 0) // Check for denormalized and 0.0
@@ -48,11 +48,11 @@ namespace NMib::NNumeric
 				f_SetExponent(fg_Convert<CInteger>(Exponent));
 		}
 
-		if (uaint(COtherFloat::EMantissaBits) > uaint(EMantissaBits))
+		if (uaint(COtherFloat::mc_MantissaBits) > uaint(mc_MantissaBits))
 		{
-			uaint nBits = (uaint(COtherFloat::EMantissaBits) - uaint(EMantissaBits));
+			uaint nBits = (uaint(COtherFloat::mc_MantissaBits) - uaint(mc_MantissaBits));
 			typename COtherFloat::CInteger Temp = Other.f_GetMantissaBits() + ((typename COtherFloat::CInteger(1) << nBits) - 1);
-			typename COtherFloat::CInteger Largest = typename COtherFloat::CInteger(1) << uaint(COtherFloat::EMantissaBits);
+			typename COtherFloat::CInteger Largest = typename COtherFloat::CInteger(1) << uaint(COtherFloat::mc_MantissaBits);
 			if (Temp >= Largest)
 			{
 				CInteger Exponent = f_GetExponent() + CInteger(1);
@@ -68,7 +68,7 @@ namespace NMib::NNumeric
 		}
 		else
 		{
-			uaint nBits = (uaint(EMantissaBits) - uaint(COtherFloat::EMantissaBits));
+			uaint nBits = (uaint(mc_MantissaBits) - uaint(COtherFloat::mc_MantissaBits));
 			f_SetMantissaBits(fg_Convert<CInteger>(Other.f_GetMantissaBits()) << nBits);
 		}
 
@@ -86,7 +86,7 @@ namespace NMib::NNumeric
 
 		using CLargestInteger = typename NTraits::TCLargestType<CInteger, typename COtherFloat::CInteger>::CType;
 
-		static const CLargestInteger ExponentMax = fg_PowerOfTwoMinusOne<CLargestInteger>(EExponentBits);
+		static const CLargestInteger ExponentMax = fg_PowerOfTwoMinusOne<CLargestInteger>(mc_ExponentBits);
 		static const CLargestInteger ExponentMaxNeg = -((CLargestInteger(1) << (uaint(sizeof(CInteger)*8 - 2))) - CLargestInteger(1));
 
 		typename COtherFloat::CInteger OtherExponent;
@@ -108,7 +108,7 @@ namespace NMib::NNumeric
 
 				if (Exponent >= ExponentMax)
 				{
-					f_SetExponentBits(fg_PowerOfTwoMinusOne<CInteger>(EExponentBits));
+					f_SetExponentBits(fg_PowerOfTwoMinusOne<CInteger>(mc_ExponentBits));
 					f_SetMantissaBits(0);
 					return;
 				}
@@ -122,22 +122,22 @@ namespace NMib::NNumeric
 			}
 			else if (Other.f_IsInfinity())
 			{
-				f_SetExponentBits(fg_PowerOfTwoMinusOne<CInteger>(EExponentBits));
+				f_SetExponentBits(fg_PowerOfTwoMinusOne<CInteger>(mc_ExponentBits));
 				f_SetMantissaBits(0);
 				return;
 			}
 			else if (Other.f_IsQNan())
 			{
 				CInteger Mask = 1;
-				f_SetExponentBits(fg_PowerOfTwoMinusOne<CInteger>(EExponentBits));
-				if (uaint(COtherFloat::EMantissaBits) > uaint(EMantissaBits))
+				f_SetExponentBits(fg_PowerOfTwoMinusOne<CInteger>(mc_ExponentBits));
+				if (uaint(COtherFloat::mc_MantissaBits) > uaint(mc_MantissaBits))
 				{
-					uaint nBits = (uaint(COtherFloat::EMantissaBits) - uaint(EMantissaBits));
+					uaint nBits = (uaint(COtherFloat::mc_MantissaBits) - uaint(mc_MantissaBits));
 					f_SetMantissaBits((fg_Convert<CInteger>(Other.f_GetMantissaBits() >> nBits)) | Mask);
 				}
 				else
 				{
-					uaint nBits = (uaint(EMantissaBits) - uaint(COtherFloat::EMantissaBits));
+					uaint nBits = (uaint(mc_MantissaBits) - uaint(COtherFloat::mc_MantissaBits));
 					f_SetMantissaBits((fg_Convert<CInteger>((Other.f_GetMantissaBits() & ~(typename COtherFloat::CInteger(1))) << nBits)) | Mask);
 				}
 				return;
@@ -145,32 +145,32 @@ namespace NMib::NNumeric
 			else if (Other.f_IsSNan())
 			{
 				CInteger Mask = 1;
-				f_SetExponentBits(fg_PowerOfTwoMinusOne<CInteger>(EExponentBits));
-				if (uaint(COtherFloat::EMantissaBits) > uaint(EMantissaBits))
+				f_SetExponentBits(fg_PowerOfTwoMinusOne<CInteger>(mc_ExponentBits));
+				if (uaint(COtherFloat::mc_MantissaBits) > uaint(mc_MantissaBits))
 				{
-					uaint nBits = (uaint(COtherFloat::EMantissaBits) - uaint(EMantissaBits));
+					uaint nBits = (uaint(COtherFloat::mc_MantissaBits) - uaint(mc_MantissaBits));
 					f_SetMantissaBits((fg_Convert<CInteger>(Other.f_GetMantissaBits()) >> nBits) | Mask);
 				}
 				else
 				{
-					uaint nBits = (uaint(EMantissaBits) - uaint(COtherFloat::EMantissaBits));
+					uaint nBits = (uaint(mc_MantissaBits) - uaint(COtherFloat::mc_MantissaBits));
 					f_SetMantissaBits((fg_Convert<CInteger>((Other.f_GetMantissaBits() & ~(typename COtherFloat::CInteger(1))) << nBits)) | Mask);
 				}
 				return;
 			}
 		}
 
-		if (uaint(COtherFloat::EMantissaBits) > uaint(EMantissaBits))
+		if (uaint(COtherFloat::mc_MantissaBits) > uaint(mc_MantissaBits))
 		{
-			uaint nBits = (uaint(COtherFloat::EMantissaBits) - uaint(EMantissaBits));
+			uaint nBits = (uaint(COtherFloat::mc_MantissaBits) - uaint(mc_MantissaBits));
 			uaint nBitsLost = 0;
-			if constexpr (uaint(COtherFloat::EMantissaBits) > uaint(sizeof(CDoubleInteger)*8-1))
-				nBitsLost = uaint(COtherFloat::EMantissaBits) - uaint(sizeof(CDoubleInteger)*8-1);
+			if constexpr (uaint(COtherFloat::mc_MantissaBits) > uaint(sizeof(CDoubleInteger)*8-1))
+				nBitsLost = uaint(COtherFloat::mc_MantissaBits) - uaint(sizeof(CDoubleInteger)*8-1);
 			f_SetAllRound(fg_Convert<CInteger>(Other.f_GetSignBits()), fg_Convert<CInteger>(OtherExponent), fg_Convert<CDoubleUnsignedInteger>((OtherMantissa >> nBitsLost)), nBits - nBitsLost);
 		}
 		else
 		{
-			uaint nBits = (uaint(EMantissaBits) - uaint(COtherFloat::EMantissaBits));
+			uaint nBits = (uaint(mc_MantissaBits) - uaint(COtherFloat::mc_MantissaBits));
 			f_SetAllRound(fg_Convert<CInteger>(Other.f_GetSignBits()), fg_Convert<CInteger>(OtherExponent), fg_Convert<CDoubleUnsignedInteger>(OtherMantissa) << nBits, 0);
 		}
 
@@ -223,11 +223,11 @@ namespace NMib::NNumeric
 			Int = fg_Convert<CLargestInteger>(_Int);
 		}
 
-		if (IntegerBits > EMantissaBits && (Int > (CLargestInteger(1) << (aint)(EMantissaBits))))
+		if (IntegerBits > mc_MantissaBits && (Int > (CLargestInteger(1) << (aint)(mc_MantissaBits))))
 		{
 			CInteger Exponent = fg_Convert<CInteger>(IntegerBits);
 			CDoubleUnsignedInteger Mantissa;
-			Mantissa = fg_Convert<CDoubleUnsignedInteger>((Int >> (IntegerBits - (aint)(EMantissaBits))));
+			Mantissa = fg_Convert<CDoubleUnsignedInteger>((Int >> (IntegerBits - (aint)(mc_MantissaBits))));
 
 			f_SetAllRound(Sign, Exponent, Mantissa, 0);
 		}
@@ -239,8 +239,8 @@ namespace NMib::NNumeric
 		{
 			CDoubleUnsignedInteger Mantissa = fg_Convert<CDoubleInteger>(Int);
 
-			CInteger Exponent = (aint)(EMantissaBits);
-			while (Mantissa < (CDoubleInteger(1) << (aint)(EMantissaBits)))
+			CInteger Exponent = (aint)(mc_MantissaBits);
+			while (Mantissa < (CDoubleInteger(1) << (aint)(mc_MantissaBits)))
 			{
 				Mantissa <<= 1;
 				--Exponent;
@@ -383,9 +383,9 @@ namespace NMib::NNumeric
 			else if (ExponentLeft > ExponentRight)
 				return false;
 
-			if (uaint(CLeftFloat::EMantissaBits) > uaint(CRightFloat::EMantissaBits))
+			if (uaint(CLeftFloat::mc_MantissaBits) > uaint(CRightFloat::mc_MantissaBits))
 			{
-				uaint nBits = (uaint(CLeftFloat::EMantissaBits) - uaint(CRightFloat::EMantissaBits));
+				uaint nBits = (uaint(CLeftFloat::mc_MantissaBits) - uaint(CRightFloat::mc_MantissaBits));
 				CLeftInteger LeftMantissa = MantissaLeft;
 				CLeftInteger RightMantissa = CLeftFloat::CInteger(MantissaRight) << nBits;
 
@@ -394,7 +394,7 @@ namespace NMib::NNumeric
 			}
 			else
 			{
-				uaint nBits = (uaint(CRightFloat::EMantissaBits) - uaint(CLeftFloat::EMantissaBits));
+				uaint nBits = (uaint(CRightFloat::mc_MantissaBits) - uaint(CLeftFloat::mc_MantissaBits));
 				CRightInteger LeftMantissa = CRightInteger(MantissaLeft) << nBits;
 				CRightInteger RightMantissa = MantissaRight;
 
@@ -408,9 +408,9 @@ namespace NMib::NNumeric
 				return true;
 			else if (ExponentLeft < ExponentRight)
 				return false;
-			if (uaint(CLeftFloat::EMantissaBits) > uaint(CRightFloat::EMantissaBits))
+			if (uaint(CLeftFloat::mc_MantissaBits) > uaint(CRightFloat::mc_MantissaBits))
 			{
-				uaint nBits = (uaint(CLeftFloat::EMantissaBits) - uaint(CRightFloat::EMantissaBits));
+				uaint nBits = (uaint(CLeftFloat::mc_MantissaBits) - uaint(CRightFloat::mc_MantissaBits));
 				CLeftInteger LeftMantissa = MantissaLeft;
 				CLeftInteger RightMantissa = CLeftInteger(MantissaRight) << nBits;
 
@@ -419,7 +419,7 @@ namespace NMib::NNumeric
 			}
 			else
 			{
-				uaint nBits = (uaint(CRightFloat::EMantissaBits) - uaint(CLeftFloat::EMantissaBits));
+				uaint nBits = (uaint(CRightFloat::mc_MantissaBits) - uaint(CLeftFloat::mc_MantissaBits));
 				CRightInteger LeftMantissa = CRightInteger(MantissaLeft) << nBits;
 				CRightInteger RightMantissa = MantissaRight;
 
@@ -459,9 +459,9 @@ namespace NMib::NNumeric
 		if (!(fg_Convert<CLargestInteger>(ExponentLeft) == fg_Convert<CLargestInteger>(ExponentRight)))
 			return false;
 
-		if (uaint(CLeftFloat::EMantissaBits) > uaint(CRightFloat::EMantissaBits))
+		if (uaint(CLeftFloat::mc_MantissaBits) > uaint(CRightFloat::mc_MantissaBits))
 		{
-			uaint nBits = (uaint(CLeftFloat::EMantissaBits) - uaint(CRightFloat::EMantissaBits));
+			uaint nBits = (uaint(CLeftFloat::mc_MantissaBits) - uaint(CRightFloat::mc_MantissaBits));
 			CLeftInteger LeftMantissa = MantissaLeft;
 			CLeftInteger RightMantissa = CLeftInteger(MantissaRight) << nBits;
 
@@ -470,7 +470,7 @@ namespace NMib::NNumeric
 		}
 		else
 		{
-			uaint nBits = (uaint(CRightFloat::EMantissaBits) - uaint(CLeftFloat::EMantissaBits));
+			uaint nBits = (uaint(CRightFloat::mc_MantissaBits) - uaint(CLeftFloat::mc_MantissaBits));
 			CRightInteger LeftMantissa = CRightInteger(MantissaLeft) << nBits;
 			CRightInteger RightMantissa = MantissaRight;
 
