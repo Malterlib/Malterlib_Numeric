@@ -299,6 +299,10 @@ namespace
 		template <typename tf_CType>
 		static auto fs_GetName(tf_CType const &_Type)
 		{
+#if defined(DArchitecture_arm64)
+			if (_Type.f_IsNan())
+				return NMib::NStr::CStr::fs_ToStr(_Type.f_Abs());
+#endif
 			return NMib::NStr::CStr::fs_ToStr(_Type);
 		}
 
@@ -486,7 +490,12 @@ namespace
 					{
 						if 
 							(
-								NMib::NTraits::TCIsSame<tf_CFloat, fp80>::mc_Value 
+								(
+									NMib::NTraits::TCIsSame<tf_CFloat, fp80>::mc_Value
+#ifdef DArchitecture_arm64
+									|| true
+#endif
+								)
 								&& 
 								(
 									_Desc.f_Find(".f_LogN()") >= 0
@@ -498,7 +507,8 @@ namespace
 								)
 							)
 						{
-							DMibExpectTrue(ResultEmu.f_AlmostEqual(Result, 2));
+							mint nBitsEqual = 2;
+							DMibExpectTrue(ResultEmu.f_AlmostEqual(Result, nBitsEqual));
 						}
 						else
 							DMibExpect(ResultEmu, ==, Result);
