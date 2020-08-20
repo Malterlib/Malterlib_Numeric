@@ -56,7 +56,7 @@ namespace NMib::NSys::NNumeric
 
 namespace NMib::NNumeric
 {
-	template <> inline_small CIEEEFloat32::TCFloat(TCFloat const &_Other)
+	template <> inline_small CIEEEFloat32::TCFloat(CIEEEFloat32 const &_Other)
 		: m_DataImplicit(_Other.m_DataImplicit)
 	{
 	}
