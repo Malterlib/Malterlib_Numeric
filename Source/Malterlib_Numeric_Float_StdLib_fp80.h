@@ -1,4 +1,4 @@
-// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #pragma once
@@ -48,47 +48,47 @@ namespace NMib::NSys::NNumeric
 
 namespace NMib::NNumeric
 {
-	template <> inline_small CIEEEFloat80::TCFloat(TCFloat const &_Other)
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80::TCFloat(TCFloat const &_Other)
 		: m_DataImplicit(_Other.m_DataImplicit)
 	{
 	}
 
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::fs_0()
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::fs_0()
 	{
 		return 0.0l;
 	}
 
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::fs_0_5()
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::fs_0_5()
 	{
 		return 0.5l;
 	}
 
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::fs_1()
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::fs_1()
 	{
 		return 1.0l;
 	}
 
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::fs_2()
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::fs_2()
 	{
 		return 2.0l;
 	}
 
-	template <> inline_small void CIEEEFloat80::fp_Set_0()
+	template <> DMibFloatConstexpr inline_small void CIEEEFloat80::fp_Set_0()
 	{
 		f_Get() = 0.0l;
 	}
 
-	template <> inline_small void CIEEEFloat80::fp_Set_0_5()
+	template <> DMibFloatConstexpr inline_small void CIEEEFloat80::fp_Set_0_5()
 	{
 		f_Get() = 0.5l;
 	}
 
-	template <> inline_small void CIEEEFloat80::fp_Set_1()
+	template <> DMibFloatConstexpr inline_small void CIEEEFloat80::fp_Set_1()
 	{
 		f_Get() = 1.0l;
 	}
 
-	template <> inline_small void CIEEEFloat80::fp_Set_2()
+	template <> DMibFloatConstexpr inline_small void CIEEEFloat80::fp_Set_2()
 	{
 		f_Get() = 2.0l;
 	}
@@ -231,27 +231,27 @@ namespace NMib::NNumeric
 	||______________________________________________________________________________________________||
 	\************************************************************************************************/
 
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::operator + (const CIEEEFloat80 &_Value) const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::operator + (const CIEEEFloat80 &_Value) const
 	{
-		return f_Get() + ((pfp80 &)_Value.m_Data);
+		return f_Get() + _Value.m_DataImplicit;
 	}
 
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::operator - (const CIEEEFloat80 &_Value) const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::operator - (const CIEEEFloat80 &_Value) const
 	{
-		return f_Get() - ((pfp80 &)_Value.m_Data);
+		return f_Get() - _Value.m_DataImplicit;
 	}
 
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::operator * (const CIEEEFloat80 &_Value) const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::operator * (const CIEEEFloat80 &_Value) const
 	{
-		return f_Get() * ((pfp80 &)_Value.m_Data);
+		return f_Get() * _Value.m_DataImplicit;
 	}
 
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::operator / (const CIEEEFloat80 &_Value) const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::operator / (const CIEEEFloat80 &_Value) const
 	{
-		return f_Get() / ((pfp80 &)_Value.m_Data);
+		return f_Get() / _Value.m_DataImplicit;
 	}
 
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::operator - () const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::operator - () const
 	{
 		return -f_Get();
 	}
@@ -264,27 +264,27 @@ namespace NMib::NNumeric
 	||______________________________________________________________________________________________||
 	\************************************************************************************************/
 
-	template <> inline_small CIEEEFloat80 &CIEEEFloat80::operator += (const CIEEEFloat80 &_Value)
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 &CIEEEFloat80::operator += (const CIEEEFloat80 &_Value)
 	{
-		f_Get() += ((pfp80 &)_Value.m_Data);
+		f_Get() += _Value.m_DataImplicit;
 		return *this;
 	}
 
-	template <> inline_small CIEEEFloat80 &CIEEEFloat80::operator -= (const CIEEEFloat80 &_Value)
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 &CIEEEFloat80::operator -= (const CIEEEFloat80 &_Value)
 	{
-		f_Get() -= ((pfp80 &)_Value.m_Data);
+		f_Get() -= _Value.m_DataImplicit;
 		return *this;
 	}
 
-	template <> inline_small CIEEEFloat80 &CIEEEFloat80::operator /= (const CIEEEFloat80 &_Value)
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 &CIEEEFloat80::operator /= (const CIEEEFloat80 &_Value)
 	{
-		f_Get() /= ((pfp80 &)_Value.m_Data);
+		f_Get() /= _Value.m_DataImplicit;
 		return *this;
 	}
 
-	template <> inline_small CIEEEFloat80 &CIEEEFloat80::operator *= (const CIEEEFloat80 &_Value)
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 &CIEEEFloat80::operator *= (const CIEEEFloat80 &_Value)
 	{
-		f_Get() *= ((pfp80 &)_Value.m_Data);
+		f_Get() *= _Value.m_DataImplicit;
 		return *this;
 	}
 
@@ -294,46 +294,136 @@ namespace NMib::NNumeric
 	||______________________________________________________________________________________________||
 	\************************************************************************************************/
 
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_Sin() const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_Sin() const
 	{
-		return NSys::NNumeric::fg_Sin(f_Get());
+#if DMibFloatConstexprEnabled
+		if (std::is_constant_evaluated())
+		{
+			CEmulatedFloat Temp(*this);
+			Temp.f_Sin();
+			return Temp;
+		}
+		else
+#endif
+			return NSys::NNumeric::fg_Sin(f_Get());
 	}
 
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_Cos() const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_Cos() const
 	{
-		return NSys::NNumeric::fg_Cos(f_Get());
+#if DMibFloatConstexprEnabled
+		if (std::is_constant_evaluated())
+		{
+			CEmulatedFloat Temp(*this);
+			Temp.f_Cos();
+			return Temp;
+		}
+		else
+#endif
+			return NSys::NNumeric::fg_Cos(f_Get());
 	}
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_Tan() const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_Tan() const
 	{
-		return NSys::NNumeric::fg_Tan(f_Get());
+#if DMibFloatConstexprEnabled
+		if (std::is_constant_evaluated())
+		{
+			CEmulatedFloat Temp(*this);
+			Temp.f_Tan();
+			return Temp;
+		}
+		else
+#endif
+			return NSys::NNumeric::fg_Tan(f_Get());
 	}
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_SinH() const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_SinH() const
 	{
-		return NSys::NNumeric::fg_SinH(f_Get());
+#if DMibFloatConstexprEnabled
+		if (std::is_constant_evaluated())
+		{
+			CEmulatedFloat Temp(*this);
+			Temp.f_SinH();
+			return Temp;
+		}
+		else
+#endif
+			return NSys::NNumeric::fg_SinH(f_Get());
 	}
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_CosH() const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_CosH() const
 	{
-		return NSys::NNumeric::fg_CosH(f_Get());
+#if DMibFloatConstexprEnabled
+		if (std::is_constant_evaluated())
+		{
+			CEmulatedFloat Temp(*this);
+			Temp.f_CosH();
+			return Temp;
+		}
+		else
+#endif
+			return NSys::NNumeric::fg_CosH(f_Get());
 	}
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_TanH() const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_TanH() const
 	{
-		return NSys::NNumeric::fg_TanH(f_Get());
+#if DMibFloatConstexprEnabled
+		if (std::is_constant_evaluated())
+		{
+			CEmulatedFloat Temp(*this);
+			Temp.f_TanH();
+			return Temp;
+		}
+		else
+#endif
+			return NSys::NNumeric::fg_TanH(f_Get());
 	}
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_ArcSin() const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_ArcSin() const
 	{
-		return NSys::NNumeric::fg_ArcSin(f_Get());
+#if DMibFloatConstexprEnabled
+		if (std::is_constant_evaluated())
+		{
+			CEmulatedFloat Temp(*this);
+			Temp.f_ArcSin();
+			return Temp;
+		}
+		else
+#endif
+			return NSys::NNumeric::fg_ArcSin(f_Get());
 	}
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_ArcCos() const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_ArcCos() const
 	{
-		return NSys::NNumeric::fg_ArcCos(f_Get());
+#if DMibFloatConstexprEnabled
+		if (std::is_constant_evaluated())
+		{
+			CEmulatedFloat Temp(*this);
+			Temp.f_ArcCos();
+			return Temp;
+		}
+		else
+#endif
+			return NSys::NNumeric::fg_ArcCos(f_Get());
 	}
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_ArcTan() const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_ArcTan() const
 	{
-		return NSys::NNumeric::fg_ArcTan(f_Get());
+#if DMibFloatConstexprEnabled
+		if (std::is_constant_evaluated())
+		{
+			CEmulatedFloat Temp(*this);
+			Temp.f_ArcTan();
+			return Temp;
+		}
+		else
+#endif
+			return NSys::NNumeric::fg_ArcTan(f_Get());
 	}
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_ArcTan(const CIEEEFloat80 &_Source) const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_ArcTan(const CIEEEFloat80 &_Source) const
 	{
-		return NSys::NNumeric::fg_ArcTan(f_Get(), ((pfp80 &)_Source.m_Data));
+#if DMibFloatConstexprEnabled
+		if (std::is_constant_evaluated())
+		{
+			CEmulatedFloat Temp(*this);
+			Temp.f_ArcTan(CEmulatedFloat(_Source));
+			return Temp;
+		}
+		else
+#endif
+			return NSys::NNumeric::fg_ArcTan(f_Get(), _Source.m_DataImplicit);
 	}
 
 	/************************************************************************************************\
@@ -343,37 +433,109 @@ namespace NMib::NNumeric
 	\************************************************************************************************/
 
 
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_ExpN() const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_ExpN() const
 	{
-		return NSys::NNumeric::fg_ExpN(f_Get());
+#if DMibFloatConstexprEnabled
+		if (std::is_constant_evaluated())
+		{
+			CEmulatedFloat Temp(*this);
+			Temp.f_ExpN();
+			return Temp;
+		}
+		else
+#endif
+			return NSys::NNumeric::fg_ExpN(f_Get());
 	}
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_LogN() const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_LogN() const
 	{
-		return NSys::NNumeric::fg_LogN(f_Get());
+#if DMibFloatConstexprEnabled
+		if (std::is_constant_evaluated())
+		{
+			CEmulatedFloat Temp(*this);
+			Temp.f_LogN();
+			return Temp;
+		}
+		else
+#endif
+			return NSys::NNumeric::fg_LogN(f_Get());
 	}
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_Exp10() const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_Exp10() const
 	{
-		return NSys::NNumeric::fg_Exp10(f_Get());
+#if DMibFloatConstexprEnabled
+		if (std::is_constant_evaluated())
+		{
+			CEmulatedFloat Temp(*this);
+			Temp.f_Exp10();
+			return Temp;
+		}
+		else
+#endif
+			return NSys::NNumeric::fg_Exp10(f_Get());
 	}
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_Log10() const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_Log10() const
 	{
-		return NSys::NNumeric::fg_Log10(f_Get());
+#if DMibFloatConstexprEnabled
+		if (std::is_constant_evaluated())
+		{
+			CEmulatedFloat Temp(*this);
+			Temp.f_Log10();
+			return Temp;
+		}
+		else
+#endif
+			return NSys::NNumeric::fg_Log10(f_Get());
 	}
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_Exp2() const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_Exp2() const
 	{
-		return NSys::NNumeric::fg_Exp2(f_Get());
+#if DMibFloatConstexprEnabled
+		if (std::is_constant_evaluated())
+		{
+			CEmulatedFloat Temp(*this);
+			Temp.f_Exp2();
+			return Temp;
+		}
+		else
+#endif
+			return NSys::NNumeric::fg_Exp2(f_Get());
 	}
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_Log2() const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_Log2() const
 	{
-		return NSys::NNumeric::fg_Log2(f_Get());
+#if DMibFloatConstexprEnabled
+		if (std::is_constant_evaluated())
+		{
+			CEmulatedFloat Temp(*this);
+			Temp.f_Log2();
+			return Temp;
+		}
+		else
+#endif
+			return NSys::NNumeric::fg_Log2(f_Get());
 	}
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_Exp(const CIEEEFloat80 & _Base) const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_Exp(const CIEEEFloat80 & _Base) const
 	{
-		return NSys::NNumeric::fg_Exp(f_Get(), ((pfp80 &)_Base.m_Data));
+#if DMibFloatConstexprEnabled
+		if (std::is_constant_evaluated())
+		{
+			CEmulatedFloat Temp(*this);
+			Temp.f_Exp(CEmulatedFloat(_Base));
+			return Temp;
+		}
+		else
+#endif
+			return NSys::NNumeric::fg_Exp(f_Get(), _Base.m_DataImplicit);
 	}
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_Log(const CIEEEFloat80 & _Base) const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_Log(const CIEEEFloat80 & _Base) const
 	{
-		return NSys::NNumeric::fg_Log(f_Get(), ((pfp80 &)_Base.m_Data));
+#if DMibFloatConstexprEnabled
+		if (std::is_constant_evaluated())
+		{
+			CEmulatedFloat Temp(*this);
+			Temp.f_Log(CEmulatedFloat(_Base));
+			return Temp;
+		}
+		else
+#endif
+			return NSys::NNumeric::fg_Log(f_Get(), _Base.m_DataImplicit);
 	}
 
 	/************************************************************************************************\
@@ -382,18 +544,36 @@ namespace NMib::NNumeric
 	||______________________________________________________________________________________________||
 	\************************************************************************************************/
 
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_Sqrt() const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_Sqrt() const
 	{
-		return NSys::NNumeric::fg_Sqrt(f_Get());
+#if DMibFloatConstexprEnabled
+		if (std::is_constant_evaluated())
+		{
+			CEmulatedFloat Temp(*this);
+			Temp.f_Sqrt();
+			return Temp;
+		}
+		else
+#endif
+			return NSys::NNumeric::fg_Sqrt(f_Get());
 	}
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_Sqr() const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_Sqr() const
 	{
 		return (f_Get()) * (f_Get());
 	}
 
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_Pow(const CIEEEFloat80 &_Power) const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_Pow(const CIEEEFloat80 &_Power) const
 	{
-		return NSys::NNumeric::fg_Pow(f_Get(), ((pfp80 &)_Power.m_Data));
+#if DMibFloatConstexprEnabled
+		if (std::is_constant_evaluated())
+		{
+			CEmulatedFloat Temp(*this);
+			Temp.f_Pow(CEmulatedFloat(_Power));
+			return Temp;
+		}
+		else
+#endif
+			return NSys::NNumeric::fg_Pow(f_Get(), _Power.m_DataImplicit);
 	}
 
 
@@ -403,7 +583,7 @@ namespace NMib::NNumeric
 	||______________________________________________________________________________________________||
 	\************************************************************************************************/
 
-	template <> inline_small CIEEEFloat80::CInteger CIEEEFloat80::f_ToInt() const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80::CInteger CIEEEFloat80::f_ToInt() const
 	{
 		pfp80 ToLoad = f_Get();
 #ifdef DMibPCanDo_int128
@@ -413,7 +593,7 @@ namespace NMib::NNumeric
 #endif
 	}
 
-	template <> inline_small CIEEEFloat80::CUnsignedInteger CIEEEFloat80::f_ToUnsignedInt() const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80::CUnsignedInteger CIEEEFloat80::f_ToUnsignedInt() const
 	{
 		pfp80 ToLoad = f_Get();
 #ifdef DMibPCanDo_int128
@@ -423,32 +603,68 @@ namespace NMib::NNumeric
 #endif
 	}
 
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_Floor() const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_Floor() const
 	{
-		return NSys::NNumeric::fg_Floor(f_Get());
+#if DMibFloatConstexprEnabled
+		if (std::is_constant_evaluated())
+		{
+			CEmulatedFloat Temp(*this);
+			Temp.f_Floor();
+			return Temp;
+		}
+		else
+#endif
+			return NSys::NNumeric::fg_Floor(f_Get());
 	}
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_Ceil() const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_Ceil() const
 	{
-		return NSys::NNumeric::fg_Ceil(f_Get());
+#if DMibFloatConstexprEnabled
+		if (std::is_constant_evaluated())
+		{
+			CEmulatedFloat Temp(*this);
+			Temp.f_Ceil();
+			return Temp;
+		}
+		else
+#endif
+			return NSys::NNumeric::fg_Ceil(f_Get());
 	}
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_Abs() const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_Abs() const
 	{
-		return NSys::NNumeric::fg_Abs(f_Get());
+#if DMibFloatConstexprEnabled
+		if (std::is_constant_evaluated())
+		{
+			CEmulatedFloat Temp(*this);
+			Temp.f_Abs();
+			return Temp;
+		}
+		else
+#endif
+			return NSys::NNumeric::fg_Abs(f_Get());
 	}
-	template <> inline_small CIEEEFloat80 CIEEEFloat80::f_Mod(const TCFloat &_Modulu) const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat80 CIEEEFloat80::f_Mod(const TCFloat &_Modulu) const
 	{
-		return NSys::NNumeric::fg_Mod(f_Get(), ((pfp80 &)_Modulu.m_Data));
+#if DMibFloatConstexprEnabled
+		if (std::is_constant_evaluated())
+		{
+			CEmulatedFloat Temp(*this);
+			Temp.f_Mod(CEmulatedFloat(_Modulu));
+			return Temp;
+		}
+		else
+#endif
+			return NSys::NNumeric::fg_Mod(f_Get(), _Modulu.m_DataImplicit);
 	}
 
 
-	template <> inline_small bool CIEEEFloat80::operator == (const CIEEEFloat80 &_Value) const
+	template <> DMibFloatConstexpr inline_small bool CIEEEFloat80::operator == (const CIEEEFloat80 &_Value) const
 	{
-		return f_Get() == ((pfp80 &)_Value.m_Data);
+		return f_Get() == _Value.m_DataImplicit;
 	}
 
-	template <> inline_small bool CIEEEFloat80::operator < (const CIEEEFloat80 &_Value) const
+	template <> DMibFloatConstexpr inline_small bool CIEEEFloat80::operator < (const CIEEEFloat80 &_Value) const
 	{
-		return f_Get() < ((pfp80 &)_Value.m_Data);
+		return f_Get() < _Value.m_DataImplicit;
 	}
 }
 
@@ -461,7 +677,7 @@ namespace NMib
 	class TCConvert< _ToType, _FromType>\
 	{\
 	public:\
-		static inline_small _ToType fs_Convert( _FromType const &_From)\
+		static DMibFloatConstexpr inline_small _ToType fs_Convert( _FromType const &_From)\
 		{\
 			return _From;\
 		}\
@@ -484,7 +700,7 @@ namespace NMib
 	class TCConvert< _ToType, _FromType>\
 	{\
 	public:\
-		static inline_small _ToType fs_Convert( _FromType const &_From)\
+		static DMibFloatConstexpr inline_small _ToType fs_Convert( _FromType const &_From)\
 		{\
 			return _From.f_Get();\
 		}\
@@ -501,15 +717,15 @@ namespace NMib
 #endif
 
 	DMibMathFloatConvertNative(CIEEEFloat80, pfp80);
-	
+
 #undef DMibMathFloatConvertNative
-	
+
 #define DMibMathFloatConvertInt(_FromType, _ToType) \
 	template <>\
 	class TCConvert< _ToType, _FromType >\
 	{\
 	public:\
-		static inline_small _ToType fs_Convert( _FromType const &_From)\
+		static DMibFloatConstexpr inline_small _ToType fs_Convert( _FromType const &_From)\
 		{\
 			return NMib::fg_Convert<_ToType>(_From.f_ToInt());\
 		}\
@@ -518,10 +734,10 @@ namespace NMib
 	class TCConvert< _FromType, _ToType >\
 	{\
 	public:\
-		static inline_small _FromType fs_Convert( _ToType const &_From)\
+		static DMibFloatConstexpr inline_small _FromType fs_Convert( _ToType const &_From)\
 		{\
 			_FromType Ret;\
-			((_FromType::CImplicitFloat &)Ret) = _From;\
+			Ret.f_GetImplicit() = _From;\
 			return Ret;\
 		}\
 	};
@@ -592,7 +808,7 @@ namespace NMib
 #ifdef DMibPCanDo_uint320
 	DMibMathFloatConvertInt(CIEEEFloat80, uint320);
 #endif
-	
+
 #ifdef DMibPCanDo_int512
 	DMibMathFloatConvertInt(CIEEEFloat80, int512);
 #endif

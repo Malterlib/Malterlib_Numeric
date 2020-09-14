@@ -299,10 +299,9 @@ namespace
 		template <typename tf_CType>
 		static auto fs_GetName(tf_CType const &_Type)
 		{
-#if defined(DArchitecture_arm64)
 			if (_Type.f_IsNan())
 				return NMib::NStr::CStr::fs_ToStr(_Type.f_Abs());
-#endif
+
 			return NMib::NStr::CStr::fs_ToStr(_Type);
 		}
 
