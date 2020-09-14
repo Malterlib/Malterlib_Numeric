@@ -1,9 +1,7 @@
-// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #if 1
-
-#include "Test_Malterlib_Numeric_Integer.h"
 
 using namespace NMib::NNumeric;
 namespace
@@ -265,42 +263,6 @@ namespace
 
 		void f_DoTests()
 		{
-
-#if 0
-			TCInt2<32> IntTest;
-			IntTest;
-
-			TCCombineInt<31> Inter;
-			Inter;
-
-			int Temee = sizeof(Inter);
-
-			{
-				
-
-				int256 Test = NMib::NStr::fg_StrToInt("0x9abcdef123456789abcdef123456789abcdef123456789abcdef123456789abc", int256(-1));
-				Test = Test << (64 + 8);
-				Test = Test >> (64);
-				Test = Test >> (64);
-			}
-
-
-			auto &Test0 = Inter.f_GetInt<0>();
-			auto &Test1 = Inter.f_GetInt<1>();
-			auto &Test2 = Inter.f_GetInt<2>();
-			auto &Test3 = Inter.f_GetInt<3>();
-			auto &Test4 = Inter.f_GetInt<4>();
-			auto &Test5 = Inter.f_GetInt<5>();
-//			auto &Test6 = Inter.f_GetInt<6>();
-			Test0 = 0;
-			Test1 = 1;
-			Test2 = 2;
-			Test3 = 3;
-			Test4 = 4;
-			Test5 = 5;
-//			Test6 = 6;
-#endif
-
 			DMibTestCategoryFlags("Shift Left", ETestCategoryFlag_DisableValues | ETestCategoryFlag_Tests)
 			{
 				this->f_TestAll<CShiftLeft>();
@@ -402,15 +364,7 @@ namespace
 				DMibStaticCheck(NMib::TCLimitsInt<uint32>::mc_Max == uint32(0xffffffff));
 				DMibStaticCheck(NMib::TCLimitsInt<int32>::mc_Min == int32(0x80000000));
 				DMibStaticCheck(NMib::TCLimitsInt<int32>::mc_Max == int32(0x7fffffff));
-
-				DMibTest(DMibExpr(NMib::TCLimitsIntDyn<uint32>::mc_Min) == DMibExpr(0u));
-				DMibTest(DMibExpr(NMib::TCLimitsIntDyn<uint32>::mc_Max) == DMibExpr(uint32(0xffffffff)));
-				DMibTest(DMibExpr(NMib::TCLimitsIntDyn<int32>::mc_Min) == DMibExpr(int32(0x80000000)));
-				DMibTest(DMibExpr(NMib::TCLimitsIntDyn<int32>::mc_Max) == DMibExpr(int32(0x7fffffff)));
-			
 			};
-	
-
 		}
 	};
 
@@ -451,7 +405,7 @@ public:
 		return(((holdrand = holdrand * 214013L + 2531011L) >> 16) & 0x7fff);
 	}
 
-	bool f_AutomaticTest() 
+	bool f_AutomaticTest()
 	{
 		return true;
 	}
@@ -479,7 +433,7 @@ public:
 	uint32 f_GetHighestPower2_BSR(uint32 _Number)
 	{
 		int32 v = f_BitScanReverse_Test(_Number - 1);
-		
+
 		return 1 << (v + 1);
 	}
 
@@ -496,11 +450,11 @@ public:
 
 	NMib::NStr::CStr Certify(CTestInterface &_Interface)
 	{
-		
+
 		uint16 Swap16 = 0x0123;
 		uint32 Swap32 = 0x01234567;
 		uint64 Swap64 = 0x0123456789abcdefll;
-		
+
 		Swap16 = NMib::fg_ByteSwap(Swap16);
 		Swap32 = NMib::fg_ByteSwap(Swap32);
 		Swap64 = NMib::fg_ByteSwap(Swap64);
@@ -514,7 +468,7 @@ public:
 		aint Highest6 = NMib::fg_GetHighestBitSet(uint64(0x0000056625540066));
 
 		DMibTrace("{} {} {} {} {} {} {}\n", Highest0 << Highest1 << Highest2 << Highest3 << Highest4 << Highest5 << Highest6);
-		
+
 		uint64 Temp = constant_uint64(40000000000);
 		Temp += -3;
 		TCInt<uint8, uint8> TestInt(0, 0);
@@ -531,7 +485,7 @@ public:
 		TestInt1 = TCInt<int8, uint8>(50 + 256) - TCInt<int8, uint8>(80+256);
 		Test1 = NMib::fg_Convert<int16>(TestInt1);
 
-		
+
 		TestInt1 = TCInt<int8, uint8>(-12152) << 4;
 		Test1 = NMib::fg_Convert<int16>(TestInt1);
 //		Test1 = (int16)(int16(-12152) << 4);
@@ -1227,7 +1181,7 @@ public:
 		return "";
 
 	}
-		
+
 };
 
 DMibRuntimeClass(CMalterlibTest, CTestInt);
