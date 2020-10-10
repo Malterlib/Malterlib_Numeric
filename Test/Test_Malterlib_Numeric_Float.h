@@ -68,13 +68,12 @@ namespace NMib
 		class TCFloatConstant
 		{
 		public:
-#ifndef DMibNoAggregateConstexpr
 			constexpr TCFloatConstant(EAggregateInitialization _Init)
 				: mp_bInit{}
 				, mp_Float{_Init}
 			{
 			}
-#endif
+
 			bool mp_bInit;
 			NStorage::TCAggregateSimple<t_CFloat> mp_Float;
 			operator const t_CFloat & ()
