@@ -574,9 +574,9 @@ namespace NMib::NNumeric
 		return f_Get() == _Value.m_DataImplicit;
 	}
 
-	template <> DMibFloatConstexpr inline_small bool CIEEEFloat32::operator < (const CIEEEFloat32 &_Value) const
+	template <> DMibFloatConstexpr inline_small COrdering_Partial CIEEEFloat32::operator <=> (const CIEEEFloat32 &_Value) const
 	{
-		return f_Get() < _Value.m_DataImplicit;
+		return f_Get() <=> _Value.m_DataImplicit;
 	}
 }
 

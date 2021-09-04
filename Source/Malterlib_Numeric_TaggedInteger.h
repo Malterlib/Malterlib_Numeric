@@ -24,7 +24,7 @@ namespace NMib::NNumeric
 		constexpr TCTaggedInteger &operator ++ ();
 
 		constexpr inline_small bool operator == (const TCTaggedInteger &_Data) const;
-		constexpr inline_small bool operator < (const TCTaggedInteger &_Data) const;
+		constexpr inline_small auto operator <=> (const TCTaggedInteger &_Data) const;
 
 		constexpr inline_small t_CType f_Get() const;
 		constexpr inline_small void f_Set(const t_CType &_Source);

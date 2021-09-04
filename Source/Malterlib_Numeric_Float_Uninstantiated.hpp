@@ -353,46 +353,69 @@ namespace NMib::NNumeric
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 	template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bool t_bDummyOptimize2, typename t_CIntegerStorage2>
-	DMibFloatConstexpr bool TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::operator < (TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_Right) const
+	DMibFloatConstexpr bool TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::operator ==
+		(
+			NMib::NNumeric::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_Right
+		) const
+	{
+		return (*this <=> _Right) == COrdering_Partial::equivalent;
+	}
+
+	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
+	template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bool t_bDummyOptimize2, typename t_CIntegerStorage2>
+	DMibFloatConstexpr COrdering_Partial TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::operator <=>
+		(
+			TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_Right
+		) const
 	{
 		if (f_IsNan() || _Right.f_IsNan())
-			return false;
+			return COrdering_Partial::unordered;
+
 		typedef TCFloat CLeftFloat;
 		typedef TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> CRightFloat;
 
 		using CLeftInteger = typename CLeftFloat::CInteger;
 		using CRightInteger = typename CRightFloat::CInteger;
+		using CBiggerInteger = typename TCChooseType<sizeof(CLeftInteger) >= sizeof(CRightInteger), CLeftInteger, CRightInteger>::CType;
 
-		CLeftInteger ExponentLeft;
-		CRightInteger ExponentRight;
+		CLeftInteger ExponentLeftGet;
+		CRightInteger ExponentRightGet;
 		CLeftInteger MantissaLeft;
 		CRightInteger MantissaRight;
-		f_GetNormalized(ExponentLeft, MantissaLeft);
-		_Right.f_GetNormalized(ExponentRight, MantissaRight);
+		f_GetNormalized(ExponentLeftGet, MantissaLeft);
+		_Right.f_GetNormalized(ExponentRightGet, MantissaRight);
+
+		CBiggerInteger ExponentLeft = fg_Convert<CBiggerInteger>(ExponentLeftGet);
+		CBiggerInteger ExponentRight = fg_Convert<CBiggerInteger>(ExponentRightGet);
+
+		CBiggerInteger SignLeft = fg_Convert<CBiggerInteger>(f_GetSign());
+		CBiggerInteger SignRight = fg_Convert<CBiggerInteger>(_Right.f_GetSign());
 
 		if (MantissaLeft == 0 && MantissaRight == 0)
-			return false;
+			return COrdering_Partial::equivalent;
 
-		if (f_GetSign() < _Right.f_GetSign())
-			return true;
-		else if (f_GetSign() > _Right.f_GetSign())
-			return false;
+		if (SignLeft < SignRight)
+			return COrdering_Partial::less;
+		else if (SignLeft > SignRight)
+			return COrdering_Partial::greater;
 
-		if (f_GetSign() > CLeftFloat::CInteger(0))
+		if (SignLeft > CBiggerInteger(0))
 		{
 			if (ExponentLeft < ExponentRight)
-				return true;
+				return COrdering_Partial::less;
 			else if (ExponentLeft > ExponentRight)
-				return false;
+				return COrdering_Partial::greater;
 
-			if (uaint(CLeftFloat::mc_MantissaBits) > uaint(CRightFloat::mc_MantissaBits))
+			if constexpr (uaint(CLeftFloat::mc_MantissaBits) > uaint(CRightFloat::mc_MantissaBits))
 			{
 				uaint nBits = (uaint(CLeftFloat::mc_MantissaBits) - uaint(CRightFloat::mc_MantissaBits));
 				CLeftInteger LeftMantissa = MantissaLeft;
 				CLeftInteger RightMantissa = CLeftFloat::CInteger(MantissaRight) << nBits;
 
 				if (LeftMantissa < RightMantissa)
-					return true;
+					return COrdering_Partial::less;
+				else if (LeftMantissa > RightMantissa)
+					return COrdering_Partial::greater;
 			}
 			else
 			{
@@ -401,23 +424,28 @@ namespace NMib::NNumeric
 				CRightInteger RightMantissa = MantissaRight;
 
 				if (LeftMantissa < RightMantissa)
-					return true;
+					return COrdering_Partial::less;
+				else if (LeftMantissa > RightMantissa)
+					return COrdering_Partial::greater;
 			}
 		}
 		else
 		{
 			if (ExponentLeft > ExponentRight)
-				return true;
+				return COrdering_Partial::less;
 			else if (ExponentLeft < ExponentRight)
-				return false;
-			if (uaint(CLeftFloat::mc_MantissaBits) > uaint(CRightFloat::mc_MantissaBits))
+				return COrdering_Partial::greater;
+
+			if constexpr (uaint(CLeftFloat::mc_MantissaBits) > uaint(CRightFloat::mc_MantissaBits))
 			{
 				uaint nBits = (uaint(CLeftFloat::mc_MantissaBits) - uaint(CRightFloat::mc_MantissaBits));
 				CLeftInteger LeftMantissa = MantissaLeft;
 				CLeftInteger RightMantissa = CLeftInteger(MantissaRight) << nBits;
 
 				if (LeftMantissa > RightMantissa)
-					return true;
+					return COrdering_Partial::less;
+				else if (LeftMantissa < RightMantissa)
+					return COrdering_Partial::greater;
 			}
 			else
 			{
@@ -426,83 +454,12 @@ namespace NMib::NNumeric
 				CRightInteger RightMantissa = MantissaRight;
 
 				if (LeftMantissa > RightMantissa)
-					return true;
+					return COrdering_Partial::less;
+				else if (LeftMantissa < RightMantissa)
+					return COrdering_Partial::greater;
 			}
 		}
-		return false;
-	}
 
-	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bool t_bDummyOptimize2, typename t_CIntegerStorage2>
-	DMibFloatConstexpr bool TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::operator == (NMib::NNumeric::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_Right) const
-	{
-		if (f_IsNan() || _Right.f_IsNan())
-			return false;
-		typedef TCFloat CLeftFloat;
-		typedef NMib::NNumeric::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> CRightFloat;
-
-		using CLeftInteger = typename CLeftFloat::CInteger;
-		using CRightInteger = typename CRightFloat::CInteger;
-		using CLargestInteger = typename NTraits::TCLargestType<CLeftInteger, CRightInteger>::CType;
-
-		CLeftInteger ExponentLeft;
-		CRightInteger ExponentRight;
-		CLeftInteger MantissaLeft;
-		CRightInteger MantissaRight;
-		f_GetNormalized(ExponentLeft, MantissaLeft);
-		_Right.f_GetNormalized(ExponentRight, MantissaRight);
-
-		if (MantissaLeft == 0 && MantissaRight == 0)
-			return true;
-
-		if (!(fg_Convert<CLargestInteger>(f_GetSign()) == fg_Convert<CLargestInteger>(_Right.f_GetSign())))
-			return false;
-
-		if (!(fg_Convert<CLargestInteger>(ExponentLeft) == fg_Convert<CLargestInteger>(ExponentRight)))
-			return false;
-
-		if (uaint(CLeftFloat::mc_MantissaBits) > uaint(CRightFloat::mc_MantissaBits))
-		{
-			uaint nBits = (uaint(CLeftFloat::mc_MantissaBits) - uaint(CRightFloat::mc_MantissaBits));
-			CLeftInteger LeftMantissa = MantissaLeft;
-			CLeftInteger RightMantissa = CLeftInteger(MantissaRight) << nBits;
-
-			if (!(LeftMantissa == RightMantissa))
-				return false;
-		}
-		else
-		{
-			uaint nBits = (uaint(CRightFloat::mc_MantissaBits) - uaint(CLeftFloat::mc_MantissaBits));
-			CRightInteger LeftMantissa = CRightInteger(MantissaLeft) << nBits;
-			CRightInteger RightMantissa = MantissaRight;
-
-			if (!(LeftMantissa == RightMantissa))
-				return false;
-		}
-		return true;
-	}
-
-	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	DMibFloatConstexpr bool operator < (NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> const &_Left, typename NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::CImplicitFloat const &_Right)
-	{
-		return _Left.f_Get() < _Right;
-	}
-
-	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	DMibFloatConstexpr bool operator < (typename NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::CImplicitFloat const &_Left, NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> const &_Right)
-	{
-		return _Left < _Right.f_Get();
-	}
-
-	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	DMibFloatConstexpr bool operator == (NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> const &_Left, typename NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::CImplicitFloat const &_Right)
-	{
-		return _Left.f_Get() == _Right;
-	}
-
-	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	DMibFloatConstexpr bool operator == (typename NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::CImplicitFloat const &_Left, NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> const &_Right)
-	{
-		return _Left == _Right.f_Get();
+		return COrdering_Partial::equivalent;
 	}
 }

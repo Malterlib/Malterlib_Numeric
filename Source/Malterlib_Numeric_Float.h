@@ -45,6 +45,7 @@ namespace NMib::NNumeric
 {
 	struct CNoImplicit
 	{
+		auto operator <=> (CNoImplicit const &_Right) const = default;
 	};
 
 	template <typename t_CFloat>
@@ -424,22 +425,33 @@ namespace NMib::NNumeric
 		DMibFloatConstexpr bool f_AlmostEqual(TCFloat const &_Other, mint _nMantissaBits = 1) const;
 
 		DMibFloatConstexpr bool operator == (const TCFloat &_Value) const;
-		DMibFloatConstexpr bool operator < (const TCFloat &_Value) const;
+		DMibFloatConstexpr COrdering_Partial operator <=> (const TCFloat &_Value) const;
+
 		template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bool t_bDummyOptimize2, typename t_CIntegerStorage2>
-		DMibFloatConstexpr bool operator < (TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_Right) const;
+		DMibFloatConstexpr bool operator ==
+			(
+				NMib::NNumeric::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_Right
+			) const
+		;
 		template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bool t_bDummyOptimize2, typename t_CIntegerStorage2>
-		DMibFloatConstexpr bool operator == (NMib::NNumeric::TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_Right) const;
+		DMibFloatConstexpr COrdering_Partial operator <=>
+			(
+				TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_Right
+			) const
+		;
+
+		DMibFloatConstexpr bool operator == (CImplicitFloat const &_Right) const
+		{
+			return f_Get() == _Right;
+		}
+
+		DMibFloatConstexpr COrdering_Partial operator <=> (CImplicitFloat const &_Right) const
+		{
+			return f_Get() <=> _Right;
+		}
+
 		DMibFloatConstexpr explicit operator bool() const;
 	};
-
-	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	DMibFloatConstexpr bool operator < (NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> const &_Left, typename NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::CImplicitFloat const &_Right);
-	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	DMibFloatConstexpr bool operator < (typename NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::CImplicitFloat const &_Left, NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> const &_Right);
-	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	DMibFloatConstexpr bool operator == (NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> const &_Left, typename NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::CImplicitFloat const &_Right);
-	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	DMibFloatConstexpr bool operator == (typename NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::CImplicitFloat const &_Left, NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> const &_Right);
 }
 
 namespace NMib::NTraits::NImplementation

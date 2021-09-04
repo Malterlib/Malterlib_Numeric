@@ -18,24 +18,7 @@ typedef CIEEEFloat80 fp80;
 typedef NMib::TCAutoClear<fp80> zfp80;
 //typedef NMib::TCAutoClear<ufp80> zufp80;
 
-#if defined(DMibPFloat_StdLib) && defined(DMibPCanDo_fp80)
-#	include "Malterlib_Numeric_Float_StdLib_fp80.h"
-#endif
-
 namespace NMib::NTraits
 {
 	DMibTraitsImplementFloatFromSize(fp80);
-}
-
-namespace NMib::NNumeric
-{
-#ifndef DMibFloattDoInline_NoExternTemplate
-	#ifdef DMibPCanDo_fp80
-		extern template class TCFloat<1, 15, 63, pfp80>;
-		extern template class TCFloat<1, 15, 63, pfp80, 0>;
-	#else
-		extern template class TCFloat<1, 15, 63>;
-		extern template class TCFloat<1, 15, 63, CNoImplicit, 0>;
-	#endif
-#endif
 }

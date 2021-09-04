@@ -24,25 +24,8 @@ static_assert(NMib::NTraits::TCAlignmentOf<pfp64>::mc_Value == 8);
 static_assert(NMib::NTraits::TCAlignmentOf<fp64>::mc_Value == 8);
 #endif
 
-#if defined(DMibPFloat_StdLib) && defined(DMibPCanDo_fp64)
-#	include "Malterlib_Numeric_Float_StdLib_fp64.h"
-#endif
-
 namespace NMib::NTraits
 {
 	DMibTraitsImplementFloatFromSize(fp64);
 	DMibTraitsImplementSizePair(fp32, fp64);
-}
-
-namespace NMib::NNumeric
-{
-#ifndef DMibFloattDoInline_NoExternTemplate
-	#ifdef DMibPCanDo_fp64
-		extern template class TCFloat<1, 11, 52, pfp64, 0>;
-		extern template class TCFloat<1, 11, 52, pfp64>;
-	#else
-		extern template class TCFloat<1, 11, 52>;
-		extern template class TCFloat<1, 11, 52, CNoImplicit, 0>;
-	#endif
-#endif
 }

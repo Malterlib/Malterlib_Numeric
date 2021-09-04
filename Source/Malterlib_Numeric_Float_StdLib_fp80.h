@@ -148,16 +148,16 @@ namespace NMib::NNumeric
 
 	template < >
 	template < >
-	inline_always bool CIEEEFloat80 :: operator < (const CIEEEFloat32 &_SetValue) const
+	inline_always bool CIEEEFloat80 :: operator == (const CIEEEFloat32 &_SetValue) const
 	{
-		return f_Get() < _SetValue.f_Get();
+		return f_Get() == _SetValue.f_Get();
 	}
 
 	template < >
 	template < >
-	inline_always bool CIEEEFloat80 :: operator == (const CIEEEFloat32 &_SetValue) const
+	inline_always COrdering_Partial CIEEEFloat80 :: operator <=> (const CIEEEFloat32 &_SetValue) const
 	{
-		return f_Get() == _SetValue.f_Get();
+		return f_Get() <=> _SetValue.f_Get();
 	}
 
 	template < >
@@ -169,16 +169,16 @@ namespace NMib::NNumeric
 
 	template < >
 	template < >
-	inline_always bool CIEEEFloat32 :: operator < (const CIEEEFloat80 &_SetValue) const
+	inline_always bool CIEEEFloat32 :: operator == (const CIEEEFloat80 &_SetValue) const
 	{
-		return f_Get() < _SetValue.f_Get();
+		return f_Get() == _SetValue.f_Get();
 	}
 
 	template < >
 	template < >
-	inline_always bool CIEEEFloat32 :: operator == (const CIEEEFloat80 &_SetValue) const
+	inline_always COrdering_Partial CIEEEFloat32 :: operator <=> (const CIEEEFloat80 &_SetValue) const
 	{
-		return f_Get() == _SetValue.f_Get();
+		return f_Get() <=> _SetValue.f_Get();
 	}
 #endif
 
@@ -192,17 +192,18 @@ namespace NMib::NNumeric
 
 	template < >
 	template < >
-	inline_always bool CIEEEFloat80 :: operator < (const CIEEEFloat64 &_SetValue) const
-	{
-		return f_Get() < _SetValue.f_Get();
-	}
-
-	template < >
-	template < >
 	inline_always bool CIEEEFloat80 :: operator == (const CIEEEFloat64 &_SetValue) const
 	{
 		return f_Get() == _SetValue.f_Get();
 	}
+
+	template < >
+	template < >
+	inline_always COrdering_Partial CIEEEFloat80 :: operator <=> (const CIEEEFloat64 &_SetValue) const
+	{
+		return f_Get() <=> _SetValue.f_Get();
+	}
+
 	template < >
 	template < >
 	inline_always void CIEEEFloat64 ::f_Assign(const CIEEEFloat80 &_SetValue)
@@ -212,16 +213,16 @@ namespace NMib::NNumeric
 
 	template < >
 	template < >
-	inline_always bool CIEEEFloat64 :: operator < (const CIEEEFloat80 &_SetValue) const
+	inline_always bool CIEEEFloat64 :: operator == (const CIEEEFloat80 &_SetValue) const
 	{
-		return f_Get() < _SetValue.f_Get();
+		return f_Get() == _SetValue.f_Get();
 	}
 
 	template < >
 	template < >
-	inline_always bool CIEEEFloat64 :: operator == (const CIEEEFloat80 &_SetValue) const
+	inline_always COrdering_Partial CIEEEFloat64 :: operator <=> (const CIEEEFloat80 &_SetValue) const
 	{
-		return f_Get() == _SetValue.f_Get();
+		return f_Get() <=> _SetValue.f_Get();
 	}
 #endif
 
@@ -656,15 +657,14 @@ namespace NMib::NNumeric
 			return NSys::NNumeric::fg_Mod(f_Get(), _Modulu.m_DataImplicit);
 	}
 
-
 	template <> DMibFloatConstexpr inline_small bool CIEEEFloat80::operator == (const CIEEEFloat80 &_Value) const
 	{
 		return f_Get() == _Value.m_DataImplicit;
 	}
 
-	template <> DMibFloatConstexpr inline_small bool CIEEEFloat80::operator < (const CIEEEFloat80 &_Value) const
+	template <> DMibFloatConstexpr inline_small COrdering_Partial CIEEEFloat80::operator <=> (const CIEEEFloat80 &_Value) const
 	{
-		return f_Get() < _Value.m_DataImplicit;
+		return f_Get() <=> _Value.m_DataImplicit;
 	}
 }
 

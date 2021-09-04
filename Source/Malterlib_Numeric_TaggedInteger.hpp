@@ -26,9 +26,9 @@ namespace NMib::NNumeric
 	}
 
 	template <typename t_CType, typename t_CTag, t_CType t_DefaultInit>
-	constexpr inline_small bool TCTaggedInteger<t_CType, t_CTag, t_DefaultInit>::operator < (const TCTaggedInteger &_Data) const
+	constexpr inline_small auto TCTaggedInteger<t_CType, t_CTag, t_DefaultInit>::operator <=> (const TCTaggedInteger &_Data) const
 	{
-		return this->mp_Data < _Data.mp_Data;
+		return this->mp_Data <=> _Data.mp_Data;
 	}
 
 	template <typename t_CType, typename t_CTag, t_CType t_DefaultInit>

@@ -644,9 +644,12 @@ namespace NMib::NNumeric
 			return m_Lower == _Value.m_Lower && m_Upper == _Value.m_Upper;
 		}
 
-		constexpr bool operator < (const TCInt &_Value) const
+		constexpr COrdering_Strong operator <=> (const TCInt &_Value) const
 		{
-			return m_Upper < _Value.m_Upper || (m_Upper == _Value.m_Upper && m_Lower < _Value.m_Lower);
+			if (auto Result = m_Upper <=> _Value.m_Upper; Result != 0)
+				return Result;
+
+			return m_Lower <=> _Value.m_Lower;
 		}
 	};
 

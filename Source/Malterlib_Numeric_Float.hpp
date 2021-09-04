@@ -2076,7 +2076,11 @@ namespace NMib::NNumeric
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	DMibFloatConstexpr bool TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::f_AlmostEqual(TCFloat const &_Other, mint _nMantissaBits) const
+	DMibFloatConstexpr bool TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::f_AlmostEqual
+		(
+			TCFloat const &_Other
+			, mint _nMantissaBits
+		) const
 	{
 		if (f_IsNan() || _Other.f_IsNan())
 			return false;
@@ -2136,29 +2140,34 @@ namespace NMib::NNumeric
 		if (f_IsNan() || _Value.f_IsNan())
 			return false;
 
+		if (m_Data == _Value.m_Data)
+			return true;
+
 		CInteger Sign0 = f_GetSignBits();
 		CInteger Sign1 = _Value.f_GetSignBits();
-		CInteger Exponent0;
-		CInteger Exponent1;
-		CInteger Mantissa0;
-		CInteger Mantissa1;
-		f_GetNormalized(Exponent0, Mantissa0);
-		_Value.f_GetNormalized(Exponent1, Mantissa1);
 
 		if (Sign0 != Sign1)
 		{
+			CInteger Exponent0;
+			CInteger Exponent1;
+			CInteger Mantissa0;
+			CInteger Mantissa1;
+			f_GetNormalized(Exponent0, Mantissa0);
+			_Value.f_GetNormalized(Exponent1, Mantissa1);
+
 			if (Mantissa0 == 0 && Mantissa1 == 0 && Exponent0 == Exponent1)
 				return true;
 		}
 
-		return m_Data == _Value.m_Data;
+		return false;
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	DMibFloatConstexpr bool TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::operator < (const TCFloat &_Value) const
+	DMibFloatConstexpr auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::operator <=> (const TCFloat &_Value) const
+		-> COrdering_Partial
 	{
 		if (f_IsNan() || _Value.f_IsNan())
-			return false;
+			return COrdering_Partial::unordered;
 
 		CInteger Sign0 = f_GetSignBits();
 		CInteger Sign1 = _Value.f_GetSignBits();
@@ -2172,31 +2181,40 @@ namespace NMib::NNumeric
 		if (Sign1 < Sign0)
 		{
 			if (Mantissa0 == 0 && Mantissa1 == 0 && Exponent0 == Exponent1)
-				return false;
-			return true;
+				return COrdering_Partial::equivalent;
+			return COrdering_Partial::less;
 		}
 		else if (Sign1 > Sign0)
-			return false;
+		{
+			if (Mantissa0 == 0 && Mantissa1 == 0 && Exponent0 == Exponent1)
+				return COrdering_Partial::equivalent;
+			return COrdering_Partial::greater;
+		}
 
 		if (Sign0)
 		{
 			if (Exponent0 > Exponent1)
-				return true;
+				return COrdering_Partial::less;
 			else if (Exponent0 < Exponent1)
-				return false;
+				return COrdering_Partial::greater;
 			if (Mantissa0 > Mantissa1)
-				return true;
+				return COrdering_Partial::less;
+			else if (Mantissa0 < Mantissa1)
+				return COrdering_Partial::greater;
 		}
 		else
 		{
 			if (Exponent0 < Exponent1)
-				return true;
+				return COrdering_Partial::less;
 			else if (Exponent0 > Exponent1)
-				return false;
+				return COrdering_Partial::greater;
 			if (Mantissa0 < Mantissa1)
-				return true;
+				return COrdering_Partial::less;
+			else if (Mantissa0 > Mantissa1)
+				return COrdering_Partial::greater;
 		}
-		return false;
+
+		return COrdering_Partial::equivalent;
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
