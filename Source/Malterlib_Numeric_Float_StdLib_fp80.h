@@ -44,8 +44,6 @@ namespace NMib::NSys::NNumeric
 	#pragma warning(disable : 4725) // Disable warning about erronous pentiums
 #endif
 
-#ifndef DDocumentation_Doxygen
-
 namespace NMib::NNumeric
 {
 	template <> DMibFloatConstexpr inline_small CIEEEFloat80::TCFloat(TCFloat const &_Other)
@@ -667,8 +665,6 @@ namespace NMib::NNumeric
 		return f_Get() <=> _Value.m_DataImplicit;
 	}
 }
-
-#endif
 
 namespace NMib
 {

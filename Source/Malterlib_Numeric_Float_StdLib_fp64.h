@@ -40,8 +40,6 @@ namespace NMib::NSys::NNumeric
 	pfp64 fg_Mod(pfp64 _Val, pfp64 _Modulu);
 }
 
-#ifndef DDocumentation_Doxygen
-
 namespace NMib::NNumeric
 {
 #ifdef DCompiler_MSVC
@@ -612,8 +610,6 @@ namespace NMib::NNumeric
 		return f_Get() <=> _Value.m_DataImplicit;
 	}
 }
-
-#endif
 
 namespace NMib
 {

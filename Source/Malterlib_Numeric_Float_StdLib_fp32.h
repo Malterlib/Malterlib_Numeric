@@ -52,8 +52,6 @@ namespace NMib::NSys::NNumeric
 		|_________________________________________________________________________________________________|
 		\************************************************************************************************/
 
-#ifndef DDocumentation_Doxygen
-
 namespace NMib::NNumeric
 {
 	template <> DMibFloatConstexpr inline_small CIEEEFloat32::TCFloat(CIEEEFloat32 const &_Other)
@@ -579,8 +577,6 @@ namespace NMib::NNumeric
 		return f_Get() <=> _Value.m_DataImplicit;
 	}
 }
-
-#endif
 
 namespace NMib
 {
