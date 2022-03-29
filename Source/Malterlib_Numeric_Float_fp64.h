@@ -20,8 +20,8 @@ typedef NMib::TCAutoClear<fp64> zfp64;
 //typedef NMib::TCAutoClear<ufp64> zufp64;
 
 #if defined(DArchitecture_x86) || defined(DArchitecture_x64) || defined(DArchitecture_arm64) || defined(DArchitecture_arm64e)
-static_assert(NMib::NTraits::TCAlignmentOf<pfp64>::mc_Value == 8);
-static_assert(NMib::NTraits::TCAlignmentOf<fp64>::mc_Value == 8);
+static_assert(alignof(pfp64) == 8);
+static_assert(alignof(fp64) == 8);
 #endif
 
 namespace NMib::NTraits

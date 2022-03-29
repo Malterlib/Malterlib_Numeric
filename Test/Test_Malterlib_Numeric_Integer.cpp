@@ -272,10 +272,10 @@ namespace
 				this->f_TestAll<CShiftRight>();
 			};
 			{
-				int32 Test = 0xffffffff;
-				uint32 Testu = 0xffffffff;
-				int32 Test2 = 0xffffffff;
-				uint32 Testu2 = 0xffffffff;
+				[[maybe_unused]] int32 Test = 0xffffffff;
+				[[maybe_unused]] uint32 Testu = 0xffffffff;
+				[[maybe_unused]] int32 Test2 = 0xffffffff;
+				[[maybe_unused]] uint32 Testu2 = 0xffffffff;
 
 				Test >>= 2;
 				Testu >>= 2;
