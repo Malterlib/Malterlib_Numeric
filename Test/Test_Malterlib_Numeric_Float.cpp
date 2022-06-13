@@ -491,7 +491,7 @@ namespace
 							(
 								(
 									NMib::NTraits::TCIsSame<tf_CFloat, fp80>::mc_Value
-#ifdef DArchitecture_arm64
+#if defined(DArchitecture_arm64) || defined(DArchitecture_arm64e)
 									|| true
 #endif
 								)
