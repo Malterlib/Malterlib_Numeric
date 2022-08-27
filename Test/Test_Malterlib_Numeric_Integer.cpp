@@ -263,6 +263,47 @@ namespace
 
 		void f_DoTests()
 		{
+			DMibTestSuite("Literals")
+			{
+				DMibExpect(12_uint8, ==, uint8(12));
+				DMibExpect(uint8(-12_uint8), ==, uint8(-12));
+				DMibExpect(1234_uint16, ==, uint16(1234));
+				DMibExpect(uint16(-1234_uint16), ==, uint16(-1234));
+				DMibExpect(1234567890_uint32, ==, uint32(1234567890));
+				DMibExpect(uint32(-1234567890_uint32), ==, uint32(-1234567890));
+				DMibExpect(1234567890000_uint64, ==, uint64(constant_uint64(1234567890000)));
+				DMibExpect(uint64(-1234567890000_uint64), ==, uint64(constant_uint64(-1234567890000)));
+
+				DMibExpect(12_int8, ==, int8(12));
+				DMibExpect(-12_int8, ==, int8(-12));
+				DMibExpect(1234_int16, ==, int16(1234));
+				DMibExpect(-1234_int16, ==, int16(-1234));
+				DMibExpect(1234567890_int32, ==, int32(1234567890));
+				DMibExpect(-1234567890_int32, ==, int32(-1234567890));
+				DMibExpect(1234567890000_int64, ==, int64(constant_int64(1234567890000)));
+				DMibExpect(-1234567890000_int64, ==, int64(constant_int64(-1234567890000)));
+
+				DMibExpect(127_int8, ==, int8(127));
+				DMibExpect(-127_int8, ==, int8(-127));
+				DMibExpect(128_int8, ==, int8(128));
+				DMibExpect(int8(-128_int8), ==, int8(-int8(128)));
+
+				DMibExpect(32767_int16, ==, int16(32767));
+				DMibExpect(-32767_int16, ==, int16(-32767));
+				DMibExpect(32768_int16, ==, int16(32768));
+				DMibExpect(int16(-32768_int16), ==, int16(-int16(32768)));
+
+				DMibExpect(2147483647_int32, ==, int32(2147483647));
+				DMibExpect(-2147483647_int32, ==, int32(-2147483647));
+				DMibExpect(2147483648_int32, ==, int32(2147483648));
+				DMibExpect(-2147483648_int32, ==, int32(-2147483648));
+
+				DMibExpect(0xff_uint8, ==, uint8(0xff));
+				DMibExpect(0xffff_uint16, ==, uint16(0xffff));
+				DMibExpect(0xffffffff_uint32, ==, uint32(0xffffffff));
+				DMibExpect(0xffffffffffffffff_uint64, ==, uint64(constant_uint64(0xffffffffffffffff)));
+
+			};
 			DMibTestCategoryFlags("Shift Left", ETestCategoryFlag_DisableValues | ETestCategoryFlag_Tests)
 			{
 				this->f_TestAll<CShiftLeft>();
