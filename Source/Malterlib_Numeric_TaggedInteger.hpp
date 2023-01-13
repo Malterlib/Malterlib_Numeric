@@ -77,12 +77,12 @@ namespace NMib::NStream
 	class TCBinaryStreamTypeReference<t_CStream, NNumeric::TCTaggedInteger<t_CType, t_CIdent, t_DefaultValue> >
 	{
 	public:
-		static void fs_Feed(t_CStream &_Stream, NNumeric::TCTaggedInteger<t_CType, t_CIdent, t_DefaultValue> const &_Data)
+		static constexpr void fs_Feed(t_CStream &_Stream, NNumeric::TCTaggedInteger<t_CType, t_CIdent, t_DefaultValue> const &_Data)
 		{
 			_Stream << _Data.mp_Data;
 		}
 
-		static void fs_Consume(t_CStream &_Stream, NNumeric::TCTaggedInteger<t_CType, t_CIdent, t_DefaultValue> &_Data)
+		static constexpr void fs_Consume(t_CStream &_Stream, NNumeric::TCTaggedInteger<t_CType, t_CIdent, t_DefaultValue> &_Data)
 		{
 			_Stream >> _Data.mp_Data;
 		}
