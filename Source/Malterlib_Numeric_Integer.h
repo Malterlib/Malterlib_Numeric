@@ -134,10 +134,9 @@ namespace NMib::NNumeric
 		constexpr TCInt(t_CType const &_Convert,
 			  typename TCEnableIf<NTraits::TCIsFundamental<t_CType>::mc_Value, NPrivate::CDummy &>::CType _pDummy = NPrivate::CDummy::ms_Dummy
 			)
+			: m_Upper(((_Convert >> (fg_Min((mint)ELowerBits, sizeof(t_CType)*8) - 1)) >> 1))
+			, m_Lower((_Convert & fg_BitRange<t_CType>(0, fg_Min((mint)ELowerBits - 1, sizeof(t_CType)*8 - 1))))
 		{
-			constexpr t_CType And1 = fg_BitRange<t_CType>(0, fg_Min((mint)ELowerBits - 1, sizeof(t_CType)*8 - 1));
-			m_Upper = ((_Convert >> (fg_Min((mint)ELowerBits, sizeof(t_CType)*8) - 1)) >> 1);
-			m_Lower = (_Convert & And1);
 		}
 
 		template <typename t_CUpper2, typename t_CLower2>
@@ -714,7 +713,7 @@ namespace NMib
 		}
 	};*/
 
-#if 0
+#if 1
 	template <typename t_CInt>
 	typename NTraits::TCSmallerType<t_CInt>::CType fg_GetLower(t_CInt const &_Integer)
 	{
@@ -724,7 +723,7 @@ namespace NMib
 	template <typename t_CInt>
 	typename NTraits::TCSmallerType<t_CInt>::CType fg_GetUpper(t_CInt const &_Integer)
 	{
-		return _Integer >> (sizeof(t_CInt)*4);
+		return typename NTraits::TCSmallerType<t_CInt>::CType(_Integer >> (sizeof(t_CInt)*4));
 	}
 #else
 
@@ -732,9 +731,9 @@ namespace NMib
 	typename NTraits::TCSmallerType<t_CInt>::CType const &fg_GetLower(t_CInt const &_Integer)
 	{
 #ifdef DMibPLittleEndian
-		return ((typename NTraits::TCSmallerType<t_CInt>::CType *)&_Integer)[0];
+		return reinterpret_cast<typename NTraits::TCSmallerType<t_CInt>::CType const *>(&_Integer)[0];
 #else
-		return ((typename NTraits::TCSmallerType<t_CInt>::CType *)&_Integer)[1];
+		return reinterpret_cast<typename NTraits::TCSmallerType<t_CInt>::CType const *>(&_Integer)[1];
 #endif
 	}
 
@@ -742,21 +741,21 @@ namespace NMib
 	typename NTraits::TCSmallerType<t_CInt>::CType const &fg_GetUpper(t_CInt const &_Integer)
 	{
 #ifdef DMibPLittleEndian
-		return ((typename NTraits::TCSmallerType<t_CInt>::CType *)&_Integer)[1];
+		return reinterpret_cast<typename NTraits::TCSmallerType<t_CInt>::CType const *>(&_Integer)[1];
 #else
-		return ((typename NTraits::TCSmallerType<t_CInt>::CType *)&_Integer)[0];
+		return reinterpret_cast<typename NTraits::TCSmallerType<t_CInt>::CType const *>(&_Integer)[0];
 #endif
 	}
 #endif
 
 	template <typename t_CUpper, typename t_CLower>
-	typename NNumeric::TCInt<t_CUpper, t_CLower>::CLower const & fg_GetLower(NNumeric::TCInt<t_CUpper, t_CLower> const &_Integer)
+	typename NNumeric::TCInt<t_CUpper, t_CLower>::CLower const &fg_GetLower(NNumeric::TCInt<t_CUpper, t_CLower> const &_Integer)
 	{
 		return _Integer.m_Lower;
 	}
 
 	template <typename t_CUpper, typename t_CLower>
-	typename NNumeric::TCInt<t_CUpper, t_CLower>::CUpper const & fg_GetUpper(NNumeric::TCInt<t_CUpper, t_CLower> const &_Integer)
+	typename NNumeric::TCInt<t_CUpper, t_CLower>::CUpper const &fg_GetUpper(NNumeric::TCInt<t_CUpper, t_CLower> const &_Integer)
 	{
 		return _Integer.m_Upper;
 	}
