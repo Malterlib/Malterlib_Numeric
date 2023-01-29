@@ -296,7 +296,12 @@ namespace
 				DMibExpect(2147483647_int32, ==, int32(2147483647));
 				DMibExpect(-2147483647_int32, ==, int32(-2147483647));
 				DMibExpect(2147483648_int32, ==, int32(2147483648));
-				DMibExpect(-2147483648_int32, ==, int32(-2147483648));
+				[] DMibSuppressUndefinedSanitizer
+					{
+						DMibExpect(-2147483648_int32, ==, int32(-2147483648));
+					}
+					()
+				;
 
 				DMibExpect(0xff_uint8, ==, uint8(0xff));
 				DMibExpect(0xffff_uint16, ==, uint16(0xffff));

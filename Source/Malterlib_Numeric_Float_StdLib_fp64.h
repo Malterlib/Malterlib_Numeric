@@ -247,7 +247,7 @@ namespace NMib::NNumeric
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Sin() const
 	{
 #if DMibFloatConstexprEnabled
-		if (std::is_constant_evaluated())
+		if_consteval
 		{
 			CEmulatedFloat Temp(*this);
 			Temp.f_Sin();
@@ -255,13 +255,15 @@ namespace NMib::NNumeric
 		}
 		else
 #endif
+		{
 			return NSys::NNumeric::fg_Sin(f_Get());
+		}
 	}
 
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Cos() const
 	{
 #if DMibFloatConstexprEnabled
-		if (std::is_constant_evaluated())
+		if_consteval
 		{
 			CEmulatedFloat Temp(*this);
 			Temp.f_Cos();
@@ -269,12 +271,14 @@ namespace NMib::NNumeric
 		}
 		else
 #endif
+		{
 			return NSys::NNumeric::fg_Cos(f_Get());
+		}
 	}
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Tan() const
 	{
 #if DMibFloatConstexprEnabled
-		if (std::is_constant_evaluated())
+		if_consteval
 		{
 			CEmulatedFloat Temp(*this);
 			Temp.f_Tan();
@@ -282,12 +286,14 @@ namespace NMib::NNumeric
 		}
 		else
 #endif
+		{
 			return NSys::NNumeric::fg_Tan(f_Get());
+		}
 	}
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_SinH() const
 	{
 #if DMibFloatConstexprEnabled
-		if (std::is_constant_evaluated())
+		if_consteval
 		{
 			CEmulatedFloat Temp(*this);
 			Temp.f_SinH();
@@ -295,12 +301,14 @@ namespace NMib::NNumeric
 		}
 		else
 #endif
+		{
 			return NSys::NNumeric::fg_SinH(f_Get());
+		}
 	}
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_CosH() const
 	{
 #if DMibFloatConstexprEnabled
-		if (std::is_constant_evaluated())
+		if_consteval
 		{
 			CEmulatedFloat Temp(*this);
 			Temp.f_CosH();
@@ -308,12 +316,14 @@ namespace NMib::NNumeric
 		}
 		else
 #endif
+		{
 			return NSys::NNumeric::fg_CosH(f_Get());
+		}
 	}
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_TanH() const
 	{
 #if DMibFloatConstexprEnabled
-		if (std::is_constant_evaluated())
+		if_consteval
 		{
 			CEmulatedFloat Temp(*this);
 			Temp.f_TanH();
@@ -321,12 +331,14 @@ namespace NMib::NNumeric
 		}
 		else
 #endif
+		{
 			return NSys::NNumeric::fg_TanH(f_Get());
+		}
 	}
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_ArcSin() const
 	{
 #if DMibFloatConstexprEnabled
-		if (std::is_constant_evaluated())
+		if_consteval
 		{
 			CEmulatedFloat Temp(*this);
 			Temp.f_ArcSin();
@@ -334,12 +346,14 @@ namespace NMib::NNumeric
 		}
 		else
 #endif
+		{
 			return NSys::NNumeric::fg_ArcSin(f_Get());
+		}
 	}
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_ArcCos() const
 	{
 #if DMibFloatConstexprEnabled
-		if (std::is_constant_evaluated())
+		if_consteval
 		{
 			CEmulatedFloat Temp(*this);
 			Temp.f_ArcCos();
@@ -347,12 +361,14 @@ namespace NMib::NNumeric
 		}
 		else
 #endif
+		{
 			return NSys::NNumeric::fg_ArcCos(f_Get());
+		}
 	}
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_ArcTan() const
 	{
 #if DMibFloatConstexprEnabled
-		if (std::is_constant_evaluated())
+		if_consteval
 		{
 			CEmulatedFloat Temp(*this);
 			Temp.f_ArcTan();
@@ -360,12 +376,14 @@ namespace NMib::NNumeric
 		}
 		else
 #endif
+		{
 			return NSys::NNumeric::fg_ArcTan(f_Get());
+		}
 	}
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_ArcTan(const CIEEEFloat64 &_Source) const
 	{
 #if DMibFloatConstexprEnabled
-		if (std::is_constant_evaluated())
+		if_consteval
 		{
 			CEmulatedFloat Temp(*this);
 			Temp.f_ArcTan(CEmulatedFloat(_Source));
@@ -373,7 +391,9 @@ namespace NMib::NNumeric
 		}
 		else
 #endif
+		{
 			return NSys::NNumeric::fg_ArcTan(f_Get(), _Source.m_DataImplicit);
+		}
 	}
 
 	/************************************************************************************************\
@@ -386,7 +406,7 @@ namespace NMib::NNumeric
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_ExpN() const
 	{
 #if DMibFloatConstexprEnabled
-		if (std::is_constant_evaluated())
+		if_consteval
 		{
 			CEmulatedFloat Temp(*this);
 			Temp.f_ExpN();
@@ -394,12 +414,14 @@ namespace NMib::NNumeric
 		}
 		else
 #endif
+		{
 			return NSys::NNumeric::fg_ExpN(f_Get());
+		}
 	}
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_LogN() const
 	{
 #if DMibFloatConstexprEnabled
-		if (std::is_constant_evaluated())
+		if_consteval
 		{
 			CEmulatedFloat Temp(*this);
 			Temp.f_LogN();
@@ -407,12 +429,14 @@ namespace NMib::NNumeric
 		}
 		else
 #endif
+		{
 			return NSys::NNumeric::fg_LogN(f_Get());
+		}
 	}
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Exp10() const
 	{
 #if DMibFloatConstexprEnabled
-		if (std::is_constant_evaluated())
+		if_consteval
 		{
 			CEmulatedFloat Temp(*this);
 			Temp.f_Exp10();
@@ -420,12 +444,14 @@ namespace NMib::NNumeric
 		}
 		else
 #endif
+		{
 			return NSys::NNumeric::fg_Exp10(f_Get());
+		}
 	}
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Log10() const
 	{
 #if DMibFloatConstexprEnabled
-		if (std::is_constant_evaluated())
+		if_consteval
 		{
 			CEmulatedFloat Temp(*this);
 			Temp.f_Log10();
@@ -433,12 +459,14 @@ namespace NMib::NNumeric
 		}
 		else
 #endif
+		{
 			return NSys::NNumeric::fg_Log10(f_Get());
+		}
 	}
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Exp2() const
 	{
 #if DMibFloatConstexprEnabled
-		if (std::is_constant_evaluated())
+		if_consteval
 		{
 			CEmulatedFloat Temp(*this);
 			Temp.f_Exp2();
@@ -446,12 +474,14 @@ namespace NMib::NNumeric
 		}
 		else
 #endif
+		{
 			return NSys::NNumeric::fg_Exp2(f_Get());
+		}
 	}
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Log2() const
 	{
 #if DMibFloatConstexprEnabled
-		if (std::is_constant_evaluated())
+		if_consteval
 		{
 			CEmulatedFloat Temp(*this);
 			Temp.f_Log2();
@@ -459,12 +489,14 @@ namespace NMib::NNumeric
 		}
 		else
 #endif
+		{
 			return NSys::NNumeric::fg_Log2(f_Get());
+		}
 	}
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Exp(const CIEEEFloat64 & _Base) const
 	{
 #if DMibFloatConstexprEnabled
-		if (std::is_constant_evaluated())
+		if_consteval
 		{
 			CEmulatedFloat Temp(*this);
 			Temp.f_Exp(CEmulatedFloat(_Base));
@@ -472,12 +504,14 @@ namespace NMib::NNumeric
 		}
 		else
 #endif
+		{
 			return NSys::NNumeric::fg_Exp(f_Get(), _Base.m_DataImplicit);
+		}
 	}
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Log(const CIEEEFloat64 & _Base) const
 	{
 #if DMibFloatConstexprEnabled
-		if (std::is_constant_evaluated())
+		if_consteval
 		{
 			CEmulatedFloat Temp(*this);
 			Temp.f_Log(CEmulatedFloat(_Base));
@@ -485,7 +519,9 @@ namespace NMib::NNumeric
 		}
 		else
 #endif
+		{
 			return NSys::NNumeric::fg_Log(f_Get(), _Base.m_DataImplicit);
+		}
 	}
 
 	/************************************************************************************************\
@@ -497,7 +533,7 @@ namespace NMib::NNumeric
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Sqrt() const
 	{
 #if DMibFloatConstexprEnabled
-		if (std::is_constant_evaluated())
+		if_consteval
 		{
 			CEmulatedFloat Temp(*this);
 			Temp.f_Sqrt();
@@ -505,7 +541,9 @@ namespace NMib::NNumeric
 		}
 		else
 #endif
+		{
 			return NSys::NNumeric::fg_Sqrt(f_Get());
+		}
 	}
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Sqr() const
 	{
@@ -515,7 +553,7 @@ namespace NMib::NNumeric
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Pow(const CIEEEFloat64 &_Power) const
 	{
 #if DMibFloatConstexprEnabled
-		if (std::is_constant_evaluated())
+		if_consteval
 		{
 			CEmulatedFloat Temp(*this);
 			Temp.f_Pow(CEmulatedFloat(_Power));
@@ -523,7 +561,9 @@ namespace NMib::NNumeric
 		}
 		else
 #endif
+		{
 			return NSys::NNumeric::fg_Pow(f_Get(), _Power.m_DataImplicit);
+		}
 	}
 
 
@@ -550,7 +590,7 @@ namespace NMib::NNumeric
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Floor() const
 	{
 #if DMibFloatConstexprEnabled
-		if (std::is_constant_evaluated())
+		if_consteval
 		{
 			CEmulatedFloat Temp(*this);
 			Temp.f_Floor();
@@ -558,12 +598,14 @@ namespace NMib::NNumeric
 		}
 		else
 #endif
+		{
 			return NSys::NNumeric::fg_Floor(f_Get());
+		}
 	}
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Ceil() const
 	{
 #if DMibFloatConstexprEnabled
-		if (std::is_constant_evaluated())
+		if_consteval
 		{
 			CEmulatedFloat Temp(*this);
 			Temp.f_Ceil();
@@ -571,12 +613,14 @@ namespace NMib::NNumeric
 		}
 		else
 #endif
+		{
 			return NSys::NNumeric::fg_Ceil(f_Get());
+		}
 	}
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Abs() const
 	{
 #if DMibFloatConstexprEnabled
-		if (std::is_constant_evaluated())
+		if_consteval
 		{
 			CEmulatedFloat Temp(*this);
 			Temp.f_Abs();
@@ -584,12 +628,14 @@ namespace NMib::NNumeric
 		}
 		else
 #endif
+		{
 			return NSys::NNumeric::fg_Abs(f_Get());
+		}
 	}
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Mod(const TCFloat &_Modulu) const
 	{
 #if DMibFloatConstexprEnabled
-		if (std::is_constant_evaluated())
+		if_consteval
 		{
 			CEmulatedFloat Temp(*this);
 			Temp.f_Mod(CEmulatedFloat(_Modulu));
@@ -597,7 +643,9 @@ namespace NMib::NNumeric
 		}
 		else
 #endif
+		{
 			return NSys::NNumeric::fg_Mod(f_Get(), _Modulu.m_DataImplicit);
+		}
 	}
 
 	template <> DMibFloatConstexpr inline_small bool CIEEEFloat64::operator == (const CIEEEFloat64 &_Value) const
