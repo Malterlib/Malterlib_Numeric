@@ -19,9 +19,12 @@ typedef CIEEEFloat64 fp64;
 typedef NMib::TCAutoClear<fp64> zfp64;
 //typedef NMib::TCAutoClear<ufp64> zufp64;
 
-#if defined(DArchitecture_x86) || defined(DArchitecture_x64) || defined(DArchitecture_arm64) || defined(DArchitecture_arm64e)
+#if defined(DArchitecture_x86) && defined(DPlatformFamily_Windows) || defined(DArchitecture_x64) || defined(DArchitecture_arm64) || defined(DArchitecture_arm64e)
 static_assert(alignof(pfp64) == 8);
 static_assert(alignof(fp64) == 8);
+#elif defined(DArchitecture_x86)
+static_assert(alignof(pfp64) == 4);
+static_assert(alignof(fp64) == 4);
 #endif
 
 namespace NMib::NTraits
