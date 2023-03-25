@@ -292,7 +292,7 @@ namespace
 		}
 
 		static bool fs_IsNan(bool const &_Type)
- 		{
+		{
 			return false;
 		}
 
