@@ -2163,6 +2163,21 @@ namespace NMib::NNumeric
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
+	DMibFloatConstexpr bool TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::f_EqualIncludingNan(TCFloat const &_Value) const
+	{
+		if (f_IsNan() || _Value.f_IsNan())
+		{
+			if (f_IsQNan() && _Value.f_IsQNan())
+				return f_GetSignBits() == _Value.f_GetSignBits();
+			if (f_IsSNan() && _Value.f_IsSNan())
+				return f_GetSignBits() == _Value.f_GetSignBits();
+			return false;
+		}
+
+		return *this == _Value;
+	}
+
+	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 	DMibFloatConstexpr auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::operator <=> (const TCFloat &_Value) const
 		-> COrdering_Partial
 	{
@@ -2215,6 +2230,24 @@ namespace NMib::NNumeric
 		}
 
 		return COrdering_Partial::equivalent;
+	}
+
+	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
+	DMibFloatConstexpr auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::f_SpaceshipIncludingNan(const TCFloat &_Value) const
+		-> COrdering_Partial
+	{
+		if (f_IsNan() || _Value.f_IsNan())
+		{
+			if (auto Compare = f_IsQNan() <=> _Value.f_IsQNan(); Compare != 0)
+				return Compare;
+
+			if (auto Compare = f_IsSNan() <=> _Value.f_IsSNan(); Compare != 0)
+				return Compare;
+
+			return COrdering_Partial::equivalent;
+		}
+
+		return *this <=> _Value;
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>

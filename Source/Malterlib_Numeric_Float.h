@@ -425,7 +425,9 @@ namespace NMib::NNumeric
 		DMibFloatConstexpr bool f_AlmostEqual(TCFloat const &_Other, mint _nMantissaBits = 1) const;
 
 		DMibFloatConstexpr bool operator == (const TCFloat &_Value) const;
+		DMibFloatConstexpr bool f_EqualIncludingNan(const TCFloat &_Value) const;
 		DMibFloatConstexpr COrdering_Partial operator <=> (const TCFloat &_Value) const;
+		DMibFloatConstexpr COrdering_Partial f_SpaceshipIncludingNan(const TCFloat &_Value) const;
 
 		template <aint t_SignBits2, aint t_ExponentBits2, aint t_MantissaBits2, typename t_CImplicitFloat2, bool t_bDummyOptimize2, typename t_CIntegerStorage2>
 		DMibFloatConstexpr bool operator ==
