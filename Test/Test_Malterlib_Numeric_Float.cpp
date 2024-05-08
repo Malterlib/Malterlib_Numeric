@@ -569,7 +569,7 @@ namespace
 			{
 				fs_TestAll<CDivide>();
 			};
-#if !defined(DCompiler_MSVC_Workaround) && !defined(DPlatformFamily_Linux)
+#if !defined(DCompiler_MSVC_Workaround) && !defined(DCompiler_clang_cl) && !defined(DPlatformFamily_Linux)
 			DMibTestCategory("Compare Emulate")
 			{
 #if defined(DMibPCanDo_fp32)
