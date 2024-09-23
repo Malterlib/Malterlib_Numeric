@@ -440,6 +440,11 @@ namespace
 							if (_Desc.f_Find(".f_Pow(") >= 0 || _Desc.f_Find(".f_Exp(") >= 0)
 								AlmontEqualBits = 1;
 						}
+						else if (NMib::NTraits::TCIsSame<tf_CFloat, fp32>::mc_Value)
+						{
+							if (_Desc.f_Find(".f_Pow(") >= 0 || _Desc.f_Find(".f_Exp(") >= 0)
+								AlmontEqualBits = 1;
+						}
 						
 						if (AlmontEqualBits)
 							DMibTest(DMibExpr(fs_AlmostEqual(ResultEmu, Result, AlmontEqualBits)) || DMibExpr(ResultEmu) == DMibExpr(Result));
