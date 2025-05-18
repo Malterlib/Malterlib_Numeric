@@ -9,20 +9,16 @@
 #include "Malterlib_Numeric_Float_fp16.h"
 
 #ifdef DMibPCanDo_fp32
-typedef NMib::NNumeric::TCFloat<1, 8, 23, pfp32> CIEEEFloat32;
-typedef NMib::NNumeric::TCFloat<1, 8, 23, pfp32, 0> CIEEEFloat32Emu;
+using CIEEEFloat32 = NMib::NNumeric::TCFloat<1, 8, 23, pfp32>;
+using CIEEEFloat32Emu = NMib::NNumeric::TCFloat<1, 8, 23, pfp32, 0>;
+DMibNumericImplementImplicitFloatFromParams(1, 8, 23, pfp32);
 #else
-typedef NMib::NNumeric::TCFloat<1, 8, 23> CIEEEFloat32;
-typedef NMib::NNumeric::TCFloat<1, 8, 23, NMib::NNumeric::CNoImplicit, 0> CIEEEFloat32Emu;
+using CIEEEFloat32 = NMib::NNumeric::TCFloat<1, 8, 23>;
+using CIEEEFloat32Emu = NMib::NNumeric::TCFloat<1, 8, 23, NMib::NNumeric::CNoImplicit, 0>;
 #endif
-typedef NMib::NNumeric::TCFloat<0, 8, 24> ufp32;
-typedef CIEEEFloat32 fp32;
-typedef NMib::TCAutoClear<fp32> zfp32;
-typedef NMib::TCAutoClear<ufp32> zufp32;
+using fp32 = CIEEEFloat32;
+using zfp32 = NMib::TCAutoClear<fp32>;
 
-namespace NMib::NTraits
-{
-	DMibTraitsImplementFloatFromSize(fp32);
-	DMibTraitsImplementSizePair(fp16, fp32);
-}
+DMibTraitsImplementFloatFromSize(fp32);
+DMibTraitsImplementSizePair(fp16, fp32);
 

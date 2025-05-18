@@ -9,26 +9,22 @@
 #include "Malterlib_Numeric_Float_fp8.h"
 
 #ifdef DMibPCanDo_fp16
-typedef NMib::NNumeric::TCFloat<1, 5, 10, pfp16> CIEEEFloat16;
-typedef NMib::NNumeric::TCFloat<1, 4, 11, pfp16, 0> CIEEEFloat16Emu;
+using CIEEEFloat16 = NMib::NNumeric::TCFloat<1, 5, 10, pfp16>;
+using CIEEEFloat16Emu = NMib::NNumeric::TCFloat<1, 4, 11, pfp16, 0>;
+DMibNumericImplementImplicitFloatFromParams(1, 4, 11, pfp16);
 #else
-typedef NMib::NNumeric::TCFloat<1, 5, 10> CIEEEFloat16;
-typedef NMib::NNumeric::TCFloat<1, 4, 11, NMib::NNumeric::CNoImplicit, 0> CIEEEFloat16Emu;
+using CIEEEFloat16 = NMib::NNumeric::TCFloat<1, 5, 10>;
+using CIEEEFloat16Emu = NMib::NNumeric::TCFloat<1, 4, 11, NMib::NNumeric::CNoImplicit, 0>;
 #endif
-typedef NMib::NNumeric::TCFloat<0, 5, 11> ufp16;
-typedef CIEEEFloat16 fp16;
-typedef NMib::TCAutoClear<fp16> zfp16;
-typedef NMib::TCAutoClear<ufp16> zufp16;
+using fp16 = CIEEEFloat16;
+using zfp16 = NMib::TCAutoClear<fp16>;
 
 #if defined(DMibPFloat_StdLib) && defined(DMibPCanDo_fp16)
 #	include "Malterlib_Numeric_Float_StdLib_fp16.h"
 #endif
 
-namespace NMib::NTraits
-{
-	DMibTraitsImplementFloatFromSize(fp16);
-	DMibTraitsImplementSizePair(fp8, fp16);
-}
+DMibTraitsImplementFloatFromSize(fp16);
+DMibTraitsImplementSizePair(fp8, fp16);
 
 namespace NMib::NNumeric
 {

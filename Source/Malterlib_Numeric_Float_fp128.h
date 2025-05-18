@@ -9,25 +9,22 @@
 #include "Malterlib_Numeric_Float_fp64.h"
 
 #ifdef DMibPCanDo_fp128
-typedef NMib::NNumeric::TCFloat<1, 15, 112, pfp128> CIEEEFloat128;
-typedef NMib::NNumeric::TCFloat<1, 15, 112, pfp128, 0> CIEEEFloat128Emu;
+using CIEEEFloat128 = NMib::NNumeric::TCFloat<1, 15, 112, pfp128>;
+using CIEEEFloat128Emu = NMib::NNumeric::TCFloat<1, 15, 112, pfp128, 0>;
+DMibNumericImplementImplicitFloatFromParams(1, 15, 112, pfp128);
 #else
-typedef NMib::NNumeric::TCFloat<1, 15, 112> CIEEEFloat128;
-typedef NMib::NNumeric::TCFloat<1, 15, 112, NMib::NNumeric::CNoImplicit, 0> CIEEEFloat128Emu;
+using CIEEEFloat128 = NMib::NNumeric::TCFloat<1, 15, 112>;
+using CIEEEFloat128Emu = NMib::NNumeric::TCFloat<1, 15, 112, NMib::NNumeric::CNoImplicit, 0>;
 #endif
-typedef CIEEEFloat128 fp128;
-typedef NMib::TCAutoClear<fp128> zfp128;
-//typedef NMib::TCAutoClear<ufp128> zufp128;
+using fp128 = CIEEEFloat128;
+using zfp128 = NMib::TCAutoClear<fp128>;
 
 #if defined(DMibPFloat_StdLib) && defined(DMibPCanDo_fp128)
 #	include "Malterlib_Numeric_Float_StdLib_fp128.h"
 #endif
 
-namespace NMib::NTraits
-{
-	DMibTraitsImplementFloatFromSize(fp128);
-	DMibTraitsImplementSizePair(fp64, fp128);
-}
+DMibTraitsImplementFloatFromSize(fp128);
+DMibTraitsImplementSizePair(fp64, fp128);
 
 namespace NMib::NNumeric
 {

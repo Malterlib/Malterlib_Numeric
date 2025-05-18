@@ -8,17 +8,15 @@
 #include "Malterlib_Numeric_Float.h"
 
 #ifdef DMibPCanDo_fp80
-typedef NMib::NNumeric::TCFloat<1, 15, 63, pfp80> CIEEEFloat80;
-typedef NMib::NNumeric::TCFloat<1, 15, 63, pfp80, 0> CIEEEFloat80Emu;
+using CIEEEFloat80 = typedef NMib::NNumeric::TCFloat<1, 15, 63, pfp80>;
+using CIEEEFloat80Emu = typedef NMib::NNumeric::TCFloat<1, 15, 63, pfp80, 0>;
+DMibNumericImplementImplicitFloatFromParams(1, 15, 63, pfp80);
 #else
-typedef NMib::NNumeric::TCFloat<1, 15, 63> CIEEEFloat80;
-typedef NMib::NNumeric::TCFloat<1, 15, 63, NMib::NNumeric::CNoImplicit, 0> CIEEEFloat80Emu;
+using CIEEEFloat80 = NMib::NNumeric::TCFloat<1, 15, 63>;
+using CIEEEFloat80Emu = NMib::NNumeric::TCFloat<1, 15, 63, NMib::NNumeric::CNoImplicit, 0>;
 #endif
-typedef CIEEEFloat80 fp80;
-typedef NMib::TCAutoClear<fp80> zfp80;
-//typedef NMib::TCAutoClear<ufp80> zufp80;
+using fp80 = CIEEEFloat80;
+using zfp80 = NMib::TCAutoClear<fp80>;
 
-namespace NMib::NTraits
-{
-	DMibTraitsImplementFloatFromSize(fp80);
-}
+DMibTraitsImplementFloatFromSize(fp80);
+

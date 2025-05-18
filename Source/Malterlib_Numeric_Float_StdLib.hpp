@@ -39,6 +39,7 @@ namespace NMib::NNumeric
 		extern template class TCFloat<1, 11, 52>;
 		extern template class TCFloat<1, 11, 52, CNoImplicit, 0>;
 	#endif
+	extern template class TCFloat<0, 11, 53>;
 #endif
 }
 

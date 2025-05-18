@@ -242,7 +242,7 @@ namespace
 						NMib::NStr::CStr ShouldBeNumber;
 						for (mint j = 0; j < i; j += 4)
 						{
-							if (NMib::NTraits::TCIsSigned<t_CInt>::mc_Value)
+							if constexpr (NMib::NTraits::cIsSigned<t_CInt>)
 								ShouldBeNumber += "F";
 							else
 								ShouldBeNumber += "0";
@@ -406,10 +406,10 @@ namespace
 
 			DMibTestSuite("Limits")
 			{
-				DMibStaticCheck(NMib::TCLimitsInt<uint32>::mc_Min == 0);
-				DMibStaticCheck(NMib::TCLimitsInt<uint32>::mc_Max == uint32(0xffffffff));
-				DMibStaticCheck(NMib::TCLimitsInt<int32>::mc_Min == int32(0x80000000));
-				DMibStaticCheck(NMib::TCLimitsInt<int32>::mc_Max == int32(0x7fffffff));
+				static_assert(NMib::TCLimitsInt<uint32>::mc_Min == 0);
+				static_assert(NMib::TCLimitsInt<uint32>::mc_Max == uint32(0xffffffff));
+				static_assert(NMib::TCLimitsInt<int32>::mc_Min == int32(0x80000000));
+				static_assert(NMib::TCLimitsInt<int32>::mc_Max == int32(0x7fffffff));
 			};
 		}
 	};

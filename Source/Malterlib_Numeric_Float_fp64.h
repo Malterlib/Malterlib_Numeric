@@ -9,15 +9,15 @@
 #include "Malterlib_Numeric_Float_fp32.h"
 
 #ifdef DMibPCanDo_fp64
-typedef NMib::NNumeric::TCFloat<1, 11, 52, pfp64, 0> CIEEEFloat64Emu;
-typedef NMib::NNumeric::TCFloat<1, 11, 52, pfp64> CIEEEFloat64;
+using CIEEEFloat64Emu = NMib::NNumeric::TCFloat<1, 11, 52, pfp64, 0>;
+using CIEEEFloat64 = NMib::NNumeric::TCFloat<1, 11, 52, pfp64>;
+DMibNumericImplementImplicitFloatFromParams(1, 11, 52, pfp64);
 #else
-typedef NMib::NNumeric::TCFloat<1, 11, 52> CIEEEFloat64;
-typedef NMib::NNumeric::TCFloat<1, 11, 52, NMib::NNumeric::CNoImplicit, 0> CIEEEFloat64Emu;
+using CIEEEFloat64 = NMib::NNumeric::TCFloat<1, 11, 52>;
+using CIEEEFloat64Emu = NMib::NNumeric::TCFloat<1, 11, 52, NMib::NNumeric::CNoImplicit, 0>;
 #endif
-typedef CIEEEFloat64 fp64;
-typedef NMib::TCAutoClear<fp64> zfp64;
-//typedef NMib::TCAutoClear<ufp64> zufp64;
+using fp64 = CIEEEFloat64;
+using zfp64 = NMib::TCAutoClear<fp64>;
 
 #if defined(DArchitecture_x86) && defined(DPlatformFamily_Windows) || defined(DArchitecture_x64) || defined(DArchitecture_arm64) || defined(DArchitecture_arm64e)
 static_assert(alignof(pfp64) == 8);
@@ -27,8 +27,5 @@ static_assert(alignof(pfp64) == 4);
 static_assert(alignof(fp64) == 4);
 #endif
 
-namespace NMib::NTraits
-{
-	DMibTraitsImplementFloatFromSize(fp64);
-	DMibTraitsImplementSizePair(fp32, fp64);
-}
+DMibTraitsImplementFloatFromSize(fp64);
+DMibTraitsImplementSizePair(fp32, fp64);

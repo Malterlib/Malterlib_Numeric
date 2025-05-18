@@ -44,7 +44,7 @@ namespace NMib
 
 			typedef typename CFloat::CImplicitFloat CFundamentalFloat;
 
-			bool const static ms_bHasFundamentalFloat = !NTraits::TCIsSame<CFundamentalFloat, NMib::NNumeric::CNoImplicit>::mc_Value;
+			bool const static ms_bHasFundamentalFloat = !NTraits::cIsSame<CFundamentalFloat, NMib::NNumeric::CNoImplicit>;
 		};
 
 		template <typename t_CFloat>
@@ -52,7 +52,7 @@ namespace NMib
 		{
 		public:
 
-			typename TCChooseType<TCFloatTraits<t_CFloat>::ms_bHasFundamentalFloat, typename TCFloatTraits<t_CFloat>::CFundamentalFloat, t_CFloat>::CFloat CType;
+			TCConditional<TCFloatTraits<t_CFloat>::ms_bHasFundamentalFloat, typename TCFloatTraits<t_CFloat>::CFundamentalFloat, t_CFloat> CType;
 
 		};
 
@@ -61,7 +61,7 @@ namespace NMib
 		class TCFloatCombinedType
 		{
 		public:
-			typedef typename NTraits::TCLargestType<t_CFloat0, t_CFloat1>::CType CType;
+			typedef NTraits::TCLargestType<t_CFloat0, t_CFloat1> CType;
 		};
 
 		template <typename t_CFloat, void (&f_Init)(t_CFloat &_Float)>

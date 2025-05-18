@@ -8,21 +8,17 @@
 #include "Malterlib_Numeric_Float.h"
 #include "Malterlib_Numeric_Float_fp2048.h"
 
-typedef NMib::NNumeric::TCFloat<1, 63, 4096-64> CIEEEFloat4096;
-typedef NMib::NNumeric::TCFloat<1, 63, 4096-64, NMib::NNumeric::CNoImplicit, 0> CIEEEFloat4096Emu;
-typedef CIEEEFloat4096 fp4096;
-typedef NMib::TCAutoClear<fp4096> zfp4096;
-//typedef NMib::TCAutoClear<ufp4096> zufp4096;
+using CIEEEFloat4096 = NMib::NNumeric::TCFloat<1, 63, 4096-64>;
+using CIEEEFloat4096Emu = NMib::NNumeric::TCFloat<1, 63, 4096-64, NMib::NNumeric::CNoImplicit, 0>;
+using fp4096 = CIEEEFloat4096;
+using zfp4096 = NMib::TCAutoClear<fp4096>;
 
 #if defined(DMibPFloat_StdLib) && defined(DMibPCanDo_fp4096)
 #	include "Malterlib_Numeric_Float_StdLib_fp4096.h"
 #endif
 
-namespace NMib::NTraits
-{
-	DMibTraitsImplementFloatFromSize(fp4096);
-	DMibTraitsImplementSizePair(fp2048, fp4096);
-}
+DMibTraitsImplementFloatFromSize(fp4096);
+DMibTraitsImplementSizePair(fp2048, fp4096);
 
 namespace NMib::NNumeric
 {

@@ -49,7 +49,7 @@ namespace NMib::NNumeric
 		using CInt = TCInt;
 		struct CConstants;
 
-		static constexpr bool mc_bIsSigned = NTraits::TCIsSigned<t_CUpper>::mc_Value;
+		static constexpr bool mc_bIsSigned = NTraits::cIsSigned<t_CUpper>;
 
 		static constexpr t_CUpper mc_UpperZero{0};
 		static constexpr t_CUpper mc_UpperOne{1};
@@ -89,7 +89,7 @@ namespace NMib::NNumeric
 				CType Ret;
 				if constexpr (sizeof(t_CUpper2) > sizeof(TCInt))
 				{
-					typename TCChooseType<NTraits::TCIsSigned<t_CUpper>::mc_Value, typename NTraits::TCSigned<t_CUpper2>::CType, t_CUpper2>::CType  Temp{*this};
+					TCConditional<NTraits::cIsSigned<t_CUpper>, NTraits::TCSigned<t_CUpper2>, t_CUpper2> Temp{*this};
 					Temp >>= CType::ELowerBits - 1;
 					Temp >>= 1;
 					Ret.m_Upper = t_CUpper2(Temp);
@@ -98,7 +98,7 @@ namespace NMib::NNumeric
 					Ret.m_Upper = t_CUpper2((((*this) >> uaint(CType::ELowerBits - 1) >> uaint(1))));
 				if constexpr (sizeof(t_CLower2) > sizeof(TCInt))
 				{
-					typename TCChooseType<NTraits::TCIsSigned<t_CUpper>::mc_Value, typename NTraits::TCSigned<t_CLower2>::CType, t_CLower2>::CType Temp{*this};
+					TCConditional<NTraits::cIsSigned<t_CUpper>, NTraits::TCSigned<t_CLower2>, t_CLower2> Temp{*this};
 					Ret.m_Lower = t_CLower2(Temp);
 				}
 				else
@@ -113,7 +113,7 @@ namespace NMib::NNumeric
 		template <typename t_CInt>
 		constexpr explicit operator t_CInt () const
 		{
-			static_assert(NTraits::TCIsInteger<t_CInt>::mc_Value, "Must be an integer type");
+			static_assert(NTraits::cIsInteger<t_CInt>, "Must be an integer type");
 			if constexpr (sizeof(t_CInt) <= sizeof(t_CLower))
 			{
 				// Less than lower
@@ -122,7 +122,7 @@ namespace NMib::NNumeric
 			else
 			{
 				t_CInt Ret;
-				using CLargestInt = typename NTraits::TCLargestType<t_CInt, t_CUpper>::CType;
+				using CLargestInt = NTraits::TCLargestType<t_CInt, t_CUpper>;
 				Ret = t_CInt((CLargestInt(m_Upper) << (fg_Min((mint)ELowerBits, sizeof(CLargestInt)*8) - 1)) << 1);
 				Ret = Ret | t_CInt(m_Lower);
 				return Ret;
@@ -130,9 +130,7 @@ namespace NMib::NNumeric
 		}
 
 		template <typename t_CType>
-		constexpr TCInt(t_CType const &_Convert,
-			  typename TCEnableIf<NTraits::TCIsFundamental<t_CType>::mc_Value, NPrivate::CDummy &>::CType _pDummy = NPrivate::CDummy::ms_Dummy
-			)
+		constexpr TCInt(t_CType const &_Convert, TCEnableIf<NTraits::cIsFundamental<t_CType>, NPrivate::CDummy &> _pDummy = NPrivate::CDummy::ms_Dummy)
 			: m_Upper(((_Convert >> (fg_Min((mint)ELowerBits, sizeof(t_CType)*8) - 1)) >> 1))
 			, m_Lower((_Convert & fg_BitRange<t_CType>(0, fg_Min((mint)ELowerBits - 1, sizeof(t_CType)*8 - 1))))
 		{
@@ -370,7 +368,7 @@ namespace NMib::NNumeric
 			bool bSigned = false;
 			TCInt Val0 = *this;
 			TCInt Val1 = _Value;
-			if (NTraits::TCIsSigned<t_CUpper>::mc_Value && Val0 < CConstants::mc_Zero)
+			if (NTraits::cIsSigned<t_CUpper> && Val0 < CConstants::mc_Zero)
 			{
 				Val0 = -Val0;
 				if (Val1 < CConstants::mc_Zero)
@@ -378,7 +376,7 @@ namespace NMib::NNumeric
 				else
 					bSigned = true;
 			}
-			else if (NTraits::TCIsSigned<t_CUpper>::mc_Value && Val1 < CConstants::mc_Zero)
+			else if (NTraits::cIsSigned<t_CUpper> && Val1 < CConstants::mc_Zero)
 			{
 				Val1 = -Val1;
 				bSigned = true;
@@ -409,7 +407,7 @@ namespace NMib::NNumeric
 			if constexpr (sizeof(t_CLower) < sizeof(t_CUpper))
 				Result += TCInt(Val0.m_Upper * Val1.m_Upper, 0) << ELowerBits;
 
-			if (NTraits::TCIsSigned<t_CUpper>::mc_Value && bSigned)
+			if (NTraits::cIsSigned<t_CUpper> && bSigned)
 				*this = -Result;
 			else
 				*this = Result;
@@ -427,7 +425,7 @@ namespace NMib::NNumeric
 			bool bSigned = false;
 			TCInt Val0 = *this;
 			TCInt Val1 = _Value;
-			if (NTraits::TCIsSigned<t_CUpper>::mc_Value && Val0 < CConstants::mc_Zero)
+			if (NTraits::cIsSigned<t_CUpper> && Val0 < CConstants::mc_Zero)
 			{
 				Val0 = -Val0;
 				if (Val1 < CConstants::mc_Zero)
@@ -435,7 +433,7 @@ namespace NMib::NNumeric
 				else
 					bSigned = true;
 			}
-			else if (NTraits::TCIsSigned<t_CUpper>::mc_Value && Val1 < CConstants::mc_Zero)
+			else if (NTraits::cIsSigned<t_CUpper> && Val1 < CConstants::mc_Zero)
 			{
 				Val1 = -Val1;
 				bSigned = true;
@@ -467,7 +465,7 @@ namespace NMib::NNumeric
 				}
 			}
 
-			if (NTraits::TCIsSigned<t_CUpper>::mc_Value && bSigned)
+			if (NTraits::cIsSigned<t_CUpper> && bSigned)
 				*this = -Result;
 			else
 				*this = Result;
@@ -480,13 +478,13 @@ namespace NMib::NNumeric
 			bool bSigned = false;
 			TCInt Val0 = *this;
 			TCInt Val1 = _Value;
-			if (NTraits::TCIsSigned<t_CUpper>::mc_Value && Val0 < CConstants::mc_Zero)
+			if (NTraits::cIsSigned<t_CUpper> && Val0 < CConstants::mc_Zero)
 			{
 				Val0 = -Val0;
 				bSigned = true;
 			}
 
-			if (NTraits::TCIsSigned<t_CUpper>::mc_Value && Val1 < CConstants::mc_Zero)
+			if (NTraits::cIsSigned<t_CUpper> && Val1 < CConstants::mc_Zero)
 			{
 				Val1 = -Val1;
 			}
@@ -517,7 +515,7 @@ namespace NMib::NNumeric
 				}
 			}
 
-			if (NTraits::TCIsSigned<t_CUpper>::mc_Value && bSigned)
+			if (NTraits::cIsSigned<t_CUpper> && bSigned)
 				*this = -Remainder;
 			else
 				*this = Remainder;
@@ -526,19 +524,19 @@ namespace NMib::NNumeric
 		}
 
 		template <typename t_CDummy>
-		constexpr inline_small void fp_SignExtendUpper(typename TCEnableIf<NTraits::TCIsSigned<t_CDummy>::mc_Value && NTraits::TCIsFundamental<t_CDummy>::mc_Value, t_CDummy>::CType *_pDummy = nullptr)
+		constexpr inline_small void fp_SignExtendUpper(TCEnableIf<NTraits::cIsSigned<t_CDummy> && NTraits::cIsFundamental<t_CDummy>, t_CDummy> *_pDummy = nullptr)
 		{
 			m_Upper = (m_Upper >> (EUpperBits - 1)) >> 1;
 		}
 
 		template <typename t_CDummy>
-		constexpr inline_small void fp_SignExtendUpper(typename TCEnableIf<!NTraits::TCIsSigned<t_CDummy>::mc_Value, t_CDummy>::CType *_pDummy = nullptr)
+		constexpr inline_small void fp_SignExtendUpper(TCEnableIf<!NTraits::cIsSigned<t_CDummy>, t_CDummy> *_pDummy = nullptr)
 		{
 			m_Upper = mc_UpperZero;
 		}
 
 		template <typename t_CDummy>
-		constexpr inline_small void fp_SignExtendUpper(typename TCEnableIf<NTraits::TCIsSigned<t_CDummy>::mc_Value && !NTraits::TCIsFundamental<t_CDummy>::mc_Value, t_CDummy>::CType *_pDummy = nullptr)
+		constexpr inline_small void fp_SignExtendUpper(TCEnableIf<NTraits::cIsSigned<t_CDummy> && !NTraits::cIsFundamental<t_CDummy>, t_CDummy> *_pDummy = nullptr)
 		{
 			m_Upper = m_Upper >> (EUpperBits);
 		}
@@ -646,40 +644,30 @@ namespace NMib::NNumeric
 	};
 }
 
-namespace NMib::NTraits::NImplementation
+namespace NMib::NTraits::NPrivate
 {
 	template <typename t_CUpper, typename t_CLower>
-	class TCIsSigned<NMib::NNumeric::TCInt<t_CUpper, t_CLower> >
+	struct TCIsSigned<NMib::NNumeric::TCInt<t_CUpper, t_CLower>>
 	{
-	public:
-		enum
-		{
-			EValue = NMib::NTraits::TCIsSigned<t_CUpper>::mc_Value
-		};
+		constexpr static bool mc_bValue = NMib::NTraits::cIsSigned<t_CUpper>;
 	};
 
 	template <typename t_CUpper, typename t_CLower>
-	class TCUnsigned<NMib::NNumeric::TCInt<t_CUpper, t_CLower> >
+	struct TCUnsigned<NMib::NNumeric::TCInt<t_CUpper, t_CLower>>
 	{
-	public:
-		typedef NMib::NNumeric::TCInt<typename NMib::NTraits::TCUnsigned<t_CUpper>::CType, t_CLower> CType;
+		using CType = NMib::NNumeric::TCInt<NMib::NTraits::TCUnsigned<t_CUpper>, t_CLower>;
 	};
 
 	template <typename t_CUpper, typename t_CLower>
-	class TCSigned<NMib::NNumeric::TCInt<t_CUpper, t_CLower> >
+	struct TCSigned<NMib::NNumeric::TCInt<t_CUpper, t_CLower>>
 	{
-	public:
-		typedef NMib::NNumeric::TCInt<typename NMib::NTraits::TCSigned<t_CUpper>::CType, t_CLower> CType;
+		using CType = NMib::NNumeric::TCInt<NMib::NTraits::TCSigned<t_CUpper>, t_CLower>;
 	};
 
 	template <typename t_CUpper, typename t_CLower>
-	class TCIsInteger<NMib::NNumeric::TCInt<t_CUpper, t_CLower>>
+	struct TCIsInteger<NMib::NNumeric::TCInt<t_CUpper, t_CLower>>
 	{
-	public:
-		enum
-		{
-			EValue = true
-		};
+		constexpr static bool mc_bValue = true;
 	};
 }
 
@@ -701,35 +689,35 @@ namespace NMib
 
 #if 1
 	template <typename t_CInt>
-	typename NTraits::TCSmallerType<t_CInt>::CType fg_GetLower(t_CInt const &_Integer)
+	NTraits::TCSmallerType<t_CInt> fg_GetLower(t_CInt const &_Integer)
 	{
 		return _Integer;
 	}
 
 	template <typename t_CInt>
-	typename NTraits::TCSmallerType<t_CInt>::CType fg_GetUpper(t_CInt const &_Integer)
+	NTraits::TCSmallerType<t_CInt> fg_GetUpper(t_CInt const &_Integer)
 	{
-		return typename NTraits::TCSmallerType<t_CInt>::CType(_Integer >> (sizeof(t_CInt)*4));
+		return NTraits::TCSmallerType<t_CInt>(_Integer >> (sizeof(t_CInt)*4));
 	}
 #else
 
 	template <typename t_CInt>
-	typename NTraits::TCSmallerType<t_CInt>::CType const &fg_GetLower(t_CInt const &_Integer)
+	NTraits::TCSmallerType<t_CInt> const &fg_GetLower(t_CInt const &_Integer)
 	{
 #ifdef DMibPLittleEndian
-		return reinterpret_cast<typename NTraits::TCSmallerType<t_CInt>::CType const *>(&_Integer)[0];
+		return reinterpret_cast<NTraits::TCSmallerType<t_CInt> const *>(&_Integer)[0];
 #else
-		return reinterpret_cast<typename NTraits::TCSmallerType<t_CInt>::CType const *>(&_Integer)[1];
+		return reinterpret_cast<NTraits::TCSmallerType<t_CInt> const *>(&_Integer)[1];
 #endif
 	}
 
 	template <typename t_CInt>
-	typename NTraits::TCSmallerType<t_CInt>::CType const &fg_GetUpper(t_CInt const &_Integer)
+	NTraits::TCSmallerType<t_CInt> const &fg_GetUpper(t_CInt const &_Integer)
 	{
 #ifdef DMibPLittleEndian
-		return reinterpret_cast<typename NTraits::TCSmallerType<t_CInt>::CType const *>(&_Integer)[1];
+		return reinterpret_cast<NTraits::TCSmallerType<t_CInt> const *>(&_Integer)[1];
 #else
-		return reinterpret_cast<typename NTraits::TCSmallerType<t_CInt>::CType const *>(&_Integer)[0];
+		return reinterpret_cast<NTraits::TCSmallerType<t_CInt> const *>(&_Integer)[0];
 #endif
 	}
 #endif
@@ -747,15 +735,15 @@ namespace NMib
 	}
 
 	template <typename tf_CInteger>
-	typename NTraits::TCUnsigned<tf_CInteger>::CType &fg_Unsigned(tf_CInteger &_Integer)
+	NTraits::TCUnsigned<tf_CInteger> &fg_Unsigned(tf_CInteger &_Integer)
 	{
-		return reinterpret_cast<typename NTraits::TCUnsigned<tf_CInteger>::CType &>(_Integer);
+		return reinterpret_cast<NTraits::TCUnsigned<tf_CInteger> &>(_Integer);
 	}
 
 	template <typename tf_CInteger>
-	typename NTraits::TCUnsigned<tf_CInteger>::CType &fg_Signed(tf_CInteger &_Integer)
+	NTraits::TCSigned<tf_CInteger> &fg_Signed(tf_CInteger &_Integer)
 	{
-		return reinterpret_cast<typename NTraits::TCUnsigned<tf_CInteger>::CType &>(_Integer);
+		return reinterpret_cast<NTraits::TCSigned<tf_CInteger> &>(_Integer);
 	}
 }
 
@@ -863,8 +851,6 @@ typedef NMib::NNumeric::TCInt<int4096, uint4096> int8192;
 typedef NMib::NNumeric::TCInt<uint4096, uint4096> uint8192;
 #endif
 
-namespace NMib::NTraits
-{
 #if !(defined(DMibPCanDo_uint8) && defined(DMibPCanDo_uint16))
 	DMibTraitsImplementSizePair(uint8, uint16);
 #endif
@@ -980,7 +966,6 @@ namespace NMib::NTraits
 #if !defined(DMibPCanDo_int8192)
 	DMibTraitsImplementIntegerFromSize(int8192);
 #endif
-}
 
 #ifndef DMibPNoShortCuts
 	using namespace NMib::NNumeric;

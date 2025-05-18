@@ -28,6 +28,7 @@
 #endif
 
 using namespace NMib::NNumeric;
+using namespace NMib::NTraits;
 namespace
 {
 	class CFloat_Tests : public NMib::NTest::CTest
@@ -99,7 +100,7 @@ namespace
 		class CConstants
 		{
 		public:
-			typedef typename NMib::NTraits::TCSmallestType<t_CFloat, fp64>::CType CSmallestType;
+			typedef TCSmallestType<t_CFloat, fp64> CSmallestType;
 			template <typename t_CFrom>
 			CSmallestType f_Cnv(const t_CFrom &_From)
 			{
@@ -273,7 +274,7 @@ namespace
 		class CConversion
 		{
 		public:
-			typedef typename NMib::NTraits::TCSmallestType<t_CFloat, fp64>::CType CSmallestType;
+			typedef TCSmallestType<t_CFloat, fp64> CSmallestType;
 			template <typename t_CFrom>
 			CSmallestType f_Cnv(const t_CFrom &_From)
 			{
@@ -313,7 +314,7 @@ namespace
 		template <typename tf_CFloat>
 		static auto fs_ConvertValue(tf_CFloat const &_Float)
 		{
-			if ((NMib::NTraits::TCIsSame<tf_CFloat, fp80>::mc_Value || NMib::NTraits::TCIsSame<tf_CFloat, CIEEEFloat80Emu>::mc_Value) && _Float.f_IsQNan())
+			if ((cIsSame<tf_CFloat, fp80> || cIsSame<tf_CFloat, CIEEEFloat80Emu>) && _Float.f_IsQNan())
 				return _Float.f_Abs();
 			return _Float;
 		}
@@ -407,12 +408,12 @@ namespace
 					auto ResultEmu = fs_ConvertValue(_fFunctor(tf_CEmulateFloat(_Value0), tf_CEmulateFloat(_Value1)));
 					bool bCheckName = true;
 					
-					if (NMib::NTraits::TCIsSame<tf_CFloat, fp80>::mc_Value)
+					if (cIsSame<tf_CFloat, fp80>)
 					{
 						if (!fs_IsNan(Result))
 							bCheckName = false;
 					}
-					else if (NMib::NTraits::TCIsSame<tf_CFloat, fp64>::mc_Value)
+					else if (cIsSame<tf_CFloat, fp64>)
 					{
 						if (_Desc.f_Find(".f_Pow(") >= 0 || _Desc.f_Find(".f_Exp(") >= 0)
 							bCheckName = false;
@@ -430,17 +431,17 @@ namespace
 						mint AlmontEqualBits = 0;
 						if (_Desc.f_Find(".f_Log(") >= 0)
 							AlmontEqualBits = 2;
-						else if (NMib::NTraits::TCIsSame<tf_CFloat, fp80>::mc_Value)
+						else if (cIsSame<tf_CFloat, fp80>)
 						{
 							if (_Desc.f_Find(".f_Pow(") >= 0 || _Desc.f_Find(".f_Exp(") >= 0)
 								AlmontEqualBits = 4;
 						}
-						else if (NMib::NTraits::TCIsSame<tf_CFloat, fp64>::mc_Value)
+						else if (cIsSame<tf_CFloat, fp64>)
 						{
 							if (_Desc.f_Find(".f_Pow(") >= 0 || _Desc.f_Find(".f_Exp(") >= 0)
 								AlmontEqualBits = 1;
 						}
-						else if (NMib::NTraits::TCIsSame<tf_CFloat, fp32>::mc_Value)
+						else if (cIsSame<tf_CFloat, fp32>)
 						{
 							if (_Desc.f_Find(".f_Pow(") >= 0 || _Desc.f_Find(".f_Exp(") >= 0)
 								AlmontEqualBits = 1;
@@ -488,14 +489,14 @@ namespace
 					auto ResultEmu = _fFunctor(tf_CEmulateFloat(_Value0));
 					if (fs_IsNan(Result))
 						DMibExpect(fs_IsNan(ResultEmu), ==, fs_IsNan(Result));
-					else if (!NMib::NTraits::TCIsSame<tf_CFloat, fp80>::mc_Value)
+					else if (!cIsSame<tf_CFloat, fp80>)
 						DMibExpect(fs_GetName(ResultEmu), ==, fs_GetName(Result));
 					if (!fs_IsNan(Result))
 					{
 						if 
 							(
 								(
-									NMib::NTraits::TCIsSame<tf_CFloat, fp80>::mc_Value
+									cIsSame<tf_CFloat, fp80>
 #if defined(DArchitecture_arm64) || defined(DArchitecture_arm64e)
 									|| true
 #endif

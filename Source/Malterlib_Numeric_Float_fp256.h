@@ -8,21 +8,17 @@
 #include "Malterlib_Numeric_Float.h"
 #include "Malterlib_Numeric_Float_fp128.h"
 
-typedef NMib::NNumeric::TCFloat<1, 19, 236> CIEEEFloat256;
-typedef NMib::NNumeric::TCFloat<1, 19, 236, NMib::NNumeric::CNoImplicit, 0> CIEEEFloat256Emu;
-typedef CIEEEFloat256 fp256;
-typedef NMib::TCAutoClear<fp256> zfp256;
-//typedef NMib::TCAutoClear<ufp256> zufp256;
+using CIEEEFloat256 = NMib::NNumeric::TCFloat<1, 19, 236>;
+using CIEEEFloat256Emu = NMib::NNumeric::TCFloat<1, 19, 236, NMib::NNumeric::CNoImplicit, 0>;
+using fp256 = CIEEEFloat256;
+using zfp256 = NMib::TCAutoClear<fp256>;
 
 #if defined(DMibPFloat_StdLib) && defined(DMibPCanDo_fp256)
 #	include "Malterlib_Numeric_Float_StdLib_fp256.h"
 #endif
 
-namespace NMib::NTraits
-{
-	DMibTraitsImplementFloatFromSize(fp256);
-	DMibTraitsImplementSizePair(fp128, fp256);
-}
+DMibTraitsImplementFloatFromSize(fp256);
+DMibTraitsImplementSizePair(fp128, fp256);
 
 namespace NMib::NNumeric
 {

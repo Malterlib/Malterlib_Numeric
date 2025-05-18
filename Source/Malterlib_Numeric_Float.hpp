@@ -1072,7 +1072,7 @@ namespace NMib::NNumeric
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 	DMibFloatInlineS auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::operator = (TCFloat const &_Value) -> TCFloat &
 	{
-		if constexpr (NTraits::TCIsSame<t_CImplicitFloat, CNoImplicit>::mc_Value)
+		if constexpr (NTraits::cIsSame<t_CImplicitFloat, CNoImplicit>)
 			m_Data = _Value.m_Data;
 		else
 			m_DataImplicit = _Value.m_DataImplicit;

@@ -14,5 +14,6 @@ namespace NMib::NNumeric
 		template class TCFloat<1, 11, 52>;
 		template class TCFloat<1, 11, 52, CNoImplicit, 0>;
 	#endif
+	template class TCFloat<0, 11, 53>;
 #endif
 }
