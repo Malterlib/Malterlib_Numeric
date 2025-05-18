@@ -54,7 +54,17 @@ namespace NMib::NSys::NNumeric
 
 namespace NMib::NNumeric
 {
+	template <> DMibFloatConstexpr inline_small CIEEEFloat32::TCFloat()
+		: m_DataImplicit()
+	{
+	}
+
 	template <> DMibFloatConstexpr inline_small CIEEEFloat32::TCFloat(CIEEEFloat32 const &_Other)
+		: m_DataImplicit(_Other.m_DataImplicit)
+	{
+	}
+
+	template <> DMibFloatConstexpr inline_small CIEEEFloat32::TCFloat(CIEEEFloat32 &&_Other)
 		: m_DataImplicit(_Other.m_DataImplicit)
 	{
 	}

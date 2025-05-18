@@ -954,11 +954,6 @@ namespace NMib::NNumeric
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	DMibFloatInlineS TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::~TCFloat()
-	{
-	}
-
-	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 	DMibFloatInlineS auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::f_ToInt() const -> CInteger
 	{
 		aint Exp = fg_Convert<aint>(f_GetExponent()) - mc_MantissaBits;
@@ -1057,14 +1052,20 @@ namespace NMib::NNumeric
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
+	DMibFloatInlineS TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::TCFloat(CUnsignedInteger const &_Value, EConstexprInitialization)
+		: m_Data(_Value)
+	{
+	}
+
+	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 	DMibFloatInlineS TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::TCFloat(TCFloat const &_Value)
 		: m_Data(_Value.m_Data)
 	{
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	DMibFloatInlineS TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::TCFloat(CUnsignedInteger const &_Value, EConstexprInitialization)
-		: m_Data(_Value)
+	DMibFloatInlineS TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::TCFloat(TCFloat &&_Value)
+		: m_Data(_Value.m_Data)
 	{
 	}
 
@@ -1072,6 +1073,16 @@ namespace NMib::NNumeric
 	DMibFloatInlineS auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::operator = (TCFloat const &_Value) -> TCFloat &
 	{
 		if constexpr (NTraits::TCIsSame<t_CImplicitFloat, CNoImplicit>::mc_Value)
+			m_Data = _Value.m_Data;
+		else
+			m_DataImplicit = _Value.m_DataImplicit;
+		return *this;
+	}
+
+	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
+	DMibFloatInlineS auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::operator = (TCFloat &&_Value) -> TCFloat &
+	{
+		if constexpr (NTraits::cIsSame<t_CImplicitFloat, CNoImplicit>)
 			m_Data = _Value.m_Data;
 		else
 			m_DataImplicit = _Value.m_DataImplicit;

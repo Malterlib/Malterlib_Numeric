@@ -18,17 +18,16 @@ namespace NMib::NNumeric::NPrivate
 namespace NMib::NNumeric
 {
 	template <typename t_CUpper, typename t_CLower>
-	class TCInt
+	struct TCInt
 	{
-	public:
 		typedef t_CUpper CUpper;
 		typedef t_CLower CLower;
 #ifdef DMibPLittleEndian
-		t_CLower m_Lower;
-		t_CUpper m_Upper;
+		t_CLower m_Lower{};
+		t_CUpper m_Upper{};
 #else
-		t_CUpper m_Upper;
-		t_CLower m_Lower;
+		t_CUpper m_Upper{};
+		t_CLower m_Lower{};
 #endif
 		enum
 		{
@@ -42,12 +41,12 @@ namespace NMib::NNumeric
 			, EHalfBits = EAllBits / 2
 		};
 		static_assert(EUpperBits >= ELowerBits, "If non symmetric sizes for constituent integers, the upper integer needs to be the larger one, otherwise sign extension wont work");
-	public:
+
 		enum
 		{
 			ESize = sizeof(t_CUpper) + sizeof(t_CLower)
 		};
-		typedef TCInt CInt;
+		using CInt = TCInt;
 		struct CConstants;
 
 		static constexpr bool mc_bIsSigned = NTraits::TCIsSigned<t_CUpper>::mc_Value;
@@ -58,11 +57,12 @@ namespace NMib::NNumeric
 		static constexpr t_CLower mc_LowerOne{1};
 
 		// Do nothing in default constructor
-		constexpr TCInt()
-			: m_Upper(0)
-			, m_Lower(0)
-		{
-		}
+		constexpr TCInt() noexcept = default;
+		constexpr TCInt(TCInt const &_Value) noexcept = default;
+		constexpr TCInt(TCInt &&_Value) noexcept = default;
+
+		constexpr TCInt &operator = (TCInt const &_Value) = default;
+		constexpr TCInt &operator = (TCInt &&_Value) = default;
 
 		constexpr TCInt(t_CUpper _Upper, t_CLower _Lower)
 			: m_Upper(_Upper)
@@ -71,8 +71,7 @@ namespace NMib::NNumeric
 		}
 
 		constexpr TCInt(t_CLower _Lower)
-			: m_Upper(0)
-			, m_Lower(_Lower)
+			: m_Lower(_Lower)
 		{
 		}
 
@@ -151,19 +150,6 @@ namespace NMib::NNumeric
 			constexpr t_CType And1 = fg_BitRange<t_CType>(0, fg_Min((mint)ELowerBits - 1, sizeof(t_CType)*8 - 1));
 			m_Upper = t_CUpper(((_Convert >> (fg_Min((mint)ELowerBits, sizeof(t_CType)*8) - 1)) >> 1));
 			m_Lower = t_CLower((_Convert & And1));
-			return *this;
-		}
-
-		constexpr TCInt(const TCInt &_Value)
-		{
-			m_Upper = _Value.m_Upper;
-			m_Lower = _Value.m_Lower;
-		}
-
-		constexpr TCInt &operator = (const TCInt &_Value)
-		{
-			m_Upper = _Value.m_Upper;
-			m_Lower = _Value.m_Lower;
 			return *this;
 		}
 

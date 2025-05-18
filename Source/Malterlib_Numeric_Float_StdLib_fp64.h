@@ -46,7 +46,17 @@ namespace NMib::NNumeric
 	#pragma warning(disable : 4725) // Disable warning about erronous pentiums
 #endif
 	
+	template <> DMibFloatConstexpr inline_small CIEEEFloat64::TCFloat()
+		: m_DataImplicit()
+	{
+	}
+
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64::TCFloat(CIEEEFloat64 const &_Other)
+		: m_DataImplicit(_Other.m_DataImplicit)
+	{
+	}
+
+	template <> DMibFloatConstexpr inline_small CIEEEFloat64::TCFloat(CIEEEFloat64 &&_Other)
 		: m_DataImplicit(_Other.m_DataImplicit)
 	{
 	}
