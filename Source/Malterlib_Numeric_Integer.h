@@ -20,8 +20,9 @@ namespace NMib::NNumeric
 	template <typename t_CUpper, typename t_CLower>
 	struct TCInt
 	{
-		typedef t_CUpper CUpper;
-		typedef t_CLower CLower;
+		using CUpper = t_CUpper;
+		using CLower = t_CLower;
+
 #ifdef DMibPLittleEndian
 		t_CLower m_Lower{};
 		t_CUpper m_Upper{};
@@ -85,7 +86,7 @@ namespace NMib::NNumeric
 			}
 			else
 			{
-				typedef TCInt<t_CUpper2, t_CLower2> CType;
+				using CType = TCInt<t_CUpper2, t_CLower2>;
 				CType Ret;
 				if constexpr (sizeof(t_CUpper2) > sizeof(TCInt))
 				{
@@ -748,107 +749,107 @@ namespace NMib
 }
 
 #ifndef DMibPCanDo_int16
-typedef NMib::NNumeric::TCInt<int8, uint8> int16;
+using int16 = NMib::NNumeric::TCInt<int8, uint8>;
 #endif
 
 #ifndef DMibPCanDo_uint16
-typedef NMib::NNumeric::TCInt<uint8, uint8> uint16;
+using uint16 = NMib::NNumeric::TCInt<uint8, uint8>;
 #endif
 
 #ifndef DMibPCanDo_int32
-typedef NMib::NNumeric::TCInt<int16, uint16> int32;
+using int32 = NMib::NNumeric::TCInt<int16, uint16>;
 #endif
 
 #ifndef DMibPCanDo_uint32
-typedef NMib::NNumeric::TCInt<uint16, uint16> uint32;
+using uint32 = NMib::NNumeric::TCInt<uint16, uint16>;
 #endif
 
 #ifndef DMibPCanDo_int64
-typedef NMib::NNumeric::TCInt<int32, uint32> int64;
+using int64 = NMib::NNumeric::TCInt<int32, uint32>;
 #endif
 
 #ifndef DMibPCanDo_uint64
-typedef NMib::NNumeric::TCInt<uint32, uint32> uint64;
+using uint64 = NMib::NNumeric::TCInt<uint32, uint32>;
 #endif
 
 #ifndef DMibPCanDo_int80
-typedef NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<int16, uint16>, NMib::NNumeric::TCInt<uint16, uint16>>, uint16> int80;
+using int80 = NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<int16, uint16>, NMib::NNumeric::TCInt<uint16, uint16>>, uint16>;
 #endif
 
 #ifndef DMibPCanDo_uint80
-typedef NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<uint16, uint16>, NMib::NNumeric::TCInt<uint16, uint16>>, uint16> uint80;
+using uint80 = NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<uint16, uint16>, NMib::NNumeric::TCInt<uint16, uint16>>, uint16>;
 #endif
 
 #ifndef DMibPCanDo_int128
-typedef NMib::NNumeric::TCInt<int64, uint64> int128;
+using int128 = NMib::NNumeric::TCInt<int64, uint64>;
 #endif
 
 #ifndef DMibPCanDo_uint128
-typedef NMib::NNumeric::TCInt<uint64, uint64> uint128;
+using uint128 = NMib::NNumeric::TCInt<uint64, uint64>;
 #endif
 
 #ifndef DMibPCanDo_int160
-typedef NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<int32, uint32>, NMib::NNumeric::TCInt<uint32, uint32>>, uint32> int160;
+using int160 = NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<int32, uint32>, NMib::NNumeric::TCInt<uint32, uint32>>, uint32>;
 #endif
 
 #ifndef DMibPCanDo_uint160
-typedef NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<uint32, uint32>, NMib::NNumeric::TCInt<uint32, uint32>>, uint32> uint160;
+using uint160 = NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<uint32, uint32>, NMib::NNumeric::TCInt<uint32, uint32>>, uint32>;
 #endif
 
 #ifndef DMibPCanDo_int256
-typedef NMib::NNumeric::TCInt<int128, uint128> int256;
+using int256 = NMib::NNumeric::TCInt<int128, uint128>;
 #endif
 
 #ifndef DMibPCanDo_uint256
-typedef NMib::NNumeric::TCInt<uint128, uint128> uint256;
+using uint256 = NMib::NNumeric::TCInt<uint128, uint128>;
 #endif
 
 #ifndef DMibPCanDo_int320
-typedef NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<int64, uint64>, NMib::NNumeric::TCInt<uint64, uint64>>, uint64> int320;
+using int320 = NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<int64, uint64>, NMib::NNumeric::TCInt<uint64, uint64>>, uint64>;
 #endif
 
 #ifndef DMibPCanDo_uint320
-typedef NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<uint64, uint64>, NMib::NNumeric::TCInt<uint64, uint64>>, uint64> uint320;
+using uint320 = NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<uint64, uint64>, NMib::NNumeric::TCInt<uint64, uint64>>, uint64>;
 #endif
 
 #ifndef DMibPCanDo_int512
-typedef NMib::NNumeric::TCInt<int256, uint256> int512;
+using int512 = NMib::NNumeric::TCInt<int256, uint256>;
 #endif
 
 #ifndef DMibPCanDo_uint512
-typedef NMib::NNumeric::TCInt<uint256, uint256> uint512;
+using uint512 = NMib::NNumeric::TCInt<uint256, uint256>;
 #endif
 
 #ifndef DMibPCanDo_int1024
-typedef NMib::NNumeric::TCInt<int512, uint512> int1024;
+using int1024 = NMib::NNumeric::TCInt<int512, uint512>;
 #endif
 
 #ifndef DMibPCanDo_uint1024
-typedef NMib::NNumeric::TCInt<uint512, uint512> uint1024;
+using uint1024 = NMib::NNumeric::TCInt<uint512, uint512>;
 #endif
 
 #ifndef DMibPCanDo_int2048
-typedef NMib::NNumeric::TCInt<int1024, uint1024> int2048;
+using int2048 = NMib::NNumeric::TCInt<int1024, uint1024>;
 #endif
 
 #ifndef DMibPCanDo_uint2048
-typedef NMib::NNumeric::TCInt<uint1024, uint1024> uint2048;
+using uint2048 = NMib::NNumeric::TCInt<uint1024, uint1024>;
 #endif
 
 #ifndef DMibPCanDo_int4096
-typedef NMib::NNumeric::TCInt<int2048, uint2048> int4096;
+using int4096 = NMib::NNumeric::TCInt<int2048, uint2048>;
 #endif
 
 #ifndef DMibPCanDo_uint4096
-typedef NMib::NNumeric::TCInt<uint2048, uint2048> uint4096;
+using uint4096 = NMib::NNumeric::TCInt<uint2048, uint2048>;
 #endif
 
 #ifndef DMibPCanDo_int8192
-typedef NMib::NNumeric::TCInt<int4096, uint4096> int8192;
+using int8192 = NMib::NNumeric::TCInt<int4096, uint4096>;
 #endif
 
 #ifndef DMibPCanDo_uint8192
-typedef NMib::NNumeric::TCInt<uint4096, uint4096> uint8192;
+using uint8192 = NMib::NNumeric::TCInt<uint4096, uint4096>;
 #endif
 
 #if !(defined(DMibPCanDo_uint8) && defined(DMibPCanDo_uint16))

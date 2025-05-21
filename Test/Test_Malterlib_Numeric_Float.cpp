@@ -100,7 +100,8 @@ namespace
 		class CConstants
 		{
 		public:
-			typedef TCSmallestType<t_CFloat, fp64> CSmallestType;
+			using CSmallestType = TCSmallestType<t_CFloat, fp64>;
+
 			template <typename t_CFrom>
 			CSmallestType f_Cnv(const t_CFrom &_From)
 			{
@@ -274,7 +275,8 @@ namespace
 		class CConversion
 		{
 		public:
-			typedef TCSmallestType<t_CFloat, fp64> CSmallestType;
+			using CSmallestType = TCSmallestType<t_CFloat, fp64>;
+
 			template <typename t_CFrom>
 			CSmallestType f_Cnv(const t_CFrom &_From)
 			{
@@ -1024,8 +1026,8 @@ public:
 
 		DMibTrace("{fe100}\n", fp32(2000000000.0f));
 
-		typedef NMib::NNumeric::TCFloat <1, 8, 23, pfp32, 0> CIEEEFloat32Emulate;
-		typedef NMib::NNumeric::TCFloat <1, 11, 52, pfp64, 0> CIEEEFloat64Emulate;
+		using CIEEEFloat32Emulate = NMib::NNumeric::TCFloat <1, 8, 23, pfp32, 0>;
+		using CIEEEFloat64Emulate = NMib::NNumeric::TCFloat <1, 11, 52, pfp64, 0>;
 
 		fp128 Temp1 = fp64(11.0);
 

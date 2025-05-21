@@ -532,7 +532,7 @@ namespace NMib
 		template <typename t_CType>
 		static DMibFloatInlineS t_CType0 fs_Convert( t_CType const &_From)
 		{
-			typedef typename NNumeric::TCFloatFromNative<t_CType0>::CType CRetType;
+			using CRetType = typename NNumeric::TCFloatFromNative<t_CType0>::CType;
 			CRetType Ret = _From;
 			return (t_CType0 const &)Ret;
 		}
@@ -555,7 +555,7 @@ namespace NMib
 	class TCConvert< NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>, t_CType0>
 	{
 	public:
-		typedef NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> CFloatType;
+		using CFloatType = NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>;
 
 		template <typename t_CType>
 		static DMibFloatInlineS TCDisableIf<NTraits::cIsFloat<t_CType>, CFloatType> fs_Convert( t_CType const &_From)
@@ -574,7 +574,7 @@ namespace NMib
 	class TCConvert< NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>, NNumeric::TCInt<t_CUpper, t_CLower> >
 	{
 	public:
-		typedef NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> CFloatType;
+		using CFloatType = NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> ;
 		static DMibFloatInlineS CFloatType fs_Convert( NNumeric::TCInt<t_CUpper, t_CLower> const &_From)
 		{
 			return CFloatType::fs_FromInt(_From);

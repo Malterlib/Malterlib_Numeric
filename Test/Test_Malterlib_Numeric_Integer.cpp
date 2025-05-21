@@ -425,7 +425,7 @@ namespace
 
 using namespace NMib::NNumeric;
 
-typedef TCInt<int8, uint8> Simulate_int16;
+using Simulate_int16 = TCInt<int8, uint8>;
 
 DMibStrStringFormatterImplementInt(Simulate_int16);
 
@@ -824,7 +824,7 @@ public:
 		}
 
 		{
-			typedef TCInt<int32, uint32> int64emu;
+			using int64emu = TCInt<int32, uint32>;
 
 			int64emu HugeNumber = NMib::NStr::fg_StrToInt("-87654321098765", int64emu(0));
 			DMibTrace("HugeNumber: {}\n", HugeNumber);

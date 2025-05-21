@@ -11,7 +11,7 @@ namespace NMib::NNumeric
 	template <typename t_CType, typename t_CTag, t_CType t_DefaultInit = -1>
 	struct TCTaggedInteger
 	{
-		typedef t_CType CType;
+		using CType = t_CType;
 
 		constexpr TCTaggedInteger();
 

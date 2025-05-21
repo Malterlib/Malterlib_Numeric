@@ -12,7 +12,7 @@ namespace NMib::NNumeric
 			TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_SetValue
 		)
 	{
-		typedef TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> COtherFloat;
+		using COtherFloat = TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2>;
 		COtherFloat Other = _SetValue;
 
 		f_SetSignBits(fg_Convert<CInteger>(Other.f_GetSignBits()));
@@ -85,7 +85,7 @@ namespace NMib::NNumeric
 			TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> const &_SetValue
 		)
 	{
-		typedef TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> COtherFloat;
+		using COtherFloat = TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2>;
 		COtherFloat Other = _SetValue;
 
 		f_SetSignBits(fg_Convert<CInteger>(Other.f_GetSignBits()));
@@ -477,8 +477,8 @@ namespace NMib::NNumeric
 		if (f_IsNan() || _Right.f_IsNan())
 			return COrdering_Partial::unordered;
 
-		typedef TCFloat CLeftFloat;
-		typedef TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2> CRightFloat;
+		using CLeftFloat = TCFloat;
+		using CRightFloat = TCFloat<t_SignBits2, t_ExponentBits2, t_MantissaBits2, t_CImplicitFloat2, t_bDummyOptimize2, t_CIntegerStorage2>;
 
 		using CLeftInteger = typename CLeftFloat::CInteger;
 		using CRightInteger = typename CRightFloat::CInteger;

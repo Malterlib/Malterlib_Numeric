@@ -12,7 +12,7 @@ namespace NMib
 		class TCFloatFromNative<_Native>\
 		{\
 		public:\
-			typedef _TCFloat CType;\
+			using CType = _TCFloat;\
 		};
 
 		DMibMathImplementNativeFloat(pfp32, CIEEEFloat32);
@@ -22,7 +22,7 @@ namespace NMib
 		class TCFloatFromNative<NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>>
 		{
 		public:
-			typedef NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> CType;
+			using CType = NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>;
 		};
 
 		template <typename t_CFloat>
@@ -34,15 +34,13 @@ namespace NMib
 		template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 		class TCFloatTraits<NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>>
 		{
-			typedef NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage> CFloat;
+			using CFloat = NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>;
 		public:
-			typedef typename CFloat::CInteger CStorageInteger;
-			typedef typename CFloat::CDoubleInteger CStorageInteger_x2;
-
-			typedef typename CFloat::CUnsignedInteger CStorageUnsignedInteger;
-			typedef typename CFloat::CDoubleUnsignedInteger CStorageUnsignedInteger_x2;
-
-			typedef typename CFloat::CImplicitFloat CFundamentalFloat;
+			using CStorageInteger = typename CFloat::CInteger;
+			using CStorageInteger_x2 = typename CFloat::CDoubleInteger;
+			using CStorageUnsignedInteger = typename CFloat::CUnsignedInteger;
+			using CStorageUnsignedInteger_x2 = typename CFloat::CDoubleUnsignedInteger;
+			using CFundamentalFloat = typename CFloat::CImplicitFloat;
 
 			bool const static ms_bHasFundamentalFloat = !NTraits::cIsSame<CFundamentalFloat, NMib::NNumeric::CNoImplicit>;
 		};
@@ -61,7 +59,7 @@ namespace NMib
 		class TCFloatCombinedType
 		{
 		public:
-			typedef NTraits::TCLargestType<t_CFloat0, t_CFloat1> CType;
+			using CType = NTraits::TCLargestType<t_CFloat0, t_CFloat1>;
 		};
 
 		template <typename t_CFloat, void (&f_Init)(t_CFloat &_Float)>
@@ -93,107 +91,107 @@ namespace NMib
 		{
 			static void fg_Init_0(t_CFloat &_Float)
 			{
-				typedef typename TCFloatFromNative<t_CFloat>::CType CFloat;
+				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_0();
 			}
 			static void fg_Init_0_5(t_CFloat &_Float)
 			{
-				typedef typename TCFloatFromNative<t_CFloat>::CType CFloat;
+				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_0_5();
 			}
 			static void fg_Init_1(t_CFloat &_Float)
 			{
-				typedef typename TCFloatFromNative<t_CFloat>::CType CFloat;
+				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_1();
 			}
 			static void fg_Init_2(t_CFloat &_Float)
 			{
-				typedef typename TCFloatFromNative<t_CFloat>::CType CFloat;
+				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_2();
 			}
 			static void fg_Init_E(t_CFloat &_Float)
 			{
-				typedef typename TCFloatFromNative<t_CFloat>::CType CFloat;
+				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_E();
 			}
 			static void fg_Init_Pi(t_CFloat &_Float)
 			{
-				typedef typename TCFloatFromNative<t_CFloat>::CType CFloat;
+				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_Pi();
 			}
 			static void fg_Init_Sqrt2(t_CFloat &_Float)
 			{
-				typedef typename TCFloatFromNative<t_CFloat>::CType CFloat;
+				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_Sqrt2();
 			}
 			static void fg_Init_Euler(t_CFloat &_Float)
 			{
-				typedef typename TCFloatFromNative<t_CFloat>::CType CFloat;
+				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_Euler();
 			}
 			static void fg_Init_GoldenRatio(t_CFloat &_Float)
 			{
-				typedef typename TCFloatFromNative<t_CFloat>::CType CFloat;
+				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_GoldenRatio();
 			}
 			static void fg_Init_Log10_2(t_CFloat &_Float)
 			{
-				typedef typename TCFloatFromNative<t_CFloat>::CType CFloat;
+				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_Log10_2();
 			}
 			static void fg_Init_Log2_10(t_CFloat &_Float)
 			{
-				typedef typename TCFloatFromNative<t_CFloat>::CType CFloat;
+				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_Log2_10();
 			}
 			static void fg_Init_Log10_E(t_CFloat &_Float)
 			{
-				typedef typename TCFloatFromNative<t_CFloat>::CType CFloat;
+				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_Log10_E();
 			}
 			static void fg_Init_LogE_10(t_CFloat &_Float)
 			{
-				typedef typename TCFloatFromNative<t_CFloat>::CType CFloat;
+				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_LogE_10();
 			}
 			static void fg_Init_Log2_E(t_CFloat &_Float)
 			{
-				typedef typename TCFloatFromNative<t_CFloat>::CType CFloat;
+				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_Log2_E();
 			}
 			static void fg_Init_LogE_2(t_CFloat &_Float)
 			{
-				typedef typename TCFloatFromNative<t_CFloat>::CType CFloat;
+				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_LogE_2();
 			}
 			static void fg_Init_Inf(t_CFloat &_Float)
 			{
-				typedef typename TCFloatFromNative<t_CFloat>::CType CFloat;
+				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_Inf();
 			}
 			static void fg_Init_NegInf(t_CFloat &_Float)
 			{
-				typedef typename TCFloatFromNative<t_CFloat>::CType CFloat;
+				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_NegInf();
 			}
 			static void fg_Init_QNan(t_CFloat &_Float)
 			{
-				typedef typename TCFloatFromNative<t_CFloat>::CType CFloat;
+				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_QNan();
 			}
 			static void fg_Init_SNan(t_CFloat &_Float)
 			{
-				typedef typename TCFloatFromNative<t_CFloat>::CType CFloat;
+				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_SNan();
 			}
 			static void fg_Init_NegQNan(t_CFloat &_Float)
 			{
-				typedef typename TCFloatFromNative<t_CFloat>::CType CFloat;
+				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_NegQNan();
 			}
 			static void fg_Init_NegSNan(t_CFloat &_Float)
 			{
-				typedef typename TCFloatFromNative<t_CFloat>::CType CFloat;
+				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_NegSNan();
 			}
 		public:
@@ -477,7 +475,8 @@ namespace NMib
 		template <typename t_CFloat, typename t_CInteger>
 		t_CFloat &fg_FInPlaceSetSignBits(t_CFloat &_Float, const t_CInteger &_Value)
 		{
-			typedef typename TCFloatFromNative<t_CFloat>::CType CFloat;
+			using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
+
 			CFloat &Float = (CFloat &)_Float;
 			Float.f_SetSignBits(_Value);
 			return _Float;
@@ -675,7 +674,8 @@ namespace NMib
 		template <typename t_CFloat>
 		t_CFloat fg_FArcTan(t_CFloat const &_Float, const t_CFloat &_Source)
 		{
-			typedef typename TCFloatFromNative<t_CFloat>::CType CFloat;
+			using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
+
 			const CFloat &Float = _Float;
 			const CFloat &Source = _Source;
 			return Float.f_ArcTan(Source).f_Get();
@@ -683,7 +683,8 @@ namespace NMib
 		template <typename t_CFloat0, typename t_CFloat1>
 		typename TCFloatCombinedType<t_CFloat0, t_CFloat1>::CType fg_FArcTan(t_CFloat0 const &_Float, const t_CFloat1 &_Source)
 		{
-			typedef typename TCFloatCombinedType<t_CFloat0, t_CFloat1>::CType CCombinedFloat;
+			using CCombinedFloat = typename TCFloatCombinedType<t_CFloat0, t_CFloat1>::CType;
+
 			CCombinedFloat Float{_Float};
 			CCombinedFloat Source{_Source};
 			return fg_FArcTan(Float, Source);

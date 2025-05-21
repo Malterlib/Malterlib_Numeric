@@ -9,7 +9,8 @@ namespace NMib::NNumeric
 	class TCVecAggregate
 	{
 	public:
-		typedef t_CType CType;
+		using CType = t_CType;
+
 		enum
 		{
 			ENumDim = t_nDim
@@ -48,7 +49,8 @@ namespace NMib::NNumeric
 	class TCVecAggregate<fp32, 4>
 	{
 	public:
-		typedef fp32 CType;
+		using CType = fp32;
+
 		enum
 		{
 			ENumDim = 4
@@ -135,8 +137,9 @@ namespace NMib::NNumeric
 	class TCVec : public TCVecAggregate<t_CType, t_nDim>
 	{
 	public:
-		typedef TCVecAggregate<t_CType, t_nDim> CSuper;
-		typedef typename CSuper::CType CType;
+		using CSuper = TCVecAggregate<t_CType, t_nDim>;
+		using CType = typename CSuper::CType;
+
 		TCVec()
 		{
 		}
@@ -171,8 +174,9 @@ namespace NMib::NNumeric
 	class TCVec<t_CType, 2> : public TCVecAggregate<t_CType, 2>
 	{
 	public:
-		typedef TCVecAggregate<t_CType, 2> CSuper;
-		typedef typename CSuper::CType CType;
+		using CSuper = TCVecAggregate<t_CType, 2>;
+		using CType = typename CSuper::CType;
+
 		enum
 		{
 			ENumDim = CSuper::ENumDim
@@ -220,8 +224,9 @@ namespace NMib::NNumeric
 	class TCVec<t_CType, 3> : public TCVecAggregate<t_CType, 3>
 	{
 	public:
-		typedef TCVecAggregate<t_CType, 3> CSuper;
-		typedef typename CSuper::CType CType;
+		using CSuper = TCVecAggregate<t_CType, 3>;
+		using CType = typename CSuper::CType;
+
 		enum
 		{
 			ENumDim = CSuper::ENumDim
@@ -271,8 +276,8 @@ namespace NMib::NNumeric
 	class TCVec<t_CType, 4> : public TCVecAggregate<t_CType, 4>
 	{
 	public:
-		typedef TCVecAggregate<t_CType, 4> CSuper;
-		typedef typename CSuper::CType CType;
+		using CSuper = TCVecAggregate<t_CType, 4>;
+		using CType = typename CSuper::CType;
 
 		enum
 		{
@@ -329,35 +334,36 @@ namespace NMib::NNumeric
 		}
 	};
 
-	typedef TCVec<int32, 2> CVec2Dint32;
-	typedef TCVec<int32, 3> CVec3Dint32;
-	typedef TCVec<int32, 4> CVec4Dint32;
+	using CVec2Dint32 = TCVec<int32, 2>;
+	using CVec3Dint32 = TCVec<int32, 3>;
+	using CVec4Dint32 = TCVec<int32, 4>;
 
-	typedef TCVec<int32, 2> CVec2Duint32;
-	typedef TCVec<int32, 3> CVec3Duint32;
-	typedef TCVec<int32, 4> CVec4Duint32;
+	using CVec2Duint32 = TCVec<int32, 2>;
+	using CVec3Duint32 = TCVec<int32, 3>;
+	using CVec4Duint32 = TCVec<int32, 4>;
 
-	typedef TCVec<fp32, 2> CVec2Dfp32;
-	typedef TCVec<fp32, 3> CVec3Dfp32;
-	typedef TCVec<fp32, 4> CVec4Dfp32;
+	using CVec2Dfp32 = TCVec<fp32, 2>;
+	using CVec3Dfp32 = TCVec<fp32, 3>;
+	using CVec4Dfp32 = TCVec<fp32, 4>;
 
-	typedef TCVecAggregate<int32, 2> CVecAggr2Dint32;
-	typedef TCVecAggregate<int32, 3> CVecAggr3Dint32;
-	typedef TCVecAggregate<int32, 4> CVecAggr4Dint32;
+	using CVecAggr2Dint32 = TCVecAggregate<int32, 2>;
+	using CVecAggr3Dint32 = TCVecAggregate<int32, 3>;
+	using CVecAggr4Dint32 = TCVecAggregate<int32, 4>;
 
-	typedef TCVecAggregate<int32, 2> CVecAggr2Duint32;
-	typedef TCVecAggregate<int32, 3> CVecAggr3Duint32;
-	typedef TCVecAggregate<int32, 4> CVecAggr4Duint32;
+	using CVecAggr2Duint32 = TCVecAggregate<int32, 2>;
+	using CVecAggr3Duint32 = TCVecAggregate<int32, 3>;
+	using CVecAggr4Duint32 = TCVecAggregate<int32, 4>;
 
-	typedef TCVecAggregate<fp32, 2> CVecAggr2Dfp32;
-	typedef TCVecAggregate<fp32, 3> CVecAggr3Dfp32;
-	typedef TCVecAggregate<fp32, 4> CVecAggr4Dfp32;
+	using CVecAggr2Dfp32 = TCVecAggregate<fp32, 2>;
+	using CVecAggr3Dfp32 = TCVecAggregate<fp32, 3>;
+	using CVecAggr4Dfp32 = TCVecAggregate<fp32, 4>;
 
 	template <typename t_CType, mint t_nDimX>
 	class TCMatrixAggregate
 	{
 	public:
-		typedef t_CType CVec;
+		using CVec = t_CType;
+
 		enum
 		{
 			ENumDimY = t_CType::ENumDim,
@@ -379,8 +385,8 @@ namespace NMib::NNumeric
 		template <typename t_CType0, mint t_nDimX0, typename t_CType1, mint t_nDimX1>
 		static void fs_Multiply(TCMatrixAggregate<t_CType, t_nDimX> &_Dest, const TCMatrixAggregate<t_CType0, t_nDimX0> &_Src0, const TCMatrixAggregate<t_CType1, t_nDimX1> &_Src1)
 		{
-//				typedef TCMatrixAggregate<t_CType0, t_nDimX0>::CType CVec0;
-//				typedef TCMatrixAggregate<t_CType1, t_nDimX1>::CType CVec1;
+//				using CVec0 = TCMatrixAggregate<t_CType0, t_nDimX0>::CType;
+//				using CVec1 = TCMatrixAggregate<t_CType1, t_nDimX1>::CType;
 			enum
 			{
 				EDimX0 = TCMatrixAggregate<t_CType0, t_nDimX0>::ENumDimX,
@@ -429,7 +435,7 @@ namespace NMib::NNumeric
 	class TCMatrixAggregate<CVecAggr4Dfp32, 4>
 	{
 	public:
-		typedef CVecAggr4Dfp32 CVec;
+		using CVec = CVecAggr4Dfp32;
 		enum
 		{
 			ENumDimY = CVecAggr4Dfp32::ENumDim,
@@ -577,8 +583,8 @@ namespace NMib::NNumeric
 		}
 	};
 
-	typedef TCMatrixAggregate<CVecAggr4Dfp32, 4> CVecAggr4x4fp32;
-	typedef TCMatrixAggregate<CVecAggr4Dfp32, 3> CVecAggr3x4fp32;
+	using CVecAggr4x4fp32 = TCMatrixAggregate<CVecAggr4Dfp32, 4>;
+	using CVecAggr3x4fp32 = TCMatrixAggregate<CVecAggr4Dfp32, 3>;
 }
 
 #ifndef DMibPNoShortCuts
