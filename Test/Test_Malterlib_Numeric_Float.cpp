@@ -221,7 +221,7 @@ namespace
 						DMibTestPath("Construct");\
 						auto d_Name = d_Value;\
 						t_CFloatLeft Converted##d_Name{d_Name}; \
-						if (sizeof(typename t_CFloatLeft::CUnsignedInteger) >= sizeof(typename t_CFloatRight::CUnsignedInteger))\
+						if constexpr (t_CFloatLeft::mc_MantissaBits >= t_CFloatRight::mc_MantissaBits)\
 							DMibExpect(Converted##d_Name, d_ExpectBiggerOperator, d_Name);\
 						else\
 							DMibExpect(Converted##d_Name, d_ExpectSmallerOperator, d_ExpectSmaller);\
@@ -231,15 +231,15 @@ namespace
 						auto d_Name = d_Value;\
 						t_CFloatLeft Converted##d_Name;\
 						Converted##d_Name = d_Name;\
-						if (sizeof(typename t_CFloatLeft::CUnsignedInteger) >= sizeof(typename t_CFloatRight::CUnsignedInteger))\
+						if constexpr (t_CFloatLeft::mc_MantissaBits >= t_CFloatRight::mc_MantissaBits)\
 							DMibExpect(Converted##d_Name, d_ExpectBiggerOperator, d_Name);\
 						else\
 							DMibExpect(Converted##d_Name, d_ExpectSmallerOperator, d_ExpectSmaller);\
 					}
-					
+
 					DTestConversion(SmallestDenormal, t_CFloatRight::fs_SmallestDenormal(), ==, SmallestDenormal, ==, t_CFloatLeft::fs_0());
 					DTestConversion(NegSmallestDenormal, t_CFloatRight::fs_NegSmallestDenormal(), ==, NegSmallestDenormal, ==, -t_CFloatLeft::fs_0());
-					if (sizeof(typename t_CFloatLeft::CUnsignedInteger) != sizeof(typename t_CFloatRight::CUnsignedInteger) && mint(t_CFloatLeft::mc_ExponentBits) == mint(t_CFloatRight::mc_ExponentBits))
+					if (t_CFloatLeft::mc_MantissaBits != t_CFloatRight::mc_MantissaBits && mint(t_CFloatLeft::mc_ExponentBits) == mint(t_CFloatRight::mc_ExponentBits))
 					{
 						DTestConversion(Smallest, t_CFloatRight::fs_Smallest(), ==, Smallest, ==, Smallest);
 						DTestConversion(NegSmallest, t_CFloatRight::fs_NegSmallest(), ==, NegSmallest, ==, NegSmallest);
@@ -1026,8 +1026,8 @@ public:
 
 		DMibTrace("{fe100}\n", fp32(2000000000.0f));
 
-		using CIEEEFloat32Emulate = NMib::NNumeric::TCFloat <1, 8, 23, pfp32, 0>;
-		using CIEEEFloat64Emulate = NMib::NNumeric::TCFloat <1, 11, 52, pfp64, 0>;
+		using CIEEEFloat32Emulate = NMib::NNumeric::TCFloat<1, 8, 23, 0, pfp32, 0>;
+		using CIEEEFloat64Emulate = NMib::NNumeric::TCFloat<1, 11, 52, 0, pfp64, 0>;
 
 		fp128 Temp1 = fp64(11.0);
 

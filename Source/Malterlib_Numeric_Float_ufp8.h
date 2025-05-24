@@ -7,5 +7,5 @@
 
 #include "Malterlib_Numeric_Float.h"
 
-using ufp8 = NMib::NNumeric::TCFloat<0, 3, 5>;
+using ufp8 = NMib::NNumeric::TCFloat<0, 3, 5, 0>;
 using zufp8 = NMib::TCAutoClear<ufp8>;

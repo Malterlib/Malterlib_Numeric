@@ -9,12 +9,12 @@
 #include "Malterlib_Numeric_Float_fp32.h"
 
 #ifdef DMibPCanDo_fp64
-using CIEEEFloat64Emu = NMib::NNumeric::TCFloat<1, 11, 52, pfp64, 0>;
-using CIEEEFloat64 = NMib::NNumeric::TCFloat<1, 11, 52, pfp64>;
-DMibNumericImplementImplicitFloatFromParams(1, 11, 52, pfp64);
+using CIEEEFloat64Emu = NMib::NNumeric::TCFloat<1, 11, 52, 0, pfp64, 0>;
+using CIEEEFloat64 = NMib::NNumeric::TCFloat<1, 11, 52, 0, pfp64>;
+DMibNumericImplementImplicitFloatFromParams(1, 11, 52, 0, pfp64);
 #else
-using CIEEEFloat64 = NMib::NNumeric::TCFloat<1, 11, 52>;
-using CIEEEFloat64Emu = NMib::NNumeric::TCFloat<1, 11, 52, NMib::NNumeric::CNoImplicit, 0>;
+using CIEEEFloat64 = NMib::NNumeric::TCFloat<1, 11, 52, 0>;
+using CIEEEFloat64Emu = NMib::NNumeric::TCFloat<1, 11, 52, 0, NMib::NNumeric::CNoImplicit, 0>;
 #endif
 using fp64 = CIEEEFloat64;
 using zfp64 = NMib::TCAutoClear<fp64>;

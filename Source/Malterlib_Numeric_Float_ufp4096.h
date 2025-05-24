@@ -8,7 +8,7 @@
 #include "Malterlib_Numeric_Float.h"
 #include "Malterlib_Numeric_Float_ufp2048.h"
 
-using ufp4096 = NMib::NNumeric::TCFloat<0, 63, 4096-63>;
+using ufp4096 = NMib::NNumeric::TCFloat<0, 63, 4096-63, 0>;
 using zufp4096 = NMib::TCAutoClear<ufp4096>;
 
 DMibTraitsImplementSizePair(ufp2048, ufp4096);

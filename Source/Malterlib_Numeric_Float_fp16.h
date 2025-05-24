@@ -9,12 +9,12 @@
 #include "Malterlib_Numeric_Float_fp8.h"
 
 #ifdef DMibPCanDo_fp16
-using CIEEEFloat16 = NMib::NNumeric::TCFloat<1, 5, 10, pfp16>;
-using CIEEEFloat16Emu = NMib::NNumeric::TCFloat<1, 4, 11, pfp16, 0>;
-DMibNumericImplementImplicitFloatFromParams(1, 4, 11, pfp16);
+using CIEEEFloat16 = NMib::NNumeric::TCFloat<1, 5, 10, 0, pfp16>;
+using CIEEEFloat16Emu = NMib::NNumeric::TCFloat<1, 4, 11, 0, pfp16, 0>;
+DMibNumericImplementImplicitFloatFromParams(1, 4, 11, 0, pfp16);
 #else
-using CIEEEFloat16 = NMib::NNumeric::TCFloat<1, 5, 10>;
-using CIEEEFloat16Emu = NMib::NNumeric::TCFloat<1, 4, 11, NMib::NNumeric::CNoImplicit, 0>;
+using CIEEEFloat16 = NMib::NNumeric::TCFloat<1, 5, 10, 0>;
+using CIEEEFloat16Emu = NMib::NNumeric::TCFloat<1, 4, 11, 0, NMib::NNumeric::CNoImplicit, 0>;
 #endif
 using fp16 = CIEEEFloat16;
 using zfp16 = NMib::TCAutoClear<fp16>;
@@ -30,12 +30,12 @@ namespace NMib::NNumeric
 {
 #ifndef DMibFloattDoInline_NoExternTemplate
 	#ifdef DMibPCanDo_fp16
-		extern template class TCFloat<1, 5, 10, pfp16>;
-		extern template class TCFloat<1, 4, 11, pfp16, 0>;
+		extern template class TCFloat<1, 5, 10, 0, pfp16>;
+		extern template class TCFloat<1, 4, 11, 0, pfp16, 0>;
 	#else
-		extern template class TCFloat<1, 5, 10>;
-		extern template class TCFloat<1, 4, 11, CNoImplicit, 0>;
+		extern template class TCFloat<1, 5, 10, 0>;
+		extern template class TCFloat<1, 4, 11, 0, CNoImplicit, 0>;
 	#endif
-	extern template class TCFloat<0, 5, 11>;
+	extern template class TCFloat<0, 5, 11, 0>;
 #endif
 }

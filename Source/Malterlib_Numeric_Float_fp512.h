@@ -8,8 +8,8 @@
 #include "Malterlib_Numeric_Float.h"
 #include "Malterlib_Numeric_Float_fp256.h"
 
-using CIEEEFloat512 = NMib::NNumeric::TCFloat<1, 63, 512-64>;
-using CIEEEFloat512Emu = NMib::NNumeric::TCFloat<1, 63, 512-64, NMib::NNumeric::CNoImplicit, 0>;
+using CIEEEFloat512 = NMib::NNumeric::TCFloat<1, 63, 512-64, 0>;
+using CIEEEFloat512Emu = NMib::NNumeric::TCFloat<1, 63, 512-64, 0, NMib::NNumeric::CNoImplicit, 0>;
 using fp512 = CIEEEFloat512;
 using zfp512 = NMib::TCAutoClear<fp512>;
 
@@ -23,8 +23,8 @@ DMibTraitsImplementSizePair(fp256, fp512);
 namespace NMib::NNumeric
 {
 #if !defined(DMibFloattDoInline_NoExternTemplate) && defined(DMibDebug)
-	extern template class TCFloat<1, 63, 512-64>;
-	extern template class TCFloat<1, 63, 512-64, CNoImplicit, 0>;
+	extern template class TCFloat<1, 63, 512-64, 0>;
+	extern template class TCFloat<1, 63, 512-64, 0, CNoImplicit, 0>;
 #endif
 }
 

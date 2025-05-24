@@ -8,11 +8,11 @@ namespace NMib::NNumeric
 {
 #ifndef DMibFloattDoInline_NoExternTemplate
 	#ifdef DMibPCanDo_fp80
-		template class TCFloat<1, 15, 63, pfp80>;
-		template class TCFloat<1, 15, 63, pfp80, 0>;
+		template class TCFloat<1, 15, 63, gc_FloatPaddingBits_fp80, pfp80>;
+		template class TCFloat<1, 15, 63, gc_FloatPaddingBits_fp80, pfp80, 0>;
 	#else
-		template class TCFloat<1, 15, 63>;
-		template class TCFloat<1, 15, 63, CNoImplicit, 0>;
+		template class TCFloat<1, 15, 63, 0>;
+		template class TCFloat<1, 15, 63, 0, CNoImplicit, 0>;
 	#endif
 #endif
 }

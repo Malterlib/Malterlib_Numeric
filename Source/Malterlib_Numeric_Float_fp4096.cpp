@@ -7,7 +7,7 @@
 namespace NMib::NNumeric
 {
 #if !defined(DMibFloattDoInline_NoExternTemplate) && defined(DMibDebug)
-	template class TCFloat<1, 63, 4096-64>;
-	template class TCFloat<1, 63, 4096-64, CNoImplicit, 0>;
+	template class TCFloat<1, 63, 4096-64, 0>;
+	template class TCFloat<1, 63, 4096-64, 0, CNoImplicit, 0>;
 #endif
 }

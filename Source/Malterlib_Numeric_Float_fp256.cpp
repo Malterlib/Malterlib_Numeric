@@ -7,7 +7,7 @@
 namespace NMib::NNumeric
 {
 #ifndef DMibFloattDoInline_NoExternTemplate
-	template class TCFloat<1, 19, 236>;
-	template class TCFloat<1, 19, 236, CNoImplicit, 0>;
+	template class TCFloat<1, 19, 236, 0>;
+	template class TCFloat<1, 19, 236, 0, CNoImplicit, 0>;
 #endif
 }
