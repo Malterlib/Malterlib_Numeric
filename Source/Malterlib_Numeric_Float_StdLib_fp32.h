@@ -710,6 +710,14 @@ namespace NMib
 	DMibMathFloatConvertInt(CIEEEFloat32, uint80);
 #endif
 
+#ifdef DMibPCanDo_int96
+	DMibMathFloatConvertInt(CIEEEFloat32, int96);
+#endif
+
+#ifdef DMibPCanDo_uint96
+	DMibMathFloatConvertInt(CIEEEFloat32, uint96);
+#endif
+
 #ifdef DMibPCanDo_int128
 	DMibMathFloatConvertInt(CIEEEFloat32, int128);
 #endif
@@ -726,6 +734,14 @@ namespace NMib
 	DMibMathFloatConvertInt(CIEEEFloat32, uint160);
 #endif
 
+#ifdef DMibPCanDo_int192
+	DMibMathFloatConvertInt(CIEEEFloat32, int192);
+#endif
+
+#ifdef DMibPCanDo_uint192
+	DMibMathFloatConvertInt(CIEEEFloat32, uint192);
+#endif
+
 #ifdef DMibPCanDo_int256
 	DMibMathFloatConvertInt(CIEEEFloat32, int256);
 #endif
@@ -740,6 +756,14 @@ namespace NMib
 
 #ifdef DMibPCanDo_uint320
 	DMibMathFloatConvertInt(CIEEEFloat32, uint320);
+#endif
+
+#ifdef DMibPCanDo_int384
+	DMibMathFloatConvertInt(CIEEEFloat32, int384);
+#endif
+
+#ifdef DMibPCanDo_uint384
+	DMibMathFloatConvertInt(CIEEEFloat32, uint384);
 #endif
 
 #ifdef DMibPCanDo_int512
@@ -782,6 +806,14 @@ namespace NMib
 	DMibMathFloatConvertInt(CIEEEFloat32, uint8192);
 #endif
 
+#ifdef DMibPCanDo_int16384
+	DMibMathFloatConvertInt(CIEEEFloat32, int16384);
+#endif
+
+#ifdef DMibPCanDo_uint16384
+	DMibMathFloatConvertInt(CIEEEFloat32, uint16384);
+#endif
+	
 
 #ifdef DMibPUniqueType_mint
 	DMibMathFloatConvertInt(CIEEEFloat32, mint);

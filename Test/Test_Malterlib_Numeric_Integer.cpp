@@ -34,6 +34,10 @@ namespace
 				t_CTestTemplate<int80>()();
 			}
 			{
+				DMibTestPath("int96");
+				t_CTestTemplate<int96>()();
+			}
+			{
 				DMibTestPath("int128");
 				t_CTestTemplate<int128>()();
 			}
@@ -42,12 +46,20 @@ namespace
 				t_CTestTemplate<int160>()();
 			}
 			{
+				DMibTestPath("int192");
+				t_CTestTemplate<int192>()();
+			}
+			{
 				DMibTestPath("int256");
 				t_CTestTemplate<int256>()();
 			}
 			{
 				DMibTestPath("int320");
 				t_CTestTemplate<int320>()();
+			}
+			{
+				DMibTestPath("int384");
+				t_CTestTemplate<int384>()();
 			}
 			{
 				DMibTestPath("int512");
@@ -88,12 +100,20 @@ namespace
 				t_CTestTemplate<uint80>()();
 			}
 			{
+				DMibTestPath("uint96");
+				t_CTestTemplate<uint96>()();
+			}
+			{
 				DMibTestPath("uint128");
 				t_CTestTemplate<uint128>()();
 			}
 			{
 				DMibTestPath("uint160");
 				t_CTestTemplate<uint160>()();
+			}
+			{
+				DMibTestPath("uint192");
+				t_CTestTemplate<uint192>()();
 			}
 			{
 				DMibTestPath("uint256");

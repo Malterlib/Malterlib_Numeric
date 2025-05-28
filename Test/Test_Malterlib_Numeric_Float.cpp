@@ -107,30 +107,34 @@ namespace
 			{
 				return NMib::fg_Convert<CSmallestType>(_From);
 			}
+
 			void operator() ()
 			{
-				DMibExpect(f_Cnv(fg_F0<t_CFloat>()), ==, f_Cnv(0.0));
-				DMibExpect(f_Cnv(fg_F0_5<t_CFloat>()), ==, f_Cnv(0.5));
-				DMibExpect(f_Cnv(fg_F1<t_CFloat>()), ==, f_Cnv(1.0));
-				DMibExpect(f_Cnv(fg_F2<t_CFloat>()), ==, f_Cnv(2.0));
-				DMibExpect(f_Cnv(fg_FPi<t_CFloat>()), ==, f_Cnv(3.1415926535897932384626433832795028841971693));
-				DMibExpect(f_Cnv(fg_FSqrt2<t_CFloat>()), ==, f_Cnv(1.4142135623730950488016887242096980785696718));
-				DMibExpect(f_Cnv(fg_FE<t_CFloat>()), ==, f_Cnv(2.7182818284590452353602874713526624977572470936999));
-				// Euler too slow currently
-				//DMibExpect(f_Cnv(fg_FEuler<t_CFloat>()), ==, DMibExpr(f_Cnv(0.57721566490153286060651209008240243104215933593992));
-				DMibExpect(f_Cnv(fg_FGoldenRatio<t_CFloat>()), ==, f_Cnv(1.61803398874989484820458683436563811772030));
-				DMibExpect(f_Cnv(fg_FLog10_2<t_CFloat>()), ==, f_Cnv(0.3010299956639811952137388947244930267681898814));
-				DMibExpect(f_Cnv(fg_FLog2_10<t_CFloat>()), ==, f_Cnv(3.3219280948873623478703194294893901758648313930));
-				DMibExpect(f_Cnv(fg_FLog10_E<t_CFloat>()), ==, f_Cnv(0.43429448190325182765112891891660508229439700580366));
-				DMibExpect(f_Cnv(fg_FLogE_10<t_CFloat>()), ==, f_Cnv(2.3025850929940456840179914546843642076011014886287));
-				DMibExpect(f_Cnv(fg_FLog2_E<t_CFloat>()), ==, f_Cnv(1.4426950408889634073599246810018921374266459541529));
-				DMibExpect(f_Cnv(fg_FLogE_2<t_CFloat>()), ==, f_Cnv(0.69314718055994530941723212145817656807550013436025));
-				DMibExpect(f_Cnv(fg_FInf<t_CFloat>()), ==, f_Cnv(fp64::fs_Inf()));
-				DMibExpect(f_Cnv(fg_FNegInf<t_CFloat>()), ==, f_Cnv(fp64::fs_NegInf()));
-				DMibExpect(f_Cnv(fg_FQNan<t_CFloat>()), !=, f_Cnv(fp64::fs_QNan()));
-				DMibExpect(f_Cnv(fg_FSNan<t_CFloat>()), !=, f_Cnv(fp64::fs_SNan()));
-				DMibExpect(f_Cnv(fg_FNegQNan<t_CFloat>()), !=, f_Cnv(fp64::fs_NegQNan()));
-				DMibExpect(f_Cnv(fg_FNegSNan<t_CFloat>()), !=, f_Cnv(fp64::fs_NegSNan()));
+				DMibTestSuite("Constants")
+				{
+					DMibExpect(f_Cnv(fg_F0<t_CFloat>()), ==, f_Cnv(0.0));
+					DMibExpect(f_Cnv(fg_F0_5<t_CFloat>()), ==, f_Cnv(0.5));
+					DMibExpect(f_Cnv(fg_F1<t_CFloat>()), ==, f_Cnv(1.0));
+					DMibExpect(f_Cnv(fg_F2<t_CFloat>()), ==, f_Cnv(2.0));
+					DMibExpect(f_Cnv(fg_FPi<t_CFloat>()), ==, f_Cnv(3.1415926535897932384626433832795028841971693));
+					DMibExpect(f_Cnv(fg_FSqrt2<t_CFloat>()), ==, f_Cnv(1.4142135623730950488016887242096980785696718));
+					DMibExpect(f_Cnv(fg_FE<t_CFloat>()), ==, f_Cnv(2.7182818284590452353602874713526624977572470936999));
+					// Euler too slow currently
+					//DMibExpect(f_Cnv(fg_FEuler<t_CFloat>()), ==, DMibExpr(f_Cnv(0.57721566490153286060651209008240243104215933593992));
+					DMibExpect(f_Cnv(fg_FGoldenRatio<t_CFloat>()), ==, f_Cnv(1.61803398874989484820458683436563811772030));
+					DMibExpect(f_Cnv(fg_FLog10_2<t_CFloat>()), ==, f_Cnv(0.3010299956639811952137388947244930267681898814));
+					DMibExpect(f_Cnv(fg_FLog2_10<t_CFloat>()), ==, f_Cnv(3.3219280948873623478703194294893901758648313930));
+					DMibExpect(f_Cnv(fg_FLog10_E<t_CFloat>()), ==, f_Cnv(0.43429448190325182765112891891660508229439700580366));
+					DMibExpect(f_Cnv(fg_FLogE_10<t_CFloat>()), ==, f_Cnv(2.3025850929940456840179914546843642076011014886287));
+					DMibExpect(f_Cnv(fg_FLog2_E<t_CFloat>()), ==, f_Cnv(1.4426950408889634073599246810018921374266459541529));
+					DMibExpect(f_Cnv(fg_FLogE_2<t_CFloat>()), ==, f_Cnv(0.69314718055994530941723212145817656807550013436025));
+					DMibExpect(f_Cnv(fg_FInf<t_CFloat>()), ==, f_Cnv(fp64::fs_Inf()));
+					DMibExpect(f_Cnv(fg_FNegInf<t_CFloat>()), ==, f_Cnv(fp64::fs_NegInf()));
+					DMibExpect(f_Cnv(fg_FQNan<t_CFloat>()), !=, f_Cnv(fp64::fs_QNan()));
+					DMibExpect(f_Cnv(fg_FSNan<t_CFloat>()), !=, f_Cnv(fp64::fs_SNan()));
+					DMibExpect(f_Cnv(fg_FNegQNan<t_CFloat>()), !=, f_Cnv(fp64::fs_NegQNan()));
+					DMibExpect(f_Cnv(fg_FNegSNan<t_CFloat>()), !=, f_Cnv(fp64::fs_NegSNan()));
+				};
 			}
 		};
 
@@ -565,7 +569,7 @@ namespace
 				fs_TestAll<CConversion>();
 			};
 #endif
-			DMibTestSuite("Constants")
+			DMibTestCategory("Constants")
 			{
 				fs_TestAll<CConstants>();
 			};

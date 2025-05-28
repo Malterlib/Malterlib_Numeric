@@ -808,12 +808,12 @@ namespace NMib
 	DMibMathFloatConvertInt(CIEEEFloat80, uint64);
 #endif
 
-#ifdef DMibPCanDo_int80
-	DMibMathFloatConvertInt(CIEEEFloat80, int80);
+#ifdef DMibPCanDo_int96
+	DMibMathFloatConvertInt(CIEEEFloat80, int96);
 #endif
 
-#ifdef DMibPCanDo_uint80
-	DMibMathFloatConvertInt(CIEEEFloat80, uint80);
+#ifdef DMibPCanDo_uint96
+	DMibMathFloatConvertInt(CIEEEFloat80, uint96);
 #endif
 
 #ifdef DMibPCanDo_int128
@@ -832,6 +832,14 @@ namespace NMib
 	DMibMathFloatConvertInt(CIEEEFloat80, uint160);
 #endif
 
+#ifdef DMibPCanDo_int192
+	DMibMathFloatConvertInt(CIEEEFloat80, int192);
+#endif
+
+#ifdef DMibPCanDo_uint192
+	DMibMathFloatConvertInt(CIEEEFloat80, uint192);
+#endif
+
 #ifdef DMibPCanDo_int256
 	DMibMathFloatConvertInt(CIEEEFloat80, int256);
 #endif
@@ -846,6 +854,14 @@ namespace NMib
 
 #ifdef DMibPCanDo_uint320
 	DMibMathFloatConvertInt(CIEEEFloat80, uint320);
+#endif
+
+#ifdef DMibPCanDo_int384
+	DMibMathFloatConvertInt(CIEEEFloat80, int384);
+#endif
+
+#ifdef DMibPCanDo_uint384
+	DMibMathFloatConvertInt(CIEEEFloat80, uint384);
 #endif
 
 #ifdef DMibPCanDo_int512
@@ -886,6 +902,14 @@ namespace NMib
 
 #ifdef DMibPCanDo_uint8192
 	DMibMathFloatConvertInt(CIEEEFloat80, uint8192);
+#endif
+
+#ifdef DMibPCanDo_int16384
+	DMibMathFloatConvertInt(CIEEEFloat80, int16384);
+#endif
+
+#ifdef DMibPCanDo_uint16384
+	DMibMathFloatConvertInt(CIEEEFloat80, uint16384);
 #endif
 
 

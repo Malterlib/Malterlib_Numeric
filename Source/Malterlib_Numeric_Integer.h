@@ -780,6 +780,24 @@ using int80 = NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<
 using uint80 = NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<uint16, uint16>, NMib::NNumeric::TCInt<uint16, uint16>>, uint16>;
 #endif
 
+#ifndef DMibPCanDo_int96
+	using int96 = NMib::NNumeric::TCInt
+		<
+			NMib::TCConditional<alignof(int64) <= 4, int64, NMib::NNumeric::TCInt<int32, uint32>>
+			, uint32
+		>
+	;
+#endif
+
+#ifndef DMibPCanDo_uint96
+	using uint96 = NMib::NNumeric::TCInt
+		<
+			NMib::TCConditional<alignof(uint64) <= 4, uint64, NMib::NNumeric::TCInt<uint32, uint32>>
+			, uint32
+		>
+	;
+#endif
+
 #ifndef DMibPCanDo_int128
 using int128 = NMib::NNumeric::TCInt<int64, uint64>;
 #endif
@@ -796,6 +814,24 @@ using int160 = NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<NMib::NNumeric::TCInt
 using uint160 = NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<uint32, uint32>, NMib::NNumeric::TCInt<uint32, uint32>>, uint32>;
 #endif
 
+#ifndef DMibPCanDo_int192
+	using int192 = NMib::NNumeric::TCInt
+		<
+			NMib::TCConditional<alignof(int128) <= 8, int128, NMib::NNumeric::TCInt<int64, uint64>>
+			, uint64
+		>
+	;
+#endif
+
+#ifndef DMibPCanDo_uint192
+	using uint192 = NMib::NNumeric::TCInt
+		<
+			NMib::TCConditional<alignof(uint128) <= 8, uint128, NMib::NNumeric::TCInt<uint64, uint64>>
+			, uint64
+		>
+	;
+#endif
+
 #ifndef DMibPCanDo_int256
 using int256 = NMib::NNumeric::TCInt<int128, uint128>;
 #endif
@@ -810,6 +846,14 @@ using int320 = NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<NMib::NNumeric::TCInt
 
 #ifndef DMibPCanDo_uint320
 using uint320 = NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<uint64, uint64>, NMib::NNumeric::TCInt<uint64, uint64>>, uint64>;
+#endif
+
+#ifndef DMibPCanDo_int384
+using int384 = NMib::NNumeric::TCInt<int256, uint128>;
+#endif
+
+#ifndef DMibPCanDo_uint384
+using uint384 = NMib::NNumeric::TCInt<uint256, uint128>;
 #endif
 
 #ifndef DMibPCanDo_int512
@@ -852,6 +896,16 @@ using int8192 = NMib::NNumeric::TCInt<int4096, uint4096>;
 using uint8192 = NMib::NNumeric::TCInt<uint4096, uint4096>;
 #endif
 
+#ifndef DMibPCanDo_int16384
+using int16384 = NMib::NNumeric::TCInt<int8192, uint8192>;
+#endif
+
+#ifndef DMibPCanDo_uint16384
+using uint16384 = NMib::NNumeric::TCInt<uint8192, uint8192>;
+#endif
+
+
+
 #if !(defined(DMibPCanDo_uint8) && defined(DMibPCanDo_uint16))
 	DMibTraitsImplementSizePair(uint8, uint16);
 #endif
@@ -867,8 +921,14 @@ using uint8192 = NMib::NNumeric::TCInt<uint4096, uint4096>;
 #if !(defined(DMibPCanDo_uint80) && defined(DMibPCanDo_uint160))
 	DMibTraitsImplementSizePair(uint80, uint160);
 #endif
+#if !(defined(DMibPCanDo_uint96) && defined(DMibPCanDo_uint192))
+	DMibTraitsImplementSizePair(uint96, uint192);
+#endif
 #if !(defined(DMibPCanDo_uint160) && defined(DMibPCanDo_uint320))
 	DMibTraitsImplementSizePair(uint160, uint320);
+#endif
+#if !(defined(DMibPCanDo_uint192) && defined(DMibPCanDo_uint384))
+	DMibTraitsImplementSizePair(uint192, uint384);
 #endif
 #if !(defined(DMibPCanDo_uint128) && defined(DMibPCanDo_uint256))
 	DMibTraitsImplementSizePair(uint128, uint256);
@@ -888,6 +948,10 @@ using uint8192 = NMib::NNumeric::TCInt<uint4096, uint4096>;
 #if !(defined(DMibPCanDo_uint4096) && defined(DMibPCanDo_uint8192))
 	DMibTraitsImplementSizePair(uint4096, uint8192);
 #endif
+#if !(defined(DMibPCanDo_uint8192) && defined(DMibPCanDo_uint16384))
+	DMibTraitsImplementSizePair(uint8192, uint16384);
+#endif
+
 #if !(defined(DMibPCanDo_int8) && defined(DMibPCanDo_int16))
 	DMibTraitsImplementSizePair(int8, int16);
 #endif
@@ -903,11 +967,17 @@ using uint8192 = NMib::NNumeric::TCInt<uint4096, uint4096>;
 #if !(defined(DMibPCanDo_int80) && defined(DMibPCanDo_int160))
 	DMibTraitsImplementSizePair(int80, int160);
 #endif
+#if !(defined(DMibPCanDo_int96) && defined(DMibPCanDo_int192))
+	DMibTraitsImplementSizePair(int96, int192);
+#endif
 #if !(defined(DMibPCanDo_int128) && defined(DMibPCanDo_int256))
 	DMibTraitsImplementSizePair(int128, int256);
 #endif
 #if !(defined(DMibPCanDo_int160) && defined(DMibPCanDo_int320))
 	DMibTraitsImplementSizePair(int160, int320);
+#endif
+#if !(defined(DMibPCanDo_int192) && defined(DMibPCanDo_int384))
+	DMibTraitsImplementSizePair(int192, int384);
 #endif
 #if !(defined(DMibPCanDo_int256) && defined(DMibPCanDo_int512))
 	DMibTraitsImplementSizePair(int256, int512);
@@ -924,6 +994,11 @@ using uint8192 = NMib::NNumeric::TCInt<uint4096, uint4096>;
 #if !(defined(DMibPCanDo_int4096) && defined(DMibPCanDo_int8192))
 	DMibTraitsImplementSizePair(int4096, int8192);
 #endif
+#if !(defined(DMibPCanDo_int8192) && defined(DMibPCanDo_int16384))
+	DMibTraitsImplementSizePair(int8192, int16384);
+#endif
+
+
 
 #if !defined(DMibPCanDo_int8)
 	DMibTraitsImplementIntegerFromSize(int8);
@@ -940,17 +1015,26 @@ using uint8192 = NMib::NNumeric::TCInt<uint4096, uint4096>;
 #if !defined(DMibPCanDo_int80)
 	DMibTraitsImplementIntegerFromSize(int80);
 #endif
+#if !defined(DMibPCanDo_int96)
+	DMibTraitsImplementIntegerFromSize(int96);
+#endif
 #if !defined(DMibPCanDo_int128)
 	DMibTraitsImplementIntegerFromSize(int128);
 #endif
 #if !defined(DMibPCanDo_int160)
 	DMibTraitsImplementIntegerFromSize(int160);
 #endif
+#if !defined(DMibPCanDo_int192)
+	DMibTraitsImplementIntegerFromSize(int192);
+#endif
 #if !defined(DMibPCanDo_int256)
 	DMibTraitsImplementIntegerFromSize(int256);
 #endif
 #if !defined(DMibPCanDo_int320)
 	DMibTraitsImplementIntegerFromSize(int320);
+#endif
+#if !defined(DMibPCanDo_int384)
+	DMibTraitsImplementIntegerFromSize(int384);
 #endif
 #if !defined(DMibPCanDo_int512)
 	DMibTraitsImplementIntegerFromSize(int512);
@@ -967,6 +1051,10 @@ using uint8192 = NMib::NNumeric::TCInt<uint4096, uint4096>;
 #if !defined(DMibPCanDo_int8192)
 	DMibTraitsImplementIntegerFromSize(int8192);
 #endif
+#if !defined(DMibPCanDo_int16384)
+	DMibTraitsImplementIntegerFromSize(int16384);
+#endif
+
 
 #ifndef DMibPNoShortCuts
 	using namespace NMib::NNumeric;

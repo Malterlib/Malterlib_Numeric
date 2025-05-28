@@ -64,6 +64,9 @@ namespace NMib::NNumeric
 		template <typename t_CFloat>
 		friend class TCFloatConstants;
 		using CDoubleIntegerRaw = NTraits::TCLargerType<t_CIntegerStorage>;
+
+		static_assert(sizeof(CDoubleIntegerRaw) > sizeof(t_CIntegerStorage));
+
 	public:
 		using CInteger = t_CIntegerStorage;
 		using CDoubleInteger = TCConditional<sizeof(CDoubleIntegerRaw) >= 8, CDoubleIntegerRaw, NTraits::TCIntFromSizeLarger<8>>;
@@ -91,7 +94,8 @@ namespace NMib::NNumeric
 		static constexpr bool mc_bIsBuiltIn = false;
 #endif
 
-		static_assert(mint(mc_UnusedBits) >= 0);
+		static_assert(mc_UnusedBits >= 0);
+		static_assert(mc_UnusedBits <= 1);
 		static_assert(sizeof(CDoubleInteger) > sizeof(CInteger));
 
 	protected:
@@ -336,6 +340,8 @@ namespace NMib::NNumeric
 			using CExponent = CDoubleInteger;
 
 			using CRawQuadMantissa = NTraits::TCLargerType<CMantissa>;
+
+			static_assert(sizeof(CRawQuadMantissa) > sizeof(CMantissa));
 
 			using CQuadMantissa = NTraits::TCUnsigned<CRawQuadMantissa>;
 			using CSignedQuadMantissa = NTraits::TCSigned<CRawQuadMantissa>;
