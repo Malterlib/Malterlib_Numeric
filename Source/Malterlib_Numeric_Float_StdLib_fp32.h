@@ -813,7 +813,7 @@ namespace NMib
 #ifdef DMibPCanDo_uint16384
 	DMibMathFloatConvertInt(CIEEEFloat32, uint16384);
 #endif
-	
+
 
 #ifdef DMibPUniqueType_mint
 	DMibMathFloatConvertInt(CIEEEFloat32, mint);

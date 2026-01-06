@@ -1,9 +1,9 @@
-// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #include <Mib/Core/Core>
 
-#if defined(DMibPFloat_StdLib) && defined(DMibPCanDo_fp80) 
+#if defined(DMibPFloat_StdLib) && defined(DMibPCanDo_fp80)
 #include "math.h"
 
 namespace NMib::NSys::NNumeric

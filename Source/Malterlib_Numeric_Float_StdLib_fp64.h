@@ -1,4 +1,4 @@
-// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #pragma once
@@ -55,7 +55,7 @@ namespace NMib::NNumeric
 	{
 		return 0.5;
 	}
-	
+
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::fs_1()
 	{
 		return 1.0;
@@ -132,8 +132,8 @@ namespace NMib::NNumeric
 	}
 
 #ifdef DMibPCanDo_fp32
-	template < > 
-	template < > 
+	template < >
+	template < >
 	inline_always void CIEEEFloat64::f_Assign(const CIEEEFloat32 &_SetValue)
 	{
 		m_DataStorage = _SetValue.f_Get();
@@ -146,8 +146,8 @@ namespace NMib::NNumeric
 		return m_DataStorage == _SetValue.f_Get();
 	}
 
-	template < > 
-	template < > 
+	template < >
+	template < >
 	inline_always COrdering_Partial CIEEEFloat64::operator <=> (const CIEEEFloat32 &_SetValue) const
 	{
 		return m_DataStorage <=> _SetValue.f_Get();
@@ -161,7 +161,7 @@ namespace NMib::NNumeric
 	}
 
 	template < >
-	template < > 
+	template < >
 	inline_always COrdering_Partial CIEEEFloat32::operator <=> (const CIEEEFloat64 &_SetValue) const
 	{
 		return m_DataStorage <=> _SetValue.f_Get();
@@ -575,7 +575,7 @@ namespace NMib::NNumeric
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64::CUnsignedInteger CIEEEFloat64::f_ToUnsignedInt() const
 	{
 		pfp64 ToLoad = m_DataStorage;
-		
+
 		return (CIEEEFloat64::CUnsignedInteger)ToLoad;
 	}
 
@@ -673,7 +673,7 @@ namespace NMib
 #endif
 
 	DMibDirectConvert(pfp64, CIEEEFloat64);
-	
+
 #undef DMibDirectConvert
 
 #define DMibMathFloatConvertNative(_FromType, _ToType) \
@@ -692,9 +692,9 @@ namespace NMib
 	DMibMathFloatConvertNative(CIEEEFloat32, pfp64);
 	DMibMathFloatConvertNative(CIEEEFloat64, pfp32);
 #endif
-	
+
 	DMibMathFloatConvertNative(CIEEEFloat64, pfp64);
-	
+
 #undef DMibMathFloatConvertNative
 
 #define DMibMathFloatConvertInt(_FromType, _ToType) \
@@ -889,6 +889,6 @@ namespace NMib
 #ifdef DMibPUniqueType_ch32
 	DMibMathFloatConvertInt(CIEEEFloat64, ch32);
 #endif
-	
+
 #undef DMibMathFloatConvertInt
 }

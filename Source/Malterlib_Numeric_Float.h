@@ -138,7 +138,7 @@ namespace NMib::NNumeric
 		inline_always CUnsignedInteger fp_GetMaskedIntegerData() const
 		{
 			if constexpr (mc_bIsBuiltIn)
-			{				
+			{
  				CUnsignedInteger Return;
 				memcpy(&Return, &m_DataStorage, sizeof(Return));
 

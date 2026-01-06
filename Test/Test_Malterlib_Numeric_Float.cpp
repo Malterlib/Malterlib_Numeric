@@ -1,4 +1,4 @@
-// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #include <Mib/Numeric/fp8>
@@ -95,7 +95,7 @@ namespace
 				t_CTestTemplate<fp4096>()();
 			}*/
 		}
-		
+
 		template <typename t_CFloat>
 		class CConstants
 		{
@@ -145,11 +145,11 @@ namespace
 			void operator() ()
 			{
 				DMibExpect(t_CFloat::fs_2() * t_CFloat::fs_2(), ==, t_CFloat(fp64(4.0)));
-				
+
 				mint ExpectedBits = 1;
 				if (mint(t_CFloat::mc_MantissaBits) > mint(fp64::mc_MantissaBits))
 					ExpectedBits = (t_CFloat::mc_MantissaBits - fp64::mc_MantissaBits) - 1;
-				
+
 				auto fCheckValue = [&](NMib::NStr::CStr const &_Desc, double _Left, double _Right)
 					{
 						DMibTestPath(_Desc);
@@ -173,11 +173,11 @@ namespace
 			void operator() ()
 			{
 				DMibExpect(t_CFloat::fs_2() / t_CFloat::fs_2(), ==, t_CFloat(fp64(1.0)));
-				
+
 				mint ExpectedBits = 1;
 				if (mint(t_CFloat::mc_MantissaBits) > mint(fp64::mc_MantissaBits))
 					ExpectedBits = (t_CFloat::mc_MantissaBits - fp64::mc_MantissaBits) - 1;
-				
+
 				auto fCheckValue = [&](NMib::NStr::CStr const &_Desc, double _Left, double _Right)
 					{
 						DMibTestPath(_Desc);
@@ -188,7 +188,7 @@ namespace
 						DMibExpectTrue(Actual.f_AlmostEqual(Expected, ExpectedBits));
 					}
 				;
-				
+
 				fCheckValue("1/3", 2.0, 10);
 				fCheckValue("1/10", 1.0, 10.0);
 				fCheckValue("10/10", 10.0, 10.0);
@@ -198,7 +198,7 @@ namespace
 				fCheckValue("-1/-0", -1.0, -0.0);
 			}
 		};
-		
+
 		template <typename t_CFloat>
 		class CInvalid
 		{
@@ -274,7 +274,7 @@ namespace
 				}
 			};
 		};
-		
+
 		template <typename t_CFloat>
 		class CConversion
 		{
@@ -291,7 +291,7 @@ namespace
 				fs_TestAll<TCConversion<t_CFloat>::template CInner>();
 			}
 		};
-		
+
 		template <typename tf_CType>
 		static bool fs_IsNan(tf_CType const &_Type)
 		{
@@ -329,7 +329,7 @@ namespace
 		{
 			return _bValue;
 		}
-		
+
 		template <typename tf_CFloat, typename tf_CFloat2>
 		static bool fs_AlmostEqual(tf_CFloat const &_Float, tf_CFloat2 const &_Float2, mint _nBits)
 		{
@@ -340,7 +340,7 @@ namespace
 		{
 			return _Float == _Float2;
 		}
-		
+
 		template <typename tf_CFloat, typename tf_CEmulateFloat>
 		void f_CompareEmulate()
 		{
@@ -349,7 +349,7 @@ namespace
 				ch8 const *m_pDesc;
 				tf_CFloat m_Value;
 			};
-			
+
 			CValue Values[] =
 				{
 					{"Max", tf_CFloat::fs_LimitMax()}
@@ -406,14 +406,14 @@ namespace
 					, {"-5.0", -5.0l}
 				}
 			;
-			
+
 			auto fCheckBinary = [](NMib::NStr::CStr const &_Desc, tf_CFloat _Value0, tf_CFloat _Value1, auto _fFunctor)
 				{
 					DMibTestPath(_Desc);
 					auto Result = fs_ConvertValue(_fFunctor(tf_CFloat(_Value0), tf_CFloat(_Value1)));
 					auto ResultEmu = fs_ConvertValue(_fFunctor(tf_CEmulateFloat(_Value0), tf_CEmulateFloat(_Value1)));
 					bool bCheckName = true;
-					
+
 					if (cIsSame<tf_CFloat, fp80>)
 					{
 						if (!fs_IsNan(Result))
@@ -427,7 +427,7 @@ namespace
 
 					if (_Desc.f_Find(".f_Log(") >= 0)
 						bCheckName = false;
-					
+
 
 					if (bCheckName)
 						DMibExpect(fs_GetName(ResultEmu), ==, fs_GetName(Result));
@@ -452,7 +452,7 @@ namespace
 							if (_Desc.f_Find(".f_Pow(") >= 0 || _Desc.f_Find(".f_Exp(") >= 0)
 								AlmontEqualBits = 1;
 						}
-						
+
 						if (AlmontEqualBits)
 							DMibTest(DMibExpr(fs_AlmostEqual(ResultEmu, Result, AlmontEqualBits)) || DMibExpr(ResultEmu) == DMibExpr(Result));
 						else
@@ -481,13 +481,13 @@ namespace
 #endif
 				}
 			;
-			
+
 			for (auto &Left : Values)
 			{
 				for (auto &Right : Values)
 					fCheckBinaryFunctions(Left.m_pDesc, Right.m_pDesc, Left.m_Value, Right.m_Value);
 			}
-			
+
 			auto fCheckUnary = [](NMib::NStr::CStr const &_Desc, tf_CFloat _Value0, auto _fFunctor)
 				{
 					DMibTestPath(_Desc);
@@ -499,7 +499,7 @@ namespace
 						DMibExpect(fs_GetName(ResultEmu), ==, fs_GetName(Result));
 					if (!fs_IsNan(Result))
 					{
-						if 
+						if
 							(
 								(
 									cIsSame<tf_CFloat, fp80>
@@ -507,11 +507,11 @@ namespace
 									|| true
 #endif
 								)
-								&& 
+								&&
 								(
 									_Desc.f_Find(".f_LogN()") >= 0
-									|| _Desc.f_Find(".f_Log2()") >= 0  
-									|| _Desc.f_Find(".f_Log10()") >= 0 
+									|| _Desc.f_Find(".f_Log2()") >= 0
+									|| _Desc.f_Find(".f_Log10()") >= 0
 									|| _Desc.f_Find(".f_ExpN()") >= 0
 									|| _Desc.f_Find(".f_Exp2()") >= 0
 									|| _Desc.f_Find(".f_Exp10()") >= 0
@@ -549,7 +549,7 @@ namespace
 					fCheckUnary("(" + _LeftDesc + ").f_Sqr()", _Value0, [](auto _Left){ return _Left.f_Sqr(); });
 					fCheckUnary("(" + _LeftDesc + ").f_Floor()", _Value0, [](auto _Left){ return _Left.f_Floor(); });
 					fCheckUnary("(" + _LeftDesc + ").f_Fraction()", _Value0, [](auto _Left){ return _Left.f_Fraction(); });
-					fCheckUnary("(" + _LeftDesc + ").f_Ceil()", _Value0, [](auto _Left){ return _Left.f_Ceil(); }); 
+					fCheckUnary("(" + _LeftDesc + ").f_Ceil()", _Value0, [](auto _Left){ return _Left.f_Ceil(); });
 					fCheckUnary("(" + _LeftDesc + ").f_Abs()", _Value0, [](auto _Left){ return _Left.f_Abs(); });
 				}
 			;
@@ -640,7 +640,7 @@ public:
 		return(((holdrand = holdrand * 214013L + 2531011L) >> 16) & 0x7fff);
 	}
 
-	bool f_AutomaticTest() 
+	bool f_AutomaticTest()
 	{
 		return true;
 	}
@@ -822,7 +822,7 @@ public:
 
 			CIEEEFloat32Emu Test4;
 			Test4.f_AssignRoundUp(Test);
-			
+
 			fp64 Diff0 = Test - Test2;
 			fp64 Diff1 = Test - Test3;
 			DMibTrace("FloatFromat: {fdb,fa0} \n", Test4);
@@ -836,7 +836,7 @@ public:
 
 			CIEEEFloat32Emu Test4;
 			Test4.f_AssignRoundUp(Test);
-			
+
 			fp64 Diff0 = Test - Test2;
 			fp64 Diff1 = Test - Test3;
 			DMibTrace("FloatFromat: {ffe,fdb,fa0,fsd} \n", Test2);
@@ -850,7 +850,7 @@ public:
 
 			CIEEEFloat32Emu Test4;
 			Test4.f_AssignRoundUp(Test);
-			
+
 			fp64 Diff0 = Test - Test2;
 			fp64 Diff1 = Test - Test3;
 			DMibTrace("FloatFromat: {fdb,fa0} \n", Test4);
@@ -862,7 +862,7 @@ public:
 			Test3.f_SetMantissa(Test3.f_GetMantissa() + 1);
 
 			fp32 Test4 = Test;
-			
+
 			fp64 Diff0 = Test - Test2;
 			fp64 Diff1 = Test - Test3;
 			fp64 Temp = Test4;
@@ -877,7 +877,7 @@ public:
 
 			CIEEEFloat32Emu Test4;
 			Test4.f_AssignRoundUp(Test);
-			
+
 			fp64 Diff0 = Test - Test2;
 			fp64 Diff1 = Test - Test3;
 			DMibTrace("FloatFromat: {fdb,fa0} \n", fp64(Test4));
@@ -891,7 +891,7 @@ public:
 
 			CIEEEFloat32Emu Test4;
 			Test4.f_AssignRoundUp(Test);
-			
+
 			fp64 Diff0 = Test - Test2;
 			fp64 Diff1 = Test - Test3;
 			DMibTrace("FloatFromat: {fdb,fa0} \n", fp64(Test4));
@@ -908,7 +908,7 @@ public:
 
 			CIEEEFloat32Emu Test4;
 			Test4.f_AssignRoundUp(Test);
-			
+
 			fp64 Diff0 = Test - Test2;
 			fp64 Diff1 = Test - Test3;
 			DMibTrace("FloatFromat: {fdb,fa0} \n", fp64(Test4));
@@ -924,7 +924,7 @@ public:
 
 			CIEEEFloat32Emu Test4;
 			Test4.f_AssignRoundUp(Test);
-			
+
 			fp64 Diff0 = Test - Test2;
 			fp64 Diff1 = Test - Test3;
 			DMibTrace("FloatFromat: {fdb,fa0} \n", fp64(Test4));
@@ -1037,7 +1037,7 @@ public:
 
 		Temp1 /= fp64(32.0);
 
-		
+
 		DMibTrace("{}\n", Temp1);
 
 		(NMib::NStr::CStr::CParse("{}") >> Temp1).f_Parse("1123400.45535");
@@ -1109,7 +1109,7 @@ public:
 		DMibTrace("{FFe}\n", fp32(94564564446456456456456456456456456456.0f));
 
 		DMibTrace("{FFe}\n", fp32(999999.0f));
-		DMibTrace("{FFe}\n", fp32(100001.0f));	
+		DMibTrace("{FFe}\n", fp32(100001.0f));
 		DMibTrace("{FFe}\n", fp32(99.0f));
 		DMibTrace("{FFe}\n", fp32(11.0f));
 		DMibTrace("{FFe}\n\n\n", fp32(999999.0f));
@@ -1231,22 +1231,22 @@ public:
 			{
 
 				DMibScopeTimerMin(Timer);
-				
+
 				for (aint i = 0; i < NumIter*32; ++i)
 				{
 					Value = fp32(Rand()).f_ArcTan();
-				}				
+				}
 			}
 		}
 		DMibTrace("{}\n", Value);
-		
+
 		DMibTrace("Performance for f_ArcTan = {fe2} per second\n", fp64(NumIter*32) / Timer.f_GetTime());
 #endif
 
 		return "";
 
 	}
-		
+
 };
 
 DMibRuntimeClass(CMalterlibTest, CTestFloat);
