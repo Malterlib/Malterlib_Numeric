@@ -287,16 +287,16 @@ namespace NMib::NNumeric
 		||______________________________________________________________________________________________||
 		\************************************************************************************************/
 
-		DMibFloatInlineS t_CImplicitFloat &f_Get()
+		constexpr DMibFloatInlineS t_CImplicitFloat &f_Get() noexcept
 			requires (mc_bIsBuiltIn)
 		;
-		DMibFloatInlineS t_CImplicitFloat const &f_Get() const
+		constexpr DMibFloatInlineS t_CImplicitFloat const &f_Get() const noexcept
 			requires (mc_bIsBuiltIn)
 		;
-		DMibFloatInlineS TCFloat(const t_CImplicitFloat &_Value)
+		constexpr DMibFloatInlineS TCFloat(const t_CImplicitFloat &_Value) noexcept
 			requires (mc_bIsBuiltIn)
 		;
-		DMibFloatInlineS TCFloat &operator = (const t_CImplicitFloat &_Value)
+		constexpr DMibFloatInlineS TCFloat &operator = (const t_CImplicitFloat &_Value) noexcept
 			requires (mc_bIsBuiltIn)
 		;
 		template <typename tf_CType>
@@ -656,6 +656,8 @@ namespace NMib
 		}
 	};
 }
+
+#include "Malterlib_Numeric_FloatInline.hpp"
 
 #ifdef DMibFloattDoInline
 #	include "Malterlib_Numeric_Float.hpp"
