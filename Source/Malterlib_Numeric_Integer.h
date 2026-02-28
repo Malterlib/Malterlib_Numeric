@@ -674,63 +674,26 @@ namespace NMib::NTraits::NPrivate
 
 namespace NMib
 {
-	/*
-	template <typename t_CType0, typename t_CUpper, typename t_CLower>
-	class TCConvert<t_CType0, NNumeric::TCInt<t_CUpper, t_CLower> >
-	{
-	public:
-		static inline_small t_CType0 fs_Convert(NNumeric::TCInt<t_CUpper, t_CLower> const &_From)
-		{
-			t_CType0 Ret;
-			Ret = (NMib::fg_Convert<t_CType0>(_From.m_Upper) << (fg_Min((mint)NNumeric::TCInt<t_CUpper, t_CLower>::ELowerBits, sizeof(t_CType0)*8) - 1)) << 1;
-			Ret = Ret | NMib::fg_Convert<t_CType0>(_From.m_Lower);
-			return Ret;
-		}
-	};*/
-
-#if 1
 	template <typename t_CInt>
-	NTraits::TCSmallerType<t_CInt> fg_GetLower(t_CInt const &_Integer)
+	constexpr NTraits::TCSmallerType<t_CInt> fg_GetLower(t_CInt const &_Integer) noexcept
 	{
 		return _Integer;
 	}
 
 	template <typename t_CInt>
-	NTraits::TCSmallerType<t_CInt> fg_GetUpper(t_CInt const &_Integer)
+	constexpr NTraits::TCSmallerType<t_CInt> fg_GetUpper(t_CInt const &_Integer) noexcept
 	{
 		return NTraits::TCSmallerType<t_CInt>(_Integer >> (sizeof(t_CInt)*4));
 	}
-#else
-
-	template <typename t_CInt>
-	NTraits::TCSmallerType<t_CInt> const &fg_GetLower(t_CInt const &_Integer)
-	{
-#ifdef DMibPLittleEndian
-		return reinterpret_cast<NTraits::TCSmallerType<t_CInt> const *>(&_Integer)[0];
-#else
-		return reinterpret_cast<NTraits::TCSmallerType<t_CInt> const *>(&_Integer)[1];
-#endif
-	}
-
-	template <typename t_CInt>
-	NTraits::TCSmallerType<t_CInt> const &fg_GetUpper(t_CInt const &_Integer)
-	{
-#ifdef DMibPLittleEndian
-		return reinterpret_cast<NTraits::TCSmallerType<t_CInt> const *>(&_Integer)[1];
-#else
-		return reinterpret_cast<NTraits::TCSmallerType<t_CInt> const *>(&_Integer)[0];
-#endif
-	}
-#endif
 
 	template <typename t_CUpper, typename t_CLower>
-	typename NNumeric::TCInt<t_CUpper, t_CLower>::CLower const &fg_GetLower(NNumeric::TCInt<t_CUpper, t_CLower> const &_Integer)
+	constexpr typename NNumeric::TCInt<t_CUpper, t_CLower>::CLower const &fg_GetLower(NNumeric::TCInt<t_CUpper, t_CLower> const &_Integer) noexcept
 	{
 		return _Integer.m_Lower;
 	}
 
 	template <typename t_CUpper, typename t_CLower>
-	typename NNumeric::TCInt<t_CUpper, t_CLower>::CUpper const &fg_GetUpper(NNumeric::TCInt<t_CUpper, t_CLower> const &_Integer)
+	constexpr typename NNumeric::TCInt<t_CUpper, t_CLower>::CUpper const &fg_GetUpper(NNumeric::TCInt<t_CUpper, t_CLower> const &_Integer) noexcept
 	{
 		return _Integer.m_Upper;
 	}
