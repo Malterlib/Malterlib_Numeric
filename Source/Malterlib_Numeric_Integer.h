@@ -623,12 +623,12 @@ namespace NMib::NNumeric
 		||______________________________________________________________________________________________||
 		\************************************************************************************************/
 
-		constexpr bool operator == (const TCInt &_Value) const
+		constexpr bool operator == (const TCInt &_Value) const noexcept
 		{
 			return m_Lower == _Value.m_Lower && m_Upper == _Value.m_Upper;
 		}
 
-		constexpr COrdering_Strong operator <=> (const TCInt &_Value) const
+		constexpr COrdering_Strong operator <=> (const TCInt &_Value) const noexcept
 		{
 			if (auto Result = m_Upper <=> _Value.m_Upper; Result != 0)
 				return Result;

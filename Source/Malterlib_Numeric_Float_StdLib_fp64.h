@@ -141,28 +141,28 @@ namespace NMib::NNumeric
 
 	template < >
 	template < >
-	inline_always bool CIEEEFloat64::operator == (const CIEEEFloat32 &_SetValue) const
+	inline_always bool CIEEEFloat64::operator == (const CIEEEFloat32 &_SetValue) const noexcept
 	{
 		return m_DataStorage == _SetValue.f_Get();
 	}
 
 	template < >
 	template < >
-	inline_always COrdering_Partial CIEEEFloat64::operator <=> (const CIEEEFloat32 &_SetValue) const
+	inline_always COrdering_Partial CIEEEFloat64::operator <=> (const CIEEEFloat32 &_SetValue) const noexcept
 	{
 		return m_DataStorage <=> _SetValue.f_Get();
 	}
 
 	template < >
 	template < >
-	inline_always bool CIEEEFloat32::operator == (const CIEEEFloat64 &_SetValue) const
+	inline_always bool CIEEEFloat32::operator == (const CIEEEFloat64 &_SetValue) const noexcept
 	{
 		return m_DataStorage == _SetValue.f_Get();
 	}
 
 	template < >
 	template < >
-	inline_always COrdering_Partial CIEEEFloat32::operator <=> (const CIEEEFloat64 &_SetValue) const
+	inline_always COrdering_Partial CIEEEFloat32::operator <=> (const CIEEEFloat64 &_SetValue) const noexcept
 	{
 		return m_DataStorage <=> _SetValue.f_Get();
 	}
@@ -641,12 +641,12 @@ namespace NMib::NNumeric
 		}
 	}
 
-	template <> DMibFloatConstexpr inline_small bool CIEEEFloat64::operator == (const CIEEEFloat64 &_Value) const
+	template <> DMibFloatConstexpr inline_small bool CIEEEFloat64::operator == (const CIEEEFloat64 &_Value) const noexcept
 	{
 		return m_DataStorage == _Value.m_DataStorage;
 	}
 
-	template <> DMibFloatConstexpr inline_small COrdering_Partial CIEEEFloat64::operator <=> (const CIEEEFloat64 &_Value) const
+	template <> DMibFloatConstexpr inline_small COrdering_Partial CIEEEFloat64::operator <=> (const CIEEEFloat64 &_Value) const noexcept
 	{
 		return m_DataStorage <=> _Value.m_DataStorage;
 	}

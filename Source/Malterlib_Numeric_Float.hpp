@@ -1988,7 +1988,7 @@ namespace NMib::NNumeric
 		(
 			TCFloat const &_Other
 			, mint _nMantissaBits
-		) const
+		) const noexcept
 	{
 		if (f_IsNan() || _Other.f_IsNan())
 			return false;
@@ -2043,7 +2043,7 @@ namespace NMib::NNumeric
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	DMibFloatConstexpr bool TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::operator == (const TCFloat &_Value) const
+	DMibFloatConstexpr bool TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::operator == (const TCFloat &_Value) const noexcept
 	{
 		if (f_IsNan() || _Value.f_IsNan())
 			return false;
@@ -2086,7 +2086,7 @@ namespace NMib::NNumeric
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	DMibFloatConstexpr auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::operator <=> (const TCFloat &_Value) const
+	DMibFloatConstexpr auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::operator <=> (const TCFloat &_Value) const noexcept
 		-> COrdering_Partial
 	{
 		if (f_IsNan() || _Value.f_IsNan())

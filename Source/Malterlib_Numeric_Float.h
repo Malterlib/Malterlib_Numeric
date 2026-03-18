@@ -45,7 +45,7 @@ namespace NMib::NNumeric
 {
 	struct CNoImplicit
 	{
-		auto operator <=> (CNoImplicit const &_Right) const = default;
+		auto operator <=> (CNoImplicit const &_Right) const noexcept = default;
 	};
 
 	template <typename t_CFloat>
@@ -377,7 +377,7 @@ namespace NMib::NNumeric
 			DMibFloatConstexpr CInternalFloat(const TCFloat &_Source);
 			DMibFloatConstexpr CInternalFloat &operator = (const TCFloat &_Source);
 			DMibFloatConstexpr CMantissa f_GetSharedMantissa(CInternalFloat const &_Other, CMantissa &o_OtherMantissa, mint &o_nMantissaBits);
-			DMibFloatConstexpr bool f_AlmostEqual(const CInternalFloat &_Value, int _nBits);
+			DMibFloatConstexpr bool f_AlmostEqual(const CInternalFloat &_Value, int _nBits) noexcept;
 			DMibFloatConstexpr void f_SetAllRound(const CInteger &_Sign, const CExponent &_Exponent, const CMantissa &_Mantissa, aint _nMantissaBits);
 			DMibFloatConstexpr void f_Mul(const CInternalFloat &_Value);
 			DMibFloatConstexpr void f_Div(const CInternalFloat &_Value);
@@ -495,33 +495,33 @@ namespace NMib::NNumeric
 		||______________________________________________________________________________________________||
 		\************************************************************************************************/
 
-		DMibFloatConstexpr bool f_AlmostEqual(TCFloat const &_Other, mint _nMantissaBits = 1) const;
+		DMibFloatConstexpr bool f_AlmostEqual(TCFloat const &_Other, mint _nMantissaBits = 1) const noexcept;
 
-		DMibFloatConstexpr bool operator == (const TCFloat &_Value) const;
+		DMibFloatConstexpr bool operator == (const TCFloat &_Value) const noexcept;
 		DMibFloatConstexpr bool f_EqualIncludingNan(const TCFloat &_Value) const;
-		DMibFloatConstexpr COrdering_Partial operator <=> (const TCFloat &_Value) const;
+		DMibFloatConstexpr COrdering_Partial operator <=> (const TCFloat &_Value) const noexcept;
 		DMibFloatConstexpr COrdering_Partial f_SpaceshipIncludingNan(const TCFloat &_Value) const;
 
 		template <aint tf_SignBits, aint tf_ExponentBits, aint tf_MantissaBits, aint tf_PaddingBits, typename tf_CImplicitFloat, bool tf_bDummyOptimize, typename tf_CIntegerStorage>
 		DMibFloatConstexpr bool operator ==
 			(
 				NMib::NNumeric::TCFloat<tf_SignBits, tf_ExponentBits, tf_MantissaBits, tf_PaddingBits, tf_CImplicitFloat, tf_bDummyOptimize, tf_CIntegerStorage> const &_Right
-			) const
+			) const noexcept
 		;
 		template <aint tf_SignBits, aint tf_ExponentBits, aint tf_MantissaBits, aint tf_PaddingBits, typename tf_CImplicitFloat, bool tf_bDummyOptimize, typename tf_CIntegerStorage>
 		DMibFloatConstexpr COrdering_Partial operator <=>
 			(
 				TCFloat<tf_SignBits, tf_ExponentBits, tf_MantissaBits, tf_PaddingBits, tf_CImplicitFloat, tf_bDummyOptimize, tf_CIntegerStorage> const &_Right
-			) const
+			) const noexcept
 		;
 
-		DMibFloatConstexpr bool operator == (CImplicitFloat const &_Right) const
+		DMibFloatConstexpr bool operator == (CImplicitFloat const &_Right) const noexcept
 			requires (mc_bIsBuiltIn)
 		{
 			return f_Get() == _Right;
 		}
 
-		DMibFloatConstexpr COrdering_Partial operator <=> (CImplicitFloat const &_Right) const
+		DMibFloatConstexpr COrdering_Partial operator <=> (CImplicitFloat const &_Right) const noexcept
 			requires (mc_bIsBuiltIn)
 		{
 			return f_Get() <=> _Right;

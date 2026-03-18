@@ -454,7 +454,7 @@ namespace NMib::NNumeric
 	DMibFloatConstexpr bool TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::operator ==
 		(
 			NMib::NNumeric::TCFloat<tf_SignBits, tf_ExponentBits, tf_MantissaBits, tf_PaddingBits, tf_CImplicitFloat, tf_bDummyOptimize, tf_CIntegerStorage> const &_Right
-		) const
+		) const noexcept
 	{
 		return (*this <=> _Right) == COrdering_Partial::equivalent;
 	}
@@ -464,7 +464,7 @@ namespace NMib::NNumeric
 	DMibFloatConstexpr COrdering_Partial TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::operator <=>
 		(
 			TCFloat<tf_SignBits, tf_ExponentBits, tf_MantissaBits, tf_PaddingBits, tf_CImplicitFloat, tf_bDummyOptimize, tf_CIntegerStorage> const &_Right
-		) const
+		) const noexcept
 	{
 		if (f_IsNan() || _Right.f_IsNan())
 			return COrdering_Partial::unordered;

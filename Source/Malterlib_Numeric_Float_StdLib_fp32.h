@@ -610,12 +610,12 @@ namespace NMib::NNumeric
 		}
 	}
 
-	template <> DMibFloatConstexpr inline_small bool CIEEEFloat32::operator == (const CIEEEFloat32 &_Value) const
+	template <> DMibFloatConstexpr inline_small bool CIEEEFloat32::operator == (const CIEEEFloat32 &_Value) const noexcept
 	{
 		return m_DataStorage == _Value.m_DataStorage;
 	}
 
-	template <> DMibFloatConstexpr inline_small COrdering_Partial CIEEEFloat32::operator <=> (const CIEEEFloat32 &_Value) const
+	template <> DMibFloatConstexpr inline_small COrdering_Partial CIEEEFloat32::operator <=> (const CIEEEFloat32 &_Value) const noexcept
 	{
 		return m_DataStorage <=> _Value.m_DataStorage;
 	}
