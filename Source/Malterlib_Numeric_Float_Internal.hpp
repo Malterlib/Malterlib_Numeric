@@ -149,7 +149,7 @@ namespace NMib::NNumeric
 				CInternalFloat Temp4 = fs_0();
 				CInternalFloat TempSum = fs_0();
 
-				const mint kMax = 2000;
+				const umint kMax = 2000;
 				CInternalFloat *kHist = DMibNew CInternalFloat[kMax];
 				kHist[0] = fs_0_5();
 
@@ -354,21 +354,21 @@ namespace NMib::NNumeric
 		(
 			CInternalFloat const &_Other
 			, CMantissa &o_OtherMantissa
-			, mint &o_nMantissaBits
+			, umint &o_nMantissaBits
 		)
 		-> CMantissa
 	{
-		mint MantissaBits = m_MantissaBits;
+		umint MantissaBits = m_MantissaBits;
 		if (_Other.m_MantissaBits > MantissaBits)
 		{
-			mint Diff = _Other.m_MantissaBits - MantissaBits;
+			umint Diff = _Other.m_MantissaBits - MantissaBits;
 			o_nMantissaBits = _Other.m_MantissaBits;
 			o_OtherMantissa = _Other.m_Mantissa;
 			return m_Mantissa << Diff;
 		}
 		else if (_Other.m_MantissaBits < MantissaBits)
 		{
-			mint Diff = MantissaBits - _Other.m_MantissaBits;
+			umint Diff = MantissaBits - _Other.m_MantissaBits;
 			o_nMantissaBits = MantissaBits;
 			o_OtherMantissa = _Other.m_Mantissa << Diff;
 			return m_Mantissa;
@@ -398,7 +398,7 @@ namespace NMib::NNumeric
 		if (m_Exponent != _Value.m_Exponent)
 			return false;
 
-		mint nMantissaBits;
+		umint nMantissaBits;
 		CMantissa Mantissa1;
 		CMantissa Mantissa0 = f_GetSharedMantissa(_Value, Mantissa1, nMantissaBits);
 		CMantissa MantissaDiff;
@@ -501,25 +501,25 @@ namespace NMib::NNumeric
 		CQuadMantissa Mantissa0 = m_Mantissa;
 		CQuadMantissa Mantissa1 = _Value.m_Mantissa;
 
-		mint nTotalMantissaBits = m_MantissaBits + _Value.m_MantissaBits;
+		umint nTotalMantissaBits = m_MantissaBits + _Value.m_MantissaBits;
 
 		if (nTotalMantissaBits > EInternalMaxQuadMantissaBits)
 		{
 			if (m_MantissaBits > _Value.m_MantissaBits)
 			{
-				mint Diff = fg_Min(nTotalMantissaBits - EInternalMaxQuadMantissaBits, m_MantissaBits - _Value.m_MantissaBits);
+				umint Diff = fg_Min(nTotalMantissaBits - EInternalMaxQuadMantissaBits, m_MantissaBits - _Value.m_MantissaBits);
 				Mantissa0 >>= Diff;
 				nTotalMantissaBits -= Diff;
 			}
 			else if (_Value.m_MantissaBits > m_MantissaBits)
 			{
-				mint Diff = fg_Min(nTotalMantissaBits - EInternalMaxQuadMantissaBits, _Value.m_MantissaBits - m_MantissaBits);
+				umint Diff = fg_Min(nTotalMantissaBits - EInternalMaxQuadMantissaBits, _Value.m_MantissaBits - m_MantissaBits);
 				Mantissa1 >>= Diff;
 				nTotalMantissaBits -= Diff;
 			}
 			if (nTotalMantissaBits > EInternalMaxQuadMantissaBits)
 			{
-				mint Diff = ((nTotalMantissaBits - EInternalMaxQuadMantissaBits) + 1) / 2;
+				umint Diff = ((nTotalMantissaBits - EInternalMaxQuadMantissaBits) + 1) / 2;
 				Mantissa0 >>= Diff;
 				Mantissa1 >>= Diff;
 				nTotalMantissaBits -= Diff*2;
@@ -546,14 +546,14 @@ namespace NMib::NNumeric
 
 		if (m_MantissaBits < EInternalMaxQuadMantissaBits)
 		{
-			mint Diff = EInternalMaxQuadMantissaBits - m_MantissaBits;
+			umint Diff = EInternalMaxQuadMantissaBits - m_MantissaBits;
 			Mantissa0 <<= Diff;
 		}
 
-		mint nDivMantissaBits = _Value.m_MantissaBits;
+		umint nDivMantissaBits = _Value.m_MantissaBits;
 		if (nDivMantissaBits > EInternalHalfQuadMantissaBits)
 		{
-			mint Diff = nDivMantissaBits - EInternalHalfQuadMantissaBits;
+			umint Diff = nDivMantissaBits - EInternalHalfQuadMantissaBits;
 			nDivMantissaBits = EInternalHalfQuadMantissaBits;
 			Mantissa1 >>= Diff;
 		}
@@ -563,7 +563,7 @@ namespace NMib::NNumeric
 		aint Diff = aint(EInternalMaxQuadMantissaBits) - aint(nDivMantissaBits);
 		if (Diff > EInternalMaxMantissaBits)
 		{
-			mint Diff2 = Diff - EInternalMaxMantissaBits;
+			umint Diff2 = Diff - EInternalMaxMantissaBits;
 			NewMantissa >>= Diff2;
 			Diff = EInternalMaxMantissaBits;
 		}
@@ -578,15 +578,15 @@ namespace NMib::NNumeric
 		CExponent Exponent0 = m_Exponent;
 		CExponent Exponent1 = _Value.m_Exponent;
 
-		mint nMantissaBits;
+		umint nMantissaBits;
 		CMantissa MantissaGet1;
 		CMantissa MantissaGet0 = f_GetSharedMantissa(_Value, MantissaGet1, nMantissaBits);
-		if (nMantissaBits < mint(EInternalMaxMantissaBits - 1))
+		if (nMantissaBits < umint(EInternalMaxMantissaBits - 1))
 		{
-			mint Diff = (EInternalMaxMantissaBits - 1) - nMantissaBits;
+			umint Diff = (EInternalMaxMantissaBits - 1) - nMantissaBits;
 			MantissaGet0 <<= Diff;
 			MantissaGet1 <<= Diff;
-			nMantissaBits = mint(EInternalMaxMantissaBits - 1);
+			nMantissaBits = umint(EInternalMaxMantissaBits - 1);
 		}
 
 		CSignedMantissa Mantissa0 = MantissaGet0;
@@ -594,7 +594,7 @@ namespace NMib::NNumeric
 
 		if (Exponent0 > Exponent1)
 		{
-			mint Diff = fg_Convert<aint>(Exponent0 - Exponent1);
+			umint Diff = fg_Convert<aint>(Exponent0 - Exponent1);
 			CSignedMantissa NewMantissa;
 			if (Diff > nMantissaBits)
 			{
@@ -631,7 +631,7 @@ namespace NMib::NNumeric
 		}
 		else
 		{
-			mint Diff = fg_Convert<aint>(Exponent1 - Exponent0);
+			umint Diff = fg_Convert<aint>(Exponent1 - Exponent0);
 			CSignedMantissa NewMantissa;
 			if (Diff > nMantissaBits)
 			{
@@ -847,7 +847,7 @@ namespace NMib::NNumeric
 	{
 		tf_CFloat Temp;
 		typename tf_CFloat::CDoubleUnsignedInteger Mantissa = m_Mantissa;
-		mint MantissaBits = m_MantissaBits;
+		umint MantissaBits = m_MantissaBits;
 		if (MantissaBits < tf_CFloat::mc_MantissaBits)
 		{
 			Mantissa <<= tf_CFloat::mc_MantissaBits - MantissaBits;
@@ -863,7 +863,7 @@ namespace NMib::NNumeric
 	{
 		TCFloat Temp;
 		CDoubleUnsignedInteger Mantissa = m_Mantissa;
-		mint MantissaBits = m_MantissaBits;
+		umint MantissaBits = m_MantissaBits;
 		if (MantissaBits < mc_MantissaBits)
 		{
 			Mantissa <<= mc_MantissaBits - MantissaBits;

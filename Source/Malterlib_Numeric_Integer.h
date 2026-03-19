@@ -124,7 +124,7 @@ namespace NMib::NNumeric
 			{
 				t_CInt Ret;
 				using CLargestInt = NTraits::TCLargestType<t_CInt, t_CUpper>;
-				Ret = t_CInt((CLargestInt(m_Upper) << (fg_Min((mint)ELowerBits, sizeof(CLargestInt)*8) - 1)) << 1);
+				Ret = t_CInt((CLargestInt(m_Upper) << (fg_Min((umint)ELowerBits, sizeof(CLargestInt)*8) - 1)) << 1);
 				Ret = Ret | t_CInt(m_Lower);
 				return Ret;
 			}
@@ -132,8 +132,8 @@ namespace NMib::NNumeric
 
 		template <typename t_CType>
 		constexpr TCInt(t_CType const &_Convert, TCEnableIf<NTraits::cIsFundamental<t_CType>, NPrivate::CDummy &> _pDummy = NPrivate::CDummy::ms_Dummy)
-			: m_Upper(((_Convert >> (fg_Min((mint)ELowerBits, sizeof(t_CType)*8) - 1)) >> 1))
-			, m_Lower((_Convert & fg_BitRange<t_CType>(0, fg_Min((mint)ELowerBits - 1, sizeof(t_CType)*8 - 1))))
+			: m_Upper(((_Convert >> (fg_Min((umint)ELowerBits, sizeof(t_CType)*8) - 1)) >> 1))
+			, m_Lower((_Convert & fg_BitRange<t_CType>(0, fg_Min((umint)ELowerBits - 1, sizeof(t_CType)*8 - 1))))
 		{
 		}
 
@@ -146,8 +146,8 @@ namespace NMib::NNumeric
 		template <typename t_CType>
 		constexpr TCInt &operator = (t_CType const &_Convert)
 		{
-			constexpr t_CType And1 = fg_BitRange<t_CType>(0, fg_Min((mint)ELowerBits - 1, sizeof(t_CType)*8 - 1));
-			m_Upper = t_CUpper(((_Convert >> (fg_Min((mint)ELowerBits, sizeof(t_CType)*8) - 1)) >> 1));
+			constexpr t_CType And1 = fg_BitRange<t_CType>(0, fg_Min((umint)ELowerBits - 1, sizeof(t_CType)*8 - 1));
+			m_Upper = t_CUpper(((_Convert >> (fg_Min((umint)ELowerBits, sizeof(t_CType)*8) - 1)) >> 1));
 			m_Lower = t_CLower((_Convert & And1));
 			return *this;
 		}

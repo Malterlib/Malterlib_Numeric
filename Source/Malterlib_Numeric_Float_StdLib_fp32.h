@@ -816,7 +816,7 @@ namespace NMib
 
 
 #ifdef DMibPUniqueType_mint
-	DMibMathFloatConvertInt(CIEEEFloat32, mint);
+	DMibMathFloatConvertInt(CIEEEFloat32, umint);
 #endif
 #ifdef DMibPUniqueType_smint
 	DMibMathFloatConvertInt(CIEEEFloat32, smint);

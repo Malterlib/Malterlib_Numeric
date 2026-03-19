@@ -1325,7 +1325,7 @@ namespace NMib::NNumeric
 		if (CheckRounding < Mantissa0)
 			NewMantissa += CDoubleUnsignedInteger(1);
 
-		mint nBitsLeft = (mc_StorageBits*2 - 1) - mc_MantissaBits;
+		umint nBitsLeft = (mc_StorageBits*2 - 1) - mc_MantissaBits;
 
 		f_SetAllRound(Sign, Exponent, NewMantissa, (aint)(nBitsLeft - mc_MantissaBits));
 		return *this;
@@ -1987,7 +1987,7 @@ namespace NMib::NNumeric
 	DMibFloatConstexpr bool TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::f_AlmostEqual
 		(
 			TCFloat const &_Other
-			, mint _nMantissaBits
+			, umint _nMantissaBits
 		) const noexcept
 	{
 		if (f_IsNan() || _Other.f_IsNan())

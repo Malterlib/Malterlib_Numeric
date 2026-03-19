@@ -144,8 +144,8 @@ namespace
 			{
 				DMibExpect(t_CFloat::fs_2() * t_CFloat::fs_2(), ==, t_CFloat(fp64(4.0)));
 
-				mint ExpectedBits = 1;
-				if (mint(t_CFloat::mc_MantissaBits) > mint(fp64::mc_MantissaBits))
+				umint ExpectedBits = 1;
+				if (umint(t_CFloat::mc_MantissaBits) > umint(fp64::mc_MantissaBits))
 					ExpectedBits = (t_CFloat::mc_MantissaBits - fp64::mc_MantissaBits) - 1;
 
 				auto fCheckValue = [&](NMib::NStr::CStr const &_Desc, double _Left, double _Right)
@@ -172,8 +172,8 @@ namespace
 			{
 				DMibExpect(t_CFloat::fs_2() / t_CFloat::fs_2(), ==, t_CFloat(fp64(1.0)));
 
-				mint ExpectedBits = 1;
-				if (mint(t_CFloat::mc_MantissaBits) > mint(fp64::mc_MantissaBits))
+				umint ExpectedBits = 1;
+				if (umint(t_CFloat::mc_MantissaBits) > umint(fp64::mc_MantissaBits))
 					ExpectedBits = (t_CFloat::mc_MantissaBits - fp64::mc_MantissaBits) - 1;
 
 				auto fCheckValue = [&](NMib::NStr::CStr const &_Desc, double _Left, double _Right)
@@ -241,7 +241,7 @@ namespace
 
 					DTestConversion(SmallestDenormal, t_CFloatRight::fs_SmallestDenormal(), ==, SmallestDenormal, ==, t_CFloatLeft::fs_0());
 					DTestConversion(NegSmallestDenormal, t_CFloatRight::fs_NegSmallestDenormal(), ==, NegSmallestDenormal, ==, -t_CFloatLeft::fs_0());
-					if (t_CFloatLeft::mc_MantissaBits != t_CFloatRight::mc_MantissaBits && mint(t_CFloatLeft::mc_ExponentBits) == mint(t_CFloatRight::mc_ExponentBits))
+					if (t_CFloatLeft::mc_MantissaBits != t_CFloatRight::mc_MantissaBits && umint(t_CFloatLeft::mc_ExponentBits) == umint(t_CFloatRight::mc_ExponentBits))
 					{
 						DTestConversion(Smallest, t_CFloatRight::fs_Smallest(), ==, Smallest, ==, Smallest);
 						DTestConversion(NegSmallest, t_CFloatRight::fs_NegSmallest(), ==, NegSmallest, ==, NegSmallest);
@@ -329,12 +329,12 @@ namespace
 		}
 
 		template <typename tf_CFloat, typename tf_CFloat2>
-		static bool fs_AlmostEqual(tf_CFloat const &_Float, tf_CFloat2 const &_Float2, mint _nBits)
+		static bool fs_AlmostEqual(tf_CFloat const &_Float, tf_CFloat2 const &_Float2, umint _nBits)
 		{
 			return _Float.f_AlmostEqual(_Float2, _nBits);
 		}
 
-		static bool fs_AlmostEqual(bool _Float, bool _Float2, mint _nBits)
+		static bool fs_AlmostEqual(bool _Float, bool _Float2, umint _nBits)
 		{
 			return _Float == _Float2;
 		}
@@ -432,7 +432,7 @@ namespace
 
 					if (!fs_IsNan(Result))
 					{
-						mint AlmontEqualBits = 0;
+						umint AlmontEqualBits = 0;
 						if (_Desc.f_Find(".f_Log(") >= 0)
 							AlmontEqualBits = 2;
 						else if (cIsSame<tf_CFloat, fp80>)
@@ -516,7 +516,7 @@ namespace
 								)
 							)
 						{
-							mint nBitsEqual = 2;
+							umint nBitsEqual = 2;
 							DMibExpectTrue(ResultEmu.f_AlmostEqual(Result, nBitsEqual));
 						}
 						else

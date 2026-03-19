@@ -5,7 +5,7 @@
 
 namespace NMib::NNumeric
 {
-	template <typename t_CType, mint t_nDim>
+	template <typename t_CType, umint t_nDim>
 	struct TCVec;
 
 	namespace NPrivate
@@ -16,7 +16,7 @@ namespace NMib::NNumeric
 			constexpr static bool mc_Value = false;
 		};
 
-		template <typename t_CType, mint t_nDim>
+		template <typename t_CType, umint t_nDim>
 		struct TCIsTCVec<TCVec<t_CType, t_nDim>>
 		{
 			constexpr static bool mc_Value = true;
@@ -26,7 +26,7 @@ namespace NMib::NNumeric
 	template <typename t_CType>
 	concept cIsTCVec = NPrivate::TCIsTCVec<NTraits::TCRemoveReferenceAndQualifiers<t_CType>>::mc_Value;
 
-	template <typename t_CType, mint t_nDim>
+	template <typename t_CType, umint t_nDim>
 	struct TCVec
 	{
 		using CType = t_CType;
@@ -37,7 +37,7 @@ namespace NMib::NNumeric
 		constexpr TCVec &operator = (TCVec const &_Src) noexcept = default;
 		constexpr TCVec &operator = (TCVec &&_Src) noexcept = default;
 
-		template <typename tf_CType, mint tf_nDim>
+		template <typename tf_CType, umint tf_nDim>
 		constexpr TCVec(TCVec<tf_CType, tf_nDim> const &_Src);
 
 		template <typename ...tfp_CParmas>
@@ -46,13 +46,13 @@ namespace NMib::NNumeric
 
 		constexpr TCVec(CType _Value[t_nDim]) noexcept;
 
-		constexpr inline_small CType const &operator [] (mint _iOpr) const;
-		constexpr inline_small CType &operator [] (mint _iOpr);
+		constexpr inline_small CType const &operator [] (umint _iOpr) const;
+		constexpr inline_small CType &operator [] (umint _iOpr);
 
-		template <typename tf_CType, mint tf_nDim>
+		template <typename tf_CType, umint tf_nDim>
 		constexpr TCVec &operator = (TCVec<tf_CType, tf_nDim> const &_Src);
 
-		constexpr static mint mc_NumDim = t_nDim;
+		constexpr static umint mc_NumDim = t_nDim;
 		CType m_Axis[t_nDim];
 	};
 

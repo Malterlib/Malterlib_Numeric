@@ -80,7 +80,7 @@ namespace NMib::NNumeric
 		static constexpr aint mc_ExponentBits = t_ExponentBits;
 		static constexpr aint mc_SignBits = t_SignBits;
 		static constexpr aint mc_PaddingBits = t_PaddingBits;
-		static constexpr mint mc_StorageBits = sizeof(CInteger) * 8;
+		static constexpr umint mc_StorageBits = sizeof(CInteger) * 8;
 		static constexpr aint mc_UnusedBits = mc_StorageBits - (mc_SignBits + mc_ExponentBits + mc_MantissaBits + mc_PaddingBits);
 		static constexpr aint mc_MantissaBitPos = 0;
 		static constexpr aint mc_UnusedBitPos = mc_MantissaBitPos + mc_MantissaBits;
@@ -349,7 +349,7 @@ namespace NMib::NNumeric
 			CMantissa m_Mantissa;
 			CExponent m_Exponent;
 			CInteger m_Sign;
-			mint m_MantissaBits = 0;
+			umint m_MantissaBits = 0;
 
 			DMibFloatConstexpr CInternalFloat();
 
@@ -376,7 +376,7 @@ namespace NMib::NNumeric
 
 			DMibFloatConstexpr CInternalFloat(const TCFloat &_Source);
 			DMibFloatConstexpr CInternalFloat &operator = (const TCFloat &_Source);
-			DMibFloatConstexpr CMantissa f_GetSharedMantissa(CInternalFloat const &_Other, CMantissa &o_OtherMantissa, mint &o_nMantissaBits);
+			DMibFloatConstexpr CMantissa f_GetSharedMantissa(CInternalFloat const &_Other, CMantissa &o_OtherMantissa, umint &o_nMantissaBits);
 			DMibFloatConstexpr bool f_AlmostEqual(const CInternalFloat &_Value, int _nBits) noexcept;
 			DMibFloatConstexpr void f_SetAllRound(const CInteger &_Sign, const CExponent &_Exponent, const CMantissa &_Mantissa, aint _nMantissaBits);
 			DMibFloatConstexpr void f_Mul(const CInternalFloat &_Value);
@@ -495,7 +495,7 @@ namespace NMib::NNumeric
 		||______________________________________________________________________________________________||
 		\************************************************************************************************/
 
-		DMibFloatConstexpr bool f_AlmostEqual(TCFloat const &_Other, mint _nMantissaBits = 1) const noexcept;
+		DMibFloatConstexpr bool f_AlmostEqual(TCFloat const &_Other, umint _nMantissaBits = 1) const noexcept;
 
 		DMibFloatConstexpr bool operator == (const TCFloat &_Value) const noexcept;
 		DMibFloatConstexpr bool f_EqualIncludingNan(const TCFloat &_Value) const;

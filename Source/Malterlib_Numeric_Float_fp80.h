@@ -8,12 +8,12 @@
 #include "Malterlib_Numeric_Float.h"
 
 #ifdef DMibPCanDo_fp80
-constexpr static mint gc_FloatPaddingBits_fp80 = sizeof(pfp80) * 8 - 80;
+constexpr static umint gc_FloatPaddingBits_fp80 = sizeof(pfp80) * 8 - 80;
 using CIEEEFloat80 = NMib::NNumeric::TCFloat<1, 15, 63, gc_FloatPaddingBits_fp80, pfp80>;
 using CIEEEFloat80Emu = NMib::NNumeric::TCFloat<1, 15, 63, gc_FloatPaddingBits_fp80, pfp80, 0>;
 DMibNumericImplementImplicitFloatFromParams(1, 15, 63, gc_FloatPaddingBits_fp80, pfp80);
 #else
-constexpr static mint gc_FloatPaddingBits_fp80 = 0;
+constexpr static umint gc_FloatPaddingBits_fp80 = 0;
 using CIEEEFloat80 = NMib::NNumeric::TCFloat<1, 15, 63, 0>;
 using CIEEEFloat80Emu = NMib::NNumeric::TCFloat<1, 15, 63, 0, NMib::NNumeric::CNoImplicit, 0>;
 #endif

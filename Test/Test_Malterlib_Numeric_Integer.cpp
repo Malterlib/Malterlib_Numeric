@@ -173,14 +173,14 @@ namespace
 		public:
 			void operator() ()
 			{
-				mint nBits = sizeof(t_CInt) * 8;
+				umint nBits = sizeof(t_CInt) * 8;
 				t_CInt TestNumberBase = 0;
 				auto fl_TestNumberBase
 					= [&]() -> t_CInt
 					{
 						NMib::NStr::CStr StartNumber = "0x";
 						aint Num = 9;
-						for (mint i = 0; i < nBits; i += 4)
+						for (umint i = 0; i < nBits; i += 4)
 						{
 							StartNumber += NMib::NStr::CStr::fs_ToStr("{nfh}", Num);
 							++Num;
@@ -190,7 +190,7 @@ namespace
 						return NMib::NStr::fg_StrToInt(StartNumber.f_GetStr(), t_CInt(-1));
 					}
 				;
-				for (mint i = 0; i < nBits; i += 4)
+				for (umint i = 0; i < nBits; i += 4)
 				{
 					DMibTestPath(NMib::NStr::CStr::CFormat("{}") << i);
 					{
@@ -200,20 +200,20 @@ namespace
 
 						aint Num = 9;
 						NMib::NStr::CStr ShouldBeNumber;
-						for (mint j = 0; j < i; j += 4)
+						for (umint j = 0; j < i; j += 4)
 						{
 							++Num;
 							if (Num >= 16)
 								Num = 1;
 						}
-						for (mint j = i; j < nBits; j += 4)
+						for (umint j = i; j < nBits; j += 4)
 						{
 							ShouldBeNumber += NMib::NStr::CStr::fs_ToStr("{nfh}", Num);
 							++Num;
 							if (Num >= 16)
 								Num = 1;
 						}
-						for (mint j = 0; j < i; j += 4)
+						for (umint j = 0; j < i; j += 4)
 						{
 							ShouldBeNumber += "0";
 						}
@@ -230,14 +230,14 @@ namespace
 		public:
 			void operator() ()
 			{
-				mint nBits = sizeof(t_CInt) * 8;
+				umint nBits = sizeof(t_CInt) * 8;
 				t_CInt TestNumberBase = 0;
 				auto fl_TestNumberBase
 					= [&]() -> t_CInt
 					{
 						NMib::NStr::CStr StartNumber = "0x";
 						aint Num = 9;
-						for (mint i = 0; i < nBits; i += 4)
+						for (umint i = 0; i < nBits; i += 4)
 						{
 							StartNumber += NMib::NStr::CStr::fs_ToStr("{nfh}", Num);
 							++Num;
@@ -247,7 +247,7 @@ namespace
 						return NMib::NStr::fg_StrToInt(StartNumber.f_GetStr(), t_CInt(-1));
 					}
 				;
-				for (mint i = 0; i < nBits; i += 4)
+				for (umint i = 0; i < nBits; i += 4)
 				{
 					DMibTestPath(NMib::NStr::CStr::CFormat("{}") << i);
 					{
@@ -258,14 +258,14 @@ namespace
 
 						aint Num = 9;
 						NMib::NStr::CStr ShouldBeNumber;
-						for (mint j = 0; j < i; j += 4)
+						for (umint j = 0; j < i; j += 4)
 						{
 							if constexpr (NMib::NTraits::cIsSigned<t_CInt>)
 								ShouldBeNumber += "F";
 							else
 								ShouldBeNumber += "0";
 						}
-						for (mint j = i; j < nBits; j += 4)
+						for (umint j = i; j < nBits; j += 4)
 						{
 							ShouldBeNumber += NMib::NStr::CStr::fs_ToStr("{nfh}", Num);
 							++Num;
