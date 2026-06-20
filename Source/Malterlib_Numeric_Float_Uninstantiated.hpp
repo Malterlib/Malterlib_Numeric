@@ -203,9 +203,6 @@ namespace NMib::NNumeric
 		)
 	{
 		f_Assign(_SetValue);
-#ifdef DMibDebuggerHelpers
-		static_assert(TCInstantiateValue<&TCFloat::f_Debug_GetAsDouble>::mc_Value);
-#endif
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
@@ -273,9 +270,6 @@ namespace NMib::NNumeric
 		)
 	{
 		*this = _Value ? fs_1() : fs_0();
-#ifdef DMibDebuggerHelpers
-		static_assert(TCInstantiateValue<&TCFloat::f_Debug_GetAsDouble>::mc_Value);
-#endif
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>

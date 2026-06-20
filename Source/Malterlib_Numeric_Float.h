@@ -159,12 +159,6 @@ namespace NMib::NNumeric
 		||______________________________________________________________________________________________||
 		\************************************************************************************************/
 
-#ifdef DMibDebuggerHelpers
-		assure_used pfp64 f_Debug_GetAsDouble()
-		{
-			return NMib::NNumeric::TCFloat<1, 11, 52, 0, pfp64>(*this).f_Get();
-		}
-#endif
 		DMibFloatConstexpr void fp_Set_0();
 		DMibFloatConstexpr void fp_Set_0_5();
 		DMibFloatConstexpr void fp_Set_1();
