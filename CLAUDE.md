@@ -9,6 +9,7 @@ The Numeric module provides comprehensive numeric computation capabilities inclu
 - **Extended-precision integers** (int8 through int4096, including unsigned variants)
 - **Tagged integer types** for type-safe integer handling
 - **Vector mathematics** with templated n-dimensional vectors
+- **SIMD** lane vectors, and the vector, matrix, quaternion and bounds types of 3D math built on them
 - **Mathematical constants** and utility functions
 
 ## Architecture
@@ -41,10 +42,52 @@ Type-safe integer wrappers:
 ### Vector Mathematics
 
 N-dimensional vector operations:
-- **TCVecAggregate** - Core vector storage template
-- **TCVec** - Full-featured vector class with mathematical operations
-- Support for any dimension and underlying numeric type
-- SIMD optimizations for common configurations (when available)
+- **TCVec** - Storage for any dimension and underlying numeric type, with construction, conversion and indexing
+- `TCVec` has no arithmetic and no SIMD. Use the math types below for computation
+
+### SIMD
+
+`Mib/Numeric/Simd` provides fixed-width vectors of `pfp32` and `int32`:
+- **TCSimd<t_CType, t_nLanes>** selects `TCSimdFloat`, `TCSimdInt` or `TCSimdMask` (`bool`) on the native backend
+- **CSimd4_fp32**, **CSimd4_int32**, **CSimd4_bool** and the `8` variants are the common aliases
+- **TCSimdReference<t_CType, t_nLanes>** is the same interface on the scalar backend
+
+The backend is chosen at compile time from `DArchitectureExtension_NEON`, `DArchitectureExtension_SSE`,
+`DArchitectureExtension_SSE41` and `DArchitectureExtension_AVX2`. There is no runtime dispatch.
+8 lanes are one AVX2 vector or a pair of 4 lane vectors, 16 lanes a pair of 8 lane vectors, and other
+lane counts use the scalar backend. A vector has 1 to 32 lanes, which is what the bits of a mask hold.
+
+Every backend must produce the same bits as the scalar backend, which is what
+`Test_Malterlib_Numeric_Simd.cpp` checks. When adding an operation, add it to every backend in
+`Source/Malterlib_Numeric_Simd_Backend_*.hpp` and to that test. Semantics that differ between
+instruction sets are pinned as follows:
+- `f_Min` and `f_Max` return the argument when either operand is NaN
+- `f_Sum` adds adjacent lanes first, then the pairs
+- Comparisons return a mask. `!=` is true for NaN, all others are false
+- `f_ToInt` truncates and is unspecified for NaN and values outside `int32`
+- Shift counts must be 0 to 31
+
+### Math
+
+`Mib/Numeric/Math` builds on `CSimd4_fp32`: `CVec3_fp32`, `CVec4_fp32`, `CQuat_fp32`, `CMat4x4_fp32`,
+`CMat3x4_fp32`, `CSphere_fp32`, `CBox_fp32`, `CPlane_fp32` and `CFrustum_fp32`.
+
+Each is a template of the type of its elements, as `TCVec3<t_CType>`, and the name ends with the type after an
+underscore. Only `pfp32` is implemented, and the other templates are declared without a definition. Element types
+are added when something uses them, which is also how the lane types of `TCSimd` are named: `CSimd4_fp32`,
+`CSimd8_int32`.
+
+Conventions: column vectors, column-major matrices, right-handed view space looking down negative Z,
+clip space depth 0 to 1. `CVec3_fp32` keeps lane 3 at zero.
+
+Range: the math types are for the values of scenes. Operations calculate in `pfp32` with the fastest
+way that is right for values whose squares and products of up to three are well within what `pfp32`
+has, and for matrices that are far from one without an inverse. Other values give infinities, zeros
+or values that are not numbers, as `pfp32` does. Do not make often used operations slower to handle
+values that only data that is broken has.
+
+`CFrustum_fp32::f_CullSpheres` and `f_CullBoxes` take structure-of-arrays input, process 8 objects at
+a time and give the same answers as `f_Intersects`.
 
 ## File Organization
 
@@ -56,18 +99,24 @@ Numeric/
 │   ├── CustomFloat               # Custom float configurations
 │   ├── Integer                   # Extended integer types
 │   ├── TaggedInteger             # Type-safe integers
-│   ├── Vector                    # Vector mathematics
+│   ├── Vector                    # Vector storage
+│   ├── Simd                      # SIMD vectors
+│   ├── Math                      # Vector, matrix, quaternion and bounds types
 │   ├── Limits                    # Numeric limits
 │   └── fp*/ufp*                  # Specific precision headers
 ├── Source/                       # Implementation files
 │   ├── Malterlib_Numeric_Float*  # Float implementation
 │   ├── Malterlib_Numeric_Integer.h
 │   ├── Malterlib_Numeric_TaggedInteger.*
-│   └── Malterlib_Numeric_Vector.h
+│   ├── Malterlib_Numeric_Vector.h
+│   ├── Malterlib_Numeric_Simd*   # SIMD wrapper and backends
+│   └── Malterlib_Numeric_Math*   # SIMD math types
 └── Test/                         # Unit tests
     ├── Test_Malterlib_Numeric_Float.*
     ├── Test_Malterlib_Numeric_Integer.cpp
-    └── Test_Malterlib_Numeric_Vector.cpp
+    ├── Test_Malterlib_Numeric_Vector.cpp
+    ├── Test_Malterlib_Numeric_Simd.cpp
+    └── Test_Malterlib_Numeric_Math.cpp
 ```
 
 ## Usage Examples
@@ -142,17 +191,27 @@ int32 RawUserID = UserID.f_Get();
 ```cpp
 #include <Mib/Numeric/Vector>
 
-// 3D vector operations
 TCVec<fp32, 3> Position(1.0f, 2.0f, 3.0f);
-TCVec<fp32, 3> Velocity(0.5f, -1.0f, 0.0f);
-
-TCVec<fp32, 3> NewPosition = Position + Velocity;
-fp32 Distance = Position.f_Length();
-TCVec<fp32, 3> Normalized = Position.f_Normalized();
+TCVec<int32, 3> Cell(Position); // Converts each axis
 
 // N-dimensional vectors
 TCVec<fp64, 10> HighDimVector;
 HighDimVector[5] = 3.14;
+```
+
+### SIMD Operations
+
+```cpp
+#include <Mib/Numeric/Math>
+
+CSimd4_fp32 Values(1.0f, -2.0f, 3.0f, -4.0f);
+CSimd4_fp32 Clamped = CSimd4_fp32::fs_Select(Values < 0.0f, CSimd4_fp32::fs_Zero(), Values);
+
+CMat4x4_fp32 View = CMat4x4_fp32::fs_LookAt(CVec3_fp32(0.0f, 2.0f, 5.0f), CVec3_fp32::fs_Zero(), CVec3_fp32(0.0f, 1.0f, 0.0f));
+CMat4x4_fp32 Projection = CMat4x4_fp32::fs_PerspectiveReverseInfinite(1.0f, 16.0f / 9.0f, 0.1f);
+CFrustum_fp32 Frustum(Projection * View);
+
+bool bVisible = Frustum.f_Intersects(CSphere_fp32(CVec3_fp32(0.0f, 0.0f, -3.0f), 1.0f));
 ```
 
 ## Mathematical Constants
@@ -199,7 +258,7 @@ constexpr t_CFloat fg_FSNan();       // Signaling NaN
 
 - Hardware types (fp32, fp64, int32, int64) use native operations
 - Extended precision types use software emulation
-- Vector operations may use SIMD when available
+- `TCSimd` and the math types use NEON, SSE or AVX2 selected at compile time
 - Consider precision requirements vs performance trade-offs
 - Use emulated types (e.g., CIEEEFloat32Emu) for cross-platform consistency in tests
 
@@ -252,6 +311,7 @@ The module includes comprehensive test coverage:
 /opt/Deploy/Tests/RunAllTests --paths '["Malterlib/Numeric/Float*"]'
 /opt/Deploy/Tests/RunAllTests --paths '["Malterlib/Numeric/Integer*"]'
 /opt/Deploy/Tests/RunAllTests --paths '["Malterlib/Numeric/Vector*"]'
+/opt/Deploy/Tests/RunAllTests --paths '["Malterlib/Numeric/Simd*", "Malterlib/Numeric/Math*"]'
 ```
 
 Test files use templated test functions to verify behavior across all supported types.
@@ -292,4 +352,4 @@ static_assert(Result > fp64(6.0));
 The module automatically detects and uses:
 - Hardware FPU for fp32, fp64
 - Extended precision FPU for fp80 (x86)
-- SIMD instructions for vector operations (when available)
+- NEON, SSE or AVX2 for `TCSimd`, selected at compile time
