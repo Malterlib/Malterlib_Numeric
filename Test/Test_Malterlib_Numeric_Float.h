@@ -5,8 +5,6 @@ namespace NMib
 {
 	namespace NNumeric
 	{
-
-
 #define DMibMathImplementNativeFloat(_Native, _TCFloat) \
 		template <>\
 		class TCFloatFromNative<_Native>\
@@ -35,6 +33,7 @@ namespace NMib
 		class TCFloatTraits<NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>>
 		{
 			using CFloat = NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>;
+
 		public:
 			using CStorageInteger = typename CFloat::CInteger;
 			using CStorageInteger_x2 = typename CFloat::CDoubleInteger;
@@ -49,11 +48,8 @@ namespace NMib
 		class TCNativeFromFloat
 		{
 		public:
-
 			TCConditional<TCFloatTraits<t_CFloat>::ms_bHasFundamentalFloat, typename TCFloatTraits<t_CFloat>::CFundamentalFloat, t_CFloat> CType;
-
 		};
-
 
 		template <typename t_CFloat0, typename t_CFloat1>
 		class TCFloatCombinedType
@@ -74,7 +70,7 @@ namespace NMib
 
 			bool mp_bInit;
 			NStorage::TCAggregateSimple<t_CFloat> mp_Float;
-			operator const t_CFloat & ()
+			operator t_CFloat const & ()
 			{
 				if (!mp_bInit)
 				{
@@ -94,106 +90,127 @@ namespace NMib
 				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_0();
 			}
+
 			static void fg_Init_0_5(t_CFloat &_Float)
 			{
 				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_0_5();
 			}
+
 			static void fg_Init_1(t_CFloat &_Float)
 			{
 				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_1();
 			}
+
 			static void fg_Init_2(t_CFloat &_Float)
 			{
 				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_2();
 			}
+
 			static void fg_Init_E(t_CFloat &_Float)
 			{
 				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_E();
 			}
+
 			static void fg_Init_Pi(t_CFloat &_Float)
 			{
 				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_Pi();
 			}
+
 			static void fg_Init_Sqrt2(t_CFloat &_Float)
 			{
 				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_Sqrt2();
 			}
+
 			static void fg_Init_Euler(t_CFloat &_Float)
 			{
 				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_Euler();
 			}
+
 			static void fg_Init_GoldenRatio(t_CFloat &_Float)
 			{
 				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_GoldenRatio();
 			}
+
 			static void fg_Init_Log10_2(t_CFloat &_Float)
 			{
 				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_Log10_2();
 			}
+
 			static void fg_Init_Log2_10(t_CFloat &_Float)
 			{
 				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_Log2_10();
 			}
+
 			static void fg_Init_Log10_E(t_CFloat &_Float)
 			{
 				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_Log10_E();
 			}
+
 			static void fg_Init_LogE_10(t_CFloat &_Float)
 			{
 				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_LogE_10();
 			}
+
 			static void fg_Init_Log2_E(t_CFloat &_Float)
 			{
 				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_Log2_E();
 			}
+
 			static void fg_Init_LogE_2(t_CFloat &_Float)
 			{
 				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_LogE_2();
 			}
+
 			static void fg_Init_Inf(t_CFloat &_Float)
 			{
 				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_Inf();
 			}
+
 			static void fg_Init_NegInf(t_CFloat &_Float)
 			{
 				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_NegInf();
 			}
+
 			static void fg_Init_QNan(t_CFloat &_Float)
 			{
 				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_QNan();
 			}
+
 			static void fg_Init_SNan(t_CFloat &_Float)
 			{
 				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_SNan();
 			}
+
 			static void fg_Init_NegQNan(t_CFloat &_Float)
 			{
 				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_NegQNan();
 			}
+
 			static void fg_Init_NegSNan(t_CFloat &_Float)
 			{
 				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 				((CFloat &)_Float).fp_Set_NegSNan();
 			}
+
 		public:
 			static TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fg_Init_0> ms_0;
 			static TCFloatConstant<t_CFloat, fg_Init_0_5> ms_0_5;
@@ -216,7 +233,6 @@ namespace NMib
 			static TCFloatConstant<t_CFloat, fg_Init_SNan> ms_SNan;
 			static TCFloatConstant<t_CFloat, fg_Init_NegQNan> ms_NegQNan;
 			static TCFloatConstant<t_CFloat, fg_Init_NegSNan> ms_NegSNan;
-
 		};
 
 		template <typename t_CFloat>
@@ -267,6 +283,7 @@ namespace NMib
 		{
 			_Float = TCFloatConstants<t_CFloat>::ms_0;
 		}
+
 		template <typename t_CFloat>
 		static t_CFloat &fg_FInPlace0_5(t_CFloat &_Float);
 		template <typename t_CFloat>
@@ -308,119 +325,138 @@ namespace NMib
 		template <typename t_CFloat>
 		static t_CFloat &fg_FInPlaceNegSNan(t_CFloat &_Float);
 		template <typename t_CFloat, typename t_CInteger>
-		static t_CFloat &fg_FInPlaceFromInt(t_CFloat &_Float, const t_CInteger &_Int);
+		static t_CFloat &fg_FInPlaceFromInt(t_CFloat &_Float, t_CInteger const &_Int);
 		template <typename t_CFloat, typename t_CIntegerSign, typename t_CIntegerExponent, typename t_CMantissoExponent>
-		t_CFloat &fg_FInPlaceFromAllRound(t_CFloat &_Float, const t_CIntegerSign &_Sign, const t_CIntegerExponent &_Exponent, const t_CMantissoExponent &_Mantissa, aint _AtleastExtraBits);
+		t_CFloat &fg_FInPlaceFromAllRound(t_CFloat &_Float, t_CIntegerSign const &_Sign, t_CIntegerExponent const &_Exponent, t_CMantissoExponent const &_Mantissa, aint _AtleastExtraBits);
 
 		template <typename t_CFloat>
 		t_CFloat fg_F0()
 		{
 			return TCFloatConstants<t_CFloat>::ms_0;
 		}
+
 		template <typename t_CFloat>
 		t_CFloat fg_F0_5()
 		{
 			return TCFloatConstants<t_CFloat>::ms_0_5;
 		}
+
 		template <typename t_CFloat>
 		t_CFloat fg_F1()
 		{
 			return TCFloatConstants<t_CFloat>::ms_1;
 		}
+
 		template <typename t_CFloat>
 		t_CFloat fg_F2()
 		{
 			return TCFloatConstants<t_CFloat>::ms_2;
 		}
+
 		template <typename t_CFloat>
 		t_CFloat fg_FE()
 		{
 			return TCFloatConstants<t_CFloat>::ms_E;
 		}
+
 		template <typename t_CFloat>
 		t_CFloat fg_FPi()
 		{
 			return TCFloatConstants<t_CFloat>::ms_Pi;
 		}
+
 		template <typename t_CFloat>
 		t_CFloat fg_FSqrt2()
 		{
 			return TCFloatConstants<t_CFloat>::ms_Sqrt2;
 		}
+
 		template <typename t_CFloat>
 		t_CFloat fg_FEuler()
 		{
 			return TCFloatConstants<t_CFloat>::ms_Euler;
 		}
+
 		template <typename t_CFloat>
 		t_CFloat fg_FGoldenRatio()
 		{
 			return TCFloatConstants<t_CFloat>::ms_GoldenRatio;
 		}
+
 		template <typename t_CFloat>
 		t_CFloat fg_FLog10_2()
 		{
 			return TCFloatConstants<t_CFloat>::ms_Log10_2;
 		}
+
 		template <typename t_CFloat>
 		t_CFloat fg_FLog2_10()
 		{
 			return TCFloatConstants<t_CFloat>::ms_Log2_10;
 		}
+
 		template <typename t_CFloat>
 		t_CFloat fg_FLog10_E()
 		{
 			return TCFloatConstants<t_CFloat>::ms_Log10_E;
 		}
+
 		template <typename t_CFloat>
 		t_CFloat fg_FLogE_10()
 		{
 			return TCFloatConstants<t_CFloat>::ms_LogE_10;
 		}
+
 		template <typename t_CFloat>
 		t_CFloat fg_FLog2_E()
 		{
 			return TCFloatConstants<t_CFloat>::ms_Log2_E;
 		}
+
 		template <typename t_CFloat>
 		t_CFloat fg_FLogE_2()
 		{
 			return TCFloatConstants<t_CFloat>::ms_LogE_2;
 		}
+
 		template <typename t_CFloat>
 		t_CFloat fg_FInf()
 		{
 			return TCFloatConstants<t_CFloat>::ms_Inf;
 		}
+
 		template <typename t_CFloat>
 		t_CFloat fg_FNegInf()
 		{
 			return TCFloatConstants<t_CFloat>::ms_NegInf;
 		}
+
 		template <typename t_CFloat>
 		t_CFloat fg_FQNan()
 		{
 			return TCFloatConstants<t_CFloat>::ms_QNan;
 		}
+
 		template <typename t_CFloat>
 		t_CFloat fg_FSNan()
 		{
 			return TCFloatConstants<t_CFloat>::ms_SNan;
 		}
+
 		template <typename t_CFloat>
 		t_CFloat fg_FNegQNan()
 		{
 			return TCFloatConstants<t_CFloat>::ms_NegQNan;
 		}
+
 		template <typename t_CFloat>
 		t_CFloat fg_FNegSNan()
 		{
 			return TCFloatConstants<t_CFloat>::ms_NegSNan;
 		}
 
-
 		template <typename t_CFloat, typename t_CInteger>
-		static t_CFloat fg_FFromInt(const t_CInteger &_Int);
+		static t_CFloat fg_FFromInt(t_CInteger const &_Int);
 		template <typename t_CFloat, typename t_CIntegerSign, typename t_CIntegerExponent, typename t_CMantissoExponent>
 		t_CFloat fg_FFromAllRound(t_CIntegerSign const &_Sign, t_CIntegerExponent const &_Exponent, t_CMantissoExponent const &_Mantissa, aint _AtleastExtraBits);
 
@@ -473,7 +509,7 @@ namespace NMib
 		typename TCFloatTraits<t_CFloat>::CStorageUnsignedInteger fg_FToUnsignedIntRoundTowardZero(t_CFloat const &_Float);
 
 		template <typename t_CFloat, typename t_CInteger>
-		t_CFloat &fg_FInPlaceSetSignBits(t_CFloat &_Float, const t_CInteger &_Value)
+		t_CFloat &fg_FInPlaceSetSignBits(t_CFloat &_Float, t_CInteger const &_Value)
 		{
 			using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 
@@ -483,26 +519,25 @@ namespace NMib
 		}
 
 		template <typename t_CFloat, typename t_CInteger>
-		t_CFloat &fg_FInPlaceSetExponentBits(t_CFloat &_Float, const t_CInteger &_Value);
+		t_CFloat &fg_FInPlaceSetExponentBits(t_CFloat &_Float, t_CInteger const &_Value);
 
 		template <typename t_CFloat, typename t_CInteger>
-		t_CFloat &fg_FInPlaceSetMantissaBits(t_CFloat &_Float, const t_CInteger &_Value);
+		t_CFloat &fg_FInPlaceSetMantissaBits(t_CFloat &_Float, t_CInteger const &_Value);
 
 		template <typename t_CFloat, typename t_CInteger>
-		t_CFloat &fg_FInPlaceSetSign(t_CFloat &_Float, const t_CInteger &_Value);
+		t_CFloat &fg_FInPlaceSetSign(t_CFloat &_Float, t_CInteger const &_Value);
 
 		template <typename t_CFloat, typename t_CInteger>
-		t_CFloat &fg_FInPlaceSetExponent(t_CFloat &_Float, const t_CInteger &_Value);
+		t_CFloat &fg_FInPlaceSetExponent(t_CFloat &_Float, t_CInteger const &_Value);
 
 		template <typename t_CFloat, typename t_CInteger>
-		t_CFloat &fg_FInPlaceSetMantissa(t_CFloat &_Float, const t_CInteger &_Value);
-
+		t_CFloat &fg_FInPlaceSetMantissa(t_CFloat &_Float, t_CInteger const &_Value);
 
 		template <typename t_CFloat0, typename t_CFloat1>
-		t_CFloat0 &fg_FInPlaceConvertRoundUp(t_CFloat0 &_Float, const t_CFloat1 &_ConvertFrom);
+		t_CFloat0 &fg_FInPlaceConvertRoundUp(t_CFloat0 &_Float, t_CFloat1 const &_ConvertFrom);
 
 		template <typename t_CFloat0, typename t_CFloat1>
-		t_CFloat0 &fg_FInPlaceConvert(t_CFloat0 &_Float, const t_CFloat1 &_ConvertFrom);
+		t_CFloat0 &fg_FInPlaceConvert(t_CFloat0 &_Float, t_CFloat1 const &_ConvertFrom);
 
 		template <typename t_CFloat>
 		t_CFloat &fg_FInPlaceSin(t_CFloat &_Float);
@@ -523,12 +558,13 @@ namespace NMib
 		template <typename t_CFloat>
 		t_CFloat &fg_FInPlaceArcTan(t_CFloat &_Float);
 		template <typename t_CFloat0, typename t_CFloat1>
-		t_CFloat0 &fg_FInPlaceArcTan(t_CFloat0 &_Float, const t_CFloat1 &_Source)
+		t_CFloat0 &fg_FInPlaceArcTan(t_CFloat0 &_Float, t_CFloat1 const &_Source)
 		{
 			return fg_FInPlaceArcTan(_Float, (t_CFloat0)_Source);
 		}
+
 		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceArcTan(t_CFloat &_Float, const t_CFloat &_Source);
+		t_CFloat &fg_FInPlaceArcTan(t_CFloat &_Float, t_CFloat const &_Source);
 
 		template <typename t_CFloat>
 		t_CFloat &fg_FExpN(t_CFloat &_Float);
@@ -556,33 +592,33 @@ namespace NMib
 		t_CFloat &fg_FInPlaceAbs(t_CFloat &_Float);
 
 		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceExp(t_CFloat &_Float, const t_CFloat &_Base);
+		t_CFloat &fg_FInPlaceExp(t_CFloat &_Float, t_CFloat const &_Base);
 		template <typename t_CFloat0, typename t_CFloat1>
-		t_CFloat0 &fg_FInPlaceExp(t_CFloat0 &_Float, const t_CFloat1 &_Base)
+		t_CFloat0 &fg_FInPlaceExp(t_CFloat0 &_Float, t_CFloat1 const &_Base)
 		{
 			return fg_FInPlaceExp(_Float, (t_CFloat0)_Base);
 		}
 
 		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceLog(t_CFloat &_Float, const t_CFloat &_Base);
+		t_CFloat &fg_FInPlaceLog(t_CFloat &_Float, t_CFloat const &_Base);
 		template <typename t_CFloat0, typename t_CFloat1>
-		t_CFloat0 &fg_FInPlaceLog(t_CFloat0 &_Float, const t_CFloat1 &_Base)
+		t_CFloat0 &fg_FInPlaceLog(t_CFloat0 &_Float, t_CFloat1 const &_Base)
 		{
 			return fg_FInPlaceLog(_Float, (t_CFloat0)_Base);
 		}
 
 		template <typename t_CFloat>
-		t_CFloat &fg_FInPlacePow(t_CFloat &_Float, const t_CFloat &_Power);
+		t_CFloat &fg_FInPlacePow(t_CFloat &_Float, t_CFloat const &_Power);
 		template <typename t_CFloat0, typename t_CFloat1>
-		t_CFloat0 &fg_FInPlacePow(t_CFloat0 &_Float, const t_CFloat1 &_Power)
+		t_CFloat0 &fg_FInPlacePow(t_CFloat0 &_Float, t_CFloat1 const &_Power)
 		{
 			return fg_FInPlacePow(_Float, (t_CFloat0)_Power);
 		}
 
 		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceMod(t_CFloat &_Float, const t_CFloat &_Modulu);
+		t_CFloat &fg_FInPlaceMod(t_CFloat &_Float, t_CFloat const &_Modulu);
 		template <typename t_CFloat0, typename t_CFloat1>
-		t_CFloat0 &fg_FInPlaceMod(t_CFloat0 &_Float, const t_CFloat1 &_Modulu)
+		t_CFloat0 &fg_FInPlaceMod(t_CFloat0 &_Float, t_CFloat1 const &_Modulu)
 		{
 			return fg_FInPlaceMod(_Float, (t_CFloat0)_Modulu);
 		}
@@ -590,7 +626,7 @@ namespace NMib
 		// Non-inplace
 
 		template <typename t_CFloat, typename t_CInteger>
-		t_CFloat fg_FSetSignBits(const t_CFloat &_Float, t_CInteger _Value)
+		t_CFloat fg_FSetSignBits(t_CFloat const &_Float, t_CInteger _Value)
 		{
 			t_CFloat Ret = _Float;
 			fg_FInPlaceSetSignBits(Ret, _Value);
@@ -614,7 +650,7 @@ namespace NMib
 		}
 
 		template <typename t_CFloat, typename t_CInteger>
-		t_CFloat  fg_FSetSign(t_CFloat const &_Float, t_CInteger _Value)
+		t_CFloat fg_FSetSign(t_CFloat const &_Float, t_CInteger _Value)
 		{
 			t_CFloat Ret = _Float;
 			fg_FInPlaceSetSign(Ret, _Value);
@@ -630,7 +666,7 @@ namespace NMib
 		}
 
 		template <typename t_CFloat, typename t_CInteger>
-		t_CFloat  fg_FSetMantissa(t_CFloat const &_Float, t_CInteger _Value)
+		t_CFloat fg_FSetMantissa(t_CFloat const &_Float, t_CInteger _Value)
 		{
 			t_CFloat Ret = _Float;
 			fg_FInPlaceSetMantissa(Ret, _Value);
@@ -638,7 +674,7 @@ namespace NMib
 		}
 
 		template <typename t_CFloat0, typename t_CFloat1>
-		t_CFloat0 fg_FConvertRoundUp(const t_CFloat1 &_ConvertFrom)
+		t_CFloat0 fg_FConvertRoundUp(t_CFloat1 const &_ConvertFrom)
 		{
 			t_CFloat0 Ret;
 			fg_FInPlaceConvertRoundUp(Ret, _ConvertFrom);
@@ -646,7 +682,7 @@ namespace NMib
 		}
 
 		template <typename t_CFloat0, typename t_CFloat1>
-		t_CFloat0 fg_FConvert(const t_CFloat1 &_ConvertFrom)
+		t_CFloat0 fg_FConvert(t_CFloat1 const &_ConvertFrom)
 		{
 			t_CFloat0 Ret;
 			fg_FInPlaceConvert(Ret, _ConvertFrom);
@@ -672,16 +708,17 @@ namespace NMib
 		template <typename t_CFloat>
 		t_CFloat fg_FArcTan(t_CFloat const &_Float);
 		template <typename t_CFloat>
-		t_CFloat fg_FArcTan(t_CFloat const &_Float, const t_CFloat &_Source)
+		t_CFloat fg_FArcTan(t_CFloat const &_Float, t_CFloat const &_Source)
 		{
 			using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
 
-			const CFloat &Float = _Float;
-			const CFloat &Source = _Source;
+			CFloat const &Float = _Float;
+			CFloat const &Source = _Source;
 			return Float.f_ArcTan(Source).f_Get();
 		}
+
 		template <typename t_CFloat0, typename t_CFloat1>
-		typename TCFloatCombinedType<t_CFloat0, t_CFloat1>::CType fg_FArcTan(t_CFloat0 const &_Float, const t_CFloat1 &_Source)
+		typename TCFloatCombinedType<t_CFloat0, t_CFloat1>::CType fg_FArcTan(t_CFloat0 const &_Float, t_CFloat1 const &_Source)
 		{
 			using CCombinedFloat = typename TCFloatCombinedType<t_CFloat0, t_CFloat1>::CType;
 
@@ -716,12 +753,12 @@ namespace NMib
 		t_CFloat fg_FAbs(t_CFloat const &_Float);
 
 		template <typename t_CFloat>
-		t_CFloat fg_FExp(t_CFloat const &_Float, const t_CFloat &_Base);
+		t_CFloat fg_FExp(t_CFloat const &_Float, t_CFloat const &_Base);
 		template <typename t_CFloat>
-		t_CFloat fg_FLog(t_CFloat const &_Float, const t_CFloat &_Base);
+		t_CFloat fg_FLog(t_CFloat const &_Float, t_CFloat const &_Base);
 		template <typename t_CFloat>
-		t_CFloat fg_FPow(t_CFloat const &_Float, const t_CFloat &_Power);
+		t_CFloat fg_FPow(t_CFloat const &_Float, t_CFloat const &_Power);
 		template <typename t_CFloat>
-		t_CFloat fg_FMod(t_CFloat const &_Float, const t_CFloat &_Modulu);
+		t_CFloat fg_FMod(t_CFloat const &_Float, t_CFloat const &_Modulu);
 	}
 }

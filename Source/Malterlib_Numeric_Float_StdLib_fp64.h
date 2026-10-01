@@ -132,43 +132,42 @@ namespace NMib::NNumeric
 	}
 
 #ifdef DMibPCanDo_fp32
-	template < >
-	template < >
-	inline_always void CIEEEFloat64::f_Assign(const CIEEEFloat32 &_SetValue)
+	template <>
+	template <>
+	inline_always void CIEEEFloat64::f_Assign(CIEEEFloat32 const &_SetValue)
 	{
 		m_DataStorage = _SetValue.f_Get();
 	}
 
-	template < >
-	template < >
-	inline_always bool CIEEEFloat64::operator == (const CIEEEFloat32 &_SetValue) const noexcept
+	template <>
+	template <>
+	inline_always bool CIEEEFloat64::operator == (CIEEEFloat32 const &_SetValue) const noexcept
 	{
 		return m_DataStorage == _SetValue.f_Get();
 	}
 
-	template < >
-	template < >
-	inline_always COrdering_Partial CIEEEFloat64::operator <=> (const CIEEEFloat32 &_SetValue) const noexcept
+	template <>
+	template <>
+	inline_always COrdering_Partial CIEEEFloat64::operator <=> (CIEEEFloat32 const &_SetValue) const noexcept
 	{
 		return m_DataStorage <=> _SetValue.f_Get();
 	}
 
-	template < >
-	template < >
-	inline_always bool CIEEEFloat32::operator == (const CIEEEFloat64 &_SetValue) const noexcept
+	template <>
+	template <>
+	inline_always bool CIEEEFloat32::operator == (CIEEEFloat64 const &_SetValue) const noexcept
 	{
 		return m_DataStorage == _SetValue.f_Get();
 	}
 
-	template < >
-	template < >
-	inline_always COrdering_Partial CIEEEFloat32::operator <=> (const CIEEEFloat64 &_SetValue) const noexcept
+	template <>
+	template <>
+	inline_always COrdering_Partial CIEEEFloat32::operator <=> (CIEEEFloat64 const &_SetValue) const noexcept
 	{
 		return m_DataStorage <=> _SetValue.f_Get();
 	}
 
 #endif
-
 
 	/************************************************************************************************\
 	||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
@@ -176,22 +175,22 @@ namespace NMib::NNumeric
 	||______________________________________________________________________________________________||
 	\************************************************************************************************/
 
-	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::operator + (const CIEEEFloat64 &_Value) const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::operator + (CIEEEFloat64 const &_Value) const
 	{
 		return m_DataStorage + _Value.m_DataStorage;
 	}
 
-	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::operator - (const CIEEEFloat64 &_Value) const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::operator - (CIEEEFloat64 const &_Value) const
 	{
 		return m_DataStorage - _Value.m_DataStorage;
 	}
 
-	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::operator * (const CIEEEFloat64 &_Value) const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::operator * (CIEEEFloat64 const &_Value) const
 	{
 		return m_DataStorage * _Value.m_DataStorage;
 	}
 
-	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::operator / (const CIEEEFloat64 &_Value) const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::operator / (CIEEEFloat64 const &_Value) const
 	{
 		return m_DataStorage / _Value.m_DataStorage;
 	}
@@ -207,25 +206,25 @@ namespace NMib::NNumeric
 	||______________________________________________________________________________________________||
 	\************************************************************************************************/
 
-	template <> DMibFloatConstexpr inline_small CIEEEFloat64 &CIEEEFloat64::operator += (const CIEEEFloat64 &_Value)
+	template <> DMibFloatConstexpr inline_small CIEEEFloat64 &CIEEEFloat64::operator += (CIEEEFloat64 const &_Value)
 	{
 		m_DataStorage += _Value.m_DataStorage;
 		return *this;
 	}
 
-	template <> DMibFloatConstexpr inline_small CIEEEFloat64 &CIEEEFloat64::operator -= (const CIEEEFloat64 &_Value)
+	template <> DMibFloatConstexpr inline_small CIEEEFloat64 &CIEEEFloat64::operator -= (CIEEEFloat64 const &_Value)
 	{
 		m_DataStorage -= _Value.m_DataStorage;
 		return *this;
 	}
 
-	template <> DMibFloatConstexpr inline_small CIEEEFloat64 &CIEEEFloat64::operator /= (const CIEEEFloat64 &_Value)
+	template <> DMibFloatConstexpr inline_small CIEEEFloat64 &CIEEEFloat64::operator /= (CIEEEFloat64 const &_Value)
 	{
 		m_DataStorage /= _Value.m_DataStorage;
 		return *this;
 	}
 
-	template <> DMibFloatConstexpr inline_small CIEEEFloat64 &CIEEEFloat64::operator *= (const CIEEEFloat64 &_Value)
+	template <> DMibFloatConstexpr inline_small CIEEEFloat64 &CIEEEFloat64::operator *= (CIEEEFloat64 const &_Value)
 	{
 		m_DataStorage *= _Value.m_DataStorage;
 		return *this;
@@ -268,6 +267,7 @@ namespace NMib::NNumeric
 			return NSys::NNumeric::fg_Cos(m_DataStorage);
 		}
 	}
+
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Tan() const
 	{
 #if DMibFloatConstexprEnabled
@@ -283,6 +283,7 @@ namespace NMib::NNumeric
 			return NSys::NNumeric::fg_Tan(m_DataStorage);
 		}
 	}
+
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_SinH() const
 	{
 #if DMibFloatConstexprEnabled
@@ -298,6 +299,7 @@ namespace NMib::NNumeric
 			return NSys::NNumeric::fg_SinH(m_DataStorage);
 		}
 	}
+
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_CosH() const
 	{
 #if DMibFloatConstexprEnabled
@@ -313,6 +315,7 @@ namespace NMib::NNumeric
 			return NSys::NNumeric::fg_CosH(m_DataStorage);
 		}
 	}
+
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_TanH() const
 	{
 #if DMibFloatConstexprEnabled
@@ -328,6 +331,7 @@ namespace NMib::NNumeric
 			return NSys::NNumeric::fg_TanH(m_DataStorage);
 		}
 	}
+
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_ArcSin() const
 	{
 #if DMibFloatConstexprEnabled
@@ -343,6 +347,7 @@ namespace NMib::NNumeric
 			return NSys::NNumeric::fg_ArcSin(m_DataStorage);
 		}
 	}
+
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_ArcCos() const
 	{
 #if DMibFloatConstexprEnabled
@@ -358,6 +363,7 @@ namespace NMib::NNumeric
 			return NSys::NNumeric::fg_ArcCos(m_DataStorage);
 		}
 	}
+
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_ArcTan() const
 	{
 #if DMibFloatConstexprEnabled
@@ -373,7 +379,8 @@ namespace NMib::NNumeric
 			return NSys::NNumeric::fg_ArcTan(m_DataStorage);
 		}
 	}
-	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_ArcTan(const CIEEEFloat64 &_Source) const
+
+	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_ArcTan(CIEEEFloat64 const &_Source) const
 	{
 #if DMibFloatConstexprEnabled
 		if_consteval
@@ -395,7 +402,6 @@ namespace NMib::NNumeric
 	||______________________________________________________________________________________________||
 	\************************************************************************************************/
 
-
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_ExpN() const
 	{
 #if DMibFloatConstexprEnabled
@@ -411,6 +417,7 @@ namespace NMib::NNumeric
 			return NSys::NNumeric::fg_ExpN(m_DataStorage);
 		}
 	}
+
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_LogN() const
 	{
 #if DMibFloatConstexprEnabled
@@ -426,6 +433,7 @@ namespace NMib::NNumeric
 			return NSys::NNumeric::fg_LogN(m_DataStorage);
 		}
 	}
+
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Exp10() const
 	{
 #if DMibFloatConstexprEnabled
@@ -441,6 +449,7 @@ namespace NMib::NNumeric
 			return NSys::NNumeric::fg_Exp10(m_DataStorage);
 		}
 	}
+
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Log10() const
 	{
 #if DMibFloatConstexprEnabled
@@ -456,6 +465,7 @@ namespace NMib::NNumeric
 			return NSys::NNumeric::fg_Log10(m_DataStorage);
 		}
 	}
+
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Exp2() const
 	{
 #if DMibFloatConstexprEnabled
@@ -471,6 +481,7 @@ namespace NMib::NNumeric
 			return NSys::NNumeric::fg_Exp2(m_DataStorage);
 		}
 	}
+
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Log2() const
 	{
 #if DMibFloatConstexprEnabled
@@ -486,7 +497,8 @@ namespace NMib::NNumeric
 			return NSys::NNumeric::fg_Log2(m_DataStorage);
 		}
 	}
-	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Exp(const CIEEEFloat64 & _Base) const
+
+	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Exp(CIEEEFloat64 const &_Base) const
 	{
 #if DMibFloatConstexprEnabled
 		if_consteval
@@ -501,7 +513,8 @@ namespace NMib::NNumeric
 			return NSys::NNumeric::fg_Exp(m_DataStorage, _Base.m_DataStorage);
 		}
 	}
-	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Log(const CIEEEFloat64 & _Base) const
+
+	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Log(CIEEEFloat64 const &_Base) const
 	{
 #if DMibFloatConstexprEnabled
 		if_consteval
@@ -538,12 +551,13 @@ namespace NMib::NNumeric
 			return NSys::NNumeric::fg_Sqrt(m_DataStorage);
 		}
 	}
+
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Sqr() const
 	{
 		return (m_DataStorage) * (m_DataStorage);
 	}
 
-	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Pow(const CIEEEFloat64 &_Power) const
+	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Pow(CIEEEFloat64 const &_Power) const
 	{
 #if DMibFloatConstexprEnabled
 		if_consteval
@@ -558,7 +572,6 @@ namespace NMib::NNumeric
 			return NSys::NNumeric::fg_Pow(m_DataStorage, _Power.m_DataStorage);
 		}
 	}
-
 
 	/************************************************************************************************\
 	||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
@@ -579,7 +592,6 @@ namespace NMib::NNumeric
 		return (CIEEEFloat64::CUnsignedInteger)ToLoad;
 	}
 
-
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Floor() const
 	{
 #if DMibFloatConstexprEnabled
@@ -595,6 +607,7 @@ namespace NMib::NNumeric
 			return NSys::NNumeric::fg_Floor(m_DataStorage);
 		}
 	}
+
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Ceil() const
 	{
 #if DMibFloatConstexprEnabled
@@ -610,6 +623,7 @@ namespace NMib::NNumeric
 			return NSys::NNumeric::fg_Ceil(m_DataStorage);
 		}
 	}
+
 	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Abs() const
 	{
 #if DMibFloatConstexprEnabled
@@ -625,7 +639,8 @@ namespace NMib::NNumeric
 			return NSys::NNumeric::fg_Abs(m_DataStorage);
 		}
 	}
-	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Mod(const TCFloat &_Modulu) const
+
+	template <> DMibFloatConstexpr inline_small CIEEEFloat64 CIEEEFloat64::f_Mod(TCFloat const &_Modulu) const
 	{
 #if DMibFloatConstexprEnabled
 		if_consteval
@@ -641,12 +656,12 @@ namespace NMib::NNumeric
 		}
 	}
 
-	template <> DMibFloatConstexpr inline_small bool CIEEEFloat64::operator == (const CIEEEFloat64 &_Value) const noexcept
+	template <> DMibFloatConstexpr inline_small bool CIEEEFloat64::operator == (CIEEEFloat64 const &_Value) const noexcept
 	{
 		return m_DataStorage == _Value.m_DataStorage;
 	}
 
-	template <> DMibFloatConstexpr inline_small COrdering_Partial CIEEEFloat64::operator <=> (const CIEEEFloat64 &_Value) const noexcept
+	template <> DMibFloatConstexpr inline_small COrdering_Partial CIEEEFloat64::operator <=> (CIEEEFloat64 const &_Value) const noexcept
 	{
 		return m_DataStorage <=> _Value.m_DataStorage;
 	}
@@ -654,7 +669,6 @@ namespace NMib::NNumeric
 
 namespace NMib
 {
-
 #define DMibDirectConvert(_FromType, _ToType) \
 	template <>\
 	class TCConvert< _ToType, _FromType>\
@@ -665,7 +679,6 @@ namespace NMib
 			return _From;\
 		}\
 	};
-
 
 #ifdef DMibPCanDo_fp32
 	DMibDirectConvert(pfp64, CIEEEFloat32);
@@ -686,7 +699,6 @@ namespace NMib
 			return _From.f_Get();\
 		}\
 	};
-
 
 #ifdef DMibPCanDo_fp32
 	DMibMathFloatConvertNative(CIEEEFloat32, pfp64);
@@ -718,7 +730,6 @@ namespace NMib
 			return Ret;\
 		}\
 	};
-
 
 	DMibMathFloatConvertInt(CIEEEFloat64, int8);
 
@@ -858,7 +869,6 @@ namespace NMib
 	DMibMathFloatConvertInt(CIEEEFloat64, uint16384);
 #endif
 
-
 #ifdef DMibPUniqueType_mint
 	DMibMathFloatConvertInt(CIEEEFloat64, umint);
 #endif
@@ -878,7 +888,6 @@ namespace NMib
 #ifdef DMibPUniqueType_uaint
 	DMibMathFloatConvertInt(CIEEEFloat64, uaint);
 #endif
-
 
 #ifdef DMibPUniqueType_ch8
 	DMibMathFloatConvertInt(CIEEEFloat64, ch8);
