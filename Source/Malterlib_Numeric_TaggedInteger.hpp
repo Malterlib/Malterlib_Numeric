@@ -20,13 +20,13 @@ namespace NMib::NNumeric
 	}
 
 	template <typename t_CType, typename t_CTag, t_CType t_DefaultInit>
-	constexpr inline_small bool TCTaggedInteger<t_CType, t_CTag, t_DefaultInit>::operator == (const TCTaggedInteger &_Data) const noexcept
+	constexpr inline_small bool TCTaggedInteger<t_CType, t_CTag, t_DefaultInit>::operator == (TCTaggedInteger const &_Data) const noexcept
 	{
 		return this->mp_Data == _Data.mp_Data;
 	}
 
 	template <typename t_CType, typename t_CTag, t_CType t_DefaultInit>
-	constexpr inline_small auto TCTaggedInteger<t_CType, t_CTag, t_DefaultInit>::operator <=> (const TCTaggedInteger &_Data) const noexcept
+	constexpr inline_small auto TCTaggedInteger<t_CType, t_CTag, t_DefaultInit>::operator <=> (TCTaggedInteger const &_Data) const noexcept
 	{
 		return this->mp_Data <=> _Data.mp_Data;
 	}
@@ -38,7 +38,7 @@ namespace NMib::NNumeric
 	}
 
 	template <typename t_CType, typename t_CTag, t_CType t_DefaultInit>
-	constexpr inline_small void TCTaggedInteger<t_CType, t_CTag, t_DefaultInit>::f_Set(const t_CType &_Source)
+	constexpr inline_small void TCTaggedInteger<t_CType, t_CTag, t_DefaultInit>::f_Set(t_CType const &_Source)
 	{
 		mp_Data = _Source;
 	}
@@ -56,7 +56,7 @@ namespace NMib::NNumeric
 	}
 
 	template <typename t_CType, typename t_CTag, t_CType t_DefaultInit>
-	constexpr auto TCTaggedInteger<t_CType, t_CTag, t_DefaultInit>::fs_Create(const t_CType &_Data) -> TCTaggedInteger
+	constexpr auto TCTaggedInteger<t_CType, t_CTag, t_DefaultInit>::fs_Create(t_CType const &_Data) -> TCTaggedInteger
 	{
 		TCTaggedInteger Ret;
 		Ret.mp_Data = _Data;
@@ -74,7 +74,7 @@ namespace NMib::NNumeric
 namespace NMib::NStream
 {
 	template <typename t_CStream, typename t_CType, typename t_CIdent, t_CType t_DefaultValue>
-	class TCBinaryStreamTypeReference<t_CStream, NNumeric::TCTaggedInteger<t_CType, t_CIdent, t_DefaultValue> >
+	class TCBinaryStreamTypeReference<t_CStream, NNumeric::TCTaggedInteger<t_CType, t_CIdent, t_DefaultValue>>
 	{
 	public:
 		static constexpr void fs_Feed(t_CStream &_Stream, NNumeric::TCTaggedInteger<t_CType, t_CIdent, t_DefaultValue> const &_Data)

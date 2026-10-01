@@ -23,15 +23,15 @@ namespace NMib::NNumeric
 
 		constexpr TCTaggedInteger &operator ++ ();
 
-		constexpr inline_small bool operator == (const TCTaggedInteger &_Data) const noexcept;
-		constexpr inline_small auto operator <=> (const TCTaggedInteger &_Data) const noexcept;
+		constexpr inline_small bool operator == (TCTaggedInteger const &_Data) const noexcept;
+		constexpr inline_small auto operator <=> (TCTaggedInteger const &_Data) const noexcept;
 
 		constexpr inline_small t_CType f_Get() const;
-		constexpr inline_small void f_Set(const t_CType &_Source);
+		constexpr inline_small void f_Set(t_CType const &_Source);
 		constexpr inline_small bool f_IsValid() const;
 
-		constexpr inline_small static TCTaggedInteger fs_Default();
-		constexpr static TCTaggedInteger fs_Create(const t_CType &_Data);
+		static constexpr inline_small TCTaggedInteger fs_Default();
+		static constexpr TCTaggedInteger fs_Create(t_CType const &_Data);
 
 		template <typename tf_CFormatter>
 		auto f_GetStringFormatType(tf_CFormatter &_Formatter) -> decltype(fg_GetStringFormatType(_Formatter, fg_GetType<t_CType>()));
@@ -40,7 +40,6 @@ namespace NMib::NNumeric
 		auto f_CreateStringFormatter(tf_CFormatter &_Formatter) const -> decltype(fg_CreateStringFormatter(_Formatter, fg_GetType<t_CType>()));
 
 	private:
-
 		template <typename t_CStream, typename t_CType2>
 		friend class NStream::TCBinaryStreamTypeReference;
 
@@ -51,5 +50,5 @@ namespace NMib::NNumeric
 #include "Malterlib_Numeric_TaggedInteger.hpp"
 
 #ifndef DMibPNoShortCuts
-	using namespace NMib::NNumeric;
+using namespace NMib::NNumeric;
 #endif

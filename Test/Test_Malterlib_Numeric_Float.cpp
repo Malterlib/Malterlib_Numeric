@@ -20,9 +20,9 @@
 #include "Test_Malterlib_Numeric_Float.h"
 
 #ifdef DCompiler_MSVC
-#pragma float_control(precise, on)
-#pragma fp_contract(off)
-#pragma fenv_access(on)
+#	pragma float_control(precise, on)
+#	pragma fp_contract(off)
+#	pragma fenv_access(on)
 #endif
 
 using namespace NMib::NNumeric;
@@ -32,7 +32,6 @@ namespace
 	class CFloat_Tests : public NMib::NTest::CTest
 	{
 	public:
-
 		template <template <typename t_CFloat00> class t_CTestTemplate>
 		static void fs_TestAll()
 		{
@@ -101,12 +100,12 @@ namespace
 			using CSmallestType = TCSmallestType<t_CFloat, fp64>;
 
 			template <typename t_CFrom>
-			CSmallestType f_Cnv(const t_CFrom &_From)
+			CSmallestType f_Cnv(t_CFrom const &_From)
 			{
 				return NMib::fg_Convert<CSmallestType>(_From);
 			}
 
-			void operator() ()
+			void operator () ()
 			{
 				DMibTestSuite("Constants")
 				{
@@ -140,7 +139,7 @@ namespace
 		class CMultiply
 		{
 		public:
-			void operator() ()
+			void operator () ()
 			{
 				DMibExpect(t_CFloat::fs_2() * t_CFloat::fs_2(), ==, t_CFloat(fp64(4.0)));
 
@@ -151,15 +150,15 @@ namespace
 				auto fCheckValue = [&](NMib::NStr::CStr const &_Desc, double _Left, double _Right)
 					{
 						DMibTestPath(_Desc);
-						volatile double Left = _Left;
-						volatile double Right = _Right;
+						double volatile Left = _Left;
+						double volatile Right = _Right;
 						t_CFloat Actual = (t_CFloat(fp64(double(Left))) * t_CFloat(fp64(double(Right))));
 						t_CFloat Expected = t_CFloat(fp64(double(Left * Right)));
 						DMibExpectTrue(Actual.f_AlmostEqual(Expected, ExpectedBits));
 					}
 				;
-				fCheckValue("1/3*1/3", 1.0/3.0, 1.0/3.0);
-				fCheckValue("2/3*2/3", 2.0/3.0, 2.0/3.0);
+				fCheckValue("1/3*1/3", 1.0 / 3.0, 1.0 / 3.0);
+				fCheckValue("2/3*2/3", 2.0 / 3.0, 2.0 / 3.0);
 				fCheckValue("10*10", 10.0, 10.0);
 			}
 		};
@@ -168,7 +167,7 @@ namespace
 		class CDivide
 		{
 		public:
-			void operator() ()
+			void operator () ()
 			{
 				DMibExpect(t_CFloat::fs_2() / t_CFloat::fs_2(), ==, t_CFloat(fp64(1.0)));
 
@@ -179,8 +178,8 @@ namespace
 				auto fCheckValue = [&](NMib::NStr::CStr const &_Desc, double _Left, double _Right)
 					{
 						DMibTestPath(_Desc);
-						volatile double Left = _Left;
-						volatile double Right = _Right;
+						double volatile Left = _Left;
+						double volatile Right = _Right;
 						t_CFloat Actual = (t_CFloat(fp64(double(Left))) / t_CFloat(fp64(double(Right))));
 						t_CFloat Expected = t_CFloat(fp64(double(Left / Right)));
 						DMibExpectTrue(Actual.f_AlmostEqual(Expected, ExpectedBits));
@@ -201,7 +200,7 @@ namespace
 		class CInvalid
 		{
 		public:
-			void operator() ()
+			void operator () ()
 			{
 				DMibTest(DMibExpr(t_CFloat::fs_LimitMax()) * DMibExpr(t_CFloat::fs_2()) == DMibExpr(t_CFloat::fs_Inf()))(ETestFlag_NoValues);
 				DMibTest(DMibExpr(t_CFloat::fs_LimitMin()) * DMibExpr(t_CFloat::fs_2()) == DMibExpr(t_CFloat::fs_NegInf()))(ETestFlag_NoValues);
@@ -216,28 +215,28 @@ namespace
 			class CInner
 			{
 			public:
-				void operator() ()
+				void operator () ()
 				{
 #define DTestConversion(d_Name, d_Value, d_ExpectBiggerOperator, d_ExpectBigger, d_ExpectSmallerOperator, d_ExpectSmaller) \
-					{\
-						DMibTestPath("Construct");\
-						auto d_Name = d_Value;\
-						t_CFloatLeft Converted##d_Name{d_Name}; \
-						if constexpr (t_CFloatLeft::mc_MantissaBits >= t_CFloatRight::mc_MantissaBits)\
-							DMibExpect(Converted##d_Name, d_ExpectBiggerOperator, d_Name);\
-						else\
-							DMibExpect(Converted##d_Name, d_ExpectSmallerOperator, d_ExpectSmaller);\
-					}\
-					{\
-						DMibTestPath("Assign");\
-						auto d_Name = d_Value;\
-						t_CFloatLeft Converted##d_Name;\
-						Converted##d_Name = d_Name;\
-						if constexpr (t_CFloatLeft::mc_MantissaBits >= t_CFloatRight::mc_MantissaBits)\
-							DMibExpect(Converted##d_Name, d_ExpectBiggerOperator, d_Name);\
-						else\
-							DMibExpect(Converted##d_Name, d_ExpectSmallerOperator, d_ExpectSmaller);\
-					}
+	{\
+		DMibTestPath("Construct");\
+		auto d_Name = d_Value;\
+		t_CFloatLeft Converted##d_Name{d_Name}; \
+		if constexpr (t_CFloatLeft::mc_MantissaBits >= t_CFloatRight::mc_MantissaBits)\
+			DMibExpect(Converted##d_Name, d_ExpectBiggerOperator, d_Name);\
+		else\
+			DMibExpect(Converted##d_Name, d_ExpectSmallerOperator, d_ExpectSmaller);\
+	}\
+	{\
+		DMibTestPath("Assign");\
+		auto d_Name = d_Value;\
+		t_CFloatLeft Converted##d_Name;\
+		Converted##d_Name = d_Name;\
+		if constexpr (t_CFloatLeft::mc_MantissaBits >= t_CFloatRight::mc_MantissaBits)\
+			DMibExpect(Converted##d_Name, d_ExpectBiggerOperator, d_Name);\
+		else\
+			DMibExpect(Converted##d_Name, d_ExpectSmallerOperator, d_ExpectSmaller);\
+	}
 
 					DTestConversion(SmallestDenormal, t_CFloatRight::fs_SmallestDenormal(), ==, SmallestDenormal, ==, t_CFloatLeft::fs_0());
 					DTestConversion(NegSmallestDenormal, t_CFloatRight::fs_NegSmallestDenormal(), ==, NegSmallestDenormal, ==, -t_CFloatLeft::fs_0());
@@ -280,11 +279,12 @@ namespace
 			using CSmallestType = TCSmallestType<t_CFloat, fp64>;
 
 			template <typename t_CFrom>
-			CSmallestType f_Cnv(const t_CFrom &_From)
+			CSmallestType f_Cnv(t_CFrom const &_From)
 			{
 				return NMib::fg_Convert<CSmallestType>(_From);
 			}
-			void operator() ()
+
+			void operator () ()
 			{
 				fs_TestAll<TCConversion<t_CFloat>::template CInner>();
 			}
@@ -370,8 +370,8 @@ namespace
 					, {"-E", -tf_CFloat::fs_E()}
 					, {"Pi", tf_CFloat::fs_Pi()}
 					, {"-Pi", -tf_CFloat::fs_Pi()}
-					, {"2*Pi", tf_CFloat(2.0l)*tf_CFloat::fs_Pi()}
-					, {"-2*Pi", tf_CFloat(-2.0l)*tf_CFloat::fs_Pi()}
+					, {"2*Pi", tf_CFloat(2.0l) * tf_CFloat::fs_Pi()}
+					, {"-2*Pi", tf_CFloat(-2.0l) * tf_CFloat::fs_Pi()}
 					, {"Sqrt2", tf_CFloat::fs_Sqrt2()}
 					, {"-Sqrt2", -tf_CFloat::fs_Sqrt2()}
 					, {"0.0", 0.0l}
@@ -426,7 +426,6 @@ namespace
 					if (_Desc.f_Find(".f_Log(") >= 0)
 						bCheckName = false;
 
-
 					if (bCheckName)
 						DMibExpect(fs_GetName(ResultEmu), ==, fs_GetName(Result));
 
@@ -460,22 +459,172 @@ namespace
 			;
 			auto fCheckBinaryFunctions = [&](NMib::NStr::CStr const &_LeftDesc, NMib::NStr::CStr const &_RightDesc, tf_CFloat _Value0, tf_CFloat _Value1)
 				{
-					fCheckBinary(_LeftDesc + "*" + _RightDesc, _Value0, _Value1, [](auto _Left, auto _Right){ return _Left * _Right; });
-					fCheckBinary(_LeftDesc + "/" + _RightDesc, _Value0, _Value1, [](auto _Left, auto _Right){ return _Left / _Right; });
-					fCheckBinary(_LeftDesc + "+" + _RightDesc, _Value0, _Value1, [](auto _Left, auto _Right){ return _Left + _Right; });
-					fCheckBinary(_LeftDesc + "-" + _RightDesc, _Value0, _Value1, [](auto _Left, auto _Right){ return _Left - _Right; });
-					fCheckBinary(_LeftDesc + "==" + _RightDesc, _Value0, _Value1, [](auto _Left, auto _Right){ return _Left == _Right; });
-					fCheckBinary(_LeftDesc + "<" + _RightDesc, _Value0, _Value1, [](auto _Left, auto _Right){ return _Left < _Right; });
-					fCheckBinary(_LeftDesc + "<=" + _RightDesc, _Value0, _Value1, [](auto _Left, auto _Right){ return _Left <= _Right; });
-					fCheckBinary(_LeftDesc + ">" + _RightDesc, _Value0, _Value1, [](auto _Left, auto _Right){ return _Left > _Right; });
-					fCheckBinary(_LeftDesc + ">=" + _RightDesc, _Value0, _Value1, [](auto _Left, auto _Right){ return _Left >= _Right; });
-					fCheckBinary(_LeftDesc + "!=" + _RightDesc, _Value0, _Value1, [](auto _Left, auto _Right){ return _Left != _Right; });
-					fCheckBinary("(" + _LeftDesc + ").f_Pow(" + _RightDesc + ")", _Value0, _Value1, [](auto _Left, auto _Right){ return _Left.f_Pow(_Right); });
-					fCheckBinary("(" + _LeftDesc + ").f_Exp(" + _RightDesc + ")", _Value0, _Value1, [](auto _Left, auto _Right){ return _Left.f_Exp(_Right); });
-					fCheckBinary("(" + _LeftDesc + ").f_Log(" + _RightDesc + ")", _Value0, _Value1, [](auto _Left, auto _Right){ return _Left.f_Log(_Right); });
+					fCheckBinary
+						(
+							_LeftDesc + "*" + _RightDesc
+							, _Value0
+							, _Value1
+							, [](auto _Left, auto _Right)
+							{
+								return _Left * _Right;
+							}
+						)
+					;
+					fCheckBinary
+						(
+							_LeftDesc + "/" + _RightDesc
+							, _Value0
+							, _Value1
+							, [](auto _Left, auto _Right)
+							{
+								return _Left / _Right;
+							}
+						)
+					;
+					fCheckBinary
+						(
+							_LeftDesc + "+" + _RightDesc
+							, _Value0
+							, _Value1
+							, [](auto _Left, auto _Right)
+							{
+								return _Left + _Right;
+							}
+						)
+					;
+					fCheckBinary
+						(
+							_LeftDesc + "-" + _RightDesc
+							, _Value0
+							, _Value1
+							, [](auto _Left, auto _Right)
+							{
+								return _Left - _Right;
+							}
+						)
+					;
+					fCheckBinary
+						(
+							_LeftDesc + "==" + _RightDesc
+							, _Value0
+							, _Value1
+							, [](auto _Left, auto _Right)
+							{
+								return _Left == _Right;
+							}
+						)
+					;
+					fCheckBinary
+						(
+							_LeftDesc + "<" + _RightDesc
+							, _Value0
+							, _Value1
+							, [](auto _Left, auto _Right)
+							{
+								return _Left < _Right;
+							}
+						)
+					;
+					fCheckBinary
+						(
+							_LeftDesc + "<=" + _RightDesc
+							, _Value0
+							, _Value1
+							, [](auto _Left, auto _Right)
+							{
+								return _Left <= _Right;
+							}
+						)
+					;
+					fCheckBinary
+						(
+							_LeftDesc + ">" + _RightDesc
+							, _Value0
+							, _Value1
+							, [](auto _Left, auto _Right)
+							{
+								return _Left > _Right;
+							}
+						)
+					;
+					fCheckBinary
+						(
+							_LeftDesc + ">=" + _RightDesc
+							, _Value0
+							, _Value1
+							, [](auto _Left, auto _Right)
+							{
+								return _Left >= _Right;
+							}
+						)
+					;
+					fCheckBinary
+						(
+							_LeftDesc + "!=" + _RightDesc
+							, _Value0
+							, _Value1
+							, [](auto _Left, auto _Right)
+							{
+								return _Left != _Right;
+							}
+						)
+					;
+					fCheckBinary
+						(
+							"(" + _LeftDesc + ").f_Pow(" + _RightDesc + ")"
+							, _Value0
+							, _Value1
+							, [](auto _Left, auto _Right)
+							{
+								return _Left.f_Pow(_Right);
+							}
+						)
+					;
+					fCheckBinary
+						(
+							"(" + _LeftDesc + ").f_Exp(" + _RightDesc + ")"
+							, _Value0
+							, _Value1
+							, [](auto _Left, auto _Right)
+							{
+								return _Left.f_Exp(_Right);
+							}
+						)
+					;
+					fCheckBinary
+						(
+							"(" + _LeftDesc + ").f_Log(" + _RightDesc + ")"
+							, _Value0
+							, _Value1
+							, [](auto _Left, auto _Right)
+							{
+								return _Left.f_Log(_Right);
+							}
+						)
+					;
 #if 0
-					fCheckBinary("(" + _LeftDesc + ").f_Mod(" + _RightDesc + ")", _Value0, _Value1, [](auto _Left, auto _Right){ return _Left.f_Mod(_Right); });
-					fCheckBinary("(" + _LeftDesc + ").f_ArcTan(" + _RightDesc + ")", _Value0, _Value1, [](auto _Left, auto _Right){ return _Left.f_ArcTan(_Right); });
+					fCheckBinary
+						(
+							"(" + _LeftDesc + ").f_Mod(" + _RightDesc + ")"
+							, _Value0
+							, _Value1
+							, [](auto _Left, auto _Right)
+							{
+								return _Left.f_Mod(_Right);
+							}
+						)
+					;
+					fCheckBinary
+						(
+							"(" + _LeftDesc + ").f_ArcTan(" + _RightDesc + ")"
+							, _Value0
+							, _Value1
+							, [](auto _Left, auto _Right)
+							{
+								return _Left.f_ArcTan(_Right);
+							}
+						)
+					;
 #endif
 				}
 			;
@@ -498,23 +647,23 @@ namespace
 					if (!fs_IsNan(Result))
 					{
 						if
+						(
 							(
-								(
-									cIsSame<tf_CFloat, fp80>
+								cIsSame<tf_CFloat, fp80>
 #if defined(DArchitecture_arm64) || defined(DArchitecture_arm64e)
-									|| true
+								|| true
 #endif
-								)
-								&&
-								(
-									_Desc.f_Find(".f_LogN()") >= 0
-									|| _Desc.f_Find(".f_Log2()") >= 0
-									|| _Desc.f_Find(".f_Log10()") >= 0
-									|| _Desc.f_Find(".f_ExpN()") >= 0
-									|| _Desc.f_Find(".f_Exp2()") >= 0
-									|| _Desc.f_Find(".f_Exp10()") >= 0
-								)
 							)
+							&&
+							(
+								_Desc.f_Find(".f_LogN()") >= 0
+								|| _Desc.f_Find(".f_Log2()") >= 0
+								|| _Desc.f_Find(".f_Log10()") >= 0
+								|| _Desc.f_Find(".f_ExpN()") >= 0
+								|| _Desc.f_Find(".f_Exp2()") >= 0
+								|| _Desc.f_Find(".f_Exp10()") >= 0
+							)
+						)
 						{
 							umint nBitsEqual = 2;
 							DMibExpectTrue(ResultEmu.f_AlmostEqual(Result, nBitsEqual));
@@ -527,31 +676,220 @@ namespace
 			auto fCheckUnaryFunctions = [&](NMib::NStr::CStr const &_LeftDesc, tf_CFloat _Value0)
 				{
 #if 0
-					fCheckUnary("(" + _LeftDesc + ").f_Sin()", _Value0, [](auto _Left){ return _Left.f_Sin(); });
-					fCheckUnary("(" + _LeftDesc + ").f_Cos()", _Value0, [](auto _Left){ return _Left.f_Cos(); });
-					fCheckUnary("(" + _LeftDesc + ").f_Tan()", _Value0, [](auto _Left){ return _Left.f_Tan(); });
-					fCheckUnary("(" + _LeftDesc + ").f_SinH()", _Value0, [](auto _Left){ return _Left.f_SinH(); });
-					fCheckUnary("(" + _LeftDesc + ").f_CosH()", _Value0, [](auto _Left){ return _Left.f_CosH(); });
-					fCheckUnary("(" + _LeftDesc + ").f_TanH()", _Value0, [](auto _Left){ return _Left.f_TanH(); });
-					fCheckUnary("(" + _LeftDesc + ").f_ArcSin()", _Value0, [](auto _Left){ return _Left.f_ArcSin(); });
-					fCheckUnary("(" + _LeftDesc + ").f_ArcCos()", _Value0, [](auto _Left){ return _Left.f_ArcCos(); });
-					fCheckUnary("(" + _LeftDesc + ").f_ArcTan()", _Value0, [](auto _Left){ return _Left.f_ArcTan(); });
+					fCheckUnary
+						(
+							"(" + _LeftDesc + ").f_Sin()"
+							, _Value0
+							, [](auto _Left)
+							{
+								return _Left.f_Sin();
+							}
+						)
+					;
+					fCheckUnary
+						(
+							"(" + _LeftDesc + ").f_Cos()"
+							, _Value0
+							, [](auto _Left)
+							{
+								return _Left.f_Cos();
+							}
+						)
+					;
+					fCheckUnary
+						(
+							"(" + _LeftDesc + ").f_Tan()"
+							, _Value0
+							, [](auto _Left)
+							{
+								return _Left.f_Tan();
+							}
+						)
+					;
+					fCheckUnary
+						(
+							"(" + _LeftDesc + ").f_SinH()"
+							, _Value0
+							, [](auto _Left)
+							{
+								return _Left.f_SinH();
+							}
+						)
+					;
+					fCheckUnary
+						(
+							"(" + _LeftDesc + ").f_CosH()"
+							, _Value0
+							, [](auto _Left)
+							{
+								return _Left.f_CosH();
+							}
+						)
+					;
+					fCheckUnary
+						(
+							"(" + _LeftDesc + ").f_TanH()"
+							, _Value0
+							, [](auto _Left)
+							{
+								return _Left.f_TanH();
+							}
+						)
+					;
+					fCheckUnary
+						(
+							"(" + _LeftDesc + ").f_ArcSin()"
+							, _Value0
+							, [](auto _Left)
+							{
+								return _Left.f_ArcSin();
+							}
+						)
+					;
+					fCheckUnary
+						(
+							"(" + _LeftDesc + ").f_ArcCos()"
+							, _Value0
+							, [](auto _Left)
+							{
+								return _Left.f_ArcCos();
+							}
+						)
+					;
+					fCheckUnary
+						(
+							"(" + _LeftDesc + ").f_ArcTan()"
+							, _Value0
+							, [](auto _Left)
+							{
+								return _Left.f_ArcTan();
+							}
+						)
+					;
 #endif
-					fCheckUnary("(" + _LeftDesc + ").f_ExpN()", _Value0, [](auto _Left){ return _Left.f_ExpN(); });
-					fCheckUnary("(" + _LeftDesc + ").f_LogN()", _Value0, [](auto _Left){ return _Left.f_LogN(); });
-					fCheckUnary("(" + _LeftDesc + ").f_Exp10()", _Value0, [](auto _Left){ return _Left.f_Exp10(); });
-					fCheckUnary("(" + _LeftDesc + ").f_Log10()", _Value0, [](auto _Left){ return _Left.f_Log10(); });
-					fCheckUnary("(" + _LeftDesc + ").f_Exp2()", _Value0, [](auto _Left){ return _Left.f_Exp2(); });
-					fCheckUnary("(" + _LeftDesc + ").f_Log2()", _Value0, [](auto _Left){ return _Left.f_Log2(); });
-					fCheckUnary("(" + _LeftDesc + ").f_Sqrt()", _Value0, [](auto _Left){ return _Left.f_Sqrt(); });
-					fCheckUnary("(" + _LeftDesc + ").f_Sqr()", _Value0, [](auto _Left){ return _Left.f_Sqr(); });
-					fCheckUnary("(" + _LeftDesc + ").f_Floor()", _Value0, [](auto _Left){ return _Left.f_Floor(); });
-					fCheckUnary("(" + _LeftDesc + ").f_Fraction()", _Value0, [](auto _Left){ return _Left.f_Fraction(); });
-					fCheckUnary("(" + _LeftDesc + ").f_Ceil()", _Value0, [](auto _Left){ return _Left.f_Ceil(); });
-					fCheckUnary("(" + _LeftDesc + ").f_Abs()", _Value0, [](auto _Left){ return _Left.f_Abs(); });
+					fCheckUnary
+						(
+							"(" + _LeftDesc + ").f_ExpN()"
+							, _Value0
+							, [](auto _Left)
+							{
+								return _Left.f_ExpN();
+							}
+						)
+					;
+					fCheckUnary
+						(
+							"(" + _LeftDesc + ").f_LogN()"
+							, _Value0
+							, [](auto _Left)
+							{
+								return _Left.f_LogN();
+							}
+						)
+					;
+					fCheckUnary
+						(
+							"(" + _LeftDesc + ").f_Exp10()"
+							, _Value0
+							, [](auto _Left)
+							{
+								return _Left.f_Exp10();
+							}
+						)
+					;
+					fCheckUnary
+						(
+							"(" + _LeftDesc + ").f_Log10()"
+							, _Value0
+							, [](auto _Left)
+							{
+								return _Left.f_Log10();
+							}
+						)
+					;
+					fCheckUnary
+						(
+							"(" + _LeftDesc + ").f_Exp2()"
+							, _Value0
+							, [](auto _Left)
+							{
+								return _Left.f_Exp2();
+							}
+						)
+					;
+					fCheckUnary
+						(
+							"(" + _LeftDesc + ").f_Log2()"
+							, _Value0
+							, [](auto _Left)
+							{
+								return _Left.f_Log2();
+							}
+						)
+					;
+					fCheckUnary
+						(
+							"(" + _LeftDesc + ").f_Sqrt()"
+							, _Value0
+							, [](auto _Left)
+							{
+								return _Left.f_Sqrt();
+							}
+						)
+					;
+					fCheckUnary
+						(
+							"(" + _LeftDesc + ").f_Sqr()"
+							, _Value0
+							, [](auto _Left)
+							{
+								return _Left.f_Sqr();
+							}
+						)
+					;
+					fCheckUnary
+						(
+							"(" + _LeftDesc + ").f_Floor()"
+							, _Value0
+							, [](auto _Left)
+							{
+								return _Left.f_Floor();
+							}
+						)
+					;
+					fCheckUnary
+						(
+							"(" + _LeftDesc + ").f_Fraction()"
+							, _Value0
+							, [](auto _Left)
+							{
+								return _Left.f_Fraction();
+							}
+						)
+					;
+					fCheckUnary
+						(
+							"(" + _LeftDesc + ").f_Ceil()"
+							, _Value0
+							, [](auto _Left)
+							{
+								return _Left.f_Ceil();
+							}
+						)
+					;
+					fCheckUnary
+						(
+							"(" + _LeftDesc + ").f_Abs()"
+							, _Value0
+							, [](auto _Left)
+							{
+								return _Left.f_Abs();
+							}
+						)
+					;
 				}
 			;
-			for (auto &Left: Values)
+			for (auto &Left : Values)
 				fCheckUnaryFunctions(Left.m_pDesc, Left.m_Value);
 		}
 
@@ -582,24 +920,24 @@ namespace
 #if !defined(DCompiler_MSVC_Workaround) && !defined(DCompiler_clang_cl) && !defined(DPlatformFamily_Linux)
 			DMibTestCategory("Compare Emulate")
 			{
-#if defined(DMibPCanDo_fp32)
+#	if defined(DMibPCanDo_fp32)
 				DMibTestSuite("fp32")
 				{
 					f_CompareEmulate<fp32, CIEEEFloat32Emu>();
 				};
-#endif
-#if defined(DMibPCanDo_fp64)
+#	endif
+#	if defined(DMibPCanDo_fp64)
 				DMibTestSuite("fp64")
 				{
 					f_CompareEmulate<fp64, CIEEEFloat64Emu>();
 				};
-#endif
-#if defined(DMibPCanDo_fp80)
+#	endif
+#	if defined(DMibPCanDo_fp80)
 				DMibTestSuite("fp80")
 				{
 					f_CompareEmulate<fp80, CIEEEFloat80Emu>();
 				};
-#endif
+#	endif
 			};
 #endif
 		}

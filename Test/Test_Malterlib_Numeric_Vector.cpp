@@ -7,9 +7,9 @@ using namespace NMib::NNumeric;
 using namespace NMib::NStr;
 
 // Compile-time construction tests
-constexpr static CVec2Dfp32 gc_TestAggregate2D{0.0f, 1.0f};
-constexpr static CVec3Dfp32 gc_TestAggregate3D{0.0f, 1.0f, 2.0f};
-constexpr static CVec4Dfp32 gc_TestAggregate4D{0.0f, 1.0f, 2.0f, 3.0f};
+static constexpr CVec2Dfp32 gc_TestAggregate2D{0.0f, 1.0f};
+static constexpr CVec3Dfp32 gc_TestAggregate3D{0.0f, 1.0f, 2.0f};
+static constexpr CVec4Dfp32 gc_TestAggregate4D{0.0f, 1.0f, 2.0f, 3.0f};
 
 // Compile-time access tests
 static_assert(gc_TestAggregate2D[0].f_Get() == 0.0f);

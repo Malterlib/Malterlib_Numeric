@@ -29,13 +29,13 @@ DMibTraitsImplementSizePair(fp8, fp16);
 namespace NMib::NNumeric
 {
 #ifndef DMibFloattDoInline_NoExternTemplate
-	#ifdef DMibPCanDo_fp16
-		extern template class TCFloat<1, 5, 10, 0, pfp16>;
-		extern template class TCFloat<1, 4, 11, 0, pfp16, 0>;
-	#else
-		extern template class TCFloat<1, 5, 10, 0>;
-		extern template class TCFloat<1, 4, 11, 0, CNoImplicit, 0>;
-	#endif
+#	ifdef DMibPCanDo_fp16
+	extern template class TCFloat<1, 5, 10, 0, pfp16>;
+	extern template class TCFloat<1, 4, 11, 0, pfp16, 0>;
+#	else
+	extern template class TCFloat<1, 5, 10, 0>;
+	extern template class TCFloat<1, 4, 11, 0, CNoImplicit, 0>;
+#	endif
 	extern template class TCFloat<0, 5, 11, 0>;
 #endif
 }

@@ -32,21 +32,23 @@ namespace NMib::NNumeric
 #endif
 		enum
 		{
-			ELowerBits = sizeof(t_CLower)*8
+			ELowerBits       = sizeof(t_CLower) * 8
 			, ELowerFirstBit = 0
-			, ELowerLastBit = ELowerBits - 1
-			, EUpperBits = sizeof(t_CUpper)*8
+			, ELowerLastBit  = ELowerBits - 1
+			, EUpperBits     = sizeof(t_CUpper) * 8
 			, EUpperFirstBit = ELowerBits
-			, EUpperLastBit = EUpperBits + ELowerBits - 1
-			, EAllBits = ELowerBits + EUpperBits
-			, EHalfBits = EAllBits / 2
+			, EUpperLastBit  = EUpperBits + ELowerBits - 1
+			, EAllBits       = ELowerBits + EUpperBits
+			, EHalfBits      = EAllBits / 2
 		};
+
 		static_assert(EUpperBits >= ELowerBits, "If non symmetric sizes for constituent integers, the upper integer needs to be the larger one, otherwise sign extension wont work");
 
 		enum
 		{
 			ESize = sizeof(t_CUpper) + sizeof(t_CLower)
 		};
+
 		using CInt = TCInt;
 		struct CConstants;
 
@@ -124,7 +126,7 @@ namespace NMib::NNumeric
 			{
 				t_CInt Ret;
 				using CLargestInt = NTraits::TCLargestType<t_CInt, t_CUpper>;
-				Ret = t_CInt((CLargestInt(m_Upper) << (fg_Min((umint)ELowerBits, sizeof(CLargestInt)*8) - 1)) << 1);
+				Ret = t_CInt((CLargestInt(m_Upper) << (fg_Min((umint)ELowerBits, sizeof(CLargestInt) * 8) - 1)) << 1);
 				Ret = Ret | t_CInt(m_Lower);
 				return Ret;
 			}
@@ -132,8 +134,8 @@ namespace NMib::NNumeric
 
 		template <typename t_CType>
 		constexpr TCInt(t_CType const &_Convert, TCEnableIf<NTraits::cIsFundamental<t_CType>, NPrivate::CDummy &> _pDummy = NPrivate::CDummy::ms_Dummy)
-			: m_Upper(((_Convert >> (fg_Min((umint)ELowerBits, sizeof(t_CType)*8) - 1)) >> 1))
-			, m_Lower((_Convert & fg_BitRange<t_CType>(0, fg_Min((umint)ELowerBits - 1, sizeof(t_CType)*8 - 1))))
+			: m_Upper(((_Convert >> (fg_Min((umint)ELowerBits, sizeof(t_CType) * 8) - 1)) >> 1))
+			, m_Lower((_Convert & fg_BitRange<t_CType>(0, fg_Min((umint)ELowerBits - 1, sizeof(t_CType) * 8 - 1))))
 		{
 		}
 
@@ -146,8 +148,8 @@ namespace NMib::NNumeric
 		template <typename t_CType>
 		constexpr TCInt &operator = (t_CType const &_Convert)
 		{
-			constexpr t_CType And1 = fg_BitRange<t_CType>(0, fg_Min((umint)ELowerBits - 1, sizeof(t_CType)*8 - 1));
-			m_Upper = t_CUpper(((_Convert >> (fg_Min((umint)ELowerBits, sizeof(t_CType)*8) - 1)) >> 1));
+			constexpr t_CType And1 = fg_BitRange<t_CType>(0, fg_Min((umint)ELowerBits - 1, sizeof(t_CType) * 8 - 1));
+			m_Upper = t_CUpper(((_Convert >> (fg_Min((umint)ELowerBits, sizeof(t_CType) * 8) - 1)) >> 1));
 			m_Lower = t_CLower((_Convert & And1));
 			return *this;
 		}
@@ -176,18 +178,18 @@ namespace NMib::NNumeric
 			return Ret;
 		}
 
-		constexpr explicit operator bool() const
+		constexpr explicit operator bool () const
 		{
 			return m_Upper != mc_UpperZero || m_Lower != mc_LowerZero;
 		}
 
-		constexpr TCInt & operator ++ ()
+		constexpr TCInt &operator ++ ()
 		{
 			*this = *this + CConstants::mc_One;
 			return *this;
 		}
 
-		constexpr TCInt & operator -- ()
+		constexpr TCInt &operator -- ()
 		{
 			*this = *this - CConstants::mc_One;
 			return *this;
@@ -219,28 +221,28 @@ namespace NMib::NNumeric
 		||______________________________________________________________________________________________||
 		\************************************************************************************************/
 
-		constexpr TCInt operator + (const TCInt &_Value) const
+		constexpr TCInt operator + (TCInt const &_Value) const
 		{
 			TCInt Ret = *this;
 			Ret += _Value;
 			return Ret;
 		}
 
-		constexpr TCInt operator - (const TCInt &_Value) const
+		constexpr TCInt operator - (TCInt const &_Value) const
 		{
 			TCInt Ret = *this;
 			Ret -= _Value;
 			return Ret;
 		}
 
-		constexpr TCInt operator * (const TCInt &_Value) const
+		constexpr TCInt operator * (TCInt const &_Value) const
 		{
 			TCInt Ret = *this;
 			Ret *= _Value;
 			return Ret;
 		}
 
-		constexpr TCInt operator / (const TCInt &_Value) const
+		constexpr TCInt operator / (TCInt const &_Value) const
 		{
 			TCInt Ret = *this;
 			Ret /= _Value;
@@ -261,40 +263,40 @@ namespace NMib::NNumeric
 			return Ret;
 		}
 
-		constexpr TCInt operator % (const TCInt &_Value) const
+		constexpr TCInt operator % (TCInt const &_Value) const
 		{
 			TCInt Ret = *this;
 			Ret %= _Value;
 			return Ret;
 		}
 
-		constexpr TCInt operator & (const TCInt &_Value) const
+		constexpr TCInt operator & (TCInt const &_Value) const
 		{
 			TCInt Ret = *this;
 			Ret &= _Value;
 			return Ret;
 		}
 
-		constexpr TCInt operator | (const TCInt &_Value) const
+		constexpr TCInt operator | (TCInt const &_Value) const
 		{
 			TCInt Ret = *this;
 			Ret |= _Value;
 			return Ret;
 		}
 
-		constexpr TCInt operator ^ (const TCInt &_Value) const
+		constexpr TCInt operator ^ (TCInt const &_Value) const
 		{
 			TCInt Ret = *this;
 			Ret ^= _Value;
 			return Ret;
 		}
 
-		constexpr bool operator && (const TCInt &_Value) const
+		constexpr bool operator && (TCInt const &_Value) const
 		{
 			return (m_Upper != mc_UpperZero || m_Lower != mc_LowerZero) && (_Value.m_Upper != mc_UpperZero || _Value.m_Lower != mc_LowerZero);
 		}
 
-		constexpr bool operator || (const TCInt &_Value) const
+		constexpr bool operator || (TCInt const &_Value) const
 		{
 			return (m_Upper != mc_UpperZero || m_Lower != mc_LowerZero) || (_Value.m_Upper != mc_UpperZero || _Value.m_Lower != mc_LowerZero);
 		}
@@ -305,7 +307,7 @@ namespace NMib::NNumeric
 		||______________________________________________________________________________________________||
 		\************************************************************************************************/
 
-		constexpr TCInt &operator += (const TCInt &_Value)
+		constexpr TCInt &operator += (TCInt const &_Value)
 		{
 			t_CLower Lower0 = m_Lower;
 			t_CLower Lower1 = _Value.m_Lower;
@@ -339,16 +341,15 @@ namespace NMib::NNumeric
 			else
 				m_Upper += _Value.m_Upper;*/
 
-
-
 //				m_Upper += _Value.m_Upper + ((((((Lower0 ^ Lower1) & ((Lower0 & And1) + (Lower1 & And1))) | (Lower0 & Lower1)) & And0)) >> ELowerLastBit);
 
-//				m_Upper += _Value.m_Upper + ((((((Lower0 ^ Lower1) & ((Lower0 & ((t_CLower(1) << ELowerLastBit) - t_CLower(1))) + (Lower1 & ((t_CLower(1) << ELowerLastBit) - t_CLower(1))))) | (Lower0 & Lower1)) & (t_CLower(1) << ELowerLastBit))) >> ELowerLastBit);
+//				m_Upper += _Value.m_Upper + ((((((Lower0 ^ Lower1) & ((Lower0 & ((t_CLower(1) << ELowerLastBit) - t_CLower(1)))
+//					+ (Lower1 & ((t_CLower(1) << ELowerLastBit) - t_CLower(1))))) | (Lower0 & Lower1)) & (t_CLower(1) << ELowerLastBit))) >> ELowerLastBit);
 
 			return *this;
 		}
 
-		constexpr TCInt &operator -= (const TCInt &_Value)
+		constexpr TCInt &operator -= (TCInt const &_Value)
 		{
 			t_CLower Lower0 = m_Lower;
 			t_CLower Lower1 = _Value.m_Lower;
@@ -364,7 +365,7 @@ namespace NMib::NNumeric
 			return *this;
 		}
 
-		constexpr TCInt &operator *= (const TCInt &_Value)
+		constexpr TCInt &operator *= (TCInt const &_Value)
 		{
 			bool bSigned = false;
 			TCInt Val0 = *this;
@@ -416,12 +417,12 @@ namespace NMib::NNumeric
 			return *this;
 		}
 
-		constexpr static bool fp_IsBitSet(uaint _Bit)
+		static constexpr bool fp_IsBitSet(uaint _Bit)
 		{
 			return false;
 		}
 
-		constexpr TCInt &operator /= (const TCInt &_Value)
+		constexpr TCInt &operator /= (TCInt const &_Value)
 		{
 			bool bSigned = false;
 			TCInt Val0 = *this;
@@ -474,7 +475,7 @@ namespace NMib::NNumeric
 			return *this;
 		}
 
-		constexpr TCInt &operator %= (const TCInt &_Value)
+		constexpr TCInt &operator %= (TCInt const &_Value)
 		{
 			bool bSigned = false;
 			TCInt Val0 = *this;
@@ -486,9 +487,7 @@ namespace NMib::NNumeric
 			}
 
 			if (NTraits::cIsSigned<t_CUpper> && Val1 < CConstants::mc_Zero)
-			{
 				Val1 = -Val1;
-			}
 
 			// Do dumb divide
 			TCInt Result = Val0;
@@ -596,21 +595,21 @@ namespace NMib::NNumeric
 			return *this;
 		}
 
-		constexpr TCInt &operator &= (const TCInt &_Value)
+		constexpr TCInt &operator &= (TCInt const &_Value)
 		{
 			m_Lower &= _Value.m_Lower;
 			m_Upper &= _Value.m_Upper;
 			return *this;
 		}
 
-		constexpr TCInt &operator ^= (const TCInt &_Value)
+		constexpr TCInt &operator ^= (TCInt const &_Value)
 		{
 			m_Lower ^= _Value.m_Lower;
 			m_Upper ^= _Value.m_Upper;
 			return *this;
 		}
 
-		constexpr TCInt &operator |= (const TCInt &_Value)
+		constexpr TCInt &operator |= (TCInt const &_Value)
 		{
 			m_Lower |= _Value.m_Lower;
 			m_Upper |= _Value.m_Upper;
@@ -623,12 +622,12 @@ namespace NMib::NNumeric
 		||______________________________________________________________________________________________||
 		\************************************************************************************************/
 
-		constexpr bool operator == (const TCInt &_Value) const noexcept
+		constexpr bool operator == (TCInt const &_Value) const noexcept
 		{
 			return m_Lower == _Value.m_Lower && m_Upper == _Value.m_Upper;
 		}
 
-		constexpr COrdering_Strong operator <=> (const TCInt &_Value) const noexcept
+		constexpr COrdering_Strong operator <=> (TCInt const &_Value) const noexcept
 		{
 			if (auto Result = m_Upper <=> _Value.m_Upper; Result != 0)
 				return Result;
@@ -650,7 +649,7 @@ namespace NMib::NTraits::NPrivate
 	template <typename t_CUpper, typename t_CLower>
 	struct TCIsSigned<NMib::NNumeric::TCInt<t_CUpper, t_CLower>>
 	{
-		constexpr static bool mc_bValue = NMib::NTraits::cIsSigned<t_CUpper>;
+		static constexpr bool mc_bValue = NMib::NTraits::cIsSigned<t_CUpper>;
 	};
 
 	template <typename t_CUpper, typename t_CLower>
@@ -668,7 +667,7 @@ namespace NMib::NTraits::NPrivate
 	template <typename t_CUpper, typename t_CLower>
 	struct TCIsInteger<NMib::NNumeric::TCInt<t_CUpper, t_CLower>>
 	{
-		constexpr static bool mc_bValue = true;
+		static constexpr bool mc_bValue = true;
 	};
 }
 
@@ -683,7 +682,7 @@ namespace NMib
 	template <typename t_CInt>
 	constexpr NTraits::TCSmallerType<t_CInt> fg_GetUpper(t_CInt const &_Integer) noexcept
 	{
-		return NTraits::TCSmallerType<t_CInt>(_Integer >> (sizeof(t_CInt)*4));
+		return NTraits::TCSmallerType<t_CInt>(_Integer >> (sizeof(t_CInt) * 4));
 	}
 
 	template <typename t_CUpper, typename t_CLower>
@@ -744,21 +743,11 @@ using uint80 = NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<NMib::NNumeric::TCInt
 #endif
 
 #ifndef DMibPCanDo_int96
-	using int96 = NMib::NNumeric::TCInt
-		<
-			NMib::TCConditional<alignof(int64) <= 4, int64, NMib::NNumeric::TCInt<int32, uint32>>
-			, uint32
-		>
-	;
+using int96 = NMib::NNumeric::TCInt<NMib::TCConditional<alignof(int64) <= 4, int64, NMib::NNumeric::TCInt<int32, uint32>>, uint32>;
 #endif
 
 #ifndef DMibPCanDo_uint96
-	using uint96 = NMib::NNumeric::TCInt
-		<
-			NMib::TCConditional<alignof(uint64) <= 4, uint64, NMib::NNumeric::TCInt<uint32, uint32>>
-			, uint32
-		>
-	;
+using uint96 = NMib::NNumeric::TCInt<NMib::TCConditional<alignof(uint64) <= 4, uint64, NMib::NNumeric::TCInt<uint32, uint32>>, uint32>;
 #endif
 
 #ifndef DMibPCanDo_int128
@@ -778,21 +767,11 @@ using uint160 = NMib::NNumeric::TCInt<NMib::NNumeric::TCInt<NMib::NNumeric::TCIn
 #endif
 
 #ifndef DMibPCanDo_int192
-	using int192 = NMib::NNumeric::TCInt
-		<
-			NMib::TCConditional<alignof(int128) <= 8, int128, NMib::NNumeric::TCInt<int64, uint64>>
-			, uint64
-		>
-	;
+using int192 = NMib::NNumeric::TCInt<NMib::TCConditional<alignof(int128) <= 8, int128, NMib::NNumeric::TCInt<int64, uint64>>, uint64>;
 #endif
 
 #ifndef DMibPCanDo_uint192
-	using uint192 = NMib::NNumeric::TCInt
-		<
-			NMib::TCConditional<alignof(uint128) <= 8, uint128, NMib::NNumeric::TCInt<uint64, uint64>>
-			, uint64
-		>
-	;
+using uint192 = NMib::NNumeric::TCInt<NMib::TCConditional<alignof(uint128) <= 8, uint128, NMib::NNumeric::TCInt<uint64, uint64>>, uint64>;
 #endif
 
 #ifndef DMibPCanDo_int256
@@ -867,158 +846,153 @@ using int16384 = NMib::NNumeric::TCInt<int8192, uint8192>;
 using uint16384 = NMib::NNumeric::TCInt<uint8192, uint8192>;
 #endif
 
-
-
 #if !(defined(DMibPCanDo_uint8) && defined(DMibPCanDo_uint16))
-	DMibTraitsImplementSizePair(uint8, uint16);
+DMibTraitsImplementSizePair(uint8, uint16);
 #endif
 #if !(defined(DMibPCanDo_uint16) && defined(DMibPCanDo_uint32))
-	DMibTraitsImplementSizePair(uint16, uint32);
+DMibTraitsImplementSizePair(uint16, uint32);
 #endif
 #if !(defined(DMibPCanDo_uint32) && defined(DMibPCanDo_uint64))
-	DMibTraitsImplementSizePair(uint32, uint64);
+DMibTraitsImplementSizePair(uint32, uint64);
 #endif
 #if !(defined(DMibPCanDo_uint64) && defined(DMibPCanDo_uint128))
-	DMibTraitsImplementSizePair(uint64, uint128);
+DMibTraitsImplementSizePair(uint64, uint128);
 #endif
 #if !(defined(DMibPCanDo_uint80) && defined(DMibPCanDo_uint160))
-	DMibTraitsImplementSizePair(uint80, uint160);
+DMibTraitsImplementSizePair(uint80, uint160);
 #endif
 #if !(defined(DMibPCanDo_uint96) && defined(DMibPCanDo_uint192))
-	DMibTraitsImplementSizePair(uint96, uint192);
+DMibTraitsImplementSizePair(uint96, uint192);
 #endif
 #if !(defined(DMibPCanDo_uint160) && defined(DMibPCanDo_uint320))
-	DMibTraitsImplementSizePair(uint160, uint320);
+DMibTraitsImplementSizePair(uint160, uint320);
 #endif
 #if !(defined(DMibPCanDo_uint192) && defined(DMibPCanDo_uint384))
-	DMibTraitsImplementSizePair(uint192, uint384);
+DMibTraitsImplementSizePair(uint192, uint384);
 #endif
 #if !(defined(DMibPCanDo_uint128) && defined(DMibPCanDo_uint256))
-	DMibTraitsImplementSizePair(uint128, uint256);
+DMibTraitsImplementSizePair(uint128, uint256);
 #endif
 #if !(defined(DMibPCanDo_uint256) && defined(DMibPCanDo_uint512))
-	DMibTraitsImplementSizePair(uint256, uint512);
+DMibTraitsImplementSizePair(uint256, uint512);
 #endif
 #if !(defined(DMibPCanDo_uint512) && defined(DMibPCanDo_uint1024))
-	DMibTraitsImplementSizePair(uint512, uint1024);
+DMibTraitsImplementSizePair(uint512, uint1024);
 #endif
 #if !(defined(DMibPCanDo_uint1024) && defined(DMibPCanDo_uint2048))
-	DMibTraitsImplementSizePair(uint1024, uint2048);
+DMibTraitsImplementSizePair(uint1024, uint2048);
 #endif
 #if !(defined(DMibPCanDo_uint2048) && defined(DMibPCanDo_uint4096))
-	DMibTraitsImplementSizePair(uint2048, uint4096);
+DMibTraitsImplementSizePair(uint2048, uint4096);
 #endif
 #if !(defined(DMibPCanDo_uint4096) && defined(DMibPCanDo_uint8192))
-	DMibTraitsImplementSizePair(uint4096, uint8192);
+DMibTraitsImplementSizePair(uint4096, uint8192);
 #endif
 #if !(defined(DMibPCanDo_uint8192) && defined(DMibPCanDo_uint16384))
-	DMibTraitsImplementSizePair(uint8192, uint16384);
+DMibTraitsImplementSizePair(uint8192, uint16384);
 #endif
 
 #if !(defined(DMibPCanDo_int8) && defined(DMibPCanDo_int16))
-	DMibTraitsImplementSizePair(int8, int16);
+DMibTraitsImplementSizePair(int8, int16);
 #endif
 #if !(defined(DMibPCanDo_int16) && defined(DMibPCanDo_int32))
-	DMibTraitsImplementSizePair(int16, int32);
+DMibTraitsImplementSizePair(int16, int32);
 #endif
 #if !(defined(DMibPCanDo_int32) && defined(DMibPCanDo_int64))
-	DMibTraitsImplementSizePair(int32, int64);
+DMibTraitsImplementSizePair(int32, int64);
 #endif
 #if !(defined(DMibPCanDo_int64) && defined(DMibPCanDo_int128))
-	DMibTraitsImplementSizePair(int64, int128);
+DMibTraitsImplementSizePair(int64, int128);
 #endif
 #if !(defined(DMibPCanDo_int80) && defined(DMibPCanDo_int160))
-	DMibTraitsImplementSizePair(int80, int160);
+DMibTraitsImplementSizePair(int80, int160);
 #endif
 #if !(defined(DMibPCanDo_int96) && defined(DMibPCanDo_int192))
-	DMibTraitsImplementSizePair(int96, int192);
+DMibTraitsImplementSizePair(int96, int192);
 #endif
 #if !(defined(DMibPCanDo_int128) && defined(DMibPCanDo_int256))
-	DMibTraitsImplementSizePair(int128, int256);
+DMibTraitsImplementSizePair(int128, int256);
 #endif
 #if !(defined(DMibPCanDo_int160) && defined(DMibPCanDo_int320))
-	DMibTraitsImplementSizePair(int160, int320);
+DMibTraitsImplementSizePair(int160, int320);
 #endif
 #if !(defined(DMibPCanDo_int192) && defined(DMibPCanDo_int384))
-	DMibTraitsImplementSizePair(int192, int384);
+DMibTraitsImplementSizePair(int192, int384);
 #endif
 #if !(defined(DMibPCanDo_int256) && defined(DMibPCanDo_int512))
-	DMibTraitsImplementSizePair(int256, int512);
+DMibTraitsImplementSizePair(int256, int512);
 #endif
 #if !(defined(DMibPCanDo_int512) && defined(DMibPCanDo_int1024))
-	DMibTraitsImplementSizePair(int512, int1024);
+DMibTraitsImplementSizePair(int512, int1024);
 #endif
 #if !(defined(DMibPCanDo_int1024) && defined(DMibPCanDo_int2048))
-	DMibTraitsImplementSizePair(int1024, int2048);
+DMibTraitsImplementSizePair(int1024, int2048);
 #endif
 #if !(defined(DMibPCanDo_int2048) && defined(DMibPCanDo_int4096))
-	DMibTraitsImplementSizePair(int2048, int4096);
+DMibTraitsImplementSizePair(int2048, int4096);
 #endif
 #if !(defined(DMibPCanDo_int4096) && defined(DMibPCanDo_int8192))
-	DMibTraitsImplementSizePair(int4096, int8192);
+DMibTraitsImplementSizePair(int4096, int8192);
 #endif
 #if !(defined(DMibPCanDo_int8192) && defined(DMibPCanDo_int16384))
-	DMibTraitsImplementSizePair(int8192, int16384);
+DMibTraitsImplementSizePair(int8192, int16384);
 #endif
-
-
 
 #if !defined(DMibPCanDo_int8)
-	DMibTraitsImplementIntegerFromSize(int8);
+DMibTraitsImplementIntegerFromSize(int8);
 #endif
 #if !defined(DMibPCanDo_int16)
-	DMibTraitsImplementIntegerFromSize(int16);
+DMibTraitsImplementIntegerFromSize(int16);
 #endif
 #if !defined(DMibPCanDo_int32)
-	DMibTraitsImplementIntegerFromSize(int32);
+DMibTraitsImplementIntegerFromSize(int32);
 #endif
 #if !defined(DMibPCanDo_int64)
-	DMibTraitsImplementIntegerFromSize(int64);
+DMibTraitsImplementIntegerFromSize(int64);
 #endif
 #if !defined(DMibPCanDo_int80)
-	DMibTraitsImplementIntegerFromSize(int80);
+DMibTraitsImplementIntegerFromSize(int80);
 #endif
 #if !defined(DMibPCanDo_int96)
-	DMibTraitsImplementIntegerFromSize(int96);
+DMibTraitsImplementIntegerFromSize(int96);
 #endif
 #if !defined(DMibPCanDo_int128)
-	DMibTraitsImplementIntegerFromSize(int128);
+DMibTraitsImplementIntegerFromSize(int128);
 #endif
 #if !defined(DMibPCanDo_int160)
-	DMibTraitsImplementIntegerFromSize(int160);
+DMibTraitsImplementIntegerFromSize(int160);
 #endif
 #if !defined(DMibPCanDo_int192)
-	DMibTraitsImplementIntegerFromSize(int192);
+DMibTraitsImplementIntegerFromSize(int192);
 #endif
 #if !defined(DMibPCanDo_int256)
-	DMibTraitsImplementIntegerFromSize(int256);
+DMibTraitsImplementIntegerFromSize(int256);
 #endif
 #if !defined(DMibPCanDo_int320)
-	DMibTraitsImplementIntegerFromSize(int320);
+DMibTraitsImplementIntegerFromSize(int320);
 #endif
 #if !defined(DMibPCanDo_int384)
-	DMibTraitsImplementIntegerFromSize(int384);
+DMibTraitsImplementIntegerFromSize(int384);
 #endif
 #if !defined(DMibPCanDo_int512)
-	DMibTraitsImplementIntegerFromSize(int512);
+DMibTraitsImplementIntegerFromSize(int512);
 #endif
 #if !defined(DMibPCanDo_int1024)
-	DMibTraitsImplementIntegerFromSize(int1024);
+DMibTraitsImplementIntegerFromSize(int1024);
 #endif
 #if !defined(DMibPCanDo_int2048)
-	DMibTraitsImplementIntegerFromSize(int2048);
+DMibTraitsImplementIntegerFromSize(int2048);
 #endif
 #if !defined(DMibPCanDo_int4096)
-	DMibTraitsImplementIntegerFromSize(int4096);
+DMibTraitsImplementIntegerFromSize(int4096);
 #endif
 #if !defined(DMibPCanDo_int8192)
-	DMibTraitsImplementIntegerFromSize(int8192);
+DMibTraitsImplementIntegerFromSize(int8192);
 #endif
 #if !defined(DMibPCanDo_int16384)
-	DMibTraitsImplementIntegerFromSize(int16384);
+DMibTraitsImplementIntegerFromSize(int16384);
 #endif
 
-
 #ifndef DMibPNoShortCuts
-	using namespace NMib::NNumeric;
+using namespace NMib::NNumeric;
 #endif
