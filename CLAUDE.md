@@ -8,7 +8,6 @@ The Numeric module provides comprehensive numeric computation capabilities inclu
 - **Custom floating-point types** with configurable precision (fp8 through fp4096)
 - **Extended-precision integers** (int8 through int4096, including unsigned variants)
 - **Tagged integer types** for type-safe integer handling
-- **Vector mathematics** with templated n-dimensional vectors
 - **SIMD** lane vectors, and the vector, matrix, quaternion and bounds types of 3D math built on them
 - **Mathematical constants** and utility functions
 
@@ -38,12 +37,6 @@ Type-safe integer wrappers:
 - Prevents accidental mixing of different semantic integer types
 - Configurable default initialization value
 - Full arithmetic and comparison operator support
-
-### Vector Mathematics
-
-N-dimensional vector operations:
-- **TCVec** - Storage for any dimension and underlying numeric type, with construction, conversion and indexing
-- `TCVec` has no arithmetic and no SIMD. Use the math types below for computation
 
 ### SIMD
 
@@ -99,7 +92,6 @@ Numeric/
 │   ├── CustomFloat               # Custom float configurations
 │   ├── Integer                   # Extended integer types
 │   ├── TaggedInteger             # Type-safe integers
-│   ├── Vector                    # Vector storage
 │   ├── Simd                      # SIMD vectors
 │   ├── Math                      # Vector, matrix, quaternion and bounds types
 │   ├── Limits                    # Numeric limits
@@ -108,13 +100,11 @@ Numeric/
 │   ├── Malterlib_Numeric_Float*  # Float implementation
 │   ├── Malterlib_Numeric_Integer.h
 │   ├── Malterlib_Numeric_TaggedInteger.*
-│   ├── Malterlib_Numeric_Vector.h
 │   ├── Malterlib_Numeric_Simd*   # SIMD wrapper and backends
 │   └── Malterlib_Numeric_Math*   # SIMD math types
 └── Test/                         # Unit tests
     ├── Test_Malterlib_Numeric_Float.*
     ├── Test_Malterlib_Numeric_Integer.cpp
-    ├── Test_Malterlib_Numeric_Vector.cpp
     ├── Test_Malterlib_Numeric_Simd.cpp
     └── Test_Malterlib_Numeric_Math.cpp
 ```
@@ -184,19 +174,6 @@ CProductID ProductID = CProductID::fs_Create(67890);
 
 // Explicit access when needed
 int32 RawUserID = UserID.f_Get();
-```
-
-### Vector Operations
-
-```cpp
-#include <Mib/Numeric/Vector>
-
-TCVec<fp32, 3> Position(1.0f, 2.0f, 3.0f);
-TCVec<int32, 3> Cell(Position); // Converts each axis
-
-// N-dimensional vectors
-TCVec<fp64, 10> HighDimVector;
-HighDimVector[5] = 3.14;
 ```
 
 ### SIMD Operations
@@ -275,7 +252,6 @@ When working with the Numeric module:
 // Include base functionality
 #include <Mib/Numeric/Float>
 #include <Mib/Numeric/Integer>
-#include <Mib/Numeric/Vector>
 ```
 
 ### Naming Conventions
@@ -310,7 +286,6 @@ The module includes comprehensive test coverage:
 # Run specific test suites
 /opt/Deploy/Tests/RunAllTests --paths '["Malterlib/Numeric/Float*"]'
 /opt/Deploy/Tests/RunAllTests --paths '["Malterlib/Numeric/Integer*"]'
-/opt/Deploy/Tests/RunAllTests --paths '["Malterlib/Numeric/Vector*"]'
 /opt/Deploy/Tests/RunAllTests --paths '["Malterlib/Numeric/Simd*", "Malterlib/Numeric/Math*"]'
 ```
 
