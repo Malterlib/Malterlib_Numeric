@@ -13,13 +13,13 @@ namespace NMib::NNumeric
 		template <typename t_CType>
 		struct TCIsTCVec
 		{
-			constexpr static bool mc_Value = false;
+			static constexpr bool mc_Value = false;
 		};
 
 		template <typename t_CType, umint t_nDim>
 		struct TCIsTCVec<TCVec<t_CType, t_nDim>>
 		{
-			constexpr static bool mc_Value = true;
+			static constexpr bool mc_Value = true;
 		};
 	}
 
@@ -52,7 +52,7 @@ namespace NMib::NNumeric
 		template <typename tf_CType, umint tf_nDim>
 		constexpr TCVec &operator = (TCVec<tf_CType, tf_nDim> const &_Src);
 
-		constexpr static umint mc_NumDim = t_nDim;
+		static constexpr umint mc_NumDim = t_nDim;
 		CType m_Axis[t_nDim];
 	};
 
@@ -72,5 +72,5 @@ namespace NMib::NNumeric
 #include "Malterlib_Numeric_Vector.hpp"
 
 #ifndef DMibPNoShortCuts
-	using namespace NMib::NNumeric;
+using namespace NMib::NNumeric;
 #endif

@@ -17,7 +17,7 @@ namespace NMib::NNumeric
 	template <typename tf_CType, umint tf_nDim>
 	constexpr TCVec<t_CType, t_nDim>::TCVec(TCVec<tf_CType, tf_nDim> const &_Src)
 	{
-		constexpr static umint c_nDimMin = fg_Min(t_nDim, tf_nDim);
+		static constexpr umint c_nDimMin = fg_Min(t_nDim, tf_nDim);
 		for (umint i = 0; i < c_nDimMin; ++i)
 			(*this)[i] = fg_Convert<CType>(_Src[i]);
 
@@ -48,7 +48,7 @@ namespace NMib::NNumeric
 	template <typename tf_CType, umint tf_nDim>
 	constexpr auto TCVec<t_CType, t_nDim>::operator = (TCVec<tf_CType, tf_nDim> const &_Src) -> TCVec &
 	{
-		constexpr static umint c_nDimMin = fg_Min(t_nDim, tf_nDim);
+		static constexpr umint c_nDimMin = fg_Min(t_nDim, tf_nDim);
 		for (umint i = 0; i < c_nDimMin; ++i)
 			(*this)[i] = fg_Convert<CType>(_Src[i]);
 

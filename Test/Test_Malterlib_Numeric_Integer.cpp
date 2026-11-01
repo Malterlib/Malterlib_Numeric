@@ -7,7 +7,6 @@ namespace
 	class CInt_Tests : public NMib::NTest::CTest
 	{
 	public:
-
 		template <template <typename t_CFloat00> class t_CTestTemplate>
 		void f_TestAll()
 		{
@@ -144,8 +143,9 @@ namespace
 			{
 				DMibTest(DMibExpr(t_CInt(0) + t_CInt(1)) == DMibExpr(t_CInt(1)));
 			}
+
 		public:
-			void operator() ()
+			void operator () ()
 			{
 				DMibTestPath("Addition");
 				this->f_Test();
@@ -159,8 +159,9 @@ namespace
 			{
 				DMibTest(DMibExpr(t_CInt(2) - t_CInt(1)) == DMibExpr(t_CInt(1)));
 			}
+
 		public:
-			void operator() ()
+			void operator () ()
 			{
 				DMibTestPath("Subtraction");
 				this->f_Test();
@@ -171,12 +172,11 @@ namespace
 		class CShiftLeft
 		{
 		public:
-			void operator() ()
+			void operator () ()
 			{
 				umint nBits = sizeof(t_CInt) * 8;
 				t_CInt TestNumberBase = 0;
-				auto fl_TestNumberBase
-					= [&]() -> t_CInt
+				auto fl_TestNumberBase = [&]() -> t_CInt
 					{
 						NMib::NStr::CStr StartNumber = "0x";
 						aint Num = 9;
@@ -214,9 +214,7 @@ namespace
 								Num = 1;
 						}
 						for (umint j = 0; j < i; j += 4)
-						{
 							ShouldBeNumber += "0";
-						}
 						t_CInt CorrectShifted = NMib::NStr::fg_StrToInt(("0x" + ShouldBeNumber).f_GetStr(), t_CInt(-1));
 						DMibTest(DMibExpr(Shifted) == DMibExpr(CorrectShifted));
 					};
@@ -228,12 +226,11 @@ namespace
 		class CShiftRight
 		{
 		public:
-			void operator() ()
+			void operator () ()
 			{
 				umint nBits = sizeof(t_CInt) * 8;
 				t_CInt TestNumberBase = 0;
-				auto fl_TestNumberBase
-					= [&]() -> t_CInt
+				auto fl_TestNumberBase = [&]() -> t_CInt
 					{
 						NMib::NStr::CStr StartNumber = "0x";
 						aint Num = 9;
@@ -315,17 +312,15 @@ namespace
 				DMibExpect(-2147483647_int32, ==, int32(-2147483647));
 				DMibExpect(2147483648_int32, ==, int32(2147483648));
 				[] DMibSuppressUndefinedSanitizer
-					{
-						DMibExpect(-2147483648_int32, ==, int32(-2147483648));
-					}
-					()
-				;
+				{
+					DMibExpect(-2147483648_int32, ==, int32(-2147483648));
+				}
+				();
 
 				DMibExpect(0xff_uint8, ==, uint8(0xff));
 				DMibExpect(0xffff_uint16, ==, uint16(0xffff));
 				DMibExpect(0xffffffff_uint32, ==, uint32(0xffffffff));
 				DMibExpect(0xffffffffffffffff_uint64, ==, uint64(constant_uint64(0xffffffffffffffff)));
-
 			};
 			DMibTestCategoryFlags("Shift Left", ETestCategoryFlag_DisableValues | ETestCategoryFlag_Tests)
 			{

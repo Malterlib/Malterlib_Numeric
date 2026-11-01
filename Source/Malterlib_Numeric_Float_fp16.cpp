@@ -7,13 +7,13 @@
 namespace NMib::NNumeric
 {
 #ifndef DMibFloattDoInline_NoExternTemplate
-	#ifdef DMibPCanDo_fp16
-		template class TCFloat<1, 5, 10, 0, pfp16>;
-		template class TCFloat<1, 4, 11, 0, pfp16, 0>;
-	#else
-		template class TCFloat<1, 5, 10, 0>;
-		template class TCFloat<1, 4, 11, 0, CNoImplicit, 0>;
-	#endif
+#	ifdef DMibPCanDo_fp16
+	template class TCFloat<1, 5, 10, 0, pfp16>;
+	template class TCFloat<1, 4, 11, 0, pfp16, 0>;
+#	else
+	template class TCFloat<1, 5, 10, 0>;
+	template class TCFloat<1, 4, 11, 0, CNoImplicit, 0>;
+#	endif
 	template class TCFloat<0, 5, 11, 0>;
 #endif
 }

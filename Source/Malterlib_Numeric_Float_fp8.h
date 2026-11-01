@@ -27,13 +27,13 @@ DMibTraitsImplementFloatFromSize(fp8);
 namespace NMib::NNumeric
 {
 #ifndef DMibFloattDoInline_NoExternTemplate
-	#ifdef DMibPCanDo_fp8
-		extern template class TCFloat<1, 3, 4, 0, pfp8>;
-		extern template class TCFloat<1, 2, 5, 0, pfp8, 0>;
-	#else
-		extern template class TCFloat<1, 3, 4, 0>;
-		extern template class TCFloat<1, 2, 5, 0, CNoImplicit, 0>;
-	#endif
+#	ifdef DMibPCanDo_fp8
+	extern template class TCFloat<1, 3, 4, 0, pfp8>;
+	extern template class TCFloat<1, 2, 5, 0, pfp8, 0>;
+#	else
+	extern template class TCFloat<1, 3, 4, 0>;
+	extern template class TCFloat<1, 2, 5, 0, CNoImplicit, 0>;
+#	endif
 	extern template class TCFloat<0, 3, 5, 0>;
 #endif
 }
