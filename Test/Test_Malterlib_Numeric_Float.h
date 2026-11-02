@@ -5,12 +5,12 @@ namespace NMib
 {
 	namespace NNumeric
 	{
-#define DMibMathImplementNativeFloat(_Native, _TCFloat) \
+#define DMibMathImplementNativeFloat(d_Native, d_TCFloat) \
 	template <>\
-	class TCFloatFromNative<_Native>\
+	class TCFloatFromNative<d_Native>\
 	{\
 	public:\
-		using CType = _TCFloat;\
+		using CType = d_TCFloat;\
 	};
 
 		DMibMathImplementNativeFloat(pfp32, CIEEEFloat32);

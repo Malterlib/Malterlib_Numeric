@@ -726,12 +726,12 @@ namespace NMib::NNumeric
 
 namespace NMib
 {
-#define DMibDirectConvert(_FromType, _ToType) \
+#define DMibDirectConvert(d_FromType, d_ToType) \
 	template <>\
-	class TCConvert< _ToType, _FromType>\
+	class TCConvert< d_ToType, d_FromType>\
 	{\
 	public:\
-		static DMibFloatConstexpr inline_small _ToType fs_Convert( _FromType const &_From)\
+		static DMibFloatConstexpr inline_small d_ToType fs_Convert( d_FromType const &_From)\
 		{\
 			return _From;\
 		}\
@@ -749,12 +749,12 @@ namespace NMib
 
 #undef DMibDirectConvert
 
-#define DMibMathFloatConvertNative(_FromType, _ToType) \
+#define DMibMathFloatConvertNative(d_FromType, d_ToType) \
 	template <>\
-	class TCConvert< _ToType, _FromType>\
+	class TCConvert< d_ToType, d_FromType>\
 	{\
 	public:\
-		static DMibFloatConstexpr inline_small _ToType fs_Convert( _FromType const &_From)\
+		static DMibFloatConstexpr inline_small d_ToType fs_Convert( d_FromType const &_From)\
 		{\
 			return _From.f_Get();\
 		}\
@@ -774,23 +774,23 @@ namespace NMib
 
 #undef DMibMathFloatConvertNative
 
-#define DMibMathFloatConvertInt(_FromType, _ToType) \
+#define DMibMathFloatConvertInt(d_FromType, d_ToType) \
 	template <>\
-	class TCConvert< _ToType, _FromType >\
+	class TCConvert< d_ToType, d_FromType >\
 	{\
 	public:\
-		static DMibFloatConstexpr inline_small _ToType fs_Convert( _FromType const &_From)\
+		static DMibFloatConstexpr inline_small d_ToType fs_Convert( d_FromType const &_From)\
 		{\
-			return NMib::fg_Convert<_ToType>(_From.f_ToInt());\
+			return NMib::fg_Convert<d_ToType>(_From.f_ToInt());\
 		}\
 	};\
 	template <>\
-	class TCConvert< _FromType, _ToType >\
+	class TCConvert< d_FromType, d_ToType >\
 	{\
 	public:\
-		static DMibFloatConstexpr inline_small _FromType fs_Convert( _ToType const &_From)\
+		static DMibFloatConstexpr inline_small d_FromType fs_Convert( d_ToType const &_From)\
 		{\
-			_FromType Ret;\
+			d_FromType Ret;\
 			Ret.f_GetImplicit() = _From;\
 			return Ret;\
 		}\
@@ -926,7 +926,7 @@ namespace NMib
 	DMibMathFloatConvertInt(CIEEEFloat80, uint16384);
 #endif
 
-#ifdef DMibPUniqueType_mint
+#ifdef DMibPUniqueType_umint
 	DMibMathFloatConvertInt(CIEEEFloat80, umint);
 #endif
 #ifdef DMibPUniqueType_smint
