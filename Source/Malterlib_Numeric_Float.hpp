@@ -34,7 +34,7 @@ namespace NMib::NNumeric
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 	void TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::fp_Set_E()
 	{
-		CInternalFloat Temp = CInternalFloat::fs_E();
+		CInternalFloat Temp = CInternalFloat::fs_EulersNumber();
 		*this = Temp.f_GetFloat();
 	}
 
@@ -250,7 +250,7 @@ namespace NMib::NNumeric
 						;
 					}
 					else
-						Temp = fs_0();
+						Temp = fs_Zero();
 
 					return Temp.fp_GetIntegerData();
 				}()
@@ -286,7 +286,7 @@ namespace NMib::NNumeric
 				{
 					CEmulatedFloat Temp;
 					Temp.f_SetAllBits(0, fs_GetExponentBits(0), fg_Convert<CInteger>(1));
-					Temp -= CEmulatedFloat::fs_1();
+					Temp -= CEmulatedFloat::fs_One();
 					return Temp.f_GetAsInteger();
 				}()
 				, EConstexprInitialization_Force
@@ -295,7 +295,7 @@ namespace NMib::NNumeric
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	DMibFloatInline auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::fs_0() -> TCFloat
+	DMibFloatInline auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::fs_Zero() -> TCFloat
 	{
 		DMibFloatConstexprCache(TCFloat) Cache;
 		return Cache
@@ -312,7 +312,7 @@ namespace NMib::NNumeric
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	DMibFloatInline auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::fs_0_5() -> TCFloat
+	DMibFloatInline auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::fs_Half() -> TCFloat
 	{
 		DMibFloatConstexprCache(TCFloat) Cache;
 		return Cache
@@ -329,7 +329,7 @@ namespace NMib::NNumeric
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	DMibFloatInline auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::fs_1() -> TCFloat
+	DMibFloatInline auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::fs_One() -> TCFloat
 	{
 		DMibFloatConstexprCache(TCFloat) Cache;
 		return Cache
@@ -346,7 +346,7 @@ namespace NMib::NNumeric
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	DMibFloatInline auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::fs_2() -> TCFloat
+	DMibFloatInline auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::fs_Two() -> TCFloat
 	{
 		DMibFloatConstexprCache(TCFloat) Cache;
 		return Cache
@@ -363,7 +363,7 @@ namespace NMib::NNumeric
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::fs_E() -> TCFloat
+	auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::fs_EulersNumber() -> TCFloat
 	{
 		static TCFloat Cache
 			(
@@ -994,20 +994,20 @@ namespace NMib::NNumeric
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 	DMibFloatInlineS auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::f_ToIntRound() const -> CInteger
 	{
-		if (*this < fs_0())
-			return (*this - fs_0_5()).f_ToInt();
+		if (*this < fs_Zero())
+			return (*this - fs_Half()).f_ToInt();
 		else
-			return (*this + fs_0_5()).f_ToInt();
+			return (*this + fs_Half()).f_ToInt();
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 	DMibFloatInlineS auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::f_ToUnsignedIntRound() const
 		-> CUnsignedInteger
 	{
-		if (*this < fs_0())
-			return (*this - fs_0_5()).f_ToUnsignedInt();
+		if (*this < fs_Zero())
+			return (*this - fs_Half()).f_ToUnsignedInt();
 		else
-			return (*this + fs_0_5()).f_ToUnsignedInt();
+			return (*this + fs_Half()).f_ToUnsignedInt();
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
@@ -1323,12 +1323,12 @@ namespace NMib::NNumeric
 			}
 			if (Sign)
 			{
-				*this = -fs_0();
+				*this = -fs_Zero();
 				return *this;
 			}
 			else
 			{
-				*this = fs_0();
+				*this = fs_Zero();
 				return *this;
 			}
 		}
@@ -1370,12 +1370,12 @@ namespace NMib::NNumeric
 		{
 			if (Sign)
 			{
-				*this = -fs_0();
+				*this = -fs_Zero();
 				return *this;
 			}
 			else
 			{
-				*this = fs_0();
+				*this = fs_Zero();
 				return *this;
 			}
 		}
@@ -1460,14 +1460,14 @@ namespace NMib::NNumeric
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 	DMibFloatConstexpr auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::operator ++ () -> TCFloat &
 	{
-		*this = *this + fs_1();
+		*this = *this + fs_One();
 		return *this;
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 	DMibFloatConstexpr auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::operator -- () -> TCFloat &
 	{
-		*this = *this - fs_1();
+		*this = *this - fs_One();
 		return *this;
 	}
 
@@ -1599,7 +1599,7 @@ namespace NMib::NNumeric
 	{
 		if (f_GetSignBits())
 		{
-			if (*this == fs_0())
+			if (*this == fs_Zero())
 				return fs_NegInf();
 			else
 				return fs_NegQNan();
@@ -1611,8 +1611,8 @@ namespace NMib::NNumeric
 			else
 				return fs_QNan();
 		}
-		if (*this == fs_1())
-			return fs_0();
+		if (*this == fs_One())
+			return fs_Zero();
 		CInternalFloat Temp = *this;
 		if (Temp.m_Mantissa == 0)
 			return fs_NegInf();
@@ -1646,7 +1646,7 @@ namespace NMib::NNumeric
 	{
 		if (f_GetSignBits())
 		{
-			if (*this == fs_0())
+			if (*this == fs_Zero())
 				return fs_NegInf();
 			else
 				return fs_NegQNan();
@@ -1658,8 +1658,8 @@ namespace NMib::NNumeric
 			else
 				return fs_QNan();
 		}
-		if (*this == fs_1())
-			return fs_0();
+		if (*this == fs_One())
+			return fs_Zero();
 		CInternalFloat Temp = *this;
 		if (Temp.m_Mantissa == 0)
 			return fs_NegInf();
@@ -1694,7 +1694,7 @@ namespace NMib::NNumeric
 	{
 		if (f_GetSignBits())
 		{
-			if (*this == fs_0())
+			if (*this == fs_Zero())
 				return fs_NegInf();
 			else
 				return fs_NegQNan();
@@ -1713,8 +1713,8 @@ namespace NMib::NNumeric
 			else
 				return fs_QNan();
 		}
-		if (*this == fs_1())
-			return fs_0();
+		if (*this == fs_One())
+			return fs_Zero();
 		CInternalFloat Temp = *this;
 		if (Temp.m_Mantissa == 0)
 			return fs_NegInf();
@@ -1739,7 +1739,7 @@ namespace NMib::NNumeric
 	{
 		if (f_GetSignBits())
 		{
-			if (*this == fs_0())
+			if (*this == fs_Zero())
 				return fs_NegInf();
 			else
 				return fs_NegQNan();
@@ -1751,15 +1751,15 @@ namespace NMib::NNumeric
 			else
 				return fs_QNan();
 		}
-		if (_Base == fs_0())
+		if (_Base == fs_Zero())
 		{
 			if (_Base.f_GetSignBits())
-				return fs_0();
+				return fs_Zero();
 			else
-				return -fs_0();
+				return -fs_Zero();
 		}
-		if (*this == fs_1())
-			return fs_0();
+		if (*this == fs_One())
+			return fs_Zero();
 		CInternalFloat Temp = *this;
 		if (Temp.m_Mantissa == 0)
 			return fs_NegInf();
@@ -1777,15 +1777,15 @@ namespace NMib::NNumeric
 			else
 				return _Base.fs_QNan();
 		}
-		if (_Base == fs_1())
+		if (_Base == fs_One())
 			return fs_Inf();
 		CInternalFloat TempLog = _Base;
 		if (TempLog.m_Mantissa == 0)
 			return fs_QNan();
 		if (TempLog.m_Sign)
-			return fs_0();
+			return fs_Zero();
 		if (_Base.f_IsInfinity())
-			return fs_0();
+			return fs_Zero();
 
 		TempLog.f_Log2();
 
@@ -1807,19 +1807,19 @@ namespace NMib::NNumeric
 	{
 		if (f_GetSignBits() != 0)
 		{
-			if (*this == fs_0())
-				return -fs_0();
+			if (*this == fs_Zero())
+				return -fs_Zero();
 			return fs_NegQNan();
 		}
-		if (*this == fs_0())
-			return fs_0();
+		if (*this == fs_Zero())
+			return fs_Zero();
 		else if (*this == fs_Inf())
 			return fs_Inf();
 		else if (f_IsNan())
 			return fs_QNan();
 		CInternalFloat Temp = *this;
 		CInternalFloat Prev = Temp;
-		CInternalFloat Two = fs_2();
+		CInternalFloat Two = fs_Two();
 		Temp.f_Div(Two);
 
 		while (!Prev.f_AlmostEqual(Temp, 1) || (Prev.m_MantissaBits < (t_MantissaBits + 2) && !Prev.f_AlmostEqual(Temp, 0)))
@@ -1843,8 +1843,8 @@ namespace NMib::NNumeric
 	DMibFloatConstexpr auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::f_Pow(TCFloat const &_Power) const
 		-> TCFloat
 	{
-		if (_Power == fs_0())
-			return fs_1();
+		if (_Power == fs_Zero())
+			return fs_One();
 		if (f_IsNan())
 		{
 			auto Sign = f_GetSignBits();
@@ -1862,9 +1862,9 @@ namespace NMib::NNumeric
 			else
 				return fs_QNan();
 		}
-		if (*this == fs_1())
-			return fs_1();
-		if (_Power == fs_1())
+		if (*this == fs_One())
+			return fs_One();
+		if (_Power == fs_One())
 			return *this;
 		if (_Power.f_IsNan())
 		{
@@ -1897,16 +1897,16 @@ namespace NMib::NNumeric
 				return fs_Inf();
 			}
 			if (bValidNegativePower && NewSign)
-				return -fs_0();
-			return fs_0();
+				return -fs_Zero();
+			return fs_Zero();
 		}
 		if (f_IsInfinity())
 		{
 			if (Power.m_Sign)
 			{
 				if (bValidNegativePower && NewSign)
-					return -fs_0();
-				return fs_0();
+					return -fs_Zero();
+				return fs_Zero();
 			}
 			if (Temp.m_Sign)
 			{
@@ -1917,13 +1917,13 @@ namespace NMib::NNumeric
 		}
 		if (!bValidNegativePower)
 			return fs_NegQNan();
-		if (*this == -fs_1())
+		if (*this == -fs_One())
 		{
 			if (!!Power.m_Sign && NewSign)
-				return -fs_1();
+				return -fs_One();
 			if (!!Temp.m_Sign && NewSign)
-				return -fs_1();
-			return fs_1();
+				return -fs_One();
+			return fs_One();
 		}
 		Temp.m_Sign = 0;
 		Temp.f_Log2();
@@ -1957,10 +1957,10 @@ namespace NMib::NNumeric
 			return Temp;
 		}
 
-		if (Temp < fs_0())
+		if (Temp < fs_Zero())
 		{
 			if (f_GetExponent() < 0)
-				return -fs_1();
+				return -fs_One();
 
 			CInteger TempInt = Temp.f_ToInt();
 			auto Return = fs_FromInt(TempInt);
@@ -1970,16 +1970,16 @@ namespace NMib::NNumeric
 		}
 		else
 		{
-			if (Temp == fs_0())
+			if (Temp == fs_Zero())
 			{
 				if (Temp.f_GetSignBits())
-					return -fs_0();
-				return fs_0();
+					return -fs_Zero();
+				return fs_Zero();
 			}
 			if (f_GetExponent() < 0)
 			{
 				// Less than 0
-				return fs_0();
+				return fs_Zero();
 			}
 			CInteger TempInt = Temp.f_ToInt();
 			return fs_FromInt(TempInt);
@@ -2010,26 +2010,26 @@ namespace NMib::NNumeric
 			return Temp;
 		}
 
-		if (Temp < fs_0())
+		if (Temp < fs_Zero())
 		{
-			if (Temp == fs_0())
-				return -fs_0();
+			if (Temp == fs_Zero())
+				return -fs_Zero();
 			if (f_GetExponent() < 0)
-				return -fs_0();
+				return -fs_Zero();
 			CInteger TempInt = Temp.f_ToInt();
 			return fs_FromInt(TempInt);
 		}
 		else
 		{
-			if (Temp == fs_0())
+			if (Temp == fs_Zero())
 			{
 				if (Temp.f_GetSignBits())
-					return -fs_0();
+					return -fs_Zero();
 				else
-					return fs_0();
+					return fs_Zero();
 			}
 			if (f_GetExponent() < 0)
-				return fs_1();
+				return fs_One();
 			CInteger TempInt = Temp.f_ToInt();
 			auto Return = fs_FromInt(TempInt);
 			if (Return < Temp)
@@ -2243,6 +2243,6 @@ namespace NMib::NNumeric
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 	DMibFloatConstexpr TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::operator bool () const
 	{
-		return !(*this == fs_0());
+		return !(*this == fs_Zero());
 	}
 }

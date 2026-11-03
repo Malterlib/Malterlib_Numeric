@@ -20,7 +20,7 @@ namespace NMib::NNumeric
 		constexpr CInteger ExponentMaxNeg = -((CInteger(1) << (aint)(mc_ExponentBits - 1)) - CInteger(1));
 		constexpr CInteger ExponentMax = fg_PowerOfTwoMinusOne<CInteger>(mc_ExponentBits);
 
-		TCFloat EndMul = fs_1();
+		TCFloat EndMul = fs_One();
 		CInteger ExponentBits;
 		if (Other.f_GetExponentBits() == 0) // Check for denormalized and 0.0
 			ExponentBits = fg_Convert<CInteger>(0);
@@ -38,7 +38,7 @@ namespace NMib::NNumeric
 				CInteger ExpDiff = fg_Convert<CInteger>(Exponent) - ExponentMaxNeg - 1;
 				if (ExpDiff < ExponentMaxNeg + 1)
 				{
-					*this = fs_0();
+					*this = fs_Zero();
 					return;
 				}
 				// Set denormalized
@@ -98,7 +98,7 @@ namespace NMib::NNumeric
 		typename COtherFloat::CInteger OtherMantissa;
 		Other.f_GetNormalized(OtherExponent, OtherMantissa);
 
-		TCFloat EndMul = fs_1();
+		TCFloat EndMul = fs_One();
 		if (Other.f_GetMantissaBits() == 0 && Other.f_GetExponentBits() == 0) // Check for 0.0
 		{
 			f_SetAllBits(SignBits, fg_Convert<CInteger>(0), fg_Convert<CInteger>(0));
@@ -251,7 +251,7 @@ namespace NMib::NNumeric
 			f_SetAllRound(Sign, Exponent, Mantissa, 0);
 		}
 		else if (Int == 0)
-			*this = fs_0();
+			*this = fs_Zero();
 		else
 		{
 			CDoubleUnsignedInteger Mantissa = fg_Convert<CDoubleInteger>(Int);
@@ -276,7 +276,7 @@ namespace NMib::NNumeric
 			, TCEnableIf<NTraits::cIsSame<tf_CType, bool>> *_pDummy
 		)
 	{
-		*this = _Value ? fs_1() : fs_0();
+		*this = _Value ? fs_One() : fs_Zero();
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
@@ -284,7 +284,7 @@ namespace NMib::NNumeric
 	DMibFloatInlineS auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::operator = (tf_CType _Value)
 		-> TCEnableIf<NTraits::cIsSame<tf_CType, bool>, TCFloat &>
 	{
-		*this = _Value ? fs_1() : fs_0();
+		*this = _Value ? fs_One() : fs_Zero();
 		return *this;
 	}
 

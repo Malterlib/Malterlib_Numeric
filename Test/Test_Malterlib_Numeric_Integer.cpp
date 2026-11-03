@@ -141,11 +141,11 @@ namespace
 			void operator () ()
 			{
 				DMibTestPath("Addition");
-				this->f_Test();
+				this->fp_Test();
 			}
 
 		private:
-			void f_Test()
+			void fp_Test()
 			{
 				DMibTest(DMibExpr(t_CInt(0) + t_CInt(1)) == DMibExpr(t_CInt(1)));
 			}
@@ -157,11 +157,11 @@ namespace
 			void operator () ()
 			{
 				DMibTestPath("Subtraction");
-				this->f_Test();
+				this->fp_Test();
 			}
 
 		private:
-			void f_Test()
+			void fp_Test()
 			{
 				DMibTest(DMibExpr(t_CInt(2) - t_CInt(1)) == DMibExpr(t_CInt(1)));
 			}

@@ -198,12 +198,12 @@ namespace NMib::NNumeric
 		static DMibFloatInline TCFloat fs_LimitMin();
 		static DMibFloatInline TCFloat fs_LimitMax();
 		static DMibFloatInline TCFloat fs_Epsilon();
-		static DMibFloatInline TCFloat fs_0();
-		static DMibFloatInline TCFloat fs_0_5();
-		static DMibFloatInline TCFloat fs_1();
-		static DMibFloatInline TCFloat fs_2();
+		static DMibFloatInline TCFloat fs_Zero();
+		static DMibFloatInline TCFloat fs_Half();
+		static DMibFloatInline TCFloat fs_One();
+		static DMibFloatInline TCFloat fs_Two();
 		static DMibFloatInline TCFloat fs_MaxExponent();
-		static TCFloat fs_E();
+		static TCFloat fs_EulersNumber();
 		static TCFloat fs_Pi();
 		static TCFloat fs_Sqrt2();
 		static TCFloat fs_Euler();
@@ -399,7 +399,7 @@ namespace NMib::NNumeric
 			static CInternalFloat fs_Log10_E();
 			static CInternalFloat fs_Log2_10();
 			static CInternalFloat fs_Log10_2();
-			static CInternalFloat fs_E();
+			static CInternalFloat fs_EulersNumber();
 			static CInternalFloat fs_Euler();
 			static CInternalFloat fs_GoldenRatio();
 			static CInternalFloat fs_Pi();

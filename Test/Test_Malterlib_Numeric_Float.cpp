@@ -139,7 +139,7 @@ namespace
 		{
 			void operator () ()
 			{
-				DMibExpect(t_CFloat::fs_2() * t_CFloat::fs_2(), ==, t_CFloat(fp64(4.0)));
+				DMibExpect(t_CFloat::fs_Two() * t_CFloat::fs_Two(), ==, t_CFloat(fp64(4.0)));
 
 				umint ExpectedBits = 1;
 				if (umint(t_CFloat::mc_MantissaBits) > umint(fp64::mc_MantissaBits))
@@ -166,7 +166,7 @@ namespace
 		{
 			void operator () ()
 			{
-				DMibExpect(t_CFloat::fs_2() / t_CFloat::fs_2(), ==, t_CFloat(fp64(1.0)));
+				DMibExpect(t_CFloat::fs_Two() / t_CFloat::fs_Two(), ==, t_CFloat(fp64(1.0)));
 
 				umint ExpectedBits = 1;
 				if (umint(t_CFloat::mc_MantissaBits) > umint(fp64::mc_MantissaBits))
@@ -198,8 +198,8 @@ namespace
 		{
 			void operator () ()
 			{
-				DMibTest(DMibExpr(t_CFloat::fs_LimitMax()) * DMibExpr(t_CFloat::fs_2()) == DMibExpr(t_CFloat::fs_Inf()))(ETestFlag_NoValues);
-				DMibTest(DMibExpr(t_CFloat::fs_LimitMin()) * DMibExpr(t_CFloat::fs_2()) == DMibExpr(t_CFloat::fs_NegInf()))(ETestFlag_NoValues);
+				DMibTest(DMibExpr(t_CFloat::fs_LimitMax()) * DMibExpr(t_CFloat::fs_Two()) == DMibExpr(t_CFloat::fs_Inf()))(ETestFlag_NoValues);
+				DMibTest(DMibExpr(t_CFloat::fs_LimitMin()) * DMibExpr(t_CFloat::fs_Two()) == DMibExpr(t_CFloat::fs_NegInf()))(ETestFlag_NoValues);
 			}
 		};
 
@@ -232,8 +232,8 @@ namespace
 			DMibExpect(Converted##d_Name, d_ExpectSmallerOperator, d_ExpectSmaller);\
 	}
 
-					DTestConversion(SmallestDenormal, t_CFloatRight::fs_SmallestDenormal(), ==, SmallestDenormal, ==, t_CFloatLeft::fs_0());
-					DTestConversion(NegSmallestDenormal, t_CFloatRight::fs_NegSmallestDenormal(), ==, NegSmallestDenormal, ==, -t_CFloatLeft::fs_0());
+					DTestConversion(SmallestDenormal, t_CFloatRight::fs_SmallestDenormal(), ==, SmallestDenormal, ==, t_CFloatLeft::fs_Zero());
+					DTestConversion(NegSmallestDenormal, t_CFloatRight::fs_NegSmallestDenormal(), ==, NegSmallestDenormal, ==, -t_CFloatLeft::fs_Zero());
 					if (t_CFloatLeft::mc_MantissaBits != t_CFloatRight::mc_MantissaBits && umint(t_CFloatLeft::mc_ExponentBits) == umint(t_CFloatRight::mc_ExponentBits))
 					{
 						DTestConversion(Smallest, t_CFloatRight::fs_Smallest(), ==, Smallest, ==, Smallest);
@@ -241,17 +241,17 @@ namespace
 					}
 					else
 					{
-						DTestConversion(Smallest, t_CFloatRight::fs_Smallest(), ==, Smallest, ==, t_CFloatLeft::fs_0());
-						DTestConversion(NegSmallest, t_CFloatRight::fs_NegSmallest(), ==, NegSmallest, ==, -t_CFloatLeft::fs_0());
+						DTestConversion(Smallest, t_CFloatRight::fs_Smallest(), ==, Smallest, ==, t_CFloatLeft::fs_Zero());
+						DTestConversion(NegSmallest, t_CFloatRight::fs_NegSmallest(), ==, NegSmallest, ==, -t_CFloatLeft::fs_Zero());
 					}
 					DTestConversion(LimitMin, t_CFloatRight::fs_LimitMin(), ==, LimitMin, ==, t_CFloatLeft::fs_NegInf());
 					DTestConversion(LimitMax, t_CFloatRight::fs_LimitMax(), ==, LimitMax, ==, t_CFloatLeft::fs_Inf());
 
-					DTestConversion(Float_0, t_CFloatRight::fs_0(), ==, Float_0, ==, t_CFloatLeft::fs_0());
-					DTestConversion(Float_0_5, t_CFloatRight::fs_0_5(), ==, Float_0_5, ==, t_CFloatLeft::fs_0_5());
-					DTestConversion(Float_1, t_CFloatRight::fs_1(), ==, Float_1, ==, t_CFloatLeft::fs_1());
-					DTestConversion(Float_2, t_CFloatRight::fs_2(), ==, Float_2, ==, t_CFloatLeft::fs_2());
-					DTestConversion(Float_E, t_CFloatRight::fs_E(), ==, Float_E, ==, t_CFloatLeft::fs_E());
+					DTestConversion(Float_0, t_CFloatRight::fs_Zero(), ==, Float_0, ==, t_CFloatLeft::fs_Zero());
+					DTestConversion(Float_0_5, t_CFloatRight::fs_Half(), ==, Float_0_5, ==, t_CFloatLeft::fs_Half());
+					DTestConversion(Float_1, t_CFloatRight::fs_One(), ==, Float_1, ==, t_CFloatLeft::fs_One());
+					DTestConversion(Float_2, t_CFloatRight::fs_Two(), ==, Float_2, ==, t_CFloatLeft::fs_Two());
+					DTestConversion(Float_E, t_CFloatRight::fs_EulersNumber(), ==, Float_E, ==, t_CFloatLeft::fs_EulersNumber());
 					DTestConversion(Float_Pi, t_CFloatRight::fs_Pi(), ==, Float_Pi, ==, t_CFloatLeft::fs_Pi());
 					DTestConversion(Float_Sqrt2, t_CFloatRight::fs_Sqrt2(), ==, Float_Sqrt2, ==, t_CFloatLeft::fs_Sqrt2());
 					//DTestConversion(Float_Euler, t_CFloatRight::fs_Euler(), ==, Float_Euler, ==, t_CFloatLeft::fs_Euler()); // Slow
@@ -359,8 +359,8 @@ namespace
 					, {"-Epsilon", -tf_CFloat::fs_Epsilon()}
 					, {"(1.0+Epsilon)", tf_CFloat(1.0l) + tf_CFloat::fs_Epsilon()}
 					, {"(1.0-Epsilon)", tf_CFloat(1.0l) - tf_CFloat::fs_Epsilon()}
-					, {"E", tf_CFloat::fs_E()}
-					, {"-E", -tf_CFloat::fs_E()}
+					, {"E", tf_CFloat::fs_EulersNumber()}
+					, {"-E", -tf_CFloat::fs_EulersNumber()}
 					, {"Pi", tf_CFloat::fs_Pi()}
 					, {"-Pi", -tf_CFloat::fs_Pi()}
 					, {"2*Pi", tf_CFloat(2.0l) * tf_CFloat::fs_Pi()}

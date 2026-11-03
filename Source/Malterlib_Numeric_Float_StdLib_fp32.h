@@ -54,22 +54,22 @@ namespace NMib::NSys::NNumeric
 
 namespace NMib::NNumeric
 {
-	template <> DMibFloatConstexpr inline_small CIEEEFloat32 CIEEEFloat32::fs_0()
+	template <> DMibFloatConstexpr inline_small CIEEEFloat32 CIEEEFloat32::fs_Zero()
 	{
 		return 0.0f;
 	}
 
-	template <> DMibFloatConstexpr inline_small CIEEEFloat32 CIEEEFloat32::fs_0_5()
+	template <> DMibFloatConstexpr inline_small CIEEEFloat32 CIEEEFloat32::fs_Half()
 	{
 		return 0.5f;
 	}
 
-	template <> DMibFloatConstexpr inline_small CIEEEFloat32 CIEEEFloat32::fs_1()
+	template <> DMibFloatConstexpr inline_small CIEEEFloat32 CIEEEFloat32::fs_One()
 	{
 		return 1.0f;
 	}
 
-	template <> DMibFloatConstexpr inline_small CIEEEFloat32 CIEEEFloat32::fs_2()
+	template <> DMibFloatConstexpr inline_small CIEEEFloat32 CIEEEFloat32::fs_Two()
 	{
 		return 2.0f;
 	}

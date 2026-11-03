@@ -412,7 +412,7 @@ namespace NMib::NNumeric
 			return *this;
 		}
 
-		static constexpr bool fp_IsBitSet(uaint _Bit)
+		static constexpr bool fs_IsBitSet(uaint _Bit)
 		{
 			return false;
 		}
@@ -518,24 +518,6 @@ namespace NMib::NNumeric
 			return *this;
 		}
 
-		template <typename t_CDummy>
-		constexpr inline_small void fp_SignExtendUpper(TCEnableIf<NTraits::cIsSigned<t_CDummy> && NTraits::cIsFundamental<t_CDummy>, t_CDummy> *_pDummy = nullptr)
-		{
-			m_Upper = (m_Upper >> (mc_UpperBits - 1)) >> 1;
-		}
-
-		template <typename t_CDummy>
-		constexpr inline_small void fp_SignExtendUpper(TCEnableIf<!NTraits::cIsSigned<t_CDummy>, t_CDummy> *_pDummy = nullptr)
-		{
-			m_Upper = mc_UpperZero;
-		}
-
-		template <typename t_CDummy>
-		constexpr inline_small void fp_SignExtendUpper(TCEnableIf<NTraits::cIsSigned<t_CDummy> && !NTraits::cIsFundamental<t_CDummy>, t_CDummy> *_pDummy = nullptr)
-		{
-			m_Upper = m_Upper >> (mc_UpperBits);
-		}
-
 		constexpr TCInt &operator >>= (uaint _Value)
 		{
 			aint Value = _Value;
@@ -628,6 +610,25 @@ namespace NMib::NNumeric
 				return Result;
 
 			return m_Lower <=> _Value.m_Lower;
+		}
+
+	private:
+		template <typename t_CDummy>
+		constexpr inline_small void fp_SignExtendUpper(TCEnableIf<NTraits::cIsSigned<t_CDummy> && NTraits::cIsFundamental<t_CDummy>, t_CDummy> *_pDummy = nullptr)
+		{
+			m_Upper = (m_Upper >> (mc_UpperBits - 1)) >> 1;
+		}
+
+		template <typename t_CDummy>
+		constexpr inline_small void fp_SignExtendUpper(TCEnableIf<!NTraits::cIsSigned<t_CDummy>, t_CDummy> *_pDummy = nullptr)
+		{
+			m_Upper = mc_UpperZero;
+		}
+
+		template <typename t_CDummy>
+		constexpr inline_small void fp_SignExtendUpper(TCEnableIf<NTraits::cIsSigned<t_CDummy> && !NTraits::cIsFundamental<t_CDummy>, t_CDummy> *_pDummy = nullptr)
+		{
+			m_Upper = m_Upper >> (mc_UpperBits);
 		}
 	};
 

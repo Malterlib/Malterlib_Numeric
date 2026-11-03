@@ -85,7 +85,7 @@ fp64 Value64 = fp64(2.71828);
 fp128 Value128 = fp128(Value64);  // Conversion between precisions
 
 // Mathematical operations
-fp64 Result = Value64 * fp64::fs_2() + fp64::fs_Pi();
+fp64 Result = Value64 * fp64::fs_Two() + fp64::fs_Pi();
 
 // Constants
 fp64 Pi = fg_FPi<fp64>();
@@ -229,7 +229,7 @@ When working with the Numeric module:
 ```cpp
 // Static factory methods
 fp64 Value = fp64::fs_Pi();
-fp64 Two = fp64::fs_2();
+fp64 Two = fp64::fs_Two();
 
 // Conversion functions
 fp32 Converted = fg_Convert<fp32>(DoubleValue);
@@ -284,7 +284,7 @@ using CCustomFloat = TCFloat<1, 8, 23, 0>;  // Sign, exponent, mantissa, padding
 ### Compile-Time Computation
 ```cpp
 // Many operations support constexpr evaluation
-constexpr fp64 Result = fg_FPi<fp64>() * fp64::fs_2();
+constexpr fp64 Result = fg_FPi<fp64>() * fp64::fs_Two();
 static_assert(Result > fp64(6.0));
 ```
 

@@ -8,7 +8,7 @@ namespace NMib::NNumeric
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 	DMibFloatConstexpr TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::CInternalFloat::CInternalFloat()
 	{
-		*this = fs_0();
+		*this = fs_Zero();
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
@@ -16,7 +16,7 @@ namespace NMib::NNumeric
 	{
 		static auto s_Value = []
 			{
-				CInternalFloat Temp = fs_2();
+				CInternalFloat Temp = fs_Two();
 				Temp.f_LogNFull();
 				return Temp;
 			}
@@ -30,7 +30,7 @@ namespace NMib::NNumeric
 	{
 		static auto s_Value = []
 			{
-				CInternalFloat Temp = fs_1();
+				CInternalFloat Temp = fs_One();
 				Temp.f_Div(fs_LogE_2());
 				return Temp;
 			}
@@ -59,7 +59,7 @@ namespace NMib::NNumeric
 	{
 		static auto s_Value = []
 			{
-				CInternalFloat Temp = fs_1();
+				CInternalFloat Temp = fs_One();
 				Temp.f_Div(fs_LogE_10());
 				return Temp;
 			}
@@ -88,7 +88,7 @@ namespace NMib::NNumeric
 	{
 		static auto s_Value = []
 			{
-				CInternalFloat Temp = fs_1();
+				CInternalFloat Temp = fs_One();
 				Temp.f_Div(fs_Log2_10());
 				return Temp;
 			}
@@ -98,21 +98,21 @@ namespace NMib::NNumeric
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::CInternalFloat::fs_E() -> CInternalFloat
+	auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::CInternalFloat::fs_EulersNumber() -> CInternalFloat
 	{
 		static auto s_Value = []
 			{
 				CInternalFloat StaticRet;
-				CInternalFloat Temp = fs_1();
-				CInternalFloat Div = fs_1();
-				CInternalFloat Temp2 = fs_0();
+				CInternalFloat Temp = fs_One();
+				CInternalFloat Div = fs_One();
+				CInternalFloat Temp2 = fs_Zero();
 				CInternalFloat Prev = Temp2;
 				CSignedMantissa Current = 1;
 
 				while (!Prev.f_AlmostEqual(Temp, 0))
 				{
 					Prev = Temp;
-					Temp2 = fs_1();
+					Temp2 = fs_One();
 					Temp2.f_Div(Div);
 					Temp.f_Add(Temp2);
 					++Current;
@@ -135,20 +135,20 @@ namespace NMib::NNumeric
 				// Calculate Euler with Kluyver's series
 #if 0
 
-				CInternalFloat Result = fs_0();
-				CInternalFloat Prev = fs_1();
+				CInternalFloat Result = fs_Zero();
+				CInternalFloat Prev = fs_One();
 
 				CSignedMantissa k = 1;
-				CInternalFloat Ak = fs_0_5();
-				CInternalFloat Temp = fs_0();
-				CInternalFloat Temp2 = fs_0();
-				CInternalFloat Temp3 = fs_0();
-				CInternalFloat Temp4 = fs_0();
-				CInternalFloat TempSum = fs_0();
+				CInternalFloat Ak = fs_Half();
+				CInternalFloat Temp = fs_Zero();
+				CInternalFloat Temp2 = fs_Zero();
+				CInternalFloat Temp3 = fs_Zero();
+				CInternalFloat Temp4 = fs_Zero();
+				CInternalFloat TempSum = fs_Zero();
 
 				umint const kMax = 2000;
 				CInternalFloat *kHist = DMibNew CInternalFloat[kMax];
-				kHist[0] = fs_0_5();
+				kHist[0] = fs_Half();
 
 				while (!Prev.f_AlmostEqual(Result, 0) && k < kMax)
 				{
@@ -162,11 +162,11 @@ namespace NMib::NNumeric
 
 					++k;
 
-					Temp2 = fs_1();
+					Temp2 = fs_One();
 					Temp3.f_FromInt(k + 1);
 					Temp2.Div(Temp3);
 
-					TempSum = fs_0();
+					TempSum = fs_Zero();
 					for (CSignedMantissa i = 1; i < k; ++i)
 					{
 						Temp3.f_FromInt(fg_Convert<CSignedMantissa>(k - i));
@@ -184,30 +184,30 @@ namespace NMib::NNumeric
 
 				delete [] kHist;
 
-				Result.Add(fs_1());
+				Result.Add(fs_One());
 				Result.Sub(fs_LogE_2());
 
 				return Result;
 #else
-				CInternalFloat Result = fs_0();
-				CInternalFloat ResultSum = fs_0();
-				CInternalFloat Prev = fs_1();
+				CInternalFloat Result = fs_Zero();
+				CInternalFloat ResultSum = fs_Zero();
+				CInternalFloat Prev = fs_One();
 
 				aint k = 1;
-				CInternalFloat Ak = fs_0_5();
-				CInternalFloat Temp = fs_0();
-				CInternalFloat Temp2 = fs_0();
-				CInternalFloat Temp3 = fs_0();
-				CInternalFloat Temp4 = fs_0();
-				CInternalFloat TempSum = fs_0();
+				CInternalFloat Ak = fs_Half();
+				CInternalFloat Temp = fs_Zero();
+				CInternalFloat Temp2 = fs_Zero();
+				CInternalFloat Temp3 = fs_Zero();
+				CInternalFloat Temp4 = fs_Zero();
+				CInternalFloat TempSum = fs_Zero();
 
 				aint n = 16;
 
 				CInternalFloat Sum;
-				CInternalFloat Sum2 = fs_1();
+				CInternalFloat Sum2 = fs_One();
 				for (aint i = 1; i < n; ++i)
 				{
-					Temp = fs_1();
+					Temp = fs_One();
 					Temp2.f_FromInt(i);
 					Sum2.f_Mul(Temp2);
 					Temp.f_Div(Temp2);
@@ -216,7 +216,7 @@ namespace NMib::NNumeric
 
 				aint const kMax = 2000;
 				CInternalFloat *kHist = DMibNew CInternalFloat[kMax];
-				kHist[0] = fs_0_5();
+				kHist[0] = fs_Half();
 
 				CInternalFloat StaticRet;
 
@@ -243,11 +243,11 @@ namespace NMib::NNumeric
 
 					++k;
 
-					Temp2 = fs_1();
+					Temp2 = fs_One();
 					Temp3.f_FromInt(k + 1);
 					Temp2.f_Div(Temp3);
 
-					TempSum = fs_0();
+					TempSum = fs_Zero();
 					for (aint i = 1; i < k; ++i)
 					{
 						Temp3.f_FromInt(k - i);
@@ -282,8 +282,8 @@ namespace NMib::NNumeric
 				CInternalFloat StaticRet;
 				CInternalFloat Temp = CInternalFloat::fs_FromInt(5);
 				Temp.f_Sqrt();
-				Temp.f_Add(fs_1());
-				Temp.f_Mul(fs_0_5());
+				Temp.f_Add(fs_One());
+				Temp.f_Mul(fs_Half());
 				StaticRet = Temp;
 				return StaticRet;
 			}
@@ -300,13 +300,13 @@ namespace NMib::NNumeric
 				// PI = 16 * atan(1/5) - 4 * atan(1/239)
 
 				CInternalFloat StaticRet;
-				CInternalFloat Temp = fs_1();
+				CInternalFloat Temp = fs_One();
 				CInternalFloat Temp2 = CInternalFloat::fs_FromInt(5);
 				Temp.f_Div(Temp2);
 				Temp.f_ATan();
 				Temp2 = CInternalFloat::fs_FromInt(16);
 				Temp.f_Mul(Temp2);
-				Temp2 = fs_1();
+				Temp2 = fs_One();
 				CInternalFloat Temp3 = CInternalFloat::fs_FromInt(239);
 				Temp2.f_Div(Temp3);
 				Temp2.f_ATan();
@@ -327,7 +327,7 @@ namespace NMib::NNumeric
 		static auto s_Value = []
 			{
 				CInternalFloat StaticRet;
-				CInternalFloat Temp = fs_2();
+				CInternalFloat Temp = fs_Two();
 				Temp.f_Sqrt();
 				StaticRet = Temp;
 				return StaticRet;
@@ -699,12 +699,12 @@ namespace NMib::NNumeric
 		Squared.f_Mul(Result);
 
 		CInternalFloat Term = Result;
-		CInternalFloat Two = TCFloat::fs_2();
-		CInternalFloat Temp = TCFloat::fs_0();
+		CInternalFloat Two = TCFloat::fs_Two();
+		CInternalFloat Temp = TCFloat::fs_Zero();
 		constexpr CExponent ExponentBias = (CExponent(1) << (aint)(mc_InternalExponentBits - 1)) - CExponent(1);
 		constexpr CExponent MinExponent = -ExponentBias;
 
-		CInternalFloat Divisor = TCFloat::fs_1();
+		CInternalFloat Divisor = TCFloat::fs_One();
 		CInternalFloat LastResult = fs_Inf();
 		while ((Term.m_Mantissa != 0 || Term.m_Exponent != MinExponent) && !Result.f_AlmostEqual(LastResult, 0))
 		{
@@ -755,7 +755,7 @@ namespace NMib::NNumeric
 					}
 				}
 				else
-					*this = TCFloat::fs_0();
+					*this = TCFloat::fs_Zero();
 			}
 		}
 	}
@@ -907,10 +907,10 @@ namespace NMib::NNumeric
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 	DMibFloatConstexpr void TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::CInternalFloat::f_LogNFull()
 	{
-		CInternalFloat ResultCalc = TCFloat::fs_1();
+		CInternalFloat ResultCalc = TCFloat::fs_One();
 		CInternalFloat Temp = *this;
-		CInternalFloat One = TCFloat::fs_1();
-		//CInternalFloat Two = TCFloat::fs_2();
+		CInternalFloat One = TCFloat::fs_One();
+		//CInternalFloat Two = TCFloat::fs_Two();
 		CInternalFloat Temp2 = *this;
 
 		//y = (x-1) / (x + 1);
@@ -924,9 +924,9 @@ namespace NMib::NNumeric
 		CInternalFloat YMul = YSqr;
 		CSignedMantissa DivInt = 3;
 		CInternalFloat Y2 = Y;
-		Y2.f_Mul(TCFloat::fs_2());
-		CInternalFloat Prev = TCFloat::fs_0();
-		CInternalFloat Result = TCFloat::fs_1();
+		Y2.f_Mul(TCFloat::fs_Two());
+		CInternalFloat Prev = TCFloat::fs_Zero();
+		CInternalFloat Result = TCFloat::fs_One();
 
 		while (!Result.f_AlmostEqual(Prev, 0))
 		{
@@ -957,7 +957,7 @@ namespace NMib::NNumeric
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 	DMibFloatConstexpr void TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::CInternalFloat::f_LogN()
 	{
-		CInternalFloat Temp = TCFloat::fs_0();
+		CInternalFloat Temp = TCFloat::fs_Zero();
 		Temp.m_Mantissa = m_Mantissa;
 		Temp.m_Sign = m_Sign;
 		Temp.m_Exponent = 0;
@@ -972,7 +972,7 @@ namespace NMib::NNumeric
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
 	DMibFloatConstexpr void TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::CInternalFloat::f_Log10()
 	{
-		CInternalFloat Temp = TCFloat::fs_0();
+		CInternalFloat Temp = TCFloat::fs_Zero();
 		Temp.m_Mantissa = m_Mantissa;
 		Temp.m_Sign = m_Sign;
 		Temp.m_Exponent = 0;
@@ -1005,7 +1005,7 @@ namespace NMib::NNumeric
 			CInternalFloat Temp = *this;
 			Temp.m_Sign = 0;
 			Temp.f_Exp2();
-			*this = TCFloat::fs_1();
+			*this = TCFloat::fs_One();
 			f_Div(Temp);
 			return;
 		}
@@ -1018,10 +1018,10 @@ namespace NMib::NNumeric
 		Temp.f_Mul(fs_LogE_2());
 
 		CInternalFloat Org = Temp;
-		CInternalFloat Result = TCFloat::fs_0();
+		CInternalFloat Result = TCFloat::fs_Zero();
 
-		CInternalFloat Div = fs_2();
-		CInternalFloat Temp2 = fs_0();
+		CInternalFloat Div = fs_Two();
+		CInternalFloat Temp2 = fs_Zero();
 		CInternalFloat Prev = Div;
 		CSignedMantissa Current = 2;
 		Temp.f_Mul(Org);
@@ -1041,7 +1041,7 @@ namespace NMib::NNumeric
 			Div.f_Mul(CInternalFloat::fs_FromInt(Current));
 		}
 		Result.f_Add(Org);
-		Result.f_Add(TCFloat::fs_1());
+		Result.f_Add(TCFloat::fs_One());
 
 		bool bOverflow = false;
 		auto ExponentAdd = IntegerPart.f_ToInt(bOverflow);
@@ -1057,7 +1057,7 @@ namespace NMib::NNumeric
 			*this = fs_NegQNan();
 		CInternalFloat Temp = *this;
 		CInternalFloat Prev = Temp;
-		CInternalFloat Two = fs_2();
+		CInternalFloat Two = fs_Two();
 		Temp.f_Div(Two);
 
 		while (!Prev.f_AlmostEqual(Temp, 1) || (Prev.m_MantissaBits < (t_MantissaBits + 2) && !Prev.f_AlmostEqual(Temp, 0)))
