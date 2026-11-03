@@ -34,9 +34,8 @@
 namespace NMib
 {
 	template <typename t_CType, aint _Power>
-	class TCGetPowerTwoMinusOne
+	struct TCGetPowerTwoMinusOne
 	{
-	public:
 		static t_CType const Number = (((t_CType)1) << (_Power - 1)) + ((((t_CType)1) << (_Power - 1)) - 1);
 	};
 }
@@ -49,10 +48,10 @@ namespace NMib::NNumeric
 	};
 
 	template <typename t_CFloat>
-	class TCFloatFromNative;
+	struct TCFloatFromNative;
 
 	template <typename t_CFloat>
-	class TCFloatConstants;
+	struct TCFloatConstants;
 
 	template
 	<
@@ -64,14 +63,15 @@ namespace NMib::NNumeric
 		, bool t_bDummyOptimize = true
 		, typename t_CIntegerStorage = NTraits::TCIntFromSizeLarger<(t_SignBits + t_ExponentBits + t_MantissaBits + t_PaddingBits + 7) / 8>
 	>
-	class
+	struct
 #ifdef DCompiler_clang
 	alignas(fg_MaxConstexpr(alignof(t_CImplicitFloat), alignof(t_CIntegerStorage)))
 #endif
 	TCFloat
 	{
+	private:
 		template <typename t_CFloat>
-		friend class TCFloatConstants;
+		friend struct TCFloatConstants;
 		using CDoubleIntegerRaw = NTraits::TCLargerType<t_CIntegerStorage>;
 
 		static_assert(sizeof(CDoubleIntegerRaw) > sizeof(t_CIntegerStorage));
@@ -367,9 +367,8 @@ namespace NMib::NNumeric
 		DMibFloatConstexpr TCFloat operator + () const;
 
 		// Internal float working with 8 extra bits of precission
-		class CInternalFloat
+		struct CInternalFloat
 		{
-		public:
 			using CMantissa = CDoubleUnsignedInteger;
 			using CSignedMantissa = CDoubleInteger;
 			using CExponent = CDoubleInteger;
@@ -664,14 +663,13 @@ namespace NMib::NTraits::NPrivate
 namespace NMib
 {
 	template <typename t_CType0, aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	class TCConvert
+	struct TCConvert
 	<
 		t_CType0
 		, NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>
 		, NTraits::TCCompileTimeConstant<int, (NTraits::cIsFloat<t_CType0>)>
 	>
 	{
-	public:
 		template <typename t_CType>
 		static DMibFloatInlineS t_CType0 fs_Convert(t_CType const &_From)
 		{
@@ -682,14 +680,13 @@ namespace NMib
 	};
 
 	template <typename t_CType0, aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	class TCConvert
+	struct TCConvert
 	<
 		t_CType0
 		, NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>
 		, NTraits::TCCompileTimeConstant<int, (!NTraits::cIsFloat<t_CType0>)>
 	>
 	{
-	public:
 		template <typename t_CType>
 		static DMibFloatInlineS t_CType0 fs_Convert(t_CType const &_From)
 		{
@@ -698,9 +695,8 @@ namespace NMib
 	};
 
 	template <typename t_CType0, aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	class TCConvert<NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>, t_CType0>
+	struct TCConvert<NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>, t_CType0>
 	{
-	public:
 		using CFloatType = NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>;
 
 		template <typename t_CType>
@@ -728,13 +724,12 @@ namespace NMib
 		, bool t_bDummyOptimize
 		, typename t_CIntegerStorage
 	>
-	class TCConvert
+	struct TCConvert
 	<
 		NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>
 		, NNumeric::TCInt<t_CUpper, t_CLower>
 	>
 	{
-	public:
 		using CFloatType = NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>;
 		static DMibFloatInlineS CFloatType fs_Convert(NNumeric::TCInt<t_CUpper, t_CLower> const &_From)
 		{

@@ -23,7 +23,7 @@ DMibTraitsImplementSizePair(fp128, fp256);
 namespace NMib::NNumeric
 {
 #ifndef DMibFloattDoInline_NoExternTemplate
-	extern template class TCFloat<1, 19, 236, 0>;
-	extern template class TCFloat<1, 19, 236, 0, CNoImplicit, 0>;
+	extern template struct TCFloat<1, 19, 236, 0>;
+	extern template struct TCFloat<1, 19, 236, 0, CNoImplicit, 0>;
 #endif
 }

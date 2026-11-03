@@ -74,9 +74,8 @@ namespace NMib::NNumeric
 namespace NMib::NStream
 {
 	template <typename t_CStream, typename t_CType, typename t_CIdent, t_CType t_DefaultValue>
-	class TCBinaryStreamTypeReference<t_CStream, NNumeric::TCTaggedInteger<t_CType, t_CIdent, t_DefaultValue>>
+	struct TCBinaryStreamTypeReference<t_CStream, NNumeric::TCTaggedInteger<t_CType, t_CIdent, t_DefaultValue>>
 	{
-	public:
 		static constexpr void fs_Feed(t_CStream &_Stream, NNumeric::TCTaggedInteger<t_CType, t_CIdent, t_DefaultValue> const &_Data)
 		{
 			_Stream << _Data.mp_Data;

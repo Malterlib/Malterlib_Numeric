@@ -7,9 +7,8 @@ namespace NMib
 	{
 #define DMibMathImplementNativeFloat(d_Native, d_TCFloat) \
 	template <>\
-	class TCFloatFromNative<d_Native>\
+	struct TCFloatFromNative<d_Native>\
 	{\
-	public:\
 		using CType = d_TCFloat;\
 	};
 
@@ -17,21 +16,20 @@ namespace NMib
 		DMibMathImplementNativeFloat(pfp64, CIEEEFloat64);
 
 		template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-		class TCFloatFromNative<NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>>
+		struct TCFloatFromNative<NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>>
 		{
-		public:
 			using CType = NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>;
 		};
 
 		template <typename t_CFloat>
-		class TCFloatTraits : public TCFloatTraits<typename TCFloatFromNative<t_CFloat>::CType>
+		struct TCFloatTraits : public TCFloatTraits<typename TCFloatFromNative<t_CFloat>::CType>
 		{
-		public:
 		};
 
 		template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-		class TCFloatTraits<NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>>
+		struct TCFloatTraits<NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>>
 		{
+		private:
 			using CFloat = NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>;
 
 		public:
@@ -45,23 +43,20 @@ namespace NMib
 		};
 
 		template <typename t_CFloat>
-		class TCNativeFromFloat
+		struct TCNativeFromFloat
 		{
-		public:
 			TCConditional<TCFloatTraits<t_CFloat>::ms_bHasFundamentalFloat, typename TCFloatTraits<t_CFloat>::CFundamentalFloat, t_CFloat> CType;
 		};
 
 		template <typename t_CFloat0, typename t_CFloat1>
-		class TCFloatCombinedType
+		struct TCFloatCombinedType
 		{
-		public:
 			using CType = NTraits::TCLargestType<t_CFloat0, t_CFloat1>;
 		};
 
 		template <typename t_CFloat, void (&f_Init)(t_CFloat &_Float)>
-		class TCFloatConstant
+		struct TCFloatConstant
 		{
-		public:
 			constexpr TCFloatConstant(EAggregateInitialization _Init)
 				: mp_bInit{}
 				, mp_Float{_Init}
@@ -83,8 +78,9 @@ namespace NMib
 		};
 
 		template <typename t_CFloat>
-		class TCFloatConstants
+		struct TCFloatConstants
 		{
+		private:
 			static void fg_Init_0(t_CFloat &_Float)
 			{
 				using CFloat = typename TCFloatFromNative<t_CFloat>::CType;

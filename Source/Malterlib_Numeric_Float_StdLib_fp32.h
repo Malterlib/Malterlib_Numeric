@@ -640,9 +640,8 @@ namespace NMib
 {
 #define DMibDirectConvert(d_FromType, d_ToType) \
 	template <>\
-	class TCConvert< d_ToType, d_FromType>\
+	struct TCConvert< d_ToType, d_FromType>\
 	{\
-	public:\
 		static DMibFloatConstexpr inline_small d_ToType fs_Convert( d_FromType const &_From)\
 		{\
 			return _From;\
@@ -655,9 +654,8 @@ namespace NMib
 
 #define DMibMathFloatConvertNative(d_FromType, d_ToType) \
 	template <>\
-	class TCConvert< d_ToType, d_FromType>\
+	struct TCConvert< d_ToType, d_FromType>\
 	{\
-	public:\
 		static DMibFloatConstexpr inline_small d_ToType fs_Convert( d_FromType const &_From)\
 		{\
 			return _From.f_Get();\
@@ -670,18 +668,16 @@ namespace NMib
 
 #define DMibMathFloatConvertInt(d_FromType, d_ToType) \
 	template <>\
-	class TCConvert< d_ToType, d_FromType >\
+	struct TCConvert< d_ToType, d_FromType >\
 	{\
-	public:\
 		static DMibFloatConstexpr inline_small d_ToType fs_Convert(d_FromType const &_From)\
 		{\
 			return NMib::fg_Convert<d_ToType>(_From.f_ToInt());\
 		}\
 	};\
 	template <>\
-	class TCConvert< d_FromType, d_ToType >\
+	struct TCConvert< d_FromType, d_ToType >\
 	{\
-	public:\
 		static DMibFloatConstexpr inline_small d_FromType fs_Convert(d_ToType const &_From)\
 		{\
 			d_FromType Ret;\

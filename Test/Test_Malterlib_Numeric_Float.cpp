@@ -29,9 +29,8 @@ using namespace NMib::NNumeric;
 using namespace NMib::NTraits;
 namespace
 {
-	class CFloat_Tests : public NMib::NTest::CTest
+	struct CFloat_Tests : public NMib::NTest::CTest
 	{
-	public:
 		template <template <typename t_CFloat00> class t_CTestTemplate>
 		static void fs_TestAll()
 		{
@@ -95,9 +94,8 @@ namespace
 		}
 
 		template <typename t_CFloat>
-		class CConstants
+		struct CConstants
 		{
-		public:
 			using CSmallestType = TCSmallestType<t_CFloat, fp64>;
 
 			template <typename t_CFrom>
@@ -137,9 +135,8 @@ namespace
 		};
 
 		template <typename t_CFloat>
-		class CMultiply
+		struct CMultiply
 		{
-		public:
 			void operator () ()
 			{
 				DMibExpect(t_CFloat::fs_2() * t_CFloat::fs_2(), ==, t_CFloat(fp64(4.0)));
@@ -165,9 +162,8 @@ namespace
 		};
 
 		template <typename t_CFloat>
-		class CDivide
+		struct CDivide
 		{
-		public:
 			void operator () ()
 			{
 				DMibExpect(t_CFloat::fs_2() / t_CFloat::fs_2(), ==, t_CFloat(fp64(1.0)));
@@ -198,9 +194,8 @@ namespace
 		};
 
 		template <typename t_CFloat>
-		class CInvalid
+		struct CInvalid
 		{
-		public:
 			void operator () ()
 			{
 				DMibTest(DMibExpr(t_CFloat::fs_LimitMax()) * DMibExpr(t_CFloat::fs_2()) == DMibExpr(t_CFloat::fs_Inf()))(ETestFlag_NoValues);
@@ -209,13 +204,11 @@ namespace
 		};
 
 		template <typename t_CFloatLeft>
-		class TCConversion
+		struct TCConversion
 		{
-		public:
 			template <typename t_CFloatRight>
-			class CInner
+			struct CInner
 			{
-			public:
 				void operator () ()
 				{
 #define DTestConversion(d_Name, d_Value, d_ExpectBiggerOperator, d_ExpectBigger, d_ExpectSmallerOperator, d_ExpectSmaller) \
@@ -274,9 +267,8 @@ namespace
 		};
 
 		template <typename t_CFloat>
-		class CConversion
+		struct CConversion
 		{
-		public:
 			using CSmallestType = TCSmallestType<t_CFloat, fp64>;
 
 			template <typename t_CFrom>

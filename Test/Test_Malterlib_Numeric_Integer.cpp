@@ -4,9 +4,8 @@
 using namespace NMib::NNumeric;
 namespace
 {
-	class CInt_Tests : public NMib::NTest::CTest
+	struct CInt_Tests : public NMib::NTest::CTest
 	{
-	public:
 		template <template <typename t_CFloat00> class t_CTestTemplate>
 		void f_TestAll()
 		{
@@ -137,41 +136,40 @@ namespace
 		}
 
 		template <typename t_CInt>
-		class CAddition
+		struct CAddition
 		{
-			void f_Test()
-			{
-				DMibTest(DMibExpr(t_CInt(0) + t_CInt(1)) == DMibExpr(t_CInt(1)));
-			}
-
-		public:
 			void operator () ()
 			{
 				DMibTestPath("Addition");
 				this->f_Test();
 			}
+
+		private:
+			void f_Test()
+			{
+				DMibTest(DMibExpr(t_CInt(0) + t_CInt(1)) == DMibExpr(t_CInt(1)));
+			}
 		};
 
 		template <typename t_CInt>
-		class CSubtration
+		struct CSubtration
 		{
-			void f_Test()
-			{
-				DMibTest(DMibExpr(t_CInt(2) - t_CInt(1)) == DMibExpr(t_CInt(1)));
-			}
-
-		public:
 			void operator () ()
 			{
 				DMibTestPath("Subtraction");
 				this->f_Test();
 			}
+
+		private:
+			void f_Test()
+			{
+				DMibTest(DMibExpr(t_CInt(2) - t_CInt(1)) == DMibExpr(t_CInt(1)));
+			}
 		};
 
 		template <typename t_CInt>
-		class CShiftLeft
+		struct CShiftLeft
 		{
-		public:
 			void operator () ()
 			{
 				umint nBits = sizeof(t_CInt) * 8;
@@ -223,9 +221,8 @@ namespace
 		};
 
 		template <typename t_CInt>
-		class CShiftRight
+		struct CShiftRight
 		{
-		public:
 			void operator () ()
 			{
 				umint nBits = sizeof(t_CInt) * 8;

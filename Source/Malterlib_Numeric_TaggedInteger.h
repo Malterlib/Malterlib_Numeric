@@ -41,7 +41,7 @@ namespace NMib::NNumeric
 
 	private:
 		template <typename t_CStream, typename t_CType2>
-		friend class NStream::TCBinaryStreamTypeReference;
+		friend struct NStream::TCBinaryStreamTypeReference;
 
 		t_CType mp_Data;
 	};
