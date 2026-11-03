@@ -127,7 +127,7 @@ namespace NMib::NNumeric
 		}
 
 		template <typename tf_CType>
-		constexpr TCInt(tf_CType const &_Convert, TCEnableIf<NTraits::cIsFundamental<tf_CType>, NPrivate::CDummy &> _pDummy = NPrivate::CDummy::ms_Dummy)
+		constexpr TCInt(tf_CType const &_Convert, TCEnableIf<NTraits::cIsFundamental<tf_CType>, NPrivate::CDummy &> _Dummy = NPrivate::CDummy::ms_Dummy)
 			: m_Upper(((_Convert >> (fg_Min((umint)mc_LowerBits, sizeof(tf_CType) * 8) - 1)) >> 1))
 			, m_Lower((_Convert & fg_BitRange<tf_CType>(0, fg_Min((umint)mc_LowerBits - 1, sizeof(tf_CType) * 8 - 1))))
 		{

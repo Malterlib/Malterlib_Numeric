@@ -289,7 +289,7 @@ namespace
 			return _Type.f_IsNan();
 		}
 
-		static bool fs_IsNan(bool const &_Type)
+		static bool fs_IsNan(bool const &_bType)
 		{
 			return false;
 		}
@@ -303,9 +303,9 @@ namespace
 			return NMib::NStr::CStr::fs_ToStr(_Type);
 		}
 
-		static bool fs_GetName(bool const &_Type)
+		static bool fs_GetName(bool const &_bType)
 		{
-			return NMib::NStr::CStr::fs_ToStr(_Type);
+			return NMib::NStr::CStr::fs_ToStr(_bType);
 		}
 
 		template <typename tf_CFloat>
@@ -327,9 +327,9 @@ namespace
 			return _Float.f_AlmostEqual(_Float2, _nBits);
 		}
 
-		static bool fs_AlmostEqual(bool _Float, bool _Float2, umint _nBits)
+		static bool fs_AlmostEqual(bool _bFloat, bool _bFloat2, umint _nBits)
 		{
-			return _Float == _Float2;
+			return _bFloat == _bFloat2;
 		}
 
 		template <typename tf_CFloat, typename tf_CEmulateFloat>
