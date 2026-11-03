@@ -387,14 +387,11 @@ namespace NMib::NNumeric
 
 			DMibFloatConstexpr CInternalFloat();
 
-			enum
-			{
-				EInternalMaxMantissaBits        = sizeof(CMantissa) * 8 - 3
-				, EInternalHalfMantissaBits     = EInternalMaxMantissaBits / 2
-				, EInternalMaxQuadMantissaBits  = sizeof(CQuadMantissa) * 8 - 2
-				, EInternalHalfQuadMantissaBits = EInternalMaxQuadMantissaBits / 2
-				, EInternalExponentBits         = sizeof(CExponent) * 8 - 2
-			};
+			static constexpr aint mc_InternalMaxMantissaBits = sizeof(CMantissa) * 8 - 3;
+			static constexpr aint mc_InternalHalfMantissaBits = mc_InternalMaxMantissaBits / 2;
+			static constexpr aint mc_InternalMaxQuadMantissaBits = sizeof(CQuadMantissa) * 8 - 2;
+			static constexpr aint mc_InternalHalfQuadMantissaBits = mc_InternalMaxQuadMantissaBits / 2;
+			static constexpr aint mc_InternalExponentBits = sizeof(CExponent) * 8 - 2;
 
 			static CInternalFloat fs_LogE_2();
 			static CInternalFloat fs_Log2_E();

@@ -94,7 +94,7 @@ namespace
 		}
 
 		template <typename t_CFloat>
-		struct CConstants
+		struct TCConstants
 		{
 			using CSmallestType = TCSmallestType<t_CFloat, fp64>;
 
@@ -135,7 +135,7 @@ namespace
 		};
 
 		template <typename t_CFloat>
-		struct CMultiply
+		struct TCMultiply
 		{
 			void operator () ()
 			{
@@ -162,7 +162,7 @@ namespace
 		};
 
 		template <typename t_CFloat>
-		struct CDivide
+		struct TCDivide
 		{
 			void operator () ()
 			{
@@ -194,7 +194,7 @@ namespace
 		};
 
 		template <typename t_CFloat>
-		struct CInvalid
+		struct TCInvalid
 		{
 			void operator () ()
 			{
@@ -207,7 +207,7 @@ namespace
 		struct TCConversion
 		{
 			template <typename t_CFloatRight>
-			struct CInner
+			struct TCInner
 			{
 				void operator () ()
 				{
@@ -267,7 +267,7 @@ namespace
 		};
 
 		template <typename t_CFloat>
-		struct CConversion
+		struct TCConversionTest
 		{
 			using CSmallestType = TCSmallestType<t_CFloat, fp64>;
 
@@ -279,7 +279,7 @@ namespace
 
 			void operator () ()
 			{
-				fs_TestAll<TCConversion<t_CFloat>::template CInner>();
+				fs_TestAll<TCConversion<t_CFloat>::template TCInner>();
 			}
 		};
 
@@ -890,25 +890,25 @@ namespace
 		{
 			DMibTestSuite("Invalid")
 			{
-				fs_TestAll<CInvalid>();
+				fs_TestAll<TCInvalid>();
 			};
 #ifdef DMibDebug
 			DMibTestSuite("Conversion")
 			{
-				fs_TestAll<CConversion>();
+				fs_TestAll<TCConversionTest>();
 			};
 #endif
 			DMibTestCategory("Constants")
 			{
-				fs_TestAll<CConstants>();
+				fs_TestAll<TCConstants>();
 			};
 			DMibTestSuite("Multiply")
 			{
-				fs_TestAll<CMultiply>();
+				fs_TestAll<TCMultiply>();
 			};
 			DMibTestSuite("Divide")
 			{
-				fs_TestAll<CDivide>();
+				fs_TestAll<TCDivide>();
 			};
 #if !defined(DCompiler_MSVC_Workaround) && !defined(DCompiler_clang_cl) && !defined(DPlatformFamily_Linux)
 			DMibTestCategory("Compare Emulate")

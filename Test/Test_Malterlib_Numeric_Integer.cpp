@@ -136,7 +136,7 @@ namespace
 		}
 
 		template <typename t_CInt>
-		struct CAddition
+		struct TCAddition
 		{
 			void operator () ()
 			{
@@ -152,7 +152,7 @@ namespace
 		};
 
 		template <typename t_CInt>
-		struct CSubtration
+		struct TCSubtration
 		{
 			void operator () ()
 			{
@@ -168,7 +168,7 @@ namespace
 		};
 
 		template <typename t_CInt>
-		struct CShiftLeft
+		struct TCShiftLeft
 		{
 			void operator () ()
 			{
@@ -221,7 +221,7 @@ namespace
 		};
 
 		template <typename t_CInt>
-		struct CShiftRight
+		struct TCShiftRight
 		{
 			void operator () ()
 			{
@@ -321,11 +321,11 @@ namespace
 			};
 			DMibTestCategoryFlags("Shift Left", ETestCategoryFlag_DisableValues | ETestCategoryFlag_Tests)
 			{
-				this->f_TestAll<CShiftLeft>();
+				this->f_TestAll<TCShiftLeft>();
 			};
 			DMibTestCategoryFlags("Shift Right", ETestCategoryFlag_DisableValues | ETestCategoryFlag_Tests)
 			{
-				this->f_TestAll<CShiftRight>();
+				this->f_TestAll<TCShiftRight>();
 			};
 			{
 				[[maybe_unused]] int32 Test = 0xffffffff;
@@ -406,12 +406,12 @@ namespace
 
 			DMibTestSuite("Addition")
 			{
-				this->f_TestAll<CAddition>();
+				this->f_TestAll<TCAddition>();
 			};
 
 			DMibTestSuite("Subtration")
 			{
-				this->f_TestAll<CSubtration>();
+				this->f_TestAll<TCSubtration>();
 			};
 
 			DMibTestSuite("Limits")

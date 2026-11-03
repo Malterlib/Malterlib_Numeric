@@ -34,9 +34,9 @@ namespace NMib
 
 		public:
 			using CStorageInteger = typename CFloat::CInteger;
-			using CStorageInteger_x2 = typename CFloat::CDoubleInteger;
+			using CStorageInteger_X2 = typename CFloat::CDoubleInteger;
 			using CStorageUnsignedInteger = typename CFloat::CUnsignedInteger;
-			using CStorageUnsignedInteger_x2 = typename CFloat::CDoubleUnsignedInteger;
+			using CStorageUnsignedInteger_X2 = typename CFloat::CDoubleUnsignedInteger;
 			using CFundamentalFloat = typename CFloat::CImplicitFloat;
 
 			bool const static ms_bHasFundamentalFloat = !NTraits::cIsSame<CFundamentalFloat, NMib::NNumeric::CNoImplicit>;

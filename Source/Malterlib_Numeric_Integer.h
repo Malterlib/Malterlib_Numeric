@@ -30,24 +30,18 @@ namespace NMib::NNumeric
 		t_CUpper m_Upper{};
 		t_CLower m_Lower{};
 #endif
-		enum
-		{
-			ELowerBits       = sizeof(t_CLower) * 8
-			, ELowerFirstBit = 0
-			, ELowerLastBit  = ELowerBits - 1
-			, EUpperBits     = sizeof(t_CUpper) * 8
-			, EUpperFirstBit = ELowerBits
-			, EUpperLastBit  = EUpperBits + ELowerBits - 1
-			, EAllBits       = ELowerBits + EUpperBits
-			, EHalfBits      = EAllBits / 2
-		};
+		static constexpr aint mc_LowerBits = sizeof(t_CLower) * 8;
+		static constexpr aint mc_LowerFirstBit = 0;
+		static constexpr aint mc_LowerLastBit = mc_LowerBits - 1;
+		static constexpr aint mc_UpperBits = sizeof(t_CUpper) * 8;
+		static constexpr aint mc_UpperFirstBit = mc_LowerBits;
+		static constexpr aint mc_UpperLastBit = mc_UpperBits + mc_LowerBits - 1;
+		static constexpr aint mc_AllBits = mc_LowerBits + mc_UpperBits;
+		static constexpr aint mc_HalfBits = mc_AllBits / 2;
 
-		static_assert(EUpperBits >= ELowerBits, "If non symmetric sizes for constituent integers, the upper integer needs to be the larger one, otherwise sign extension wont work");
+		static_assert(mc_UpperBits >= mc_LowerBits, "If non symmetric sizes for constituent integers, the upper integer needs to be the larger one, otherwise sign extension wont work");
 
-		enum
-		{
-			ESize = sizeof(t_CUpper) + sizeof(t_CLower)
-		};
+		static constexpr aint mc_Size = sizeof(t_CUpper) + sizeof(t_CLower);
 
 		using CInt = TCInt;
 		struct CConstants;
@@ -93,12 +87,12 @@ namespace NMib::NNumeric
 				if constexpr (sizeof(t_CUpper2) > sizeof(TCInt))
 				{
 					TCConditional<NTraits::cIsSigned<t_CUpper>, NTraits::TCSigned<t_CUpper2>, t_CUpper2> Temp{*this};
-					Temp >>= CType::ELowerBits - 1;
+					Temp >>= CType::mc_LowerBits - 1;
 					Temp >>= 1;
 					Ret.m_Upper = t_CUpper2(Temp);
 				}
 				else
-					Ret.m_Upper = t_CUpper2((((*this) >> uaint(CType::ELowerBits - 1) >> uaint(1))));
+					Ret.m_Upper = t_CUpper2((((*this) >> uaint(CType::mc_LowerBits - 1) >> uaint(1))));
 				if constexpr (sizeof(t_CLower2) > sizeof(TCInt))
 				{
 					TCConditional<NTraits::cIsSigned<t_CUpper>, NTraits::TCSigned<t_CLower2>, t_CLower2> Temp{*this};
@@ -106,7 +100,7 @@ namespace NMib::NNumeric
 				}
 				else
 				{
-					constexpr TCInt And1 = fg_BitRange<TCInt>(0, CType::ELowerBits - 1);
+					constexpr TCInt And1 = fg_BitRange<TCInt>(0, CType::mc_LowerBits - 1);
 					Ret.m_Lower = t_CLower2(((*this) & And1));
 				}
 				return Ret;
@@ -126,7 +120,7 @@ namespace NMib::NNumeric
 			{
 				t_CInt Ret;
 				using CLargestInt = NTraits::TCLargestType<t_CInt, t_CUpper>;
-				Ret = t_CInt((CLargestInt(m_Upper) << (fg_Min((umint)ELowerBits, sizeof(CLargestInt) * 8) - 1)) << 1);
+				Ret = t_CInt((CLargestInt(m_Upper) << (fg_Min((umint)mc_LowerBits, sizeof(CLargestInt) * 8) - 1)) << 1);
 				Ret = Ret | t_CInt(m_Lower);
 				return Ret;
 			}
@@ -134,8 +128,8 @@ namespace NMib::NNumeric
 
 		template <typename t_CType>
 		constexpr TCInt(t_CType const &_Convert, TCEnableIf<NTraits::cIsFundamental<t_CType>, NPrivate::CDummy &> _pDummy = NPrivate::CDummy::ms_Dummy)
-			: m_Upper(((_Convert >> (fg_Min((umint)ELowerBits, sizeof(t_CType) * 8) - 1)) >> 1))
-			, m_Lower((_Convert & fg_BitRange<t_CType>(0, fg_Min((umint)ELowerBits - 1, sizeof(t_CType) * 8 - 1))))
+			: m_Upper(((_Convert >> (fg_Min((umint)mc_LowerBits, sizeof(t_CType) * 8) - 1)) >> 1))
+			, m_Lower((_Convert & fg_BitRange<t_CType>(0, fg_Min((umint)mc_LowerBits - 1, sizeof(t_CType) * 8 - 1))))
 		{
 		}
 
@@ -148,8 +142,8 @@ namespace NMib::NNumeric
 		template <typename t_CType>
 		constexpr TCInt &operator = (t_CType const &_Convert)
 		{
-			constexpr t_CType And1 = fg_BitRange<t_CType>(0, fg_Min((umint)ELowerBits - 1, sizeof(t_CType) * 8 - 1));
-			m_Upper = t_CUpper(((_Convert >> (fg_Min((umint)ELowerBits, sizeof(t_CType) * 8) - 1)) >> 1));
+			constexpr t_CType And1 = fg_BitRange<t_CType>(0, fg_Min((umint)mc_LowerBits - 1, sizeof(t_CType) * 8 - 1));
+			m_Upper = t_CUpper(((_Convert >> (fg_Min((umint)mc_LowerBits, sizeof(t_CType) * 8) - 1)) >> 1));
 			m_Lower = t_CLower((_Convert & And1));
 			return *this;
 		}
@@ -315,8 +309,8 @@ namespace NMib::NNumeric
 
 			m_Upper += _Value.m_Upper;
 
-			constexpr t_CLower HalfLower = (t_CLower(1) << (aint)(ELowerLastBit));
-			constexpr t_CLower And1 = ((t_CLower(1) << (aint)(ELowerLastBit)) - t_CLower(1));
+			constexpr t_CLower HalfLower = (t_CLower(1) << (aint)(mc_LowerLastBit));
+			constexpr t_CLower And1 = ((t_CLower(1) << (aint)(mc_LowerLastBit)) - t_CLower(1));
 			if (Lower0 >= HalfLower)
 			{
 				if (Lower1 >= HalfLower)
@@ -388,27 +382,27 @@ namespace NMib::NNumeric
 			TCInt Result = CConstants::mc_Zero;
 
 			// // Multiply half the bits first
-			t_CLower And0 = DMibBitRangeOne(0, (ELowerBits / 2) - 1, mc_LowerOne);
+			t_CLower And0 = DMibBitRangeOne(0, (mc_LowerBits / 2) - 1, mc_LowerOne);
 			t_CLower Lower0 = Val0.m_Lower & And0;
 			t_CLower Lower1 = Val1.m_Lower & And0;
 
 			Result += TCInt(mc_UpperZero, (Lower0) * (Lower1));
 
-			t_CLower Lower2 = Val1.m_Lower >> (ELowerBits / 2);
-			t_CLower Lower3 = Val0.m_Lower >> (ELowerBits / 2);
+			t_CLower Lower2 = Val1.m_Lower >> (mc_LowerBits / 2);
+			t_CLower Lower3 = Val0.m_Lower >> (mc_LowerBits / 2);
 
 			// Multily lower with upper bits and add
-			Result += TCInt(mc_UpperZero, Lower0 * Lower2) << uaint(ELowerBits / 2);
-			Result += TCInt(mc_UpperZero, Lower1 * Lower3) << uaint(ELowerBits / 2);
+			Result += TCInt(mc_UpperZero, Lower0 * Lower2) << uaint(mc_LowerBits / 2);
+			Result += TCInt(mc_UpperZero, Lower1 * Lower3) << uaint(mc_LowerBits / 2);
 
 			// // Multily upper bits and add
-			Result += TCInt(mc_UpperZero, Lower2 * Lower3) << uaint(ELowerBits);
+			Result += TCInt(mc_UpperZero, Lower2 * Lower3) << uaint(mc_LowerBits);
 
 			// Multiply Upper by lower and let it owerflow
 			Result += TCInt(Val0.m_Upper * Val1.m_Lower, mc_LowerZero);
 			Result += TCInt(Val1.m_Upper * Val0.m_Lower, mc_LowerZero);
 			if constexpr (sizeof(t_CLower) < sizeof(t_CUpper))
-				Result += TCInt(Val0.m_Upper * Val1.m_Upper, 0) << ELowerBits;
+				Result += TCInt(Val0.m_Upper * Val1.m_Upper, 0) << mc_LowerBits;
 
 			if (NTraits::cIsSigned<t_CUpper> && bSigned)
 				*this = -Result;
@@ -445,16 +439,16 @@ namespace NMib::NNumeric
 			// Do dumb divide
 			TCInt Result = Val0;
 			TCInt Remainder = CConstants::mc_Zero;
-			t_CUpper UppestBit = mc_UpperOne << (EUpperBits - 1);
+			t_CUpper UppestBit = mc_UpperOne << (mc_UpperBits - 1);
 			int i = 0;
-			for (; i < (ELowerBits + EUpperBits); ++i)
+			for (; i < (mc_LowerBits + mc_UpperBits); ++i)
 			{
 				if ((Result.m_Upper & UppestBit) != mc_UpperZero)
 					break;
 				Result <<= 1;
 			}
 
-			for (; i < (ELowerBits + EUpperBits); ++i)
+			for (; i < (mc_LowerBits + mc_UpperBits); ++i)
 			{
 				Remainder <<= 1;
 				if ((Result.m_Upper & UppestBit) != mc_UpperZero)
@@ -493,16 +487,16 @@ namespace NMib::NNumeric
 			// Do dumb divide
 			TCInt Result = Val0;
 			TCInt Remainder = CConstants::mc_Zero;
-			t_CUpper UppestBit = mc_UpperOne << (EUpperBits - 1);
+			t_CUpper UppestBit = mc_UpperOne << (mc_UpperBits - 1);
 			int i = 0;
-			for (; i < (ELowerBits + EUpperBits); ++i)
+			for (; i < (mc_LowerBits + mc_UpperBits); ++i)
 			{
 				if ((Result.m_Upper & UppestBit) != mc_UpperZero)
 					break;
 				Result <<= 1;
 			}
 
-			for (; i < (ELowerBits + EUpperBits); ++i)
+			for (; i < (mc_LowerBits + mc_UpperBits); ++i)
 			{
 				Remainder <<= 1;
 				if ((Result.m_Upper & UppestBit) != mc_UpperZero)
@@ -527,7 +521,7 @@ namespace NMib::NNumeric
 		template <typename t_CDummy>
 		constexpr inline_small void fp_SignExtendUpper(TCEnableIf<NTraits::cIsSigned<t_CDummy> && NTraits::cIsFundamental<t_CDummy>, t_CDummy> *_pDummy = nullptr)
 		{
-			m_Upper = (m_Upper >> (EUpperBits - 1)) >> 1;
+			m_Upper = (m_Upper >> (mc_UpperBits - 1)) >> 1;
 		}
 
 		template <typename t_CDummy>
@@ -539,30 +533,30 @@ namespace NMib::NNumeric
 		template <typename t_CDummy>
 		constexpr inline_small void fp_SignExtendUpper(TCEnableIf<NTraits::cIsSigned<t_CDummy> && !NTraits::cIsFundamental<t_CDummy>, t_CDummy> *_pDummy = nullptr)
 		{
-			m_Upper = m_Upper >> (EUpperBits);
+			m_Upper = m_Upper >> (mc_UpperBits);
 		}
 
 		constexpr TCInt &operator >>= (uaint _Value)
 		{
 			aint Value = _Value;
 			t_CUpper Upper0 = m_Upper;
-			if (Value < aint(ELowerBits))
+			if (Value < aint(mc_LowerBits))
 				m_Lower >>= Value;
 			else
 				m_Lower = mc_LowerZero;
 
-			if (Value < aint(EUpperBits))
+			if (Value < aint(mc_UpperBits))
 				m_Upper >>= Value;
 			else
 				fp_SignExtendUpper<t_CUpper>();
 
 			if (Value > 0)
 			{
-				if (aint(ELowerBits) >= Value)
-					m_Lower |= t_CLower(Upper0 << (aint(ELowerBits) - Value));
+				if (aint(mc_LowerBits) >= Value)
+					m_Lower |= t_CLower(Upper0 << (aint(mc_LowerBits) - Value));
 				else
 				{
-					auto Bits = Value - aint(ELowerBits);
+					auto Bits = Value - aint(mc_LowerBits);
 					auto Test = (Upper0 >> (Bits - 1)) >> 1;
 					m_Lower |= t_CLower(Test);
 				}
@@ -575,22 +569,22 @@ namespace NMib::NNumeric
 		{
 			aint Value = _Value;
 			t_CLower Lower0 = m_Lower;
-			if (Value < aint(ELowerBits))
+			if (Value < aint(mc_LowerBits))
 				m_Lower <<= Value;
 			else
 				m_Lower = mc_LowerZero;
 
-			if (Value < aint(EUpperBits))
+			if (Value < aint(mc_UpperBits))
 				m_Upper <<= Value;
 			else
 				m_Upper = mc_UpperZero;
 
 			if (Value > 0)
 			{
-				if (Value < aint(ELowerBits))
-					m_Upper |= t_CUpper(Lower0 >> (aint(ELowerBits) - Value));
-				else if (Value - aint(ELowerBits) < aint(EUpperBits))
-					m_Upper |= t_CUpper(Lower0) << (Value - aint(ELowerBits));
+				if (Value < aint(mc_LowerBits))
+					m_Upper |= t_CUpper(Lower0 >> (aint(mc_LowerBits) - Value));
+				else if (Value - aint(mc_LowerBits) < aint(mc_UpperBits))
+					m_Upper |= t_CUpper(Lower0) << (Value - aint(mc_LowerBits));
 			}
 
 			return *this;
