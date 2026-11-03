@@ -112,55 +112,10 @@ namespace NMib::NNumeric
 
 		CDataStorage mp_DataStorage;
 
-		static inline_always CDataStorage fsp_IntegerDataToStorage(CUnsignedInteger _Data)
-		{
-			if constexpr (mc_bIsBuiltIn)
-			{
-				CDataStorage Return;
-				memcpy(&Return, &_Data, sizeof(Return));
-				return Return;
-			}
-			else
-				return _Data;
-		}
-
-		inline_always void fp_SetIntegerData(CUnsignedInteger _Data)
-		{
-			if constexpr (mc_bIsBuiltIn)
-				memcpy(&mp_DataStorage, &_Data, sizeof(mp_DataStorage));
-			else
-				mp_DataStorage = _Data;
-		}
-
-		inline_always CUnsignedInteger fp_GetIntegerData() const
-		{
-			if constexpr (mc_bIsBuiltIn)
-			{
-				CUnsignedInteger Return;
-				memcpy(&Return, &mp_DataStorage, sizeof(Return));
-				return Return;
-			}
-			else
-				return mp_DataStorage;
-		}
-
-		inline_always CUnsignedInteger fp_GetMaskedIntegerData() const
-		{
-			if constexpr (mc_bIsBuiltIn)
-			{
-				CUnsignedInteger Return;
-				memcpy(&Return, &mp_DataStorage, sizeof(Return));
-
-				if constexpr (mc_PaddingBits != 0)
-					return Return & ((CUnsignedInteger(1) << mc_PaddingBitPos) - CUnsignedInteger(1));
-				else
-					return Return;
-			}
-			else if constexpr (mc_PaddingBits != 0)
-				return mp_DataStorage & ((CUnsignedInteger(1) << mc_PaddingBitPos) - CUnsignedInteger(1));
-			else
-				return mp_DataStorage;
-		}
+		static inline_always CDataStorage fsp_IntegerDataToStorage(CUnsignedInteger _Data);
+		inline_always void fp_SetIntegerData(CUnsignedInteger _Data);
+		inline_always CUnsignedInteger fp_GetIntegerData() const;
+		inline_always CUnsignedInteger fp_GetMaskedIntegerData() const;
 
 		/************************************************************************************************\
 		||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
@@ -577,15 +532,11 @@ namespace NMib::NNumeric
 
 		DMibFloatConstexpr bool operator == (CImplicitFloat const &_Right) const noexcept
 			requires (mc_bIsBuiltIn)
-		{
-			return f_Get() == _Right;
-		}
+		;
 
 		DMibFloatConstexpr COrdering_Partial operator <=> (CImplicitFloat const &_Right) const noexcept
 			requires (mc_bIsBuiltIn)
-		{
-			return f_Get() <=> _Right;
-		}
+		;
 
 		DMibFloatConstexpr explicit operator bool () const;
 	};
@@ -668,12 +619,7 @@ namespace NMib
 	>
 	{
 		template <typename tf_CType>
-		static DMibFloatInlineS t_CType0 fs_Convert(tf_CType const &_From)
-		{
-			using CRetType = typename NNumeric::TCFloatFromNative<t_CType0>::CType;
-			CRetType Ret = _From;
-			return (t_CType0 const &)Ret;
-		}
+		static DMibFloatInlineS t_CType0 fs_Convert(tf_CType const &_From);
 	};
 
 	template <typename t_CType0, aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
@@ -685,10 +631,7 @@ namespace NMib
 	>
 	{
 		template <typename tf_CType>
-		static DMibFloatInlineS t_CType0 fs_Convert(tf_CType const &_From)
-		{
-			return fg_Convert<t_CType0>(_From.f_ToInt());
-		}
+		static DMibFloatInlineS t_CType0 fs_Convert(tf_CType const &_From);
 	};
 
 	template <typename t_CType0, aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
@@ -697,16 +640,10 @@ namespace NMib
 		using CFloatType = NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>;
 
 		template <typename tf_CType>
-		static DMibFloatInlineS TCDisableIf<NTraits::cIsFloat<tf_CType>, CFloatType> fs_Convert(tf_CType const &_From)
-		{
-			return CFloatType::fs_FromInt(_From);
-		}
+		static DMibFloatInlineS TCDisableIf<NTraits::cIsFloat<tf_CType>, CFloatType> fs_Convert(tf_CType const &_From);
 
 		template <typename tf_CType>
-		static DMibFloatInlineS TCEnableIf<NTraits::cIsFloat<tf_CType>, CFloatType> fs_Convert(tf_CType const &_From)
-		{
-			return CFloatType(((typename NNumeric::TCFloatFromNative<tf_CType>::CType const &)_From));
-		}
+		static DMibFloatInlineS TCEnableIf<NTraits::cIsFloat<tf_CType>, CFloatType> fs_Convert(tf_CType const &_From);
 	};
 
 	template
@@ -728,10 +665,7 @@ namespace NMib
 	>
 	{
 		using CFloatType = NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>;
-		static DMibFloatInlineS CFloatType fs_Convert(NNumeric::TCInt<t_CUpper, t_CLower> const &_From)
-		{
-			return CFloatType::fs_FromInt(_From);
-		}
+		static DMibFloatInlineS CFloatType fs_Convert(NNumeric::TCInt<t_CUpper, t_CLower> const &_From);
 	};
 }
 
