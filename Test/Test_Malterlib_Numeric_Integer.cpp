@@ -6,131 +6,131 @@ namespace
 {
 	struct CInt_Tests : public NMib::NTest::CTest
 	{
-		template <template <typename t_CFloat00> class t_CTestTemplate>
+		template <template <typename t_CFloat00> class tf_TCTestTemplate>
 		void f_TestAll()
 		{
 			{
 				DMibTestPath("int8");
-				t_CTestTemplate<int8>()();
+				tf_TCTestTemplate<int8>()();
 			}
 			{
 				DMibTestPath("int16");
-				t_CTestTemplate<int16>()();
+				tf_TCTestTemplate<int16>()();
 			}
 			{
 				DMibTestPath("int32");
-				t_CTestTemplate<int32>()();
+				tf_TCTestTemplate<int32>()();
 			}
 			{
 				DMibTestPath("int64");
-				t_CTestTemplate<int64>()();
+				tf_TCTestTemplate<int64>()();
 			}
 			{
 				DMibTestPath("int80");
-				t_CTestTemplate<int80>()();
+				tf_TCTestTemplate<int80>()();
 			}
 			{
 				DMibTestPath("int96");
-				t_CTestTemplate<int96>()();
+				tf_TCTestTemplate<int96>()();
 			}
 			{
 				DMibTestPath("int128");
-				t_CTestTemplate<int128>()();
+				tf_TCTestTemplate<int128>()();
 			}
 			{
 				DMibTestPath("int160");
-				t_CTestTemplate<int160>()();
+				tf_TCTestTemplate<int160>()();
 			}
 			{
 				DMibTestPath("int192");
-				t_CTestTemplate<int192>()();
+				tf_TCTestTemplate<int192>()();
 			}
 			{
 				DMibTestPath("int256");
-				t_CTestTemplate<int256>()();
+				tf_TCTestTemplate<int256>()();
 			}
 			{
 				DMibTestPath("int320");
-				t_CTestTemplate<int320>()();
+				tf_TCTestTemplate<int320>()();
 			}
 			{
 				DMibTestPath("int384");
-				t_CTestTemplate<int384>()();
+				tf_TCTestTemplate<int384>()();
 			}
 			{
 				DMibTestPath("int512");
-				t_CTestTemplate<int512>()();
+				tf_TCTestTemplate<int512>()();
 			}
 			{
 				DMibTestPath("int1024");
-				t_CTestTemplate<int1024>()();
+				tf_TCTestTemplate<int1024>()();
 			}
 #if 0
 			{
 				DMibTestPath("int2048");
-				t_CTestTemplate<int2048>()();
+				tf_TCTestTemplate<int2048>()();
 			}
 			{
 				DMibTestPath("int4096");
-				t_CTestTemplate<int4096>()();
+				tf_TCTestTemplate<int4096>()();
 			}
 #endif
 			{
 				DMibTestPath("uint8");
-				t_CTestTemplate<uint8>()();
+				tf_TCTestTemplate<uint8>()();
 			}
 			{
 				DMibTestPath("uint16");
-				t_CTestTemplate<uint16>()();
+				tf_TCTestTemplate<uint16>()();
 			}
 			{
 				DMibTestPath("uint32");
-				t_CTestTemplate<uint32>()();
+				tf_TCTestTemplate<uint32>()();
 			}
 			{
 				DMibTestPath("uint64");
-				t_CTestTemplate<uint64>()();
+				tf_TCTestTemplate<uint64>()();
 			}
 			{
 				DMibTestPath("uint80");
-				t_CTestTemplate<uint80>()();
+				tf_TCTestTemplate<uint80>()();
 			}
 			{
 				DMibTestPath("uint96");
-				t_CTestTemplate<uint96>()();
+				tf_TCTestTemplate<uint96>()();
 			}
 			{
 				DMibTestPath("uint128");
-				t_CTestTemplate<uint128>()();
+				tf_TCTestTemplate<uint128>()();
 			}
 			{
 				DMibTestPath("uint160");
-				t_CTestTemplate<uint160>()();
+				tf_TCTestTemplate<uint160>()();
 			}
 			{
 				DMibTestPath("uint192");
-				t_CTestTemplate<uint192>()();
+				tf_TCTestTemplate<uint192>()();
 			}
 			{
 				DMibTestPath("uint256");
-				t_CTestTemplate<uint256>()();
+				tf_TCTestTemplate<uint256>()();
 			}
 			{
 				DMibTestPath("uint512");
-				t_CTestTemplate<uint512>()();
+				tf_TCTestTemplate<uint512>()();
 			}
 			{
 				DMibTestPath("uint1024");
-				t_CTestTemplate<uint1024>()();
+				tf_TCTestTemplate<uint1024>()();
 			}
 #if 0
 			{
 				DMibTestPath("uint2048");
-				t_CTestTemplate<uint2048>()();
+				tf_TCTestTemplate<uint2048>()();
 			}
 			{
 				DMibTestPath("uint4096");
-				t_CTestTemplate<uint4096>()();
+				tf_TCTestTemplate<uint4096>()();
 			}
 #endif
 		}

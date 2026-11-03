@@ -54,7 +54,7 @@ namespace NMib
 			using CType = NTraits::TCLargestType<t_CFloat0, t_CFloat1>;
 		};
 
-		template <typename t_CFloat, void (&f_Init)(t_CFloat &_Float)>
+		template <typename t_CFloat, void (&t_fInit)(t_CFloat &_Float)>
 		struct TCFloatConstant
 		{
 			constexpr TCFloatConstant(EAggregateInitialization _Init)
@@ -70,7 +70,7 @@ namespace NMib
 				if (!mp_bInit)
 				{
 					mp_Float.f_Construct();
-					f_Init(*mp_Float);
+					t_fInit(*mp_Float);
 					mp_bInit = true;
 				}
 				return *mp_Float;
@@ -274,487 +274,489 @@ namespace NMib
 		template <typename t_CFloat>
 		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fsp_Init_NegSNan> TCFloatConstants<t_CFloat>::ms_NegSNan = {DAggregateInit};
 
-		template <typename t_CFloat>
-		static t_CFloat &fg_FInPlace0(t_CFloat &_Float)
+		template <typename tf_CFloat>
+		static tf_CFloat &fg_FInPlace0(tf_CFloat &_Float)
 		{
-			_Float = TCFloatConstants<t_CFloat>::ms_0;
+			_Float = TCFloatConstants<tf_CFloat>::ms_0;
 		}
 
-		template <typename t_CFloat>
-		static t_CFloat &fg_FInPlace0_5(t_CFloat &_Float);
-		template <typename t_CFloat>
-		static t_CFloat &fg_FInPlace1(t_CFloat &_Float);
-		template <typename t_CFloat>
-		static t_CFloat &fg_FInPlace2(t_CFloat &_Float);
-		template <typename t_CFloat>
-		static t_CFloat &fg_FInPlaceE(t_CFloat &_Float);
-		template <typename t_CFloat>
-		static t_CFloat &fg_FInPlacePi(t_CFloat &_Float);
-		template <typename t_CFloat>
-		static t_CFloat &fg_FInPlaceSqrt2(t_CFloat &_Float);
-		template <typename t_CFloat>
-		static t_CFloat &fg_FInPlaceEuler(t_CFloat &_Float);
-		template <typename t_CFloat>
-		static t_CFloat &fg_FInPlaceGoldenRatio(t_CFloat &_Float);
-		template <typename t_CFloat>
-		static t_CFloat &fg_FInPlaceLog10_2(t_CFloat &_Float);
-		template <typename t_CFloat>
-		static t_CFloat &fg_FInPlaceLog2_10(t_CFloat &_Float);
-		template <typename t_CFloat>
-		static t_CFloat &fg_FInPlaceLog10_E(t_CFloat &_Float);
-		template <typename t_CFloat>
-		static t_CFloat &fg_FInPlaceLogE_10(t_CFloat &_Float);
-		template <typename t_CFloat>
-		static t_CFloat &fg_FInPlaceLog2_E(t_CFloat &_Float);
-		template <typename t_CFloat>
-		static t_CFloat &fg_FInPlaceLogE_2(t_CFloat &_Float);
-		template <typename t_CFloat>
-		static t_CFloat &fg_FInPlaceInf(t_CFloat &_Float);
-		template <typename t_CFloat>
-		static t_CFloat &fg_FInPlaceNegInf(t_CFloat &_Float);
-		template <typename t_CFloat>
-		static t_CFloat &fg_FInPlaceQNan(t_CFloat &_Float);
-		template <typename t_CFloat>
-		static t_CFloat &fg_FInPlaceSNan(t_CFloat &_Float);
-		template <typename t_CFloat>
-		static t_CFloat &fg_FInPlaceNegQNan(t_CFloat &_Float);
-		template <typename t_CFloat>
-		static t_CFloat &fg_FInPlaceNegSNan(t_CFloat &_Float);
-		template <typename t_CFloat, typename t_CInteger>
-		static t_CFloat &fg_FInPlaceFromInt(t_CFloat &_Float, t_CInteger const &_Int);
-		template <typename t_CFloat, typename t_CIntegerSign, typename t_CIntegerExponent, typename t_CMantissoExponent>
-		t_CFloat &fg_FInPlaceFromAllRound(t_CFloat &_Float, t_CIntegerSign const &_Sign, t_CIntegerExponent const &_Exponent, t_CMantissoExponent const &_Mantissa, aint _AtleastExtraBits);
+		template <typename tf_CFloat>
+		static tf_CFloat &fg_FInPlace0_5(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		static tf_CFloat &fg_FInPlace1(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		static tf_CFloat &fg_FInPlace2(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		static tf_CFloat &fg_FInPlaceE(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		static tf_CFloat &fg_FInPlacePi(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		static tf_CFloat &fg_FInPlaceSqrt2(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		static tf_CFloat &fg_FInPlaceEuler(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		static tf_CFloat &fg_FInPlaceGoldenRatio(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		static tf_CFloat &fg_FInPlaceLog10_2(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		static tf_CFloat &fg_FInPlaceLog2_10(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		static tf_CFloat &fg_FInPlaceLog10_E(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		static tf_CFloat &fg_FInPlaceLogE_10(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		static tf_CFloat &fg_FInPlaceLog2_E(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		static tf_CFloat &fg_FInPlaceLogE_2(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		static tf_CFloat &fg_FInPlaceInf(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		static tf_CFloat &fg_FInPlaceNegInf(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		static tf_CFloat &fg_FInPlaceQNan(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		static tf_CFloat &fg_FInPlaceSNan(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		static tf_CFloat &fg_FInPlaceNegQNan(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		static tf_CFloat &fg_FInPlaceNegSNan(tf_CFloat &_Float);
+		template <typename tf_CFloat, typename tf_CInteger>
+		static tf_CFloat &fg_FInPlaceFromInt(tf_CFloat &_Float, tf_CInteger const &_Int);
+		template <typename tf_CFloat, typename tf_CIntegerSign, typename tf_CIntegerExponent, typename tf_CMantissoExponent>
+		auto fg_FInPlaceFromAllRound(tf_CFloat &_Float, tf_CIntegerSign const &_Sign, tf_CIntegerExponent const &_Exponent, tf_CMantissoExponent const &_Mantissa, aint _AtleastExtraBits)
+			-> tf_CFloat &
+		;
 
-		template <typename t_CFloat>
-		t_CFloat fg_F0()
+		template <typename tf_CFloat>
+		tf_CFloat fg_F0()
 		{
-			return TCFloatConstants<t_CFloat>::ms_0;
+			return TCFloatConstants<tf_CFloat>::ms_0;
 		}
 
-		template <typename t_CFloat>
-		t_CFloat fg_F0_5()
+		template <typename tf_CFloat>
+		tf_CFloat fg_F0_5()
 		{
-			return TCFloatConstants<t_CFloat>::ms_0_5;
+			return TCFloatConstants<tf_CFloat>::ms_0_5;
 		}
 
-		template <typename t_CFloat>
-		t_CFloat fg_F1()
+		template <typename tf_CFloat>
+		tf_CFloat fg_F1()
 		{
-			return TCFloatConstants<t_CFloat>::ms_1;
+			return TCFloatConstants<tf_CFloat>::ms_1;
 		}
 
-		template <typename t_CFloat>
-		t_CFloat fg_F2()
+		template <typename tf_CFloat>
+		tf_CFloat fg_F2()
 		{
-			return TCFloatConstants<t_CFloat>::ms_2;
+			return TCFloatConstants<tf_CFloat>::ms_2;
 		}
 
-		template <typename t_CFloat>
-		t_CFloat fg_FE()
+		template <typename tf_CFloat>
+		tf_CFloat fg_FE()
 		{
-			return TCFloatConstants<t_CFloat>::ms_E;
+			return TCFloatConstants<tf_CFloat>::ms_E;
 		}
 
-		template <typename t_CFloat>
-		t_CFloat fg_FPi()
+		template <typename tf_CFloat>
+		tf_CFloat fg_FPi()
 		{
-			return TCFloatConstants<t_CFloat>::ms_Pi;
+			return TCFloatConstants<tf_CFloat>::ms_Pi;
 		}
 
-		template <typename t_CFloat>
-		t_CFloat fg_FSqrt2()
+		template <typename tf_CFloat>
+		tf_CFloat fg_FSqrt2()
 		{
-			return TCFloatConstants<t_CFloat>::ms_Sqrt2;
+			return TCFloatConstants<tf_CFloat>::ms_Sqrt2;
 		}
 
-		template <typename t_CFloat>
-		t_CFloat fg_FEuler()
+		template <typename tf_CFloat>
+		tf_CFloat fg_FEuler()
 		{
-			return TCFloatConstants<t_CFloat>::ms_Euler;
+			return TCFloatConstants<tf_CFloat>::ms_Euler;
 		}
 
-		template <typename t_CFloat>
-		t_CFloat fg_FGoldenRatio()
+		template <typename tf_CFloat>
+		tf_CFloat fg_FGoldenRatio()
 		{
-			return TCFloatConstants<t_CFloat>::ms_GoldenRatio;
+			return TCFloatConstants<tf_CFloat>::ms_GoldenRatio;
 		}
 
-		template <typename t_CFloat>
-		t_CFloat fg_FLog10_2()
+		template <typename tf_CFloat>
+		tf_CFloat fg_FLog10_2()
 		{
-			return TCFloatConstants<t_CFloat>::ms_Log10_2;
+			return TCFloatConstants<tf_CFloat>::ms_Log10_2;
 		}
 
-		template <typename t_CFloat>
-		t_CFloat fg_FLog2_10()
+		template <typename tf_CFloat>
+		tf_CFloat fg_FLog2_10()
 		{
-			return TCFloatConstants<t_CFloat>::ms_Log2_10;
+			return TCFloatConstants<tf_CFloat>::ms_Log2_10;
 		}
 
-		template <typename t_CFloat>
-		t_CFloat fg_FLog10_E()
+		template <typename tf_CFloat>
+		tf_CFloat fg_FLog10_E()
 		{
-			return TCFloatConstants<t_CFloat>::ms_Log10_E;
+			return TCFloatConstants<tf_CFloat>::ms_Log10_E;
 		}
 
-		template <typename t_CFloat>
-		t_CFloat fg_FLogE_10()
+		template <typename tf_CFloat>
+		tf_CFloat fg_FLogE_10()
 		{
-			return TCFloatConstants<t_CFloat>::ms_LogE_10;
+			return TCFloatConstants<tf_CFloat>::ms_LogE_10;
 		}
 
-		template <typename t_CFloat>
-		t_CFloat fg_FLog2_E()
+		template <typename tf_CFloat>
+		tf_CFloat fg_FLog2_E()
 		{
-			return TCFloatConstants<t_CFloat>::ms_Log2_E;
+			return TCFloatConstants<tf_CFloat>::ms_Log2_E;
 		}
 
-		template <typename t_CFloat>
-		t_CFloat fg_FLogE_2()
+		template <typename tf_CFloat>
+		tf_CFloat fg_FLogE_2()
 		{
-			return TCFloatConstants<t_CFloat>::ms_LogE_2;
+			return TCFloatConstants<tf_CFloat>::ms_LogE_2;
 		}
 
-		template <typename t_CFloat>
-		t_CFloat fg_FInf()
+		template <typename tf_CFloat>
+		tf_CFloat fg_FInf()
 		{
-			return TCFloatConstants<t_CFloat>::ms_Inf;
+			return TCFloatConstants<tf_CFloat>::ms_Inf;
 		}
 
-		template <typename t_CFloat>
-		t_CFloat fg_FNegInf()
+		template <typename tf_CFloat>
+		tf_CFloat fg_FNegInf()
 		{
-			return TCFloatConstants<t_CFloat>::ms_NegInf;
+			return TCFloatConstants<tf_CFloat>::ms_NegInf;
 		}
 
-		template <typename t_CFloat>
-		t_CFloat fg_FQNan()
+		template <typename tf_CFloat>
+		tf_CFloat fg_FQNan()
 		{
-			return TCFloatConstants<t_CFloat>::ms_QNan;
+			return TCFloatConstants<tf_CFloat>::ms_QNan;
 		}
 
-		template <typename t_CFloat>
-		t_CFloat fg_FSNan()
+		template <typename tf_CFloat>
+		tf_CFloat fg_FSNan()
 		{
-			return TCFloatConstants<t_CFloat>::ms_SNan;
+			return TCFloatConstants<tf_CFloat>::ms_SNan;
 		}
 
-		template <typename t_CFloat>
-		t_CFloat fg_FNegQNan()
+		template <typename tf_CFloat>
+		tf_CFloat fg_FNegQNan()
 		{
-			return TCFloatConstants<t_CFloat>::ms_NegQNan;
+			return TCFloatConstants<tf_CFloat>::ms_NegQNan;
 		}
 
-		template <typename t_CFloat>
-		t_CFloat fg_FNegSNan()
+		template <typename tf_CFloat>
+		tf_CFloat fg_FNegSNan()
 		{
-			return TCFloatConstants<t_CFloat>::ms_NegSNan;
+			return TCFloatConstants<tf_CFloat>::ms_NegSNan;
 		}
 
-		template <typename t_CFloat, typename t_CInteger>
-		static t_CFloat fg_FFromInt(t_CInteger const &_Int);
-		template <typename t_CFloat, typename t_CIntegerSign, typename t_CIntegerExponent, typename t_CMantissoExponent>
-		t_CFloat fg_FFromAllRound(t_CIntegerSign const &_Sign, t_CIntegerExponent const &_Exponent, t_CMantissoExponent const &_Mantissa, aint _AtleastExtraBits);
+		template <typename tf_CFloat, typename tf_CInteger>
+		static tf_CFloat fg_FFromInt(tf_CInteger const &_Int);
+		template <typename tf_CFloat, typename tf_CIntegerSign, typename tf_CIntegerExponent, typename tf_CMantissoExponent>
+		tf_CFloat fg_FFromAllRound(tf_CIntegerSign const &_Sign, tf_CIntegerExponent const &_Exponent, tf_CMantissoExponent const &_Mantissa, aint _AtleastExtraBits);
 
-		template <typename t_CFloat>
-		typename TCFloatTraits<t_CFloat>::CStorageInteger fg_FSignBits(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		typename TCFloatTraits<t_CFloat>::CStorageInteger fg_FExponentBits(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		typename TCFloatTraits<t_CFloat>::CStorageInteger fg_FMantissaBits(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		typename TCFloatTraits<t_CFloat>::CStorageInteger fg_FSign(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		typename TCFloatTraits<t_CFloat>::CStorageInteger fg_FExponent(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		typename TCFloatTraits<t_CFloat>::CStorageInteger fg_FMantissa(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		typename TCFloatTraits<t_CFloat>::CStorageInteger fg_FDenormalizedMantissa(t_CFloat const &_Float);
+		template <typename tf_CFloat>
+		typename TCFloatTraits<tf_CFloat>::CStorageInteger fg_FSignBits(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		typename TCFloatTraits<tf_CFloat>::CStorageInteger fg_FExponentBits(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		typename TCFloatTraits<tf_CFloat>::CStorageInteger fg_FMantissaBits(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		typename TCFloatTraits<tf_CFloat>::CStorageInteger fg_FSign(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		typename TCFloatTraits<tf_CFloat>::CStorageInteger fg_FExponent(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		typename TCFloatTraits<tf_CFloat>::CStorageInteger fg_FMantissa(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		typename TCFloatTraits<tf_CFloat>::CStorageInteger fg_FDenormalizedMantissa(tf_CFloat const &_Float);
 
-		template <typename t_CFloat>
-		bool fg_FIsNaN(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		bool fg_FIsQNaN(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		bool fg_FIsSNaN(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		bool fg_FIsInfinity(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		bool fg_FIsInvalid(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		bool fg_FIsDenormalized(t_CFloat const &_Float);
+		template <typename tf_CFloat>
+		bool fg_FIsNaN(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		bool fg_FIsQNaN(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		bool fg_FIsSNaN(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		bool fg_FIsInfinity(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		bool fg_FIsInvalid(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		bool fg_FIsDenormalized(tf_CFloat const &_Float);
 
-		template <typename t_CInteger, typename t_CFloat>
-		t_CInteger fg_FToInt(t_CFloat const &_Float);
-		template <typename t_CInteger, typename t_CFloat>
-		t_CInteger fg_FToIntRound(t_CFloat const &_Float);
-		template <typename t_CInteger, typename t_CFloat>
-		t_CInteger fg_FToIntRoundTowardZero(t_CFloat const &_Float);
+		template <typename tf_CInteger, typename tf_CFloat>
+		tf_CInteger fg_FToInt(tf_CFloat const &_Float);
+		template <typename tf_CInteger, typename tf_CFloat>
+		tf_CInteger fg_FToIntRound(tf_CFloat const &_Float);
+		template <typename tf_CInteger, typename tf_CFloat>
+		tf_CInteger fg_FToIntRoundTowardZero(tf_CFloat const &_Float);
 
-		template <typename t_CFloat>
-		typename TCFloatTraits<t_CFloat>::CStorageInteger fg_FToInt(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		typename TCFloatTraits<t_CFloat>::CStorageUnsignedInteger fg_FToUnsignedInt(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		typename TCFloatTraits<t_CFloat>::CStorageInteger fg_FToIntRound(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		typename TCFloatTraits<t_CFloat>::CStorageUnsignedInteger fg_FToUnsignedIntRound(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		typename TCFloatTraits<t_CFloat>::CStorageInteger fg_FToIntRoundTowardZero(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		typename TCFloatTraits<t_CFloat>::CStorageUnsignedInteger fg_FToUnsignedIntRoundTowardZero(t_CFloat const &_Float);
+		template <typename tf_CFloat>
+		typename TCFloatTraits<tf_CFloat>::CStorageInteger fg_FToInt(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		typename TCFloatTraits<tf_CFloat>::CStorageUnsignedInteger fg_FToUnsignedInt(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		typename TCFloatTraits<tf_CFloat>::CStorageInteger fg_FToIntRound(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		typename TCFloatTraits<tf_CFloat>::CStorageUnsignedInteger fg_FToUnsignedIntRound(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		typename TCFloatTraits<tf_CFloat>::CStorageInteger fg_FToIntRoundTowardZero(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		typename TCFloatTraits<tf_CFloat>::CStorageUnsignedInteger fg_FToUnsignedIntRoundTowardZero(tf_CFloat const &_Float);
 
-		template <typename t_CFloat, typename t_CInteger>
-		t_CFloat &fg_FInPlaceSetSignBits(t_CFloat &_Float, t_CInteger const &_Value)
+		template <typename tf_CFloat, typename tf_CInteger>
+		tf_CFloat &fg_FInPlaceSetSignBits(tf_CFloat &_Float, tf_CInteger const &_Value)
 		{
-			using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
+			using CFloat = typename TCFloatFromNative<tf_CFloat>::CType;
 
 			CFloat &Float = (CFloat &)_Float;
 			Float.f_SetSignBits(_Value);
 			return _Float;
 		}
 
-		template <typename t_CFloat, typename t_CInteger>
-		t_CFloat &fg_FInPlaceSetExponentBits(t_CFloat &_Float, t_CInteger const &_Value);
+		template <typename tf_CFloat, typename tf_CInteger>
+		tf_CFloat &fg_FInPlaceSetExponentBits(tf_CFloat &_Float, tf_CInteger const &_Value);
 
-		template <typename t_CFloat, typename t_CInteger>
-		t_CFloat &fg_FInPlaceSetMantissaBits(t_CFloat &_Float, t_CInteger const &_Value);
+		template <typename tf_CFloat, typename tf_CInteger>
+		tf_CFloat &fg_FInPlaceSetMantissaBits(tf_CFloat &_Float, tf_CInteger const &_Value);
 
-		template <typename t_CFloat, typename t_CInteger>
-		t_CFloat &fg_FInPlaceSetSign(t_CFloat &_Float, t_CInteger const &_Value);
+		template <typename tf_CFloat, typename tf_CInteger>
+		tf_CFloat &fg_FInPlaceSetSign(tf_CFloat &_Float, tf_CInteger const &_Value);
 
-		template <typename t_CFloat, typename t_CInteger>
-		t_CFloat &fg_FInPlaceSetExponent(t_CFloat &_Float, t_CInteger const &_Value);
+		template <typename tf_CFloat, typename tf_CInteger>
+		tf_CFloat &fg_FInPlaceSetExponent(tf_CFloat &_Float, tf_CInteger const &_Value);
 
-		template <typename t_CFloat, typename t_CInteger>
-		t_CFloat &fg_FInPlaceSetMantissa(t_CFloat &_Float, t_CInteger const &_Value);
+		template <typename tf_CFloat, typename tf_CInteger>
+		tf_CFloat &fg_FInPlaceSetMantissa(tf_CFloat &_Float, tf_CInteger const &_Value);
 
-		template <typename t_CFloat0, typename t_CFloat1>
-		t_CFloat0 &fg_FInPlaceConvertRoundUp(t_CFloat0 &_Float, t_CFloat1 const &_ConvertFrom);
+		template <typename tf_CFloat0, typename tf_CFloat1>
+		tf_CFloat0 &fg_FInPlaceConvertRoundUp(tf_CFloat0 &_Float, tf_CFloat1 const &_ConvertFrom);
 
-		template <typename t_CFloat0, typename t_CFloat1>
-		t_CFloat0 &fg_FInPlaceConvert(t_CFloat0 &_Float, t_CFloat1 const &_ConvertFrom);
+		template <typename tf_CFloat0, typename tf_CFloat1>
+		tf_CFloat0 &fg_FInPlaceConvert(tf_CFloat0 &_Float, tf_CFloat1 const &_ConvertFrom);
 
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceSin(t_CFloat &_Float);
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceCos(t_CFloat &_Float);
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceTan(t_CFloat &_Float);
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceSinH(t_CFloat &_Float);
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceCosH(t_CFloat &_Float);
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceTanH(t_CFloat &_Float);
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceArcSin(t_CFloat &_Float);
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceArcCos(t_CFloat &_Float);
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceArcTan(t_CFloat &_Float);
-		template <typename t_CFloat0, typename t_CFloat1>
-		t_CFloat0 &fg_FInPlaceArcTan(t_CFloat0 &_Float, t_CFloat1 const &_Source)
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlaceSin(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlaceCos(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlaceTan(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlaceSinH(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlaceCosH(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlaceTanH(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlaceArcSin(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlaceArcCos(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlaceArcTan(tf_CFloat &_Float);
+		template <typename tf_CFloat0, typename tf_CFloat1>
+		tf_CFloat0 &fg_FInPlaceArcTan(tf_CFloat0 &_Float, tf_CFloat1 const &_Source)
 		{
-			return fg_FInPlaceArcTan(_Float, (t_CFloat0)_Source);
+			return fg_FInPlaceArcTan(_Float, (tf_CFloat0)_Source);
 		}
 
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceArcTan(t_CFloat &_Float, t_CFloat const &_Source);
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlaceArcTan(tf_CFloat &_Float, tf_CFloat const &_Source);
 
-		template <typename t_CFloat>
-		t_CFloat &fg_FExpN(t_CFloat &_Float);
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceLogN(t_CFloat &_Float);
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceExp10(t_CFloat &_Float);
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceLog10(t_CFloat &_Float);
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceExp2(t_CFloat &_Float);
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceLog2(t_CFloat &_Float);
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceSqrt(t_CFloat &_Float);
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceSqr(t_CFloat &_Float);
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceFloor(t_CFloat &_Float);
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceFraction(t_CFloat &_Float);
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceCeil(t_CFloat &_Float);
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceAbs(t_CFloat &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FExpN(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlaceLogN(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlaceExp10(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlaceLog10(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlaceExp2(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlaceLog2(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlaceSqrt(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlaceSqr(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlaceFloor(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlaceFraction(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlaceCeil(tf_CFloat &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlaceAbs(tf_CFloat &_Float);
 
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceExp(t_CFloat &_Float, t_CFloat const &_Base);
-		template <typename t_CFloat0, typename t_CFloat1>
-		t_CFloat0 &fg_FInPlaceExp(t_CFloat0 &_Float, t_CFloat1 const &_Base)
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlaceExp(tf_CFloat &_Float, tf_CFloat const &_Base);
+		template <typename tf_CFloat0, typename tf_CFloat1>
+		tf_CFloat0 &fg_FInPlaceExp(tf_CFloat0 &_Float, tf_CFloat1 const &_Base)
 		{
-			return fg_FInPlaceExp(_Float, (t_CFloat0)_Base);
+			return fg_FInPlaceExp(_Float, (tf_CFloat0)_Base);
 		}
 
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceLog(t_CFloat &_Float, t_CFloat const &_Base);
-		template <typename t_CFloat0, typename t_CFloat1>
-		t_CFloat0 &fg_FInPlaceLog(t_CFloat0 &_Float, t_CFloat1 const &_Base)
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlaceLog(tf_CFloat &_Float, tf_CFloat const &_Base);
+		template <typename tf_CFloat0, typename tf_CFloat1>
+		tf_CFloat0 &fg_FInPlaceLog(tf_CFloat0 &_Float, tf_CFloat1 const &_Base)
 		{
-			return fg_FInPlaceLog(_Float, (t_CFloat0)_Base);
+			return fg_FInPlaceLog(_Float, (tf_CFloat0)_Base);
 		}
 
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlacePow(t_CFloat &_Float, t_CFloat const &_Power);
-		template <typename t_CFloat0, typename t_CFloat1>
-		t_CFloat0 &fg_FInPlacePow(t_CFloat0 &_Float, t_CFloat1 const &_Power)
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlacePow(tf_CFloat &_Float, tf_CFloat const &_Power);
+		template <typename tf_CFloat0, typename tf_CFloat1>
+		tf_CFloat0 &fg_FInPlacePow(tf_CFloat0 &_Float, tf_CFloat1 const &_Power)
 		{
-			return fg_FInPlacePow(_Float, (t_CFloat0)_Power);
+			return fg_FInPlacePow(_Float, (tf_CFloat0)_Power);
 		}
 
-		template <typename t_CFloat>
-		t_CFloat &fg_FInPlaceMod(t_CFloat &_Float, t_CFloat const &_Modulu);
-		template <typename t_CFloat0, typename t_CFloat1>
-		t_CFloat0 &fg_FInPlaceMod(t_CFloat0 &_Float, t_CFloat1 const &_Modulu)
+		template <typename tf_CFloat>
+		tf_CFloat &fg_FInPlaceMod(tf_CFloat &_Float, tf_CFloat const &_Modulu);
+		template <typename tf_CFloat0, typename tf_CFloat1>
+		tf_CFloat0 &fg_FInPlaceMod(tf_CFloat0 &_Float, tf_CFloat1 const &_Modulu)
 		{
-			return fg_FInPlaceMod(_Float, (t_CFloat0)_Modulu);
+			return fg_FInPlaceMod(_Float, (tf_CFloat0)_Modulu);
 		}
 
 		// Non-inplace
 
-		template <typename t_CFloat, typename t_CInteger>
-		t_CFloat fg_FSetSignBits(t_CFloat const &_Float, t_CInteger _Value)
+		template <typename tf_CFloat, typename tf_CInteger>
+		tf_CFloat fg_FSetSignBits(tf_CFloat const &_Float, tf_CInteger _Value)
 		{
-			t_CFloat Ret = _Float;
+			tf_CFloat Ret = _Float;
 			fg_FInPlaceSetSignBits(Ret, _Value);
 			return Ret;
 		}
 
-		template <typename t_CFloat, typename t_CInteger>
-		t_CFloat fg_FSetExponentBits(t_CFloat const &_Float, t_CInteger _Value)
+		template <typename tf_CFloat, typename tf_CInteger>
+		tf_CFloat fg_FSetExponentBits(tf_CFloat const &_Float, tf_CInteger _Value)
 		{
-			t_CFloat Ret = _Float;
+			tf_CFloat Ret = _Float;
 			fg_FInPlaceSetExponentBits(Ret, _Value);
 			return Ret;
 		}
 
-		template <typename t_CFloat, typename t_CInteger>
-		t_CFloat fg_FSetMantissaBits(t_CFloat const &_Float, t_CInteger _Value)
+		template <typename tf_CFloat, typename tf_CInteger>
+		tf_CFloat fg_FSetMantissaBits(tf_CFloat const &_Float, tf_CInteger _Value)
 		{
-			t_CFloat Ret = _Float;
+			tf_CFloat Ret = _Float;
 			fg_FInPlaceSetMantissaBits(Ret, _Value);
 			return Ret;
 		}
 
-		template <typename t_CFloat, typename t_CInteger>
-		t_CFloat fg_FSetSign(t_CFloat const &_Float, t_CInteger _Value)
+		template <typename tf_CFloat, typename tf_CInteger>
+		tf_CFloat fg_FSetSign(tf_CFloat const &_Float, tf_CInteger _Value)
 		{
-			t_CFloat Ret = _Float;
+			tf_CFloat Ret = _Float;
 			fg_FInPlaceSetSign(Ret, _Value);
 			return Ret;
 		}
 
-		template <typename t_CFloat, typename t_CInteger>
-		t_CFloat fg_FSetExponent(t_CFloat const &_Float, t_CInteger _Value)
+		template <typename tf_CFloat, typename tf_CInteger>
+		tf_CFloat fg_FSetExponent(tf_CFloat const &_Float, tf_CInteger _Value)
 		{
-			t_CFloat Ret = _Float;
+			tf_CFloat Ret = _Float;
 			fg_FInPlaceSetExponent(Ret, _Value);
 			return Ret;
 		}
 
-		template <typename t_CFloat, typename t_CInteger>
-		t_CFloat fg_FSetMantissa(t_CFloat const &_Float, t_CInteger _Value)
+		template <typename tf_CFloat, typename tf_CInteger>
+		tf_CFloat fg_FSetMantissa(tf_CFloat const &_Float, tf_CInteger _Value)
 		{
-			t_CFloat Ret = _Float;
+			tf_CFloat Ret = _Float;
 			fg_FInPlaceSetMantissa(Ret, _Value);
 			return Ret;
 		}
 
-		template <typename t_CFloat0, typename t_CFloat1>
-		t_CFloat0 fg_FConvertRoundUp(t_CFloat1 const &_ConvertFrom)
+		template <typename tf_CFloat0, typename tf_CFloat1>
+		tf_CFloat0 fg_FConvertRoundUp(tf_CFloat1 const &_ConvertFrom)
 		{
-			t_CFloat0 Ret;
+			tf_CFloat0 Ret;
 			fg_FInPlaceConvertRoundUp(Ret, _ConvertFrom);
 			return Ret;
 		}
 
-		template <typename t_CFloat0, typename t_CFloat1>
-		t_CFloat0 fg_FConvert(t_CFloat1 const &_ConvertFrom)
+		template <typename tf_CFloat0, typename tf_CFloat1>
+		tf_CFloat0 fg_FConvert(tf_CFloat1 const &_ConvertFrom)
 		{
-			t_CFloat0 Ret;
+			tf_CFloat0 Ret;
 			fg_FInPlaceConvert(Ret, _ConvertFrom);
 			return Ret;
 		}
 
-		template <typename t_CFloat>
-		t_CFloat fg_FSin(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		t_CFloat fg_FCos(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		t_CFloat fg_FTan(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		t_CFloat fg_FSinH(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		t_CFloat fg_FCosH(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		t_CFloat fg_FTanH(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		t_CFloat fg_FArcSin(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		t_CFloat fg_FArcCos(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		t_CFloat fg_FArcTan(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		t_CFloat fg_FArcTan(t_CFloat const &_Float, t_CFloat const &_Source)
+		template <typename tf_CFloat>
+		tf_CFloat fg_FSin(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FCos(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FTan(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FSinH(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FCosH(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FTanH(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FArcSin(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FArcCos(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FArcTan(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FArcTan(tf_CFloat const &_Float, tf_CFloat const &_Source)
 		{
-			using CFloat = typename TCFloatFromNative<t_CFloat>::CType;
+			using CFloat = typename TCFloatFromNative<tf_CFloat>::CType;
 
 			CFloat const &Float = _Float;
 			CFloat const &Source = _Source;
 			return Float.f_ArcTan(Source).f_Get();
 		}
 
-		template <typename t_CFloat0, typename t_CFloat1>
-		typename TCFloatCombinedType<t_CFloat0, t_CFloat1>::CType fg_FArcTan(t_CFloat0 const &_Float, t_CFloat1 const &_Source)
+		template <typename tf_CFloat0, typename tf_CFloat1>
+		typename TCFloatCombinedType<tf_CFloat0, tf_CFloat1>::CType fg_FArcTan(tf_CFloat0 const &_Float, tf_CFloat1 const &_Source)
 		{
-			using CCombinedFloat = typename TCFloatCombinedType<t_CFloat0, t_CFloat1>::CType;
+			using CCombinedFloat = typename TCFloatCombinedType<tf_CFloat0, tf_CFloat1>::CType;
 
 			CCombinedFloat Float{_Float};
 			CCombinedFloat Source{_Source};
 			return fg_FArcTan(Float, Source);
 		}
 
-		template <typename t_CFloat>
-		t_CFloat fg_FExpN(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		t_CFloat fg_FLogN(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		t_CFloat fg_FExp10(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		t_CFloat fg_FLog10(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		t_CFloat fg_FExp2(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		t_CFloat fg_FLog2(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		t_CFloat fg_FSqrt(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		t_CFloat fg_FSqr(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		t_CFloat fg_FFloor(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		t_CFloat fg_FFraction(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		t_CFloat fg_FCeil(t_CFloat const &_Float);
-		template <typename t_CFloat>
-		t_CFloat fg_FAbs(t_CFloat const &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FExpN(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FLogN(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FExp10(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FLog10(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FExp2(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FLog2(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FSqrt(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FSqr(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FFloor(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FFraction(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FCeil(tf_CFloat const &_Float);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FAbs(tf_CFloat const &_Float);
 
-		template <typename t_CFloat>
-		t_CFloat fg_FExp(t_CFloat const &_Float, t_CFloat const &_Base);
-		template <typename t_CFloat>
-		t_CFloat fg_FLog(t_CFloat const &_Float, t_CFloat const &_Base);
-		template <typename t_CFloat>
-		t_CFloat fg_FPow(t_CFloat const &_Float, t_CFloat const &_Power);
-		template <typename t_CFloat>
-		t_CFloat fg_FMod(t_CFloat const &_Float, t_CFloat const &_Modulu);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FExp(tf_CFloat const &_Float, tf_CFloat const &_Base);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FLog(tf_CFloat const &_Float, tf_CFloat const &_Base);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FPow(tf_CFloat const &_Float, tf_CFloat const &_Power);
+		template <typename tf_CFloat>
+		tf_CFloat fg_FMod(tf_CFloat const &_Float, tf_CFloat const &_Modulu);
 	}
 }

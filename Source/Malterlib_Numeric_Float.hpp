@@ -1034,7 +1034,7 @@ namespace NMib::NNumeric
 	DMibFloatInlineS TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::TCFloat
 		(
 			CUnsignedInteger const &_Value
-			, EConstexprInitialization
+			, EConstexprInitialization _Initialization
 		)
 		: m_DataStorage(fsp_IntegerDataToStorage(_Value))
 	{

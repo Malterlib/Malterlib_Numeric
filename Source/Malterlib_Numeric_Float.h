@@ -33,10 +33,10 @@
 
 namespace NMib
 {
-	template <typename t_CType, aint _Power>
+	template <typename t_CType, aint t_Power>
 	struct TCGetPowerTwoMinusOne
 	{
-		static t_CType const Number = (((t_CType)1) << (_Power - 1)) + ((((t_CType)1) << (_Power - 1)) - 1);
+		static t_CType const Number = (((t_CType)1) << (t_Power - 1)) + ((((t_CType)1) << (t_Power - 1)) - 1);
 	};
 }
 
@@ -286,11 +286,11 @@ namespace NMib::NNumeric
 		DMibFloatInlineS CInteger f_ToIntRoundTowardZero() const;
 		DMibFloatInlineS CUnsignedInteger f_ToUnsignedIntRoundTowardZero() const;
 
-		template <typename t_CInteger>
-		static DMibFloatConstexpr TCFloat fs_FromInt(t_CInteger const &_Int);
+		template <typename tf_CInteger>
+		static DMibFloatConstexpr TCFloat fs_FromInt(tf_CInteger const &_Int);
 
-		template <typename t_CInteger>
-		DMibFloatConstexpr void f_FromInt(t_CInteger const &_Int);
+		template <typename tf_CInteger>
+		DMibFloatConstexpr void f_FromInt(tf_CInteger const &_Int);
 
 		/************************************************************************************************\
 		||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
@@ -315,7 +315,7 @@ namespace NMib::NNumeric
 		template <typename tf_CType>
 		DMibFloatInlineS TCEnableIf<NTraits::cIsSame<tf_CType, bool>, TCFloat &> operator = (tf_CType _Value);
 
-		DMibFloatInlineS TCFloat(CUnsignedInteger const &_Value, EConstexprInitialization);
+		DMibFloatInlineS TCFloat(CUnsignedInteger const &_Value, EConstexprInitialization _Initialization);
 
 		/************************************************************************************************\
 		||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
@@ -667,8 +667,8 @@ namespace NMib
 		, NTraits::TCCompileTimeConstant<int, (NTraits::cIsFloat<t_CType0>)>
 	>
 	{
-		template <typename t_CType>
-		static DMibFloatInlineS t_CType0 fs_Convert(t_CType const &_From)
+		template <typename tf_CType>
+		static DMibFloatInlineS t_CType0 fs_Convert(tf_CType const &_From)
 		{
 			using CRetType = typename NNumeric::TCFloatFromNative<t_CType0>::CType;
 			CRetType Ret = _From;
@@ -684,8 +684,8 @@ namespace NMib
 		, NTraits::TCCompileTimeConstant<int, (!NTraits::cIsFloat<t_CType0>)>
 	>
 	{
-		template <typename t_CType>
-		static DMibFloatInlineS t_CType0 fs_Convert(t_CType const &_From)
+		template <typename tf_CType>
+		static DMibFloatInlineS t_CType0 fs_Convert(tf_CType const &_From)
 		{
 			return fg_Convert<t_CType0>(_From.f_ToInt());
 		}
@@ -696,16 +696,16 @@ namespace NMib
 	{
 		using CFloatType = NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>;
 
-		template <typename t_CType>
-		static DMibFloatInlineS TCDisableIf<NTraits::cIsFloat<t_CType>, CFloatType> fs_Convert(t_CType const &_From)
+		template <typename tf_CType>
+		static DMibFloatInlineS TCDisableIf<NTraits::cIsFloat<tf_CType>, CFloatType> fs_Convert(tf_CType const &_From)
 		{
 			return CFloatType::fs_FromInt(_From);
 		}
 
-		template <typename t_CType>
-		static DMibFloatInlineS TCEnableIf<NTraits::cIsFloat<t_CType>, CFloatType> fs_Convert(t_CType const &_From)
+		template <typename tf_CType>
+		static DMibFloatInlineS TCEnableIf<NTraits::cIsFloat<tf_CType>, CFloatType> fs_Convert(tf_CType const &_From)
 		{
-			return CFloatType(((typename NNumeric::TCFloatFromNative<t_CType>::CType const &)_From));
+			return CFloatType(((typename NNumeric::TCFloatFromNative<tf_CType>::CType const &)_From));
 		}
 	};
 

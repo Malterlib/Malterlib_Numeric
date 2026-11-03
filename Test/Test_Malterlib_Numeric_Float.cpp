@@ -31,65 +31,65 @@ namespace
 {
 	struct CFloat_Tests : public NMib::NTest::CTest
 	{
-		template <template <typename t_CFloat00> class t_CTestTemplate>
+		template <template <typename t_CFloat00> class tf_TCTestTemplate>
 		static void fs_TestAll()
 		{
 			{
 				DMibTestPath("fp8");
-				t_CTestTemplate<fp8>()();
+				tf_TCTestTemplate<fp8>()();
 			}
 			{
 				DMibTestPath("fp16");
-				t_CTestTemplate<fp16>()();
+				tf_TCTestTemplate<fp16>()();
 			}
 			{
 				DMibTestPath("fp32");
-				t_CTestTemplate<fp32>()();
+				tf_TCTestTemplate<fp32>()();
 			}
 			{
 				DMibTestPath("fp32Emu");
-				t_CTestTemplate<CIEEEFloat32Emu>()();
+				tf_TCTestTemplate<CIEEEFloat32Emu>()();
 			}
 			{
 				DMibTestPath("fp64");
-				t_CTestTemplate<fp64>()();
+				tf_TCTestTemplate<fp64>()();
 			}
 			{
 				DMibTestPath("fp64Emu");
-				t_CTestTemplate<CIEEEFloat64Emu>()();
+				tf_TCTestTemplate<CIEEEFloat64Emu>()();
 			}
 			{
 				DMibTestPath("fp80");
-				t_CTestTemplate<fp80>()();
+				tf_TCTestTemplate<fp80>()();
 			}
 			{
 				DMibTestPath("fp80Emu");
-				t_CTestTemplate<CIEEEFloat80Emu>()();
+				tf_TCTestTemplate<CIEEEFloat80Emu>()();
 			}
 			{
 				DMibTestPath("fp128");
-				t_CTestTemplate<fp128>()();
+				tf_TCTestTemplate<fp128>()();
 			}
 			{
 				DMibTestPath("fp256");
-				t_CTestTemplate<fp256>()();
+				tf_TCTestTemplate<fp256>()();
 			}
 			/*
 			{
 				DMibTestPath("fp512");
-				t_CTestTemplate<fp512>()();
+				tf_TCTestTemplate<fp512>()();
 			}
 			{
 				DMibTestPath("fp1024");
-				t_CTestTemplate<fp1024>()();
+				tf_TCTestTemplate<fp1024>()();
 			}
 			{
 				DMibTestPath("fp2048");
-				t_CTestTemplate<fp2048>()();
+				tf_TCTestTemplate<fp2048>()();
 			}
 			{
 				DMibTestPath("fp4096");
-				t_CTestTemplate<fp4096>()();
+				tf_TCTestTemplate<fp4096>()();
 			}*/
 		}
 
@@ -98,8 +98,8 @@ namespace
 		{
 			using CSmallestType = TCSmallestType<t_CFloat, fp64>;
 
-			template <typename t_CFrom>
-			CSmallestType f_Cnv(t_CFrom const &_From)
+			template <typename tf_CFrom>
+			CSmallestType f_Cnv(tf_CFrom const &_From)
 			{
 				return NMib::fg_Convert<CSmallestType>(_From);
 			}
@@ -271,8 +271,8 @@ namespace
 		{
 			using CSmallestType = TCSmallestType<t_CFloat, fp64>;
 
-			template <typename t_CFrom>
-			CSmallestType f_Cnv(t_CFrom const &_From)
+			template <typename tf_CFrom>
+			CSmallestType f_Cnv(tf_CFrom const &_From)
 			{
 				return NMib::fg_Convert<CSmallestType>(_From);
 			}

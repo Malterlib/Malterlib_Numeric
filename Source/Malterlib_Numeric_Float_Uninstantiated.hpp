@@ -216,8 +216,8 @@ namespace NMib::NNumeric
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	template <typename t_CInteger>
-	DMibFloatConstexpr auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::fs_FromInt(t_CInteger const &_Int)
+	template <typename tf_CInteger>
+	DMibFloatConstexpr auto TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::fs_FromInt(tf_CInteger const &_Int)
 		-> TCFloat
 	{
 		TCFloat Ret;
@@ -226,12 +226,12 @@ namespace NMib::NNumeric
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
-	template <typename t_CInteger>
-	DMibFloatConstexpr void TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::f_FromInt(t_CInteger const &_Int)
+	template <typename tf_CInteger>
+	DMibFloatConstexpr void TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::f_FromInt(tf_CInteger const &_Int)
 	{
 		aint IntegerBits = sizeof(_Int) * 8;
 		CInteger Sign = 0;
-		using CLargestInteger = NTraits::TCLargestType<CInteger, t_CInteger>;
+		using CLargestInteger = NTraits::TCLargestType<CInteger, tf_CInteger>;
 
 		CLargestInteger Int;
 		if (_Int < 0)
