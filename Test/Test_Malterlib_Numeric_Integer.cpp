@@ -174,11 +174,11 @@ namespace
 			{
 				umint nBits = sizeof(t_CInt) * 8;
 				t_CInt TestNumberBase = 0;
-				auto fl_TestNumberBase = [&]() -> t_CInt
+				auto fTestNumberBase = [&]() -> t_CInt
 					{
 						NMib::NStr::CStr StartNumber = "0x";
 						aint Num = 9;
-						for (umint i = 0; i < nBits; i += 4)
+						for (umint iBit = 0; iBit < nBits; iBit += 4)
 						{
 							StartNumber += NMib::NStr::CStr::fs_ToStr("{nfh}", Num);
 							++Num;
@@ -188,30 +188,30 @@ namespace
 						return NMib::NStr::fg_StrToInt(StartNumber.f_GetStr(), t_CInt(-1));
 					}
 				;
-				for (umint i = 0; i < nBits; i += 4)
+				for (umint iShift = 0; iShift < nBits; iShift += 4)
 				{
-					DMibTestPath(NMib::NStr::CStr::CFormat("{}") << i);
+					DMibTestPath(NMib::NStr::CStr::CFormat("{}") << iShift);
 					{
 						if (!TestNumberBase)
-							TestNumberBase = fl_TestNumberBase();
-						t_CInt Shifted = TestNumberBase << uaint(i);
+							TestNumberBase = fTestNumberBase();
+						t_CInt Shifted = TestNumberBase << uaint(iShift);
 
 						aint Num = 9;
 						NMib::NStr::CStr ShouldBeNumber;
-						for (umint j = 0; j < i; j += 4)
+						for (umint iBit = 0; iBit < iShift; iBit += 4)
 						{
 							++Num;
 							if (Num >= 16)
 								Num = 1;
 						}
-						for (umint j = i; j < nBits; j += 4)
+						for (umint iBit = iShift; iBit < nBits; iBit += 4)
 						{
 							ShouldBeNumber += NMib::NStr::CStr::fs_ToStr("{nfh}", Num);
 							++Num;
 							if (Num >= 16)
 								Num = 1;
 						}
-						for (umint j = 0; j < i; j += 4)
+						for (umint iBit = 0; iBit < iShift; iBit += 4)
 							ShouldBeNumber += "0";
 						t_CInt CorrectShifted = NMib::NStr::fg_StrToInt(("0x" + ShouldBeNumber).f_GetStr(), t_CInt(-1));
 						DMibTest(DMibExpr(Shifted) == DMibExpr(CorrectShifted));
@@ -227,11 +227,11 @@ namespace
 			{
 				umint nBits = sizeof(t_CInt) * 8;
 				t_CInt TestNumberBase = 0;
-				auto fl_TestNumberBase = [&]() -> t_CInt
+				auto fTestNumberBase = [&]() -> t_CInt
 					{
 						NMib::NStr::CStr StartNumber = "0x";
 						aint Num = 9;
-						for (umint i = 0; i < nBits; i += 4)
+						for (umint iBit = 0; iBit < nBits; iBit += 4)
 						{
 							StartNumber += NMib::NStr::CStr::fs_ToStr("{nfh}", Num);
 							++Num;
@@ -241,25 +241,25 @@ namespace
 						return NMib::NStr::fg_StrToInt(StartNumber.f_GetStr(), t_CInt(-1));
 					}
 				;
-				for (umint i = 0; i < nBits; i += 4)
+				for (umint iShift = 0; iShift < nBits; iShift += 4)
 				{
-					DMibTestPath(NMib::NStr::CStr::CFormat("{}") << i);
+					DMibTestPath(NMib::NStr::CStr::CFormat("{}") << iShift);
 					{
 						if (!TestNumberBase)
-							TestNumberBase = fl_TestNumberBase();
+							TestNumberBase = fTestNumberBase();
 
-						t_CInt Shifted = TestNumberBase >> uaint(i);
+						t_CInt Shifted = TestNumberBase >> uaint(iShift);
 
 						aint Num = 9;
 						NMib::NStr::CStr ShouldBeNumber;
-						for (umint j = 0; j < i; j += 4)
+						for (umint iBit = 0; iBit < iShift; iBit += 4)
 						{
 							if constexpr (NMib::NTraits::cIsSigned<t_CInt>)
 								ShouldBeNumber += "F";
 							else
 								ShouldBeNumber += "0";
 						}
-						for (umint j = i; j < nBits; j += 4)
+						for (umint iBit = iShift; iBit < nBits; iBit += 4)
 						{
 							ShouldBeNumber += NMib::NStr::CStr::fs_ToStr("{nfh}", Num);
 							++Num;

@@ -36,7 +36,7 @@ namespace NMib
 	template <typename t_CType, aint t_Power>
 	struct TCGetPowerTwoMinusOne
 	{
-		static t_CType const Number = (((t_CType)1) << (t_Power - 1)) + ((((t_CType)1) << (t_Power - 1)) - 1);
+		static constexpr t_CType mc_Number = (((t_CType)1) << (t_Power - 1)) + ((((t_CType)1) << (t_Power - 1)) - 1);
 	};
 }
 
@@ -110,7 +110,7 @@ namespace NMib::NNumeric
 	protected:
 		using CDataStorage = TCConditional<mc_bIsBuiltIn, t_CImplicitFloat, CUnsignedInteger>;
 
-		CDataStorage m_DataStorage;
+		CDataStorage mp_DataStorage;
 
 		static inline_always CDataStorage fsp_IntegerDataToStorage(CUnsignedInteger _Data)
 		{
@@ -127,9 +127,9 @@ namespace NMib::NNumeric
 		inline_always void fp_SetIntegerData(CUnsignedInteger _Data)
 		{
 			if constexpr (mc_bIsBuiltIn)
-				memcpy(&m_DataStorage, &_Data, sizeof(m_DataStorage));
+				memcpy(&mp_DataStorage, &_Data, sizeof(mp_DataStorage));
 			else
-				m_DataStorage = _Data;
+				mp_DataStorage = _Data;
 		}
 
 		inline_always CUnsignedInteger fp_GetIntegerData() const
@@ -137,11 +137,11 @@ namespace NMib::NNumeric
 			if constexpr (mc_bIsBuiltIn)
 			{
 				CUnsignedInteger Return;
-				memcpy(&Return, &m_DataStorage, sizeof(Return));
+				memcpy(&Return, &mp_DataStorage, sizeof(Return));
 				return Return;
 			}
 			else
-				return m_DataStorage;
+				return mp_DataStorage;
 		}
 
 		inline_always CUnsignedInteger fp_GetMaskedIntegerData() const
@@ -149,7 +149,7 @@ namespace NMib::NNumeric
 			if constexpr (mc_bIsBuiltIn)
 			{
 				CUnsignedInteger Return;
-				memcpy(&Return, &m_DataStorage, sizeof(Return));
+				memcpy(&Return, &mp_DataStorage, sizeof(Return));
 
 				if constexpr (mc_PaddingBits != 0)
 					return Return & ((CUnsignedInteger(1) << mc_PaddingBitPos) - CUnsignedInteger(1));
@@ -157,9 +157,9 @@ namespace NMib::NNumeric
 					return Return;
 			}
 			else if constexpr (mc_PaddingBits != 0)
-				return m_DataStorage & ((CUnsignedInteger(1) << mc_PaddingBitPos) - CUnsignedInteger(1));
+				return mp_DataStorage & ((CUnsignedInteger(1) << mc_PaddingBitPos) - CUnsignedInteger(1));
 			else
-				return m_DataStorage;
+				return mp_DataStorage;
 		}
 
 		/************************************************************************************************\

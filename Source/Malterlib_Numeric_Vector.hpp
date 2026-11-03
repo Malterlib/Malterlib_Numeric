@@ -18,18 +18,18 @@ namespace NMib::NNumeric
 	constexpr TCVec<t_CType, t_nDim>::TCVec(TCVec<tf_CType, tf_nDim> const &_Src)
 	{
 		static constexpr umint c_nDimMin = fg_Min(t_nDim, tf_nDim);
-		for (umint i = 0; i < c_nDimMin; ++i)
-			(*this)[i] = fg_Convert<CType>(_Src[i]);
+		for (umint iAxis = 0; iAxis < c_nDimMin; ++iAxis)
+			(*this)[iAxis] = fg_Convert<CType>(_Src[iAxis]);
 
-		for (umint i = tf_nDim; i < t_nDim; ++i)
-			(*this)[i] = CType{};
+		for (umint iAxis = tf_nDim; iAxis < t_nDim; ++iAxis)
+			(*this)[iAxis] = CType{};
 	}
 
 	template <typename t_CType, umint t_nDim>
 	constexpr TCVec<t_CType, t_nDim>::TCVec(CType _Value[t_nDim]) noexcept
 	{
-		for (umint i = 0; i < t_nDim; ++i)
-			(*this)[i] = _Value[i];
+		for (umint iAxis = 0; iAxis < t_nDim; ++iAxis)
+			(*this)[iAxis] = _Value[iAxis];
 	}
 
 	template <typename t_CType, umint t_nDim>
@@ -49,11 +49,11 @@ namespace NMib::NNumeric
 	constexpr auto TCVec<t_CType, t_nDim>::operator = (TCVec<tf_CType, tf_nDim> const &_Src) -> TCVec &
 	{
 		static constexpr umint c_nDimMin = fg_Min(t_nDim, tf_nDim);
-		for (umint i = 0; i < c_nDimMin; ++i)
-			(*this)[i] = fg_Convert<CType>(_Src[i]);
+		for (umint iAxis = 0; iAxis < c_nDimMin; ++iAxis)
+			(*this)[iAxis] = fg_Convert<CType>(_Src[iAxis]);
 
-		for (umint i = tf_nDim; i < t_nDim; ++i)
-			(*this)[i] = CType{};
+		for (umint iAxis = tf_nDim; iAxis < t_nDim; ++iAxis)
+			(*this)[iAxis] = CType{};
 
 		return *this;
 	}

@@ -107,8 +107,8 @@ namespace NMib::NSys::NNumeric
 	pfp64 fg_Log(pfp64 _Val, pfp64 _Base)
 	{
 		// log(x) / log(_Base)
-		pfp64 log_Base = log(_Base);
-		return log(_Val) / log_Base;
+		pfp64 LogBase = log(_Base);
+		return log(_Val) / LogBase;
 	}
 
 	pfp64 fg_Sqrt(pfp64 _Val)

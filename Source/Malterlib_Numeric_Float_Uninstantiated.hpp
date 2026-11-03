@@ -17,8 +17,8 @@ namespace NMib::NNumeric
 
 		auto SignBits = fg_Convert<CInteger>(Other.f_GetSignBits());
 
-		constexpr CInteger ExponentMaxNeg = -((CInteger(1) << (aint)(mc_ExponentBits - 1)) - CInteger(1));
-		constexpr CInteger ExponentMax = fg_PowerOfTwoMinusOne<CInteger>(mc_ExponentBits);
+		constexpr CInteger c_ExponentMaxNeg = -((CInteger(1) << (aint)(mc_ExponentBits - 1)) - CInteger(1));
+		constexpr CInteger c_ExponentMax = fg_PowerOfTwoMinusOne<CInteger>(mc_ExponentBits);
 
 		TCFloat EndMul = fs_One();
 		CInteger ExponentBits;
@@ -28,15 +28,15 @@ namespace NMib::NNumeric
 		{
 			typename COtherFloat::CInteger Exponent = Other.f_GetExponent();
 
-			if (fg_Convert<CInteger>(Exponent) >= ExponentMax)
+			if (fg_Convert<CInteger>(Exponent) >= c_ExponentMax)
 			{
 				*this = fs_Inf();
 				return;
 			}
-			else if (fg_Convert<CInteger>(Exponent) <= ExponentMaxNeg)
+			else if (fg_Convert<CInteger>(Exponent) <= c_ExponentMaxNeg)
 			{
-				CInteger ExpDiff = fg_Convert<CInteger>(Exponent) - ExponentMaxNeg - 1;
-				if (ExpDiff < ExponentMaxNeg + 1)
+				CInteger ExpDiff = fg_Convert<CInteger>(Exponent) - c_ExponentMaxNeg - 1;
+				if (ExpDiff < c_ExponentMaxNeg + 1)
 				{
 					*this = fs_Zero();
 					return;
@@ -57,7 +57,7 @@ namespace NMib::NNumeric
 			if (Temp >= Largest)
 			{
 				CInteger Exponent = f_GetExponent() + CInteger(1);
-				if (Exponent >= ExponentMax)
+				if (Exponent >= c_ExponentMax)
 				{
 					*this = fs_Inf();
 					return;
@@ -90,9 +90,9 @@ namespace NMib::NNumeric
 
 		using CLargestInteger = NTraits::TCLargestType<CInteger, typename COtherFloat::CInteger>;
 
-		constexpr CLargestInteger ExponentBias = fg_PowerOfTwoMinusOne<CLargestInteger>(mc_ExponentBits - 1);
-		constexpr CLargestInteger ExponentMax = fg_PowerOfTwoMinusOne<CLargestInteger>(mc_ExponentBits) - ExponentBias;
-		constexpr CLargestInteger ExponentMaxNeg = -((CLargestInteger(1) << (uaint(sizeof(CInteger) * 8 - 2))) - CLargestInteger(1));
+		constexpr CLargestInteger c_ExponentBias = fg_PowerOfTwoMinusOne<CLargestInteger>(mc_ExponentBits - 1);
+		constexpr CLargestInteger c_ExponentMax = fg_PowerOfTwoMinusOne<CLargestInteger>(mc_ExponentBits) - c_ExponentBias;
+		constexpr CLargestInteger c_ExponentMaxNeg = -((CLargestInteger(1) << (uaint(sizeof(CInteger) * 8 - 2))) - CLargestInteger(1));
 
 		typename COtherFloat::CInteger OtherExponent;
 		typename COtherFloat::CInteger OtherMantissa;
@@ -110,12 +110,12 @@ namespace NMib::NNumeric
 			{
 				CLargestInteger Exponent = fg_Convert<CLargestInteger>(OtherExponent);
 
-				if (Exponent >= ExponentMax)
+				if (Exponent >= c_ExponentMax)
 				{
 					f_SetAllBits(SignBits, fg_PowerOfTwoMinusOne<CInteger>(mc_ExponentBits), 0);
 					return;
 				}
-				else if (Exponent < ExponentMaxNeg)
+				else if (Exponent < c_ExponentMaxNeg)
 				{
 					// Integer underflow
 					f_SetAllBits(SignBits, 0, 0);
@@ -255,10 +255,10 @@ namespace NMib::NNumeric
 		else
 		{
 			CDoubleUnsignedInteger Mantissa = fg_Convert<CDoubleInteger>(Int);
-			constexpr CDoubleUnsignedInteger MaxMantissa = CDoubleUnsignedInteger(1) << (aint)(mc_MantissaBits);
+			constexpr CDoubleUnsignedInteger c_MaxMantissa = CDoubleUnsignedInteger(1) << (aint)(mc_MantissaBits);
 
 			CInteger Exponent = (aint)(mc_MantissaBits);
-			while (Mantissa < MaxMantissa)
+			while (Mantissa < c_MaxMantissa)
 			{
 				Mantissa <<= 1;
 				--Exponent;

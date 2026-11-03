@@ -9,7 +9,7 @@ namespace NMib::NNumeric
 	constexpr DMibFloatInlineS t_CImplicitFloat &TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>::f_Get() noexcept
 		requires (mc_bIsBuiltIn)
 	{
-		return m_DataStorage;
+		return mp_DataStorage;
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
@@ -17,7 +17,7 @@ namespace NMib::NNumeric
 		::f_Get() const noexcept
 		requires (mc_bIsBuiltIn)
 	{
-		return m_DataStorage;
+		return mp_DataStorage;
 	}
 
 	template <aint t_SignBits, aint t_ExponentBits, aint t_MantissaBits, aint t_PaddingBits, typename t_CImplicitFloat, bool t_bDummyOptimize, typename t_CIntegerStorage>
@@ -27,7 +27,7 @@ namespace NMib::NNumeric
 		)
 		noexcept
 		requires (mc_bIsBuiltIn)
-		: m_DataStorage(_Value)
+		: mp_DataStorage(_Value)
 	{
 	}
 
@@ -37,7 +37,7 @@ namespace NMib::NNumeric
 		-> TCFloat &
 		requires (mc_bIsBuiltIn)
 	{
-		m_DataStorage = _Value;
+		mp_DataStorage = _Value;
 		return *this;
 	}
 }

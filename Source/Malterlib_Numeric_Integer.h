@@ -100,8 +100,8 @@ namespace NMib::NNumeric
 				}
 				else
 				{
-					constexpr TCInt And1 = fg_BitRange<TCInt>(0, CType::mc_LowerBits - 1);
-					Ret.m_Lower = tf_CLower2(((*this) & And1));
+					constexpr TCInt c_LowerMask = fg_BitRange<TCInt>(0, CType::mc_LowerBits - 1);
+					Ret.m_Lower = tf_CLower2(((*this) & c_LowerMask));
 				}
 				return Ret;
 			}
@@ -142,9 +142,9 @@ namespace NMib::NNumeric
 		template <typename tf_CType>
 		constexpr TCInt &operator = (tf_CType const &_Convert)
 		{
-			constexpr tf_CType And1 = fg_BitRange<tf_CType>(0, fg_Min((umint)mc_LowerBits - 1, sizeof(tf_CType) * 8 - 1));
+			constexpr tf_CType c_LowerMask = fg_BitRange<tf_CType>(0, fg_Min((umint)mc_LowerBits - 1, sizeof(tf_CType) * 8 - 1));
 			m_Upper = t_CUpper(((_Convert >> (fg_Min((umint)mc_LowerBits, sizeof(tf_CType) * 8) - 1)) >> 1));
-			m_Lower = t_CLower((_Convert & And1));
+			m_Lower = t_CLower((_Convert & c_LowerMask));
 			return *this;
 		}
 
@@ -309,18 +309,18 @@ namespace NMib::NNumeric
 
 			m_Upper += _Value.m_Upper;
 
-			constexpr t_CLower HalfLower = (t_CLower(1) << (aint)(mc_LowerLastBit));
-			constexpr t_CLower And1 = ((t_CLower(1) << (aint)(mc_LowerLastBit)) - t_CLower(1));
-			if (Lower0 >= HalfLower)
+			constexpr t_CLower c_HalfLower = (t_CLower(1) << (aint)(mc_LowerLastBit));
+			constexpr t_CLower c_BelowHalfMask = ((t_CLower(1) << (aint)(mc_LowerLastBit)) - t_CLower(1));
+			if (Lower0 >= c_HalfLower)
 			{
-				if (Lower1 >= HalfLower)
+				if (Lower1 >= c_HalfLower)
 					m_Upper += 1;
-				else if (((Lower0 & And1) + (Lower1 & And1)) >= HalfLower)
+				else if (((Lower0 & c_BelowHalfMask) + (Lower1 & c_BelowHalfMask)) >= c_HalfLower)
 					m_Upper += 1;
 			}
-			else if (Lower1 >= HalfLower)
+			else if (Lower1 >= c_HalfLower)
 			{
-				if (((Lower0 & And1) + (Lower1 & And1)) >= HalfLower)
+				if (((Lower0 & c_BelowHalfMask) + (Lower1 & c_BelowHalfMask)) >= c_HalfLower)
 					m_Upper += 1;
 			}
 
@@ -440,15 +440,15 @@ namespace NMib::NNumeric
 			TCInt Result = Val0;
 			TCInt Remainder = CConstants::mc_Zero;
 			t_CUpper UppestBit = mc_UpperOne << (mc_UpperBits - 1);
-			int i = 0;
-			for (; i < (mc_LowerBits + mc_UpperBits); ++i)
+			int iBit = 0;
+			for (; iBit < (mc_LowerBits + mc_UpperBits); ++iBit)
 			{
 				if ((Result.m_Upper & UppestBit) != mc_UpperZero)
 					break;
 				Result <<= 1;
 			}
 
-			for (; i < (mc_LowerBits + mc_UpperBits); ++i)
+			for (; iBit < (mc_LowerBits + mc_UpperBits); ++iBit)
 			{
 				Remainder <<= 1;
 				if ((Result.m_Upper & UppestBit) != mc_UpperZero)
@@ -488,15 +488,15 @@ namespace NMib::NNumeric
 			TCInt Result = Val0;
 			TCInt Remainder = CConstants::mc_Zero;
 			t_CUpper UppestBit = mc_UpperOne << (mc_UpperBits - 1);
-			int i = 0;
-			for (; i < (mc_LowerBits + mc_UpperBits); ++i)
+			int iBit = 0;
+			for (; iBit < (mc_LowerBits + mc_UpperBits); ++iBit)
 			{
 				if ((Result.m_Upper & UppestBit) != mc_UpperZero)
 					break;
 				Result <<= 1;
 			}
 
-			for (; i < (mc_LowerBits + mc_UpperBits); ++i)
+			for (; iBit < (mc_LowerBits + mc_UpperBits); ++iBit)
 			{
 				Remainder <<= 1;
 				if ((Result.m_Upper & UppestBit) != mc_UpperZero)

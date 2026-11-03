@@ -45,7 +45,7 @@ namespace NMib
 		template <typename t_CFloat>
 		struct TCNativeFromFloat
 		{
-			TCConditional<TCFloatTraits<t_CFloat>::ms_bHasFundamentalFloat, typename TCFloatTraits<t_CFloat>::CFundamentalFloat, t_CFloat> CType;
+			using CType = TCConditional<TCFloatTraits<t_CFloat>::ms_bHasFundamentalFloat, typename TCFloatTraits<t_CFloat>::CFundamentalFloat, t_CFloat>;
 		};
 
 		template <typename t_CFloat0, typename t_CFloat1>
@@ -63,8 +63,6 @@ namespace NMib
 			{
 			}
 
-			bool mp_bInit;
-			NStorage::TCAggregateSimple<t_CFloat> mp_Float;
 			operator t_CFloat const & ()
 			{
 				if (!mp_bInit)
@@ -75,6 +73,10 @@ namespace NMib
 				}
 				return *mp_Float;
 			}
+
+		private:
+			bool mp_bInit;
+			NStorage::TCAggregateSimple<t_CFloat> mp_Float;
 		};
 
 		template <typename t_CFloat>
@@ -208,11 +210,11 @@ namespace NMib
 			}
 
 		public:
-			static TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fsp_Init_0> ms_0;
-			static TCFloatConstant<t_CFloat, fsp_Init_0_5> ms_0_5;
-			static TCFloatConstant<t_CFloat, fsp_Init_1> ms_1;
-			static TCFloatConstant<t_CFloat, fsp_Init_2> ms_2;
-			static TCFloatConstant<t_CFloat, fsp_Init_E> ms_E;
+			static TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fsp_Init_0> ms_Zero;
+			static TCFloatConstant<t_CFloat, fsp_Init_0_5> ms_Half;
+			static TCFloatConstant<t_CFloat, fsp_Init_1> ms_One;
+			static TCFloatConstant<t_CFloat, fsp_Init_2> ms_Two;
+			static TCFloatConstant<t_CFloat, fsp_Init_E> ms_EulersNumber;
 			static TCFloatConstant<t_CFloat, fsp_Init_Pi> ms_Pi;
 			static TCFloatConstant<t_CFloat, fsp_Init_Sqrt2> ms_Sqrt2;
 			static TCFloatConstant<t_CFloat, fsp_Init_Euler> ms_Euler;
@@ -232,15 +234,15 @@ namespace NMib
 		};
 
 		template <typename t_CFloat>
-		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fsp_Init_0> TCFloatConstants<t_CFloat>::ms_0 = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fsp_Init_0> TCFloatConstants<t_CFloat>::ms_Zero = {DAggregateInit};
 		template <typename t_CFloat>
-		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fsp_Init_0_5> TCFloatConstants<t_CFloat>::ms_0_5 = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fsp_Init_0_5> TCFloatConstants<t_CFloat>::ms_Half = {DAggregateInit};
 		template <typename t_CFloat>
-		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fsp_Init_1> TCFloatConstants<t_CFloat>::ms_1 = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fsp_Init_1> TCFloatConstants<t_CFloat>::ms_One = {DAggregateInit};
 		template <typename t_CFloat>
-		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fsp_Init_2> TCFloatConstants<t_CFloat>::ms_2 = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fsp_Init_2> TCFloatConstants<t_CFloat>::ms_Two = {DAggregateInit};
 		template <typename t_CFloat>
-		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fsp_Init_E> TCFloatConstants<t_CFloat>::ms_E = {DAggregateInit};
+		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fsp_Init_E> TCFloatConstants<t_CFloat>::ms_EulersNumber = {DAggregateInit};
 		template <typename t_CFloat>
 		constinit TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fsp_Init_Pi> TCFloatConstants<t_CFloat>::ms_Pi = {DAggregateInit};
 		template <typename t_CFloat>
@@ -277,7 +279,7 @@ namespace NMib
 		template <typename tf_CFloat>
 		static tf_CFloat &fg_FInPlace0(tf_CFloat &_Float)
 		{
-			_Float = TCFloatConstants<tf_CFloat>::ms_0;
+			_Float = TCFloatConstants<tf_CFloat>::ms_Zero;
 		}
 
 		template <typename tf_CFloat>
@@ -330,31 +332,31 @@ namespace NMib
 		template <typename tf_CFloat>
 		tf_CFloat fg_F0()
 		{
-			return TCFloatConstants<tf_CFloat>::ms_0;
+			return TCFloatConstants<tf_CFloat>::ms_Zero;
 		}
 
 		template <typename tf_CFloat>
 		tf_CFloat fg_F0_5()
 		{
-			return TCFloatConstants<tf_CFloat>::ms_0_5;
+			return TCFloatConstants<tf_CFloat>::ms_Half;
 		}
 
 		template <typename tf_CFloat>
 		tf_CFloat fg_F1()
 		{
-			return TCFloatConstants<tf_CFloat>::ms_1;
+			return TCFloatConstants<tf_CFloat>::ms_One;
 		}
 
 		template <typename tf_CFloat>
 		tf_CFloat fg_F2()
 		{
-			return TCFloatConstants<tf_CFloat>::ms_2;
+			return TCFloatConstants<tf_CFloat>::ms_Two;
 		}
 
 		template <typename tf_CFloat>
 		tf_CFloat fg_FE()
 		{
-			return TCFloatConstants<tf_CFloat>::ms_E;
+			return TCFloatConstants<tf_CFloat>::ms_EulersNumber;
 		}
 
 		template <typename tf_CFloat>

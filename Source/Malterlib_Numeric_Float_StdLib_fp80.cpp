@@ -107,8 +107,8 @@ namespace NMib::NSys::NNumeric
 	pfp80 fg_Log(pfp80 _Val, pfp80 _Base)
 	{
 		// log(x) / log(_Base)
-		pfp80 log_Base = logl(_Base);
-		return logl(_Val) / log_Base;
+		pfp80 LogBase = logl(_Base);
+		return logl(_Val) / LogBase;
 	}
 
 	pfp80 fg_Sqrt(pfp80 _Val)

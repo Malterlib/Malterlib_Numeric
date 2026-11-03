@@ -76,67 +76,67 @@ namespace NMib::NNumeric
 
 	template <> DMibFloatConstexpr inline_small void CIEEEFloat32::fp_Set_0()
 	{
-		m_DataStorage = 0.0f;
+		mp_DataStorage = 0.0f;
 	}
 
 	template <> DMibFloatConstexpr inline_small void CIEEEFloat32::fp_Set_0_5()
 	{
-		m_DataStorage = 0.5f;
+		mp_DataStorage = 0.5f;
 	}
 
 	template <> DMibFloatConstexpr inline_small void CIEEEFloat32::fp_Set_1()
 	{
-		m_DataStorage = 1.0f;
+		mp_DataStorage = 1.0f;
 	}
 
 	template <> DMibFloatConstexpr inline_small void CIEEEFloat32::fp_Set_2()
 	{
-		m_DataStorage = 2.0f;
+		mp_DataStorage = 2.0f;
 	}
 
 	template <> inline_small void CIEEEFloat32::fp_Set_E()
 	{
-		m_DataStorage = 2.71828182845904523536028747135266249775724709369995f;
+		mp_DataStorage = 2.71828182845904523536028747135266249775724709369995f;
 	}
 
 	template <> inline_small void CIEEEFloat32::fp_Set_Pi()
 	{
-		m_DataStorage = 3.14159265358979323846264338327950288419716939937510f;
+		mp_DataStorage = 3.14159265358979323846264338327950288419716939937510f;
 	}
 
 	template <> inline_small void CIEEEFloat32::fp_Set_Euler()
 	{
-		m_DataStorage = 0.57721566490153286060651209008240243104215933593992f;
+		mp_DataStorage = 0.57721566490153286060651209008240243104215933593992f;
 	}
 
 	template <> inline_small void CIEEEFloat32::fp_Set_GoldenRatio()
 	{
-		m_DataStorage = 1.61803398874989484820458683436563811772030917980576f;
+		mp_DataStorage = 1.61803398874989484820458683436563811772030917980576f;
 	}
 
 	template <> inline_small void CIEEEFloat32::fp_Set_Sqrt2()
 	{
-		m_DataStorage = 1.4142135623730950488016887242097f;
+		mp_DataStorage = 1.4142135623730950488016887242097f;
 	}
 
 	template <> inline_small void CIEEEFloat32::fp_Set_Log2_10()
 	{
-		m_DataStorage = 3.3219280948873623478703194294894f;
+		mp_DataStorage = 3.3219280948873623478703194294894f;
 	}
 
 	template <> inline_small void CIEEEFloat32::fp_Set_Log10_2()
 	{
-		m_DataStorage = 0.30102999566398119521373889472449f;
+		mp_DataStorage = 0.30102999566398119521373889472449f;
 	}
 
 	template <> inline_small void CIEEEFloat32::fp_Set_Log2_E()
 	{
-		m_DataStorage = 1.4426950408889634073599246810019f;
+		mp_DataStorage = 1.4426950408889634073599246810019f;
 	}
 
 	template <> inline_small void CIEEEFloat32::fp_Set_LogE_2()
 	{
-		m_DataStorage = 0.69314718055994530941723212145818f;
+		mp_DataStorage = 0.69314718055994530941723212145818f;
 	}
 
 	/************************************************************************************************\
@@ -147,27 +147,27 @@ namespace NMib::NNumeric
 
 	template <> DMibFloatConstexpr inline_small CIEEEFloat32 CIEEEFloat32::operator + (CIEEEFloat32 const &_Value) const
 	{
-		return m_DataStorage + _Value.m_DataStorage;
+		return mp_DataStorage + _Value.mp_DataStorage;
 	}
 
 	template <> DMibFloatConstexpr inline_small CIEEEFloat32 CIEEEFloat32::operator - (CIEEEFloat32 const &_Value) const
 	{
-		return m_DataStorage - _Value.m_DataStorage;
+		return mp_DataStorage - _Value.mp_DataStorage;
 	}
 
 	template <> DMibFloatConstexpr inline_small CIEEEFloat32 CIEEEFloat32::operator * (CIEEEFloat32 const &_Value) const
 	{
-		return m_DataStorage * _Value.m_DataStorage;
+		return mp_DataStorage * _Value.mp_DataStorage;
 	}
 
 	template <> DMibFloatConstexpr inline_small CIEEEFloat32 CIEEEFloat32::operator / (CIEEEFloat32 const &_Value) const
 	{
-		return m_DataStorage / _Value.m_DataStorage;
+		return mp_DataStorage / _Value.mp_DataStorage;
 	}
 
 	template <> DMibFloatConstexpr inline_small CIEEEFloat32 CIEEEFloat32::operator - () const
 	{
-		return -m_DataStorage;
+		return -mp_DataStorage;
 	}
 
 	/************************************************************************************************\
@@ -178,25 +178,25 @@ namespace NMib::NNumeric
 
 	template <> DMibFloatConstexpr inline_small CIEEEFloat32 &CIEEEFloat32::operator += (CIEEEFloat32 const &_Value)
 	{
-		m_DataStorage += _Value.m_DataStorage;
+		mp_DataStorage += _Value.mp_DataStorage;
 		return *this;
 	}
 
 	template <> DMibFloatConstexpr inline_small CIEEEFloat32 &CIEEEFloat32::operator -= (CIEEEFloat32 const &_Value)
 	{
-		m_DataStorage -= _Value.m_DataStorage;
+		mp_DataStorage -= _Value.mp_DataStorage;
 		return *this;
 	}
 
 	template <> DMibFloatConstexpr inline_small CIEEEFloat32 &CIEEEFloat32::operator /= (CIEEEFloat32 const &_Value)
 	{
-		m_DataStorage /= _Value.m_DataStorage;
+		mp_DataStorage /= _Value.mp_DataStorage;
 		return *this;
 	}
 
 	template <> DMibFloatConstexpr inline_small CIEEEFloat32 &CIEEEFloat32::operator *= (CIEEEFloat32 const &_Value)
 	{
-		m_DataStorage *= _Value.m_DataStorage;
+		mp_DataStorage *= _Value.mp_DataStorage;
 		return *this;
 	}
 
@@ -218,7 +218,7 @@ namespace NMib::NNumeric
 		else
 #endif
 		{
-			return NSys::NNumeric::fg_Sin(m_DataStorage);
+			return NSys::NNumeric::fg_Sin(mp_DataStorage);
 		}
 	}
 
@@ -234,7 +234,7 @@ namespace NMib::NNumeric
 		else
 #endif
 		{
-			return NSys::NNumeric::fg_Cos(m_DataStorage);
+			return NSys::NNumeric::fg_Cos(mp_DataStorage);
 		}
 	}
 
@@ -250,7 +250,7 @@ namespace NMib::NNumeric
 		else
 #endif
 		{
-			return NSys::NNumeric::fg_Tan(m_DataStorage);
+			return NSys::NNumeric::fg_Tan(mp_DataStorage);
 		}
 	}
 
@@ -266,7 +266,7 @@ namespace NMib::NNumeric
 		else
 #endif
 		{
-			return NSys::NNumeric::fg_SinH(m_DataStorage);
+			return NSys::NNumeric::fg_SinH(mp_DataStorage);
 		}
 	}
 
@@ -282,7 +282,7 @@ namespace NMib::NNumeric
 		else
 #endif
 		{
-			return NSys::NNumeric::fg_CosH(m_DataStorage);
+			return NSys::NNumeric::fg_CosH(mp_DataStorage);
 		}
 	}
 
@@ -298,7 +298,7 @@ namespace NMib::NNumeric
 		else
 #endif
 		{
-			return NSys::NNumeric::fg_TanH(m_DataStorage);
+			return NSys::NNumeric::fg_TanH(mp_DataStorage);
 		}
 	}
 
@@ -314,7 +314,7 @@ namespace NMib::NNumeric
 		else
 #endif
 		{
-			return NSys::NNumeric::fg_ArcSin(m_DataStorage);
+			return NSys::NNumeric::fg_ArcSin(mp_DataStorage);
 		}
 	}
 
@@ -330,7 +330,7 @@ namespace NMib::NNumeric
 		else
 #endif
 		{
-			return NSys::NNumeric::fg_ArcCos(m_DataStorage);
+			return NSys::NNumeric::fg_ArcCos(mp_DataStorage);
 		}
 	}
 
@@ -346,7 +346,7 @@ namespace NMib::NNumeric
 		else
 #endif
 		{
-			return NSys::NNumeric::fg_ArcTan(m_DataStorage);
+			return NSys::NNumeric::fg_ArcTan(mp_DataStorage);
 		}
 	}
 
@@ -362,7 +362,7 @@ namespace NMib::NNumeric
 		else
 #endif
 		{
-			return NSys::NNumeric::fg_ArcTan(m_DataStorage, _Source.m_DataStorage);
+			return NSys::NNumeric::fg_ArcTan(mp_DataStorage, _Source.mp_DataStorage);
 		}
 	}
 
@@ -384,7 +384,7 @@ namespace NMib::NNumeric
 		else
 #endif
 		{
-			return NSys::NNumeric::fg_ExpN(m_DataStorage);
+			return NSys::NNumeric::fg_ExpN(mp_DataStorage);
 		}
 	}
 
@@ -400,7 +400,7 @@ namespace NMib::NNumeric
 		else
 #endif
 		{
-			return NSys::NNumeric::fg_LogN(m_DataStorage);
+			return NSys::NNumeric::fg_LogN(mp_DataStorage);
 		}
 	}
 
@@ -416,7 +416,7 @@ namespace NMib::NNumeric
 		else
 #endif
 		{
-			return NSys::NNumeric::fg_Exp10(m_DataStorage);
+			return NSys::NNumeric::fg_Exp10(mp_DataStorage);
 		}
 	}
 
@@ -432,7 +432,7 @@ namespace NMib::NNumeric
 		else
 #endif
 		{
-			return NSys::NNumeric::fg_Log10(m_DataStorage);
+			return NSys::NNumeric::fg_Log10(mp_DataStorage);
 		}
 	}
 
@@ -448,7 +448,7 @@ namespace NMib::NNumeric
 		else
 #endif
 		{
-			return NSys::NNumeric::fg_Exp2(m_DataStorage);
+			return NSys::NNumeric::fg_Exp2(mp_DataStorage);
 		}
 	}
 
@@ -464,7 +464,7 @@ namespace NMib::NNumeric
 		else
 #endif
 		{
-			return NSys::NNumeric::fg_Log2(m_DataStorage);
+			return NSys::NNumeric::fg_Log2(mp_DataStorage);
 		}
 	}
 
@@ -480,7 +480,7 @@ namespace NMib::NNumeric
 		else
 #endif
 		{
-			return NSys::NNumeric::fg_Exp(m_DataStorage, _Base.m_DataStorage);
+			return NSys::NNumeric::fg_Exp(mp_DataStorage, _Base.mp_DataStorage);
 		}
 	}
 
@@ -496,7 +496,7 @@ namespace NMib::NNumeric
 		else
 #endif
 		{
-			return NSys::NNumeric::fg_Log(m_DataStorage, _Base.m_DataStorage);
+			return NSys::NNumeric::fg_Log(mp_DataStorage, _Base.mp_DataStorage);
 		}
 	}
 
@@ -518,13 +518,13 @@ namespace NMib::NNumeric
 		else
 #endif
 		{
-			return NSys::NNumeric::fg_Sqrt(m_DataStorage);
+			return NSys::NNumeric::fg_Sqrt(mp_DataStorage);
 		}
 	}
 
 	template <> DMibFloatConstexpr inline_small CIEEEFloat32 CIEEEFloat32::f_Sqr() const
 	{
-		return (m_DataStorage) * (m_DataStorage);
+		return (mp_DataStorage) * (mp_DataStorage);
 	}
 
 	template <> DMibFloatConstexpr inline_small CIEEEFloat32 CIEEEFloat32::f_Pow(CIEEEFloat32 const &_Power) const
@@ -539,7 +539,7 @@ namespace NMib::NNumeric
 		else
 #endif
 		{
-			return NSys::NNumeric::fg_Pow(m_DataStorage, _Power.m_DataStorage);
+			return NSys::NNumeric::fg_Pow(mp_DataStorage, _Power.mp_DataStorage);
 		}
 	}
 
@@ -551,13 +551,13 @@ namespace NMib::NNumeric
 
 	template <> DMibFloatConstexpr inline_small CIEEEFloat32::CInteger CIEEEFloat32::f_ToInt() const
 	{
-		pfp32 ToLoad = m_DataStorage;
+		pfp32 ToLoad = mp_DataStorage;
 		return (CIEEEFloat32::CInteger)ToLoad;
 	}
 
 	template <> DMibFloatConstexpr inline_small CIEEEFloat32::CUnsignedInteger CIEEEFloat32::f_ToUnsignedInt() const
 	{
-		pfp32 ToLoad = m_DataStorage;
+		pfp32 ToLoad = mp_DataStorage;
 		return (CIEEEFloat32::CUnsignedInteger)ToLoad;
 	}
 
@@ -573,7 +573,7 @@ namespace NMib::NNumeric
 		else
 #endif
 		{
-			return NSys::NNumeric::fg_Floor(m_DataStorage);
+			return NSys::NNumeric::fg_Floor(mp_DataStorage);
 		}
 	}
 
@@ -589,7 +589,7 @@ namespace NMib::NNumeric
 		else
 #endif
 		{
-			return NSys::NNumeric::fg_Ceil(m_DataStorage);
+			return NSys::NNumeric::fg_Ceil(mp_DataStorage);
 		}
 	}
 
@@ -605,7 +605,7 @@ namespace NMib::NNumeric
 		else
 #endif
 		{
-			return NSys::NNumeric::fg_Abs(m_DataStorage);
+			return NSys::NNumeric::fg_Abs(mp_DataStorage);
 		}
 	}
 
@@ -621,18 +621,18 @@ namespace NMib::NNumeric
 		else
 #endif
 		{
-			return NSys::NNumeric::fg_Mod(m_DataStorage, _Modulu.m_DataStorage);
+			return NSys::NNumeric::fg_Mod(mp_DataStorage, _Modulu.mp_DataStorage);
 		}
 	}
 
 	template <> DMibFloatConstexpr inline_small bool CIEEEFloat32::operator == (CIEEEFloat32 const &_Value) const noexcept
 	{
-		return m_DataStorage == _Value.m_DataStorage;
+		return mp_DataStorage == _Value.mp_DataStorage;
 	}
 
 	template <> DMibFloatConstexpr inline_small COrdering_Partial CIEEEFloat32::operator <=> (CIEEEFloat32 const &_Value) const noexcept
 	{
-		return m_DataStorage <=> _Value.m_DataStorage;
+		return mp_DataStorage <=> _Value.mp_DataStorage;
 	}
 }
 

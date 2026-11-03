@@ -193,7 +193,7 @@ namespace NMib::NNumeric
 				CInternalFloat ResultSum = fs_Zero();
 				CInternalFloat Prev = fs_One();
 
-				aint k = 1;
+				aint iTerm = 1;
 				CInternalFloat Ak = fs_Half();
 				CInternalFloat Temp = fs_Zero();
 				CInternalFloat Temp2 = fs_Zero();
@@ -201,33 +201,33 @@ namespace NMib::NNumeric
 				CInternalFloat Temp4 = fs_Zero();
 				CInternalFloat TempSum = fs_Zero();
 
-				aint n = 16;
+				aint nShift = 16;
 
 				CInternalFloat Sum;
 				CInternalFloat Sum2 = fs_One();
-				for (aint i = 1; i < n; ++i)
+				for (aint iHarmonic = 1; iHarmonic < nShift; ++iHarmonic)
 				{
 					Temp = fs_One();
-					Temp2.f_FromInt(i);
+					Temp2.f_FromInt(iHarmonic);
 					Sum2.f_Mul(Temp2);
 					Temp.f_Div(Temp2);
 					Sum.f_Add(Temp);
 				}
 
-				aint const kMax = 2000;
-				CInternalFloat *kHist = DMibNew CInternalFloat[kMax];
-				kHist[0] = fs_Half();
+				aint const MaxTerms = 2000;
+				CInternalFloat *pHistory = DMibNew CInternalFloat[MaxTerms];
+				pHistory[0] = fs_Half();
 
 				CInternalFloat StaticRet;
 
-				while (!Prev.f_AlmostEqual(Result, 0) && k < kMax)
+				while (!Prev.f_AlmostEqual(Result, 0) && iTerm < MaxTerms)
 				{
 					Prev = Result;
 					Temp4 = Ak;
-					Temp2.f_FromInt(k);
-					for (aint i = 1; i < n; ++i)
+					Temp2.f_FromInt(iTerm);
+					for (aint iFactor = 1; iFactor < nShift; ++iFactor)
 					{
-						Temp3.f_FromInt(k + i);
+						Temp3.f_FromInt(iTerm + iFactor);
 						Temp2.f_Mul(Temp3);
 					}
 					Temp4.f_Div(Temp2);
@@ -235,35 +235,35 @@ namespace NMib::NNumeric
 
 					Result = ResultSum;
 					Result.f_Mul(Sum2);
-					Temp.f_FromInt(n);
+					Temp.f_FromInt(nShift);
 					Temp.f_LogN();
 					Temp2 = Sum;
 					Temp2.f_Sub(Temp);
 					Result.f_Add(Temp2);
 
-					++k;
+					++iTerm;
 
 					Temp2 = fs_One();
-					Temp3.f_FromInt(k + 1);
+					Temp3.f_FromInt(iTerm + 1);
 					Temp2.f_Div(Temp3);
 
 					TempSum = fs_Zero();
-					for (aint i = 1; i < k; ++i)
+					for (aint iPrevious = 1; iPrevious < iTerm; ++iPrevious)
 					{
-						Temp3.f_FromInt(k - i);
-						Temp4.f_FromInt(i * (i + 1));
+						Temp3.f_FromInt(iTerm - iPrevious);
+						Temp4.f_FromInt(iPrevious * (iPrevious + 1));
 						Temp3.f_Div(Temp4);
-						Temp3.f_Mul(kHist[k - i - 1]);
+						Temp3.f_Mul(pHistory[iTerm - iPrevious - 1]);
 						TempSum.f_Add(Temp3);
 					}
 
 					Temp2.f_Mul(TempSum);
 
 					Ak = Temp2;
-					kHist[k - 1] = Ak;
+					pHistory[iTerm - 1] = Ak;
 				}
 
-				delete [] kHist;
+				delete [] pHistory;
 
 				StaticRet = Result;
 				return StaticRet;
@@ -460,19 +460,19 @@ namespace NMib::NNumeric
 			}
 		}
 
-		constexpr CExponent ExponentBias = (CExponent(1) << (aint)(mc_InternalExponentBits - 1)) - CExponent(1);
-		constexpr CExponent MinExponent = -ExponentBias;
-		constexpr CExponent MaxExponent = (CExponent(1) << (aint)(mc_InternalExponentBits)) - ExponentBias;
+		constexpr CExponent c_ExponentBias = (CExponent(1) << (aint)(mc_InternalExponentBits - 1)) - CExponent(1);
+		constexpr CExponent c_MinExponent = -c_ExponentBias;
+		constexpr CExponent c_MaxExponent = (CExponent(1) << (aint)(mc_InternalExponentBits)) - c_ExponentBias;
 
-		if (Exponent < MinExponent)
+		if (Exponent < c_MinExponent)
 		{
-			Exponent = MinExponent;
+			Exponent = c_MinExponent;
 			Mantissa = 0;
 			_nMantissaBits = 0;
 		}
-		else if (Exponent >= MaxExponent)
+		else if (Exponent >= c_MaxExponent)
 		{
-			Exponent = MaxExponent;
+			Exponent = c_MaxExponent;
 			_nMantissaBits = mc_InternalMaxMantissaBits;
 			Mantissa = (CMantissa(1) << (aint)(mc_InternalMaxMantissaBits + 1)) - 1;
 		}
@@ -701,12 +701,12 @@ namespace NMib::NNumeric
 		CInternalFloat Term = Result;
 		CInternalFloat Two = TCFloat::fs_Two();
 		CInternalFloat Temp = TCFloat::fs_Zero();
-		constexpr CExponent ExponentBias = (CExponent(1) << (aint)(mc_InternalExponentBits - 1)) - CExponent(1);
-		constexpr CExponent MinExponent = -ExponentBias;
+		constexpr CExponent c_ExponentBias = (CExponent(1) << (aint)(mc_InternalExponentBits - 1)) - CExponent(1);
+		constexpr CExponent c_MinExponent = -c_ExponentBias;
 
 		CInternalFloat Divisor = TCFloat::fs_One();
 		CInternalFloat LastResult = fs_Inf();
-		while ((Term.m_Mantissa != 0 || Term.m_Exponent != MinExponent) && !Result.f_AlmostEqual(LastResult, 0))
+		while ((Term.m_Mantissa != 0 || Term.m_Exponent != c_MinExponent) && !Result.f_AlmostEqual(LastResult, 0))
 		{
 			LastResult = Result;
 
@@ -810,9 +810,9 @@ namespace NMib::NNumeric
 		CExponent Exponent;
 		if (Mantissa == 0)
 		{
-			constexpr CExponent ExponentBias = (CExponent(1) << (aint)(mc_InternalExponentBits - 1)) - CExponent(1);
-			constexpr CExponent MinExponent = -ExponentBias;
-			Exponent = MinExponent;
+			constexpr CExponent c_ExponentBias = (CExponent(1) << (aint)(mc_InternalExponentBits - 1)) - CExponent(1);
+			constexpr CExponent c_MinExponent = -c_ExponentBias;
+			Exponent = c_MinExponent;
 		}
 		else
 		{
@@ -918,12 +918,12 @@ namespace NMib::NNumeric
 		Temp2.f_Add(One);
 
 		Temp.f_Div(Temp2);
-		CInternalFloat Y = Temp;
+		CInternalFloat YValue = Temp;
 		CInternalFloat YSqr = Temp;
 		YSqr.f_Mul(Temp);
 		CInternalFloat YMul = YSqr;
 		CSignedMantissa DivInt = 3;
-		CInternalFloat Y2 = Y;
+		CInternalFloat Y2 = YValue;
 		Y2.f_Mul(TCFloat::fs_Two());
 		CInternalFloat Prev = TCFloat::fs_Zero();
 		CInternalFloat Result = TCFloat::fs_One();
