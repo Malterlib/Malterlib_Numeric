@@ -30,10 +30,9 @@ namespace NMib
 		struct TCFloatTraits<NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>>
 		{
 		private:
-			// Declared before the public section, which uses it.
 			using CFloat = NMib::NNumeric::TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, t_bDummyOptimize, t_CIntegerStorage>;
 
-		public:
+		public: // NOLINT(malterlib-member-order): the public declarations use CFloat
 			using CStorageInteger = typename CFloat::CInteger;
 			using CStorageInteger_X2 = typename CFloat::CDoubleInteger;
 			using CStorageUnsignedInteger = typename CFloat::CUnsignedInteger;
@@ -92,7 +91,7 @@ namespace NMib
 			static void fsp_Init_NegQNan(t_CFloat &_Float);
 			static void fsp_Init_NegSNan(t_CFloat &_Float);
 
-		public:
+		public: // NOLINT(malterlib-member-order): the public declarations use the fsp_Init_ functions as template arguments
 			static TCFloatConstant<t_CFloat, TCFloatConstants<t_CFloat>::fsp_Init_0> ms_Zero;
 			static TCFloatConstant<t_CFloat, fsp_Init_0_5> ms_Half;
 			static TCFloatConstant<t_CFloat, fsp_Init_1> ms_One;
