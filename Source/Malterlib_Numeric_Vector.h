@@ -34,8 +34,6 @@ namespace NMib::NNumeric
 		constexpr TCVec() noexcept = default;
 		constexpr TCVec(TCVec const &_Src) noexcept = default;
 		constexpr TCVec(TCVec &&_Src) noexcept = default;
-		constexpr TCVec &operator = (TCVec const &_Src) noexcept = default;
-		constexpr TCVec &operator = (TCVec &&_Src) noexcept = default;
 
 		template <typename tf_CType, umint tf_nDim>
 		constexpr TCVec(TCVec<tf_CType, tf_nDim> const &_Src);
@@ -45,6 +43,9 @@ namespace NMib::NNumeric
 		constexpr TCVec(tfp_CParmas && ...p_Param) noexcept;
 
 		constexpr TCVec(CType _Value[t_nDim]) noexcept;
+
+		constexpr TCVec &operator = (TCVec const &_Src) noexcept = default;
+		constexpr TCVec &operator = (TCVec &&_Src) noexcept = default;
 
 		constexpr inline_small CType const &operator [] (umint _iOpr) const;
 		constexpr inline_small CType &operator [] (umint _iOpr);

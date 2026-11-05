@@ -76,7 +76,7 @@ namespace NMib::NNumeric
 
 		static_assert(sizeof(CDoubleIntegerRaw) > sizeof(t_CIntegerStorage));
 
-	public:
+	public: // NOLINT(malterlib-member-order): the public declarations use CDoubleIntegerRaw
 		using CInteger = t_CIntegerStorage;
 		using CDoubleInteger = TCConditional<sizeof(CDoubleIntegerRaw) >= 8, CDoubleIntegerRaw, NTraits::TCIntFromSizeLarger<8>>;
 		using CUnsignedInteger = NTraits::TCUnsigned<t_CIntegerStorage>;
@@ -85,67 +85,96 @@ namespace NMib::NNumeric
 
 		using CEmulatedFloat = TCFloat<t_SignBits, t_ExponentBits, t_MantissaBits, t_PaddingBits, t_CImplicitFloat, false, t_CIntegerStorage>;
 
-		static constexpr aint mc_MantissaBits = t_MantissaBits;
-		static constexpr aint mc_ExponentBits = t_ExponentBits;
-		static constexpr aint mc_SignBits = t_SignBits;
-		static constexpr aint mc_PaddingBits = t_PaddingBits;
-		static constexpr umint mc_StorageBits = sizeof(CInteger) * 8;
-		static constexpr aint mc_UnusedBits = mc_StorageBits - (mc_SignBits + mc_ExponentBits + mc_MantissaBits + mc_PaddingBits);
-		static constexpr aint mc_MantissaBitPos = 0;
-		static constexpr aint mc_UnusedBitPos = mc_MantissaBitPos + mc_MantissaBits;
-		static constexpr aint mc_ExponentBitPos = mc_UnusedBitPos + mc_UnusedBits;
-		static constexpr aint mc_SignBitPos = mc_ExponentBitPos + mc_ExponentBits;
-		static constexpr aint mc_PaddingBitPos = mc_SignBitPos + mc_SignBits;
+		// Internal float working with 8 extra bits of precission
+		struct CInternalFloat
+		{
+			using CMantissa = CDoubleUnsignedInteger;
+			using CSignedMantissa = CDoubleInteger;
+			using CExponent = CDoubleInteger;
+
+			using CRawQuadMantissa = NTraits::TCLargerType<CMantissa>;
+
+			static_assert(sizeof(CRawQuadMantissa) > sizeof(CMantissa));
+
+			using CQuadMantissa = NTraits::TCUnsigned<CRawQuadMantissa>;
+			using CSignedQuadMantissa = NTraits::TCSigned<CRawQuadMantissa>;
+
+			DMibFloatConstexpr CInternalFloat();
+			DMibFloatConstexpr CInternalFloat(TCFloat const &_Source);
+
+			static CInternalFloat fs_LogE_2();
+			static CInternalFloat fs_Log2_E();
+			static CInternalFloat fs_LogE_10();
+			static CInternalFloat fs_Log10_E();
+			static CInternalFloat fs_Log2_10();
+			static CInternalFloat fs_Log10_2();
+			static CInternalFloat fs_EulersNumber();
+			static CInternalFloat fs_Euler();
+			static CInternalFloat fs_GoldenRatio();
+			static CInternalFloat fs_Pi();
+			static CInternalFloat fs_Sqrt2();
+
+			DMibFloatConstexpr CInternalFloat &operator = (TCFloat const &_Source);
+			DMibFloatConstexpr CMantissa f_GetSharedMantissa(CInternalFloat const &_Other, CMantissa &o_OtherMantissa, umint &o_nMantissaBits);
+			DMibFloatConstexpr bool f_AlmostEqual(CInternalFloat const &_Value, int _nBits) noexcept;
+			DMibFloatConstexpr void f_SetAllRound(CInteger const &_Sign, CExponent const &_Exponent, CMantissa const &_Mantissa, aint _nMantissaBits);
+			DMibFloatConstexpr void f_Mul(CInternalFloat const &_Value);
+			DMibFloatConstexpr void f_Div(CInternalFloat const &_Value);
+			DMibFloatConstexpr void f_Add(CInternalFloat const &_Value);
+			DMibFloatConstexpr void f_Sub(CInternalFloat const &_Value);
+			DMibFloatConstexpr void f_ATan();
+			DMibFloatConstexpr void f_Remainder();
+
+			DMibFloatConstexpr CSignedMantissa f_ToInt(bool &o_bOverflow);
+			DMibFloatConstexpr void f_FromInt(CSignedMantissa const &_Int);
+			DMibFloatConstexpr static CInternalFloat fs_FromInt(CSignedMantissa const &_Other);
+			DMibFloatConstexpr void f_ExpN();
+			DMibFloatConstexpr void f_Exp10();
+			DMibFloatConstexpr TCFloat f_GetFloat();
+			template <typename tf_CFloat>
+			DMibFloatConstexpr tf_CFloat f_GetFloat();
+			DMibFloatConstexpr void f_LogNFull();
+			DMibFloatConstexpr void f_LogN();
+			DMibFloatConstexpr void f_Log10();
+			DMibFloatConstexpr void f_Log2();
+			DMibFloatConstexpr void f_Exp2();
+			DMibFloatConstexpr void f_Sqrt();
+
+			static constexpr aint mc_InternalMaxMantissaBits = sizeof(CMantissa) * 8 - 3;
+			static constexpr aint mc_InternalHalfMantissaBits = mc_InternalMaxMantissaBits / 2;
+			static constexpr aint mc_InternalMaxQuadMantissaBits = sizeof(CQuadMantissa) * 8 - 2;
+			static constexpr aint mc_InternalHalfQuadMantissaBits = mc_InternalMaxQuadMantissaBits / 2;
+			static constexpr aint mc_InternalExponentBits = sizeof(CExponent) * 8 - 2;
+
+			CMantissa m_Mantissa;
+			CExponent m_Exponent;
+			CInteger m_Sign;
+			umint m_MantissaBits = 0;
+		};
 
 #ifdef DMibPFloat_StdLib
-		static constexpr bool mc_bIsBuiltIn = !NTraits::cIsSame<t_CImplicitFloat, CNoImplicit>;
+		static constexpr bool mc_bIsBuiltIn = !NTraits::cIsSame<t_CImplicitFloat, CNoImplicit>; // NOLINT(malterlib-member-order): the requires clauses below use it
 #else
-		static constexpr bool mc_bIsBuiltIn = false;
+		static constexpr bool mc_bIsBuiltIn = false; // NOLINT(malterlib-member-order): the requires clauses below use it
 #endif
 
-		static_assert(mc_UnusedBits >= 0);
-		static_assert(mc_UnusedBits <= 1);
-		static_assert(sizeof(CDoubleInteger) > sizeof(CInteger));
+		// Do nothing in default constructor
+		DMibFloatInlineS TCFloat() = default;
+		DMibFloatInlineS ~TCFloat() = default;
+		DMibFloatInlineS TCFloat(TCFloat const &_Value) = default;
+		DMibFloatInlineS TCFloat(TCFloat &&_Value) = default;
 
-	protected:
-		using CDataStorage = TCConditional<mc_bIsBuiltIn, t_CImplicitFloat, CUnsignedInteger>;
+		template <aint tf_SignBits, aint tf_ExponentBits, aint tf_MantissaBits, aint tf_PaddingBits, typename tf_CImplicitFloat, bool tf_bDummyOptimize, typename tf_CIntegerStorage>
+		DMibFloatInlineS TCFloat(TCFloat<tf_SignBits, tf_ExponentBits, tf_MantissaBits, tf_PaddingBits, tf_CImplicitFloat, tf_bDummyOptimize, tf_CIntegerStorage> const &_SetValue);
 
-		CDataStorage mp_DataStorage;
+		constexpr DMibFloatInlineS TCFloat(t_CImplicitFloat const &_Value) noexcept
+			requires (mc_bIsBuiltIn)
+		;
+		template <typename tf_CType>
+		DMibFloatInlineS TCFloat(tf_CType _Value, TCEnableIf<NTraits::cIsSame<tf_CType, bool>> *_pDummy = nullptr);
 
-		static inline_always CDataStorage fsp_IntegerDataToStorage(CUnsignedInteger _Data);
-		inline_always void fp_SetIntegerData(CUnsignedInteger _Data);
-		inline_always CUnsignedInteger fp_GetIntegerData() const;
-		inline_always CUnsignedInteger fp_GetMaskedIntegerData() const;
+		DMibFloatInlineS TCFloat(CUnsignedInteger const &_Value, EConstexprInitialization _Initialization);
 
-		/************************************************************************************************\
-		||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
-		|| Constants
-		||______________________________________________________________________________________________||
-		\************************************************************************************************/
-
-		DMibFloatConstexpr void fp_Set_0();
-		DMibFloatConstexpr void fp_Set_0_5();
-		DMibFloatConstexpr void fp_Set_1();
-		DMibFloatConstexpr void fp_Set_2();
-		void fp_Set_E();
-		void fp_Set_Pi();
-		void fp_Set_Euler();
-		void fp_Set_Sqrt2();
-		void fp_Set_GoldenRatio();
-		void fp_Set_Log2_10();
-		void fp_Set_Log10_2();
-		void fp_Set_LogE_10();
-		void fp_Set_Log10_E();
-		void fp_Set_Log2_E();
-		void fp_Set_LogE_2();
-		DMibFloatConstexpr void fp_Set_Inf();
-		DMibFloatConstexpr void fp_Set_NegInf();
-		DMibFloatConstexpr void fp_Set_QNan();
-		DMibFloatConstexpr void fp_Set_SNan();
-		DMibFloatConstexpr void fp_Set_NegQNan();
-		DMibFloatConstexpr void fp_Set_NegSNan();
-
-	public:
 		static DMibFloatInline TCFloat fs_SmallestDenormal();
 		static DMibFloatInline TCFloat fs_NegSmallestDenormal();
 		static DMibFloatInline TCFloat fs_Smallest();
@@ -206,11 +235,6 @@ namespace NMib::NNumeric
 		DMibFloatInlineS CImplicitFloat const &f_GetImplicit() const
 			requires (mc_bIsBuiltIn)
 		;
-		// Do nothing in default constructor
-		DMibFloatInlineS TCFloat() = default;
-		DMibFloatInlineS ~TCFloat() = default;
-		DMibFloatInlineS TCFloat(TCFloat const &_Value) = default;
-		DMibFloatInlineS TCFloat(TCFloat &&_Value) = default;
 		DMibFloatInlineS TCFloat &operator = (TCFloat const &_Value) = default;
 		DMibFloatInlineS TCFloat &operator = (TCFloat &&_Value) = default;
 
@@ -230,9 +254,6 @@ namespace NMib::NNumeric
 				TCFloat<tf_SignBits, tf_ExponentBits, tf_MantissaBits, tf_PaddingBits, tf_CImplicitFloat, tf_bDummyOptimize, tf_CIntegerStorage> const &_SetValue
 			)
 		;
-
-		template <aint tf_SignBits, aint tf_ExponentBits, aint tf_MantissaBits, aint tf_PaddingBits, typename tf_CImplicitFloat, bool tf_bDummyOptimize, typename tf_CIntegerStorage>
-		DMibFloatInlineS TCFloat(TCFloat<tf_SignBits, tf_ExponentBits, tf_MantissaBits, tf_PaddingBits, tf_CImplicitFloat, tf_bDummyOptimize, tf_CIntegerStorage> const &_SetValue);
 
 		DMibFloatInlineS CInteger f_ToInt() const;
 		DMibFloatInlineS CUnsignedInteger f_ToUnsignedInt() const;
@@ -259,18 +280,11 @@ namespace NMib::NNumeric
 		constexpr DMibFloatInlineS t_CImplicitFloat const &f_Get() const noexcept
 			requires (mc_bIsBuiltIn)
 		;
-		constexpr DMibFloatInlineS TCFloat(t_CImplicitFloat const &_Value) noexcept
-			requires (mc_bIsBuiltIn)
-		;
 		constexpr DMibFloatInlineS TCFloat &operator = (t_CImplicitFloat const &_Value) noexcept
 			requires (mc_bIsBuiltIn)
 		;
 		template <typename tf_CType>
-		DMibFloatInlineS TCFloat(tf_CType _Value, TCEnableIf<NTraits::cIsSame<tf_CType, bool>> *_pDummy = nullptr);
-		template <typename tf_CType>
 		DMibFloatInlineS TCEnableIf<NTraits::cIsSame<tf_CType, bool>, TCFloat &> operator = (tf_CType _Value);
-
-		DMibFloatInlineS TCFloat(CUnsignedInteger const &_Value, EConstexprInitialization _Initialization);
 
 		/************************************************************************************************\
 		||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
@@ -320,73 +334,6 @@ namespace NMib::NNumeric
 
 		DMibFloatConstexpr TCFloat operator - () const;
 		DMibFloatConstexpr TCFloat operator + () const;
-
-		// Internal float working with 8 extra bits of precission
-		struct CInternalFloat
-		{
-			using CMantissa = CDoubleUnsignedInteger;
-			using CSignedMantissa = CDoubleInteger;
-			using CExponent = CDoubleInteger;
-
-			using CRawQuadMantissa = NTraits::TCLargerType<CMantissa>;
-
-			static_assert(sizeof(CRawQuadMantissa) > sizeof(CMantissa));
-
-			using CQuadMantissa = NTraits::TCUnsigned<CRawQuadMantissa>;
-			using CSignedQuadMantissa = NTraits::TCSigned<CRawQuadMantissa>;
-
-			CMantissa m_Mantissa;
-			CExponent m_Exponent;
-			CInteger m_Sign;
-			umint m_MantissaBits = 0;
-
-			DMibFloatConstexpr CInternalFloat();
-
-			static constexpr aint mc_InternalMaxMantissaBits = sizeof(CMantissa) * 8 - 3;
-			static constexpr aint mc_InternalHalfMantissaBits = mc_InternalMaxMantissaBits / 2;
-			static constexpr aint mc_InternalMaxQuadMantissaBits = sizeof(CQuadMantissa) * 8 - 2;
-			static constexpr aint mc_InternalHalfQuadMantissaBits = mc_InternalMaxQuadMantissaBits / 2;
-			static constexpr aint mc_InternalExponentBits = sizeof(CExponent) * 8 - 2;
-
-			static CInternalFloat fs_LogE_2();
-			static CInternalFloat fs_Log2_E();
-			static CInternalFloat fs_LogE_10();
-			static CInternalFloat fs_Log10_E();
-			static CInternalFloat fs_Log2_10();
-			static CInternalFloat fs_Log10_2();
-			static CInternalFloat fs_EulersNumber();
-			static CInternalFloat fs_Euler();
-			static CInternalFloat fs_GoldenRatio();
-			static CInternalFloat fs_Pi();
-			static CInternalFloat fs_Sqrt2();
-
-			DMibFloatConstexpr CInternalFloat(TCFloat const &_Source);
-			DMibFloatConstexpr CInternalFloat &operator = (TCFloat const &_Source);
-			DMibFloatConstexpr CMantissa f_GetSharedMantissa(CInternalFloat const &_Other, CMantissa &o_OtherMantissa, umint &o_nMantissaBits);
-			DMibFloatConstexpr bool f_AlmostEqual(CInternalFloat const &_Value, int _nBits) noexcept;
-			DMibFloatConstexpr void f_SetAllRound(CInteger const &_Sign, CExponent const &_Exponent, CMantissa const &_Mantissa, aint _nMantissaBits);
-			DMibFloatConstexpr void f_Mul(CInternalFloat const &_Value);
-			DMibFloatConstexpr void f_Div(CInternalFloat const &_Value);
-			DMibFloatConstexpr void f_Add(CInternalFloat const &_Value);
-			DMibFloatConstexpr void f_Sub(CInternalFloat const &_Value);
-			DMibFloatConstexpr void f_ATan();
-			DMibFloatConstexpr void f_Remainder();
-
-			DMibFloatConstexpr CSignedMantissa f_ToInt(bool &o_bOverflow);
-			DMibFloatConstexpr void f_FromInt(CSignedMantissa const &_Int);
-			DMibFloatConstexpr static CInternalFloat fs_FromInt(CSignedMantissa const &_Other);
-			DMibFloatConstexpr void f_ExpN();
-			DMibFloatConstexpr void f_Exp10();
-			DMibFloatConstexpr TCFloat f_GetFloat();
-			template <typename tf_CFloat>
-			DMibFloatConstexpr tf_CFloat f_GetFloat();
-			DMibFloatConstexpr void f_LogNFull();
-			DMibFloatConstexpr void f_LogN();
-			DMibFloatConstexpr void f_Log10();
-			DMibFloatConstexpr void f_Log2();
-			DMibFloatConstexpr void f_Exp2();
-			DMibFloatConstexpr void f_Sqrt();
-		};
 
 		/************************************************************************************************\
 		||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
@@ -539,6 +486,60 @@ namespace NMib::NNumeric
 		;
 
 		DMibFloatConstexpr explicit operator bool () const;
+
+		static constexpr aint mc_MantissaBits = t_MantissaBits;
+		static constexpr aint mc_ExponentBits = t_ExponentBits;
+		static constexpr aint mc_SignBits = t_SignBits;
+		static constexpr aint mc_PaddingBits = t_PaddingBits;
+		static constexpr umint mc_StorageBits = sizeof(CInteger) * 8;
+		static constexpr aint mc_UnusedBits = mc_StorageBits - (mc_SignBits + mc_ExponentBits + mc_MantissaBits + mc_PaddingBits);
+		static constexpr aint mc_MantissaBitPos = 0;
+		static constexpr aint mc_UnusedBitPos = mc_MantissaBitPos + mc_MantissaBits;
+		static constexpr aint mc_ExponentBitPos = mc_UnusedBitPos + mc_UnusedBits;
+		static constexpr aint mc_SignBitPos = mc_ExponentBitPos + mc_ExponentBits;
+		static constexpr aint mc_PaddingBitPos = mc_SignBitPos + mc_SignBits;
+
+		static_assert(mc_UnusedBits >= 0);
+		static_assert(mc_UnusedBits <= 1);
+		static_assert(sizeof(CDoubleInteger) > sizeof(CInteger));
+
+	protected: // NOLINT(malterlib-member-order): the private section comes first for CDoubleIntegerRaw, which the public declarations use
+		using CDataStorage = TCConditional<mc_bIsBuiltIn, t_CImplicitFloat, CUnsignedInteger>;
+
+		static inline_always CDataStorage fsp_IntegerDataToStorage(CUnsignedInteger _Data);
+		inline_always void fp_SetIntegerData(CUnsignedInteger _Data);
+		inline_always CUnsignedInteger fp_GetIntegerData() const;
+		inline_always CUnsignedInteger fp_GetMaskedIntegerData() const;
+
+		/************************************************************************************************\
+		||¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯||
+		|| Constants
+		||______________________________________________________________________________________________||
+		\************************************************************************************************/
+
+		DMibFloatConstexpr void fp_Set_0();
+		DMibFloatConstexpr void fp_Set_0_5();
+		DMibFloatConstexpr void fp_Set_1();
+		DMibFloatConstexpr void fp_Set_2();
+		void fp_Set_E();
+		void fp_Set_Pi();
+		void fp_Set_Euler();
+		void fp_Set_Sqrt2();
+		void fp_Set_GoldenRatio();
+		void fp_Set_Log2_10();
+		void fp_Set_Log10_2();
+		void fp_Set_LogE_10();
+		void fp_Set_Log10_E();
+		void fp_Set_Log2_E();
+		void fp_Set_LogE_2();
+		DMibFloatConstexpr void fp_Set_Inf();
+		DMibFloatConstexpr void fp_Set_NegInf();
+		DMibFloatConstexpr void fp_Set_QNan();
+		DMibFloatConstexpr void fp_Set_SNan();
+		DMibFloatConstexpr void fp_Set_NegQNan();
+		DMibFloatConstexpr void fp_Set_NegSNan();
+
+		CDataStorage mp_DataStorage;
 	};
 
 	namespace NPrivate

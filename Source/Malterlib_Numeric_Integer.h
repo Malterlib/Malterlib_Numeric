@@ -22,57 +22,30 @@ namespace NMib::NNumeric
 	{
 		using CUpper = t_CUpper;
 		using CLower = t_CLower;
-
-#ifdef DMibPLittleEndian
-		t_CLower m_Lower{};
-		t_CUpper m_Upper{};
-#else
-		t_CUpper m_Upper{};
-		t_CLower m_Lower{};
-#endif
-		static constexpr aint mc_LowerBits = sizeof(t_CLower) * 8;
-		static constexpr aint mc_LowerFirstBit = 0;
-		static constexpr aint mc_LowerLastBit = mc_LowerBits - 1;
-		static constexpr aint mc_UpperBits = sizeof(t_CUpper) * 8;
-		static constexpr aint mc_UpperFirstBit = mc_LowerBits;
-		static constexpr aint mc_UpperLastBit = mc_UpperBits + mc_LowerBits - 1;
-		static constexpr aint mc_AllBits = mc_LowerBits + mc_UpperBits;
-		static constexpr aint mc_HalfBits = mc_AllBits / 2;
-
-		static_assert(mc_UpperBits >= mc_LowerBits, "If non symmetric sizes for constituent integers, the upper integer needs to be the larger one, otherwise sign extension wont work");
-
-		static constexpr aint mc_Size = sizeof(t_CUpper) + sizeof(t_CLower);
-
 		using CInt = TCInt;
 		struct CConstants;
-
-		static constexpr bool mc_bIsSigned = NTraits::cIsSigned<t_CUpper>;
-
-		static constexpr t_CUpper mc_UpperZero{0};
-		static constexpr t_CUpper mc_UpperOne{1};
-		static constexpr t_CLower mc_LowerZero{0};
-		static constexpr t_CLower mc_LowerOne{1};
 
 		// Do nothing in default constructor
 		constexpr TCInt() noexcept = default;
 		constexpr TCInt(TCInt const &_Value) noexcept = default;
 		constexpr TCInt(TCInt &&_Value) noexcept = default;
 
-		constexpr TCInt &operator = (TCInt const &_Value) = default;
-		constexpr TCInt &operator = (TCInt &&_Value) = default;
-
 		constexpr TCInt(t_CUpper _Upper, t_CLower _Lower);
 		constexpr TCInt(t_CLower _Lower);
+
+		template <typename tf_CType>
+		constexpr TCInt(tf_CType const &_Convert, TCEnableIf<NTraits::cIsFundamental<tf_CType>, NPrivate::CDummy &> _Dummy = NPrivate::CDummy::ms_Dummy);
+		template <typename tf_CUpper2, typename tf_CLower2>
+		constexpr TCInt(TCInt<tf_CUpper2, tf_CLower2> const &_Other);
+
+		constexpr TCInt &operator = (TCInt const &_Value) = default;
+		constexpr TCInt &operator = (TCInt &&_Value) = default;
 
 		template <typename tf_CUpper2, typename tf_CLower2>
 		constexpr TCInt<tf_CUpper2, tf_CLower2> f_GetAsTCInt() const;
 		template <typename tf_CInt>
 		constexpr explicit operator tf_CInt () const;
 
-		template <typename tf_CType>
-		constexpr TCInt(tf_CType const &_Convert, TCEnableIf<NTraits::cIsFundamental<tf_CType>, NPrivate::CDummy &> _Dummy = NPrivate::CDummy::ms_Dummy);
-		template <typename tf_CUpper2, typename tf_CLower2>
-		constexpr TCInt(TCInt<tf_CUpper2, tf_CLower2> const &_Other);
 		template <typename tf_CType>
 		constexpr TCInt &operator = (tf_CType const &_Convert);
 
@@ -144,6 +117,34 @@ namespace NMib::NNumeric
 
 		constexpr bool operator == (TCInt const &_Value) const noexcept;
 		constexpr COrdering_Strong operator <=> (TCInt const &_Value) const noexcept;
+
+		static constexpr aint mc_LowerBits = sizeof(t_CLower) * 8;
+		static constexpr aint mc_LowerFirstBit = 0;
+		static constexpr aint mc_LowerLastBit = mc_LowerBits - 1;
+		static constexpr aint mc_UpperBits = sizeof(t_CUpper) * 8;
+		static constexpr aint mc_UpperFirstBit = mc_LowerBits;
+		static constexpr aint mc_UpperLastBit = mc_UpperBits + mc_LowerBits - 1;
+		static constexpr aint mc_AllBits = mc_LowerBits + mc_UpperBits;
+		static constexpr aint mc_HalfBits = mc_AllBits / 2;
+
+		static_assert(mc_UpperBits >= mc_LowerBits, "If non symmetric sizes for constituent integers, the upper integer needs to be the larger one, otherwise sign extension wont work");
+
+		static constexpr aint mc_Size = sizeof(t_CUpper) + sizeof(t_CLower);
+
+		static constexpr bool mc_bIsSigned = NTraits::cIsSigned<t_CUpper>;
+
+		static constexpr t_CUpper mc_UpperZero{0};
+		static constexpr t_CUpper mc_UpperOne{1};
+		static constexpr t_CLower mc_LowerZero{0};
+		static constexpr t_CLower mc_LowerOne{1};
+
+#ifdef DMibPLittleEndian
+		t_CLower m_Lower{};
+		t_CUpper m_Upper{};
+#else
+		t_CUpper m_Upper{};
+		t_CLower m_Lower{};
+#endif
 
 	private:
 		template <typename tf_CDummy>
